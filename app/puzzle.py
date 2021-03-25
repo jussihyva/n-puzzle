@@ -35,7 +35,7 @@ class PuzzleDemo(Frame):
         # if width and height are not specifically set buttons are positioned
         # in a 0 size window and do not show up
         demoPanel = Frame(self, borderwidth=2, relief=SUNKEN, background=bgColor,
-                          width=120, height=120)
+                          width=520, height=520)
         demoPanel.pack(side=TOP, pady=1, padx=1)
         
         # buttons are placed relative to the top, left corner of demoPanel
@@ -43,16 +43,18 @@ class PuzzleDemo(Frame):
         # top, left corner = (x,y) = (0,0)
         # bottom, right corner = (x,y) = (1,1)
         self.xypos = {}
-        self.xypos['space'] = (.75, .75)
-        order = [3, 1, 6, 2, 5, 7, 15, 13, 4, 11, 8, 9, 14, 10, 12]
+        order = [3, 1, 6, 2, 5, 7, 15, 0, 13, 4, 11, 8, 9, 14, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24]
         
-        for i in range(15):
+        for i in range(25):
             num = order[i]
-            self.xypos[num] = ( i%4 * .25, i//4 * .25)
-            b = ttk.Button(text=num, style='Puzzle.TButton')
-            b['command'] =lambda b=b: self._puzzle_switch(b)
-            b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
-                    relwidth=.25, relheight=.25)
+            if (num == 0):
+                self.xypos['space'] = ( i%5 * .20, i//5 * .20)
+            else:
+                self.xypos[num] = ( i%5 * .20, i//5 * .20)
+                b = ttk.Button(text=num, style='Puzzle.TButton')
+                b['command'] =lambda b=b: self._puzzle_switch(b)
+                b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
+                    relwidth=.20, relheight=.20)
         
         # set button background to demoPanel background
         ttk.Style().configure('Puzzle.TButton', background=bgColor)
@@ -75,4 +77,5 @@ class PuzzleDemo(Frame):
             button.place(relx=self.xypos[num][0], rely=self.xypos[num][1])
         
 if __name__ == '__main__':
-    PuzzleDemo().mainloop()
+    puzzleDemo = PuzzleDemo()
+    puzzleDemo.mainloop()
