@@ -38,7 +38,8 @@ class SeeDismissPanel(ttk.Frame):
         sep = ttk.Separator(orient=HORIZONTAL)
  
         # Dismiss button
-        im = Image.open('images//delete.png')   # image file
+        im = Image.open('images//exit.jpg')   # image file
+        im = im.resize((32,32))
         imh = ImageTk.PhotoImage(im)            # handle to file
         dismissBtn = ttk.Button(text='Dismiss', image=imh, command=self.winfo_toplevel().destroy)
         dismissBtn.image = imh                  # prevent image from being garbage collected
@@ -46,6 +47,7 @@ class SeeDismissPanel(ttk.Frame):
          
         # 'See Code' button
         im = Image.open('images//view.png')
+        im = im.resize((32,32))
         imh = ImageTk.PhotoImage(im)
         codeBtn = ttk.Button(text='See Code', image=imh, default=ACTIVE, command=lambda: CodeDialog(self.master))
         codeBtn.image = imh
