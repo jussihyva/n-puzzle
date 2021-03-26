@@ -10,11 +10,12 @@ from demopanels import MsgPanel, SeeDismissPanel
 
 class PuzzleDemo(Frame):
     
-    def __init__(self, isapp=True, name='puzzledemo'):
-        Frame.__init__(self, name=name)
+    def __init__(self, puzzleTiles, puzzleSize):
+        Frame.__init__(self, name='puzzledemo')
+        self.puzzleTiles = puzzleTiles
         self.pack(expand=Y, fill=BOTH)
         self.master.title('15 Puzzle Demo')
-        self.isapp = isapp
+        self.isapp = True
         self._create_widgets()
         
     def _create_widgets(self):
@@ -43,18 +44,18 @@ class PuzzleDemo(Frame):
         # top, left corner = (x,y) = (0,0)
         # bottom, right corner = (x,y) = (1,1)
         self.xypos = {}
-        order = [3, 1, 6, 2, 5, 7, 15, 0, 13, 4, 11, 8, 9, 14, 10, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24]
         
-        for i in range(25):
-            num = order[i]
-            if (num == 0):
-                self.xypos['space'] = ( i%5 * .20, i//5 * .20)
-            else:
-                self.xypos[num] = ( i%5 * .20, i//5 * .20)
-                b = ttk.Button(text=num, style='Puzzle.TButton')
-                b['command'] =lambda b=b: self._puzzle_switch(b)
-                b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
-                    relwidth=.20, relheight=.20)
+        for i in range(5):
+            for j in range(5):
+                num = self.puzzleTiles[i][j]
+                if (num == 0):
+                    self.xypos['space'] = ( j * .20, i * .20)
+                else:
+                    self.xypos[num] = ( j * .20, i * .20)
+                    b = ttk.Button(text=num, style='Puzzle.TButton')
+                    b['command'] =lambda b=b: self._puzzle_switch(b)
+                    b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
+                                                relwidth=.20, relheight=.20)
         
         # set button background to demoPanel background
         ttk.Style().configure('Puzzle.TButton', background=bgColor)
@@ -77,5 +78,11 @@ class PuzzleDemo(Frame):
             button.place(relx=self.xypos[num][0], rely=self.xypos[num][1])
         
 if __name__ == '__main__':
-    puzzleDemo = PuzzleDemo()
-    puzzleDemo.mainloop()
+	puzzleSize = 5
+	puzzleTiles = [ [ 0,  1,  6,  2,  5],
+					[ 7, 15,  3, 13,  4],
+					[11,  8,  9, 14, 10],
+					[12, 16, 17, 18, 19],
+					[20, 21, 22, 23, 24]]
+	puzzleDemo = PuzzleDemo(puzzleTiles, puzzleSize)
+	puzzleDemo.mainloop()

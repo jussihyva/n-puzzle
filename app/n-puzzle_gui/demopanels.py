@@ -19,6 +19,7 @@ from tkinter import ttk
 from tkinter.simpledialog import Dialog
 from PIL import Image, ImageTk
 import inspect
+import os
  
 class MsgPanel(ttk.Frame):
     def __init__(self, master, msgtxt):
@@ -32,13 +33,14 @@ class MsgPanel(ttk.Frame):
 class SeeDismissPanel(ttk.Frame):
     def __init__(self, master):
         ttk.Frame.__init__(self, master)
+        module_path = os.path.dirname(__file__)
         self.pack(side=BOTTOM, fill=X)          # resize with parent
          
         # separator widget
         sep = ttk.Separator(orient=HORIZONTAL)
  
         # Dismiss button
-        im = Image.open('images//exit.jpg')   # image file
+        im = Image.open(module_path + '/images//exit.jpg')   # image file
         im = im.resize((32,32))
         imh = ImageTk.PhotoImage(im)            # handle to file
         dismissBtn = ttk.Button(text='Dismiss', image=imh, command=self.winfo_toplevel().destroy)
@@ -46,7 +48,7 @@ class SeeDismissPanel(ttk.Frame):
         dismissBtn['compound'] = LEFT           # display image to left of label text
          
         # 'See Code' button
-        im = Image.open('images//view.png')
+        im = Image.open(module_path + '/images//view.png')
         im = im.resize((32,32))
         imh = ImageTk.PhotoImage(im)
         codeBtn = ttk.Button(text='See Code', image=imh, default=ACTIVE, command=lambda: CodeDialog(self.master))
