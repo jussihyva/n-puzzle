@@ -13,11 +13,13 @@ class PuzzleDemo(Frame):
     def __init__(self, puzzleTiles, puzzleSize):
         Frame.__init__(self, name='puzzledemo')
         self.puzzleTiles = puzzleTiles
+        self.puzzleSize = puzzleSize
         self.pack(expand=Y, fill=BOTH)
-        self.master.title('15 Puzzle Demo')
+        self.master.title('N-Puzzle GUI')
         self.isapp = True
         self.tileButtonList = [None] * puzzleSize ** 2
-        self.__xyEmptyPos = None
+        self.tilePosArray = []
+        self.posFactor = 1 / self.puzzleSize
         self._create_widgets()
 
     def _create_widgets(self):
@@ -47,19 +49,22 @@ class PuzzleDemo(Frame):
         # bottom, right corner = (x,y) = (1,1)
         self.xypos = {}
         
-        for i in range(5):
-            for j in range(5):
+        for i in range(self.puzzleSize):
+            for j in range(self.puzzleSize):
+                self.tilePosArray.append(None)
+        for i in range(self.puzzleSize):
+            for j in range(self.puzzleSize):
                 num = self.puzzleTiles[i][j]
+                self.tilePosArray[num] = (i, j)
                 if (num == 0):
-                    self.xypos['space'] = ( j * .20, i * .20)
-                    self.__xyEmptyPos = (i , j)
+                    self.xypos['space'] = ( j * self.posFactor, i * self.posFactor)
                 else:
-                    self.xypos[num] = ( j * .20, i * .20)
+                    self.xypos[num] = ( j * self.posFactor, i * self.posFactor)
                     b = ttk.Button(text=num, style='Puzzle.TButton')
                     self.tileButtonList[num] = b
                     b['command'] =lambda b=b: self.puzzle_switch(b)
                     b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
-                                                relwidth=.20, relheight=.20)
+                                                relwidth=self.posFactor, relheight=self.posFactor)
         
         # set button background to demoPanel background
         ttk.Style().configure('Puzzle.TButton', background=bgColor)
@@ -72,18 +77,21 @@ class PuzzleDemo(Frame):
         y = self.xypos[num][1]
         
         # is the selected button next to the space?
-        if(    sy-.01 <= y <= sy+.01 and sx-.26 <= x <= sx+.26
-            or sx-.01 <= x <= sx+.01 and sy-.26 <= y <= sy+.26):
-            
+        if(sy-.01 <= y <= sy+.01
+            and sx - self.posFactor - .01 <= x <= sx + self.posFactor + .01
+            or sx-.01 <= x <= sx+.01
+            and sy - self.posFactor - .01 <= y <= sy + self.posFactor + .01):
             # swap button with space
             self.xypos['space'], self.xypos[num] = self.xypos[num], self.xypos['space']
-            
             # re-position button
             button.place(relx=self.xypos[num][0], rely=self.xypos[num][1])
+            tmp = self.tilePosArray[num]
+            self.tilePosArray[num] = self.tilePosArray[0]
+            self.tilePosArray[0] = tmp
     def getTileButtons(self):
         return (self.tileButtonList)
     def getEmptyTilePos(self):
-        return (self.__xyEmptyPos)
+        return (self.tilePosArray[0])
 
 if __name__ == '__main__':
 	puzzleSize = 5
