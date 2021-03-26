@@ -17,8 +17,9 @@ class PuzzleDemo(Frame):
         self.master.title('15 Puzzle Demo')
         self.isapp = True
         self.tileButtonList = [None] * puzzleSize ** 2
+        self.__xyEmptyPos = None
         self._create_widgets()
-        
+
     def _create_widgets(self):
         if self.isapp:
             MsgPanel(self, ["A 15-puzzle appears below as a collection of buttons.  ",
@@ -51,6 +52,7 @@ class PuzzleDemo(Frame):
                 num = self.puzzleTiles[i][j]
                 if (num == 0):
                     self.xypos['space'] = ( j * .20, i * .20)
+                    self.__xyEmptyPos = (i , j)
                 else:
                     self.xypos[num] = ( j * .20, i * .20)
                     b = ttk.Button(text=num, style='Puzzle.TButton')
@@ -80,6 +82,8 @@ class PuzzleDemo(Frame):
             button.place(relx=self.xypos[num][0], rely=self.xypos[num][1])
     def getTileButtons(self):
         return (self.tileButtonList)
+    def getEmptyTilePos(self):
+        return (self.__xyEmptyPos)
 
 if __name__ == '__main__':
 	puzzleSize = 5

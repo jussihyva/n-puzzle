@@ -29,4 +29,4 @@ def read_map_file():
 		else:
 			print('Line: ' + line, end='')
 	fileinput.close()
-	return (puzzleTileTable)
+	return (puzzleSize, puzzleTileTable)

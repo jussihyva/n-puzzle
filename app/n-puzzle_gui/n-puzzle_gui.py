@@ -1,5 +1,7 @@
 from puzzle import *
 from read_input_map import *
+from read_solution_steps import *
+import threading
 
 # Example of puzzle input
 # puzzleTileTable = [ [ 0,  1,  6,  2,  5],
@@ -11,9 +13,8 @@ from read_input_map import *
 # puzzleSize = 5
 
 if __name__ == "__main__":
-	puzzleTileTable = read_map_file()
-	puzzleSize = 5
+	(puzzleSize, puzzleTileTable) = read_map_file()
 	n_puzzle = PuzzleDemo(puzzleTileTable, puzzleSize)
-	tileButtonList = n_puzzle.getTileButtons()
-	n_puzzle.puzzle_switch(tileButtonList[24])
+	t = threading.Thread(group=None,target=readSolution, args=[n_puzzle])
+	t.start()
 	n_puzzle.mainloop()
