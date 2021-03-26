@@ -16,6 +16,7 @@ class PuzzleDemo(Frame):
         self.pack(expand=Y, fill=BOTH)
         self.master.title('15 Puzzle Demo')
         self.isapp = True
+        self.tileButtonList = [None] * puzzleSize ** 2
         self._create_widgets()
         
     def _create_widgets(self):
@@ -53,14 +54,15 @@ class PuzzleDemo(Frame):
                 else:
                     self.xypos[num] = ( j * .20, i * .20)
                     b = ttk.Button(text=num, style='Puzzle.TButton')
-                    b['command'] =lambda b=b: self._puzzle_switch(b)
+                    self.tileButtonList[num] = b
+                    b['command'] =lambda b=b: self.puzzle_switch(b)
                     b.place(in_=demoPanel, relx=self.xypos[num][0], rely=self.xypos[num][1],
                                                 relwidth=.20, relheight=.20)
         
         # set button background to demoPanel background
         ttk.Style().configure('Puzzle.TButton', background=bgColor)
         
-    def _puzzle_switch(self, button):
+    def puzzle_switch(self, button):
         num = button['text']
         sx = self.xypos['space'][0]     # position of 'space'
         sy = self.xypos['space'][1]
@@ -76,7 +78,9 @@ class PuzzleDemo(Frame):
             
             # re-position button
             button.place(relx=self.xypos[num][0], rely=self.xypos[num][1])
-        
+    def getTileButtons(self):
+        return (self.tileButtonList)
+
 if __name__ == '__main__':
 	puzzleSize = 5
 	puzzleTiles = [ [ 0,  1,  6,  2,  5],

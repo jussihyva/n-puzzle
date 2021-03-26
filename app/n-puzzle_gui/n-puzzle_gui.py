@@ -14,4 +14,6 @@ if __name__ == "__main__":
 	puzzleTileTable = read_map_file()
 	puzzleSize = 5
 	n_puzzle = PuzzleDemo(puzzleTileTable, puzzleSize)
+	tileButtonList = n_puzzle.getTileButtons()
+	n_puzzle.puzzle_switch(tileButtonList[24])
 	n_puzzle.mainloop()
