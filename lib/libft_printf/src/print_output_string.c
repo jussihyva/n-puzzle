@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_output_string.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/10 08:57:18 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:45:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	size_t	count_len(t_substring *substring)
 	return (string_len);
 }
 
-static void		add_substrings(t_substring *substring, char *s)
+static void	add_substrings(t_substring *substring, char *s)
 {
 	size_t				i;
 	t_output_string		o_s;
@@ -47,14 +47,14 @@ static void		add_substrings(t_substring *substring, char *s)
 			ft_strcat((s += o_s.zero_filler.content_size), "");
 		else
 			ft_strcat((s += o_s.zero_filler.content_size),
-													o_s.parameter.content);
+				o_s.parameter.content);
 	}
 	if (o_s.post_filler.content)
 		ft_strcat((s += o_s.parameter.content_size), o_s.post_filler.content);
 	return ;
 }
 
-static void		write_output_string(size_t *words, t_list **substring_list,
+static void	write_output_string(size_t *words, t_list **substring_list,
 																char *buffer)
 {
 	size_t			string_len;
@@ -80,8 +80,7 @@ static void		write_output_string(size_t *words, t_list **substring_list,
 	}
 }
 
-size_t			print_formatted_string(t_list **substring_list, int fd,
-																char *str)
+size_t	print_formatted_string(t_list **substring_list, int fd, char *str)
 {
 	size_t			words;
 	char			*buffer;

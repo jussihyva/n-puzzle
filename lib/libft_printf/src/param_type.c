@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   param_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:43:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 12:51:44 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:47:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_param_type(t_list **type_list,
-														t_substring *substring)
+static void	set_param_type(t_list **type_list, t_substring *substring)
 {
 	t_list			*type_elem;
 	char			*start_ptr;
@@ -24,12 +23,12 @@ static void				set_param_type(t_list **type_list,
 	while (type_elem)
 	{
 		param_type = (t_param_type *)type_elem->content;
-		if ((substring->end_ptr - substring->input_string) >=
-															param_type->length)
+		if ((substring->end_ptr - substring->input_string)
+			>= param_type->length)
 		{
 			start_ptr = substring->end_ptr - param_type->length + 1;
 			if (ft_strnequ(param_type->type_string, start_ptr,
-															param_type->length))
+					param_type->length))
 			{
 				substring->param_type = param_type;
 				if (substring->input_string < start_ptr)
@@ -42,7 +41,7 @@ static void				set_param_type(t_list **type_list,
 	return ;
 }
 
-void					add_param_type(t_list **list, t_list **type_list)
+void	add_param_type(t_list **list, t_list **type_list)
 {
 	t_list			*elem;
 	t_substring		*substring;
@@ -56,7 +55,7 @@ void					add_param_type(t_list **list, t_list **type_list)
 	}
 }
 
-static t_list			*new_type(t_type type, char *s, int length)
+static t_list	*new_type(t_type type, char *s, int length)
 {
 	t_list			*type_elem;
 	t_param_type	param_type;
@@ -68,7 +67,7 @@ static t_list			*new_type(t_type type, char *s, int length)
 	return (type_elem);
 }
 
-t_list					**create_param_type_list(void)
+t_list	**create_param_type_list(void)
 {
 	t_list			**type_list;
 

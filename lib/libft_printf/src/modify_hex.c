@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   modify_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/07/07 21:26:38 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:27:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void			conv_to_upper(char *s)
+static void	conv_to_upper(char *s)
 {
 	size_t					i;
 
@@ -22,7 +22,7 @@ static void			conv_to_upper(char *s)
 	return ;
 }
 
-static void			set_unsigned_hex_parameter(t_substring *substring)
+static void	set_unsigned_hex_parameter(t_substring *substring)
 {
 	char					*s;
 	unsigned long long		par_value;
@@ -42,7 +42,7 @@ static void			set_unsigned_hex_parameter(t_substring *substring)
 	return ;
 }
 
-void				adjust_unsigned_hex(t_substring *substring)
+void	adjust_unsigned_hex(t_substring *substring)
 {
 	set_unsigned_hex_parameter(substring);
 	set_sign(substring);
@@ -53,8 +53,7 @@ void				adjust_unsigned_hex(t_substring *substring)
 	return ;
 }
 
-char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
-																int *attrs)
+char	*conv_unsigned_hex(va_list *ap, t_substring *substring, int *attrs)
 {
 	unsigned long long		*nbr;
 

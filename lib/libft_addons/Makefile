@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/27 10:59:22 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/27 12:18:07 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	rm -f $(NAME_1)
+	rm -f $(NAME)
 
 .PHONY: re
 re: fclean all

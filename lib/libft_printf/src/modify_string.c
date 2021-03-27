@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 19:50:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:28:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		set_string_parameter(t_substring *substring)
+static void	set_string_parameter(t_substring *substring)
 {
 	char			*s;
 
@@ -34,7 +34,7 @@ static void		set_string_parameter(t_substring *substring)
 	return ;
 }
 
-void			adjust_string(t_substring *substring)
+void	adjust_string(t_substring *substring)
 {
 	set_string_parameter(substring);
 	set_sign(substring);
@@ -44,7 +44,7 @@ void			adjust_string(t_substring *substring)
 	return ;
 }
 
-void			adjust_percent_char(t_substring *substring)
+void	adjust_percent_char(t_substring *substring)
 {
 	set_string_parameter(substring);
 	set_sign(substring);
@@ -54,7 +54,7 @@ void			adjust_percent_char(t_substring *substring)
 	return ;
 }
 
-char			*conv_string(va_list *ap, t_substring *substring, int *attrs)
+char	*conv_string(va_list *ap, t_substring *substring, int *attrs)
 {
 	(*attrs)++;
 	substring->par_value = ft_strdup((char *)va_arg(*ap, void *));
@@ -63,8 +63,7 @@ char			*conv_string(va_list *ap, t_substring *substring, int *attrs)
 	return (NULL);
 }
 
-char			*conv_percent_char(va_list *ap, t_substring *substring,
-																	int *attrs)
+char	*conv_percent_char(va_list *ap, t_substring *substring, int *attrs)
 {
 	(void)ap;
 	(void)attrs;

@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:54:26 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 18:24:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:30:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long long		read_o_u_x_param(t_type type, va_list *ap)
+long long	read_o_u_x_param(t_type type, va_list *ap)
 {
 	long long	nbr;
 
@@ -37,7 +37,7 @@ long long		read_o_u_x_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-long double		read_f_param(t_type type, va_list *ap)
+long double	read_f_param(t_type type, va_list *ap)
 {
 	long double		nbr;
 

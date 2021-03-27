@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   set_substring_common_1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 15:18:15 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:46:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				count_num_of_fillers(t_substring *substring, int min_len)
+int	count_num_of_fillers(t_substring *substring, int min_len)
 {
 	int		num_of_fillers;
 
-	num_of_fillers = min_len -
-				substring->o_string.parameter.content_size -
-				substring->o_string.zero_filler.content_size -
-				substring->o_string.prefix.content_size -
-				substring->o_string.sign.content_size;
+	num_of_fillers = min_len
+		- substring->o_string.parameter.content_size
+		- substring->o_string.zero_filler.content_size
+		- substring->o_string.prefix.content_size
+		- substring->o_string.sign.content_size;
 	return (num_of_fillers);
 }
 
-static char		set_pre_filler_char(t_substring *substring)
+static char	set_pre_filler_char(t_substring *substring)
 {
 	char		filler;
 
@@ -33,16 +33,16 @@ static char		set_pre_filler_char(t_substring *substring)
 		filler = '0';
 	if (substring->conv_type == 'o' && substring->precision == -1)
 		;
-	else if (substring->conv_type == 'c' ||
-				substring->conv_type == '%' ||
-				substring->conv_type == 's')
+	else if (substring->conv_type == 'c'
+		|| substring->conv_type == '%'
+		|| substring->conv_type == 's')
 		filler = ' ';
 	else
 		filler = ' ';
 	return (filler);
 }
 
-void			set_pre_filler(t_substring *substring)
+void	set_pre_filler(t_substring *substring)
 {
 	int			num_of_fillers;
 	char		*s;
@@ -68,7 +68,7 @@ void			set_pre_filler(t_substring *substring)
 	return ;
 }
 
-void			set_post_filler(t_substring *substring)
+void	set_post_filler(t_substring *substring)
 {
 	int			num_of_fillers;
 	char		*s;
@@ -94,7 +94,7 @@ void			set_post_filler(t_substring *substring)
 	return ;
 }
 
-void			set_sign(t_substring *substring)
+void	set_sign(t_substring *substring)
 {
 	char		conv_type;
 

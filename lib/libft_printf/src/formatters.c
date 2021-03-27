@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:08:24 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:24:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:33:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			get_formatters(t_substring *substring, t_list **formatter_list)
+void	get_formatters(t_substring *substring, t_list **formatter_list)
 {
 	int				s_len;
 	t_list			*elem;
@@ -25,8 +25,8 @@ void			get_formatters(t_substring *substring, t_list **formatter_list)
 		s_len = substring->end_ptr - substring->input_string + 1;
 		while (s_len--)
 		{
-			if (substring->input_string[s_len] == formatter->character &&
-				!(substring->flags & formatter->flag))
+			if (substring->input_string[s_len] == formatter->character
+				&& !(substring->flags & formatter->flag))
 			{
 				substring->flags |= formatter->flag;
 				ft_lstadd_e(substring->formatter_list,
@@ -55,7 +55,7 @@ static t_list	*new_formatter(char character, t_flag flag)
 	return (elem);
 }
 
-t_list			**create_formatters(void)
+t_list	**create_formatters(void)
 {
 	t_list			**formatter_list;
 

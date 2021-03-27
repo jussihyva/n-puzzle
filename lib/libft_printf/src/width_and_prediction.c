@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   width_and_prediction.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/24 06:45:23 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:32:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		save_width_and_prediction(char **ptr,
-												t_list *substring_elem)
+static void	save_width_and_prediction(char **ptr, t_list *substring_elem)
 {
 	t_substring		*substring;
 
@@ -36,7 +35,7 @@ static void		save_width_and_prediction(char **ptr,
 	return ;
 }
 
-void			add_width_and_prediction(t_list **substring_list)
+void	add_width_and_prediction(t_list **substring_list)
 {
 	t_list			*substring_elem;
 	char			*ptr;

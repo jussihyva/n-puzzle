@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   modify_unsigned_integer.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 10:13:41 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/07/07 21:27:20 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:29:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_unsigned_int_parameter(t_substring *substring)
+static void	set_unsigned_int_parameter(t_substring *substring)
 {
 	char					*s;
 	unsigned long long		par_value;
@@ -31,7 +31,7 @@ static void				set_unsigned_int_parameter(t_substring *substring)
 	return ;
 }
 
-void					adjust_unsigned_int(t_substring *substring)
+void	adjust_unsigned_int(t_substring *substring)
 {
 	set_unsigned_int_parameter(substring);
 	set_sign(substring);
@@ -41,8 +41,7 @@ void					adjust_unsigned_int(t_substring *substring)
 	return ;
 }
 
-char					*conv_unsigned_int(va_list *ap,
-										t_substring *substring, int *attrs)
+char	*conv_unsigned_int(va_list *ap, t_substring *substring, int *attrs)
 {
 	unsigned long long		*nbr;
 

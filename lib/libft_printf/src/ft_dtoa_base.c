@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/11 08:13:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:44:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static unsigned long long	unsign(long long nbr, int neg)
 {
 	if (neg)
-		return (unsigned long long)(nbr * -1);
+		return ((unsigned long long)(nbr * -1));
 	else
-		return (unsigned long long)(nbr);
+		return ((unsigned long long)(nbr));
 }
 
-static size_t				get_decimals(size_t precision, long double *nbr)
+static size_t	get_decimals(size_t precision, long double *nbr)
 {
 	static size_t	max_precision = 22;
 	size_t			added_zeros;
@@ -39,7 +39,7 @@ static size_t				get_decimals(size_t precision, long double *nbr)
 	return (added_zeros);
 }
 
-static void					add_digits(char *s, unsigned long long un_nbr,
+static void	add_digits(char *s, unsigned long long un_nbr,
 													size_t base)
 {
 	static char				*letter = "0123456789abcdef";
@@ -59,8 +59,7 @@ static void					add_digits(char *s, unsigned long long un_nbr,
 	return ;
 }
 
-static void					split_float_nbr(t_float *float_nbr,
-												size_t precision, size_t base)
+static void	split_float_nbr(t_float *float_nbr, size_t precision, size_t base)
 {
 	float_nbr->neg = 0;
 	if (float_nbr->nbr < 0 && base == 10)
@@ -76,7 +75,7 @@ static void					split_float_nbr(t_float *float_nbr,
 	return ;
 }
 
-char						*ft_dtoa_base(long double nbr, size_t base,
+char	*ft_dtoa_base(long double nbr, size_t base,
 												size_t precision, int add_dot)
 {
 	char					*s;
@@ -87,8 +86,8 @@ char						*ft_dtoa_base(long double nbr, size_t base,
 	split_float_nbr(&float_nbr, precision, base);
 	added_zeros = get_decimals(precision, &float_nbr.nbr);
 	float_nbr.nbr_decimal = unsign((long long)float_nbr.nbr, float_nbr.neg);
-	s = (char *)ft_strnew((ft_numlen(float_nbr.nbr_integer, base) + precision +
-															float_nbr.neg + 1));
+	s = (char *)ft_strnew((ft_numlen(float_nbr.nbr_integer, base) + precision
+				+ float_nbr.neg + 1));
 	if (float_nbr.neg)
 		s = ft_strcat(s, "-");
 	add_digits(s, float_nbr.nbr_integer, base);

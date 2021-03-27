@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:35:39 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 10:04:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:22:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			del_formatter(void *formatter, size_t size)
+void	del_formatter(void *formatter, size_t size)
 {
 	(void)size;
 	free(formatter);
@@ -20,7 +20,7 @@ void			del_formatter(void *formatter, size_t size)
 	return ;
 }
 
-static void		del_converter(void *converter, size_t size)
+static void	del_converter(void *converter, size_t size)
 {
 	(void)size;
 	free(converter);
@@ -28,7 +28,7 @@ static void		del_converter(void *converter, size_t size)
 	return ;
 }
 
-static void		del_param_type(void *type, size_t size)
+static void	del_param_type(void *type, size_t size)
 {
 	(void)size;
 	free(type);
@@ -36,7 +36,7 @@ static void		del_param_type(void *type, size_t size)
 	return ;
 }
 
-void			release_memory(t_list **substring_list, t_list **converter_list,
+void	release_memory(t_list **substring_list, t_list **converter_list,
 									t_list **formatter_list, t_list **type_list)
 {
 	ft_lstdel(substring_list, *del_substring);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   modify_octal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/07/07 21:25:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:28:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_octal_parameter(t_substring *substring)
+static void	set_octal_parameter(t_substring *substring)
 {
 	char					*s;
 	unsigned long long		par_value;
@@ -29,7 +29,7 @@ static void				set_octal_parameter(t_substring *substring)
 	substring->par_value = NULL;
 }
 
-void					adjust_unsigned_octal(t_substring *substring)
+void	adjust_unsigned_octal(t_substring *substring)
 {
 	set_octal_parameter(substring);
 	set_sign(substring);
@@ -40,7 +40,7 @@ void					adjust_unsigned_octal(t_substring *substring)
 	return ;
 }
 
-char					*conv_unsigned_octal(va_list *ap,
+char	*conv_unsigned_octal(va_list *ap,
 										t_substring *substring, int *attrs)
 {
 	unsigned long long		*nbr;

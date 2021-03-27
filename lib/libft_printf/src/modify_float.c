@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:36:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:26:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_double_parameter(t_substring *substring)
+static void	set_double_parameter(t_substring *substring)
 {
 	int				add_dot;
 	char			*s;
@@ -33,8 +33,7 @@ static void				set_double_parameter(t_substring *substring)
 	return ;
 }
 
-char					*conv_float(va_list *ap, t_substring *substring,
-															int *attrs)
+char	*conv_float(va_list *ap, t_substring *substring, int *attrs)
 {
 	long double		*nbr;
 
@@ -52,7 +51,7 @@ char					*conv_float(va_list *ap, t_substring *substring,
 	return (NULL);
 }
 
-void					adjust_float(t_substring *substring)
+void	adjust_float(t_substring *substring)
 {
 	set_double_parameter(substring);
 	set_sign(substring);

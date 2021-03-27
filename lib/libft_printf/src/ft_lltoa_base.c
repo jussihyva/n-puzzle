@@ -6,31 +6,35 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 14:55:26 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/28 15:00:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:36:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int					count_chars(unsigned long long nbr, int base)
+static int	count_chars(unsigned long long nbr, int base)
 {
 	int		c;
 
 	c = 1;
-	while (nbr /= base)
+	nbr /= base;
+	while (nbr)
+	{
 		c++;
+		nbr /= base;
+	}
 	return (c);
 }
 
 static unsigned long long	unsign(long long nbr, int neg)
 {
 	if (neg)
-		return (unsigned long long)(nbr * -1);
+		return ((unsigned long long)(nbr * -1));
 	else
-		return (unsigned long long)(nbr);
+		return ((unsigned long long)(nbr));
 }
 
-static char					*long_to_string(unsigned long long nbr,
+static char	*long_to_string(unsigned long long nbr,
 									unsigned int base, size_t index, char *s)
 {
 	static char		*letter = "0123456789abcdef";
@@ -44,7 +48,7 @@ static char					*long_to_string(unsigned long long nbr,
 	return (s);
 }
 
-char						*ft_lltoa_base(long long nbr, int base)
+char	*ft_lltoa_base(long long nbr, int base)
 {
 	char					*s;
 	int						neg;

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   split_input_string.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 10:00:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:44:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		set_default_values(t_substring *substring)
+static void	set_default_values(t_substring *substring)
 {
 	substring->filler = ' ';
 	substring->precision = -1;
 	substring->width = -1;
-	substring->formatter_list =
-					(t_list **)ft_memalloc(sizeof(*substring->formatter_list));
+	substring->formatter_list
+		= (t_list **)ft_memalloc(sizeof(*substring->formatter_list));
 	return ;
 }
 
-static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
+static void	save_substring(t_list **list, char *start_ptr, char *end_ptr)
 {
 	char			*substring;
 	t_list			*elem;
@@ -50,7 +50,7 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	return ;
 }
 
-static char		*create_chars_string(t_list **converter_list)
+static char	*create_chars_string(t_list **converter_list)
 {
 	char			*chars_string;
 	int				i;
@@ -72,7 +72,7 @@ static char		*create_chars_string(t_list **converter_list)
 	return (chars_string);
 }
 
-static char		*string_for_converter(char *start_ptr,
+static char	*string_for_converter(char *start_ptr,
 					char *chars_string)
 {
 	if (*start_ptr == '%')
@@ -92,7 +92,7 @@ static char		*string_for_converter(char *start_ptr,
 	return (start_ptr);
 }
 
-t_list			**split_string(char *input_string, t_list **converter_list)
+t_list	**split_string(char *input_string, t_list **converter_list)
 {
 	char			*start_ptr;
 	char			*end_ptr;

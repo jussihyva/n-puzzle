@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   modify_integer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/07/07 21:25:54 by ubuntu           ###   ########.fr       */
+/*   Updated: 2021/03/27 12:27:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_int_parameter(t_substring *substring)
+static void	set_int_parameter(t_substring *substring)
 {
 	char			*s;
 	long long		par_value;
@@ -36,7 +36,7 @@ static void				set_int_parameter(t_substring *substring)
 	return ;
 }
 
-void					adjust_int(t_substring *substring)
+void	adjust_int(t_substring *substring)
 {
 	set_int_parameter(substring);
 	set_sign(substring);
@@ -46,7 +46,7 @@ void					adjust_int(t_substring *substring)
 	return ;
 }
 
-static long long		read_int_param(t_type type, va_list *ap)
+static long long	read_int_param(t_type type, va_list *ap)
 {
 	long long	nbr;
 
@@ -71,8 +71,7 @@ static long long		read_int_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-char					*conv_int(va_list *ap, t_substring *substring,
-											int *attrs)
+char	*conv_int(va_list *ap, t_substring *substring, int *attrs)
 {
 	long long		*nbr;
 

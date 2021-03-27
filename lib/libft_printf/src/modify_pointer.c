@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 19:48:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 12:28:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		set_pointer_parameter(t_substring *substring)
+static void	set_pointer_parameter(t_substring *substring)
 {
 	char			*s;
 	uintptr_t		par_value;
@@ -31,7 +31,7 @@ static void		set_pointer_parameter(t_substring *substring)
 	return ;
 }
 
-void			adjust_pointer(t_substring *substring)
+void	adjust_pointer(t_substring *substring)
 {
 	set_pointer_parameter(substring);
 	set_sign(substring);
@@ -42,7 +42,7 @@ void			adjust_pointer(t_substring *substring)
 	return ;
 }
 
-char			*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
+char	*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
 {
 	uintptr_t		**ptr;
 
