@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 09:07:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 10:57:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 16:19:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_log_add_fp(int fd, int level)
 	return (log_add_callback(file_callback, fd, level));
 }
 
-void	ft_log_trace(const char *fmt, ...)
+void	ft_log_trace(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_TRACE;
 	gettimeofday(&event.tv, NULL);
 	lock();
@@ -55,13 +55,13 @@ void	unlock(void)
 	}
 }
 
-void	ft_log_fatal(const char *fmt, ...)
+void	ft_log_fatal(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_FATAL;
 	gettimeofday(&event.tv, NULL);
 	lock();

@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/27 07:54:00 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/27 15:24:24 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 
 # Application specific parameters
-NAME			=	n-puzzle
+NAME			=	n_puzzle
 NAMES			=	$(NAME)
 
 # Folders
@@ -32,10 +32,10 @@ CC				=	clang
 C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES)
 LD_FLAGS		=	-std=gnu17 \
 					-Llib \
-					-lft_addons -lftprintf -lft
+					-lft_addons -lftprintf -lft -lm
 
 # C (Source code) and H (Header) files
-SRC_C_FILES		=	n_puzzle.c
+SRC_C_FILES		=	loging_parameters.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files

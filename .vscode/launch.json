@@ -1,0 +1,38 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations":
+	[
+		{
+			"name": "(gdb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/fdf",
+			// "args": ["-f", "data/maps/42.fdf", "-P", "2"],
+			// "args": ["-f", "data/maps/42.fdf", "-P", "2", "-M", "2"],
+			// "args": ["-f", "data/maps/elem-col.fdf"],
+			// "args": ["-S", "2", "-F", "1", "data/maps/elem-fract.fdf"],
+			// "args": ["-f", "data/maps/cube.fdf", "-S", "300", "-F", "30", "-L", "0"],
+			// "args": ["-f", "data/maps/cube.fdf", "-S", "300", "-F", "30"],
+			"args": ["-f", "data/maps/cube.fdf", "-L", "2"],
+			// "args": ["<", "data/maps/42.fdf"],
+			// "args": ["-f", "data/maps/"],
+			// "args": ["-f"],
+			// "args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		}
+	]
+}

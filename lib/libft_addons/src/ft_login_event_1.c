@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 10:22:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 10:54:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 16:18:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	ft_log_set_params(const char **level_strings,
 	return ;
 }
 
-void	ft_log_debug(const char *fmt, ...)
+void	ft_log_debug(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_DEBUG;
 	gettimeofday(&event.tv, NULL);
 	lock();
@@ -49,13 +49,13 @@ void	ft_log_debug(const char *fmt, ...)
 	return ;
 }
 
-void	ft_log_info(const char *fmt, ...)
+void	ft_log_info(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_INFO;
 	gettimeofday(&event.tv, NULL);
 	lock();
@@ -71,13 +71,13 @@ void	ft_log_info(const char *fmt, ...)
 	return ;
 }
 
-void	ft_log_warn(const char *fmt, ...)
+void	ft_log_warn(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_WARN;
 	gettimeofday(&event.tv, NULL);
 	lock();
@@ -93,13 +93,13 @@ void	ft_log_warn(const char *fmt, ...)
 	return ;
 }
 
-void	ft_log_error(const char *fmt, ...)
+void	ft_log_error(const char *file, const int line, const char *fmt, ...)
 {
 	t_log_event				event;
 
 	event.fmt = fmt;
-	event.file = __FILE__;
-	event.line = __LINE__;
+	event.file = file;
+	event.line = line;
 	event.level = LOG_ERROR;
 	gettimeofday(&event.tv, NULL);
 	lock();

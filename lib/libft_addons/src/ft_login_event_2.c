@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:21:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 10:56:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 16:32:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	execute_login_extensions(t_log_event *event,
 	return ;
 }
 
-void	ft_login_event(int level, const char *file, int line,
-														const char *fmt, ...)
+void	ft_loging_event(int level, const char *file, int line,
+			const char *fmt, ...)
 {
 	t_log_event				event;
 

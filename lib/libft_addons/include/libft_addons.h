@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 11:04:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 16:17:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,18 @@ typedef struct s_loging_params
 	t_loging_extension		*loging_extensions[MAX_LOGING_EXTENSIONS];
 }				t_loging_params;
 
-void			ft_log_trace(const char *fmt, ...);
-void			ft_log_debug(const char *fmt, ...);
-void			ft_log_info(const char *fmt, ...);
-void			ft_log_warn(const char *fmt, ...);
-void			ft_log_error(const char *fmt, ...);
-void			ft_log_fatal(const char *fmt, ...);
+void			ft_log_trace(const char *file, const int line,
+					const char *fmt, ...);
+void			ft_log_debug(const char *file, const int line,
+					const char *fmt, ...);
+void			ft_log_info(const char *file, const int line,
+					const char *fmt, ...);
+void			ft_log_warn(const char *file, const int line,
+					const char *fmt, ...);
+void			ft_log_error(const char *file, const int line,
+					const char *fmt, ...);
+void			ft_log_fatal(const char *file, const int line,
+					const char *fmt, ...);
 void			ft_log_set_lock(t_loging_lock_function fn, void *udata);
 void			ft_log_set_level(int level);
 /*
@@ -82,7 +88,7 @@ void			ft_log_set_level(int level);
 ** int			log_add_callback(loging_function fn, void *udata, int level);
 */
 int				ft_log_add_fp(int fd, int level);
-void			ft_login_event(int level, const char *file, int line,
+void			ft_loging_event(int level, const char *file, int line,
 					const char *fmt, ...);
 void			ft_log_set_params(const char **level_strings,
 					const char **level_colors);
@@ -109,19 +115,11 @@ void			execute_login_extensions(t_log_event *event,
 					const char *fmt, ...);
 int				log_add_callback(t_loging_function fn, int fd, int level);
 
-/*
-** # define ft_log_trace(...)
-**					ft_login_event(LOG_TRACE, __FILE__, __LINE__, __VA_ARGS__)
-** # define ft_log_debug(...)
-**					ft_login_event(LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
-** # define ft_log_info(...)
-**					ft_login_event(LOG_INFO,  __FILE__, __LINE__, __VA_ARGS__)
-** # define ft_log_warn(...)
-**					ft_login_event(LOG_WARN,  __FILE__, __LINE__, __VA_ARGS__)
-** # define ft_log_error(...)
-**					ft_login_event(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
-** # define ft_log_fatal(...)
-**					ft_login_event(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
-*/
+# define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
+# define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)
+# define FT_LOG_WARN(...)	ft_log_warn(__FILE__, __LINE__, __VA_ARGS__)
+# define FT_LOG_INFO(...)	ft_log_info(__FILE__, __LINE__, __VA_ARGS__)
+# define FT_LOG_DEBUG(...)	ft_log_debug(__FILE__, __LINE__, __VA_ARGS__)
+# define FT_LOG_TRACE(...)	ft_log_trace(__FILE__, __LINE__, __VA_ARGS__)
 
 #endif
