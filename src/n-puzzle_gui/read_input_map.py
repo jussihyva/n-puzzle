@@ -9,7 +9,7 @@ def __split_map_line(line):
 		tileArray.append(int(tile))
 	return (tileArray)
 
-def read_map_file():
+def read_map():
 	print('Read a map file')
 	puzzleTileTable = []
 	puzzleSize = 0
