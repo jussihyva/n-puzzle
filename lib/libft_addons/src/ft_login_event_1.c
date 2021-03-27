@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 10:22:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/24 09:39:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:54:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_loging_params		*g_loging_params;
 
-void				ft_log_set_params(const char **level_strings,
+void	ft_log_set_params(const char **level_strings,
 													const char **level_colors)
 {
 	g_loging_params = (t_loging_params *)ft_memalloc(sizeof(*g_loging_params));
@@ -27,7 +27,7 @@ void				ft_log_set_params(const char **level_strings,
 	return ;
 }
 
-void				ft_log_debug(const char *fmt, ...)
+void	ft_log_debug(const char *fmt, ...)
 {
 	t_log_event				event;
 
@@ -49,7 +49,7 @@ void				ft_log_debug(const char *fmt, ...)
 	return ;
 }
 
-void				ft_log_info(const char *fmt, ...)
+void	ft_log_info(const char *fmt, ...)
 {
 	t_log_event				event;
 
@@ -71,7 +71,7 @@ void				ft_log_info(const char *fmt, ...)
 	return ;
 }
 
-void				ft_log_warn(const char *fmt, ...)
+void	ft_log_warn(const char *fmt, ...)
 {
 	t_log_event				event;
 
@@ -93,7 +93,7 @@ void				ft_log_warn(const char *fmt, ...)
 	return ;
 }
 
-void				ft_log_error(const char *fmt, ...)
+void	ft_log_error(const char *fmt, ...)
 {
 	t_log_event				event;
 

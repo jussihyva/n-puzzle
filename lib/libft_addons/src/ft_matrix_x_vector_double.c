@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 19:31:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/09 19:32:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:58:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void		ft_matrix_x_vector_double(t_matrix_size matrix_size,
+void	ft_matrix_x_vector_double(t_matrix_size matrix_size,
 							double **matrix, double *vector, double *new_vector)
 {
 	size_t			i;

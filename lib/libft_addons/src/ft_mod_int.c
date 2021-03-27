@@ -6,19 +6,22 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 00:42:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/22 15:58:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 11:09:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-int		ft_mod_int(int dividend, int divisor)
+int	ft_mod_int(int dividend, int divisor)
 {
 	int		remainder;
 	int		t_divisor;
 
 	remainder = dividend;
-	t_divisor = divisor < 0 ? -divisor : divisor;
+	if (divisor < 0)
+		t_divisor = -divisor;
+	else
+		t_divisor = divisor;
 	if (remainder < 0)
 	{
 		while (remainder < 0)

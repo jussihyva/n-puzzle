@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 09:07:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/24 09:39:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:57:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static t_loging_params		*g_loging_params;
 
-void				set_g_loging_params_5(t_loging_params *loging_params)
+void	set_g_loging_params_5(t_loging_params *loging_params)
 {
 	g_loging_params = loging_params;
 	return ;
 }
 
-int					ft_log_add_fp(int fd, int level)
+int	ft_log_add_fp(int fd, int level)
 {
 	return (log_add_callback(file_callback, fd, level));
 }
 
-void				ft_log_trace(const char *fmt, ...)
+void	ft_log_trace(const char *fmt, ...)
 {
 	t_log_event				event;
 
@@ -47,7 +47,7 @@ void				ft_log_trace(const char *fmt, ...)
 	return ;
 }
 
-void				unlock(void)
+void	unlock(void)
 {
 	if (g_loging_params->lock)
 	{
@@ -55,7 +55,7 @@ void				unlock(void)
 	}
 }
 
-void				ft_log_fatal(const char *fmt, ...)
+void	ft_log_fatal(const char *fmt, ...)
 {
 	t_log_event				event;
 

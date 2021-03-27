@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/24 09:41:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 11:04:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
 
-typedef enum	e_event_type
+typedef enum e_event_type
 {
 	LOG_TRACE = 0,
 	LOG_DEBUG = 1,
@@ -31,13 +31,13 @@ typedef enum	e_event_type
 	LOG_FATAL = 5
 }				t_event_type;
 
-typedef struct	s_matrix_size
+typedef struct s_matrix_size
 {
 	size_t		rows;
 	size_t		columns;
 }				t_matrix_size;
 
-typedef struct	s_log_event
+typedef struct s_log_event
 {
 	va_list			ap;
 	const char		*fmt;
@@ -51,14 +51,14 @@ typedef struct	s_log_event
 typedef void	(*t_loging_function)(t_log_event *event);
 typedef void	(*t_loging_lock_function)(int lock, void *udata);
 
-typedef struct	s_loging_extension
+typedef struct s_loging_extension
 {
 	t_loging_function	fn;
 	int					fd;
 	int					level;
 }				t_loging_extension;
 
-typedef struct	s_loging_params
+typedef struct s_loging_params
 {
 	void					*udata;
 	t_loging_lock_function	lock;
@@ -83,9 +83,9 @@ void			ft_log_set_level(int level);
 */
 int				ft_log_add_fp(int fd, int level);
 void			ft_login_event(int level, const char *file, int line,
-														const char *fmt, ...);
+					const char *fmt, ...);
 void			ft_log_set_params(const char **level_strings,
-													const char **level_colors);
+					const char **level_colors);
 void			set_g_loging_params_2(t_loging_params *loging_params);
 void			set_g_loging_params_3(t_loging_params *loging_params);
 void			set_g_loging_params_4(t_loging_params *loging_params);
@@ -97,8 +97,8 @@ double			ft_max_double(double nbr1, double nbr2);
 double			ft_min_double(double nbr1, double nbr2);
 double			ft_mod_double(double dividend, double divisor);
 int				ft_mod_int(int dividend, int divisor);
-void			ft_matrix_vector_double(t_matrix_size matrix_size,
-						double **matrix, double *vector, double *new_vector);
+void			ft_matrix_x_vector_double(t_matrix_size matrix_size,
+					double **matrix, double *vector, double *new_vector);
 int				ft_isdigit_base(int c, int base);
 int				ft_strtoi(const char *str, char **endptr, int base);
 void			stdout_callback(t_log_event *event);
@@ -106,7 +106,7 @@ void			unlock(void);
 void			lock(void);
 void			file_callback(t_log_event *event);
 void			execute_login_extensions(t_log_event *event,
-														const char *fmt, ...);
+					const char *fmt, ...);
 int				log_add_callback(t_loging_function fn, int fd, int level);
 
 /*

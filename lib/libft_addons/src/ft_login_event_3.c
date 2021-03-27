@@ -6,43 +6,43 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:22:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/24 09:41:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 11:10:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-static t_loging_params		*g_loging_params;
+static t_loging_params	*g_loging_params;
 
-void				set_g_loging_params_3(t_loging_params *loging_params)
+void	set_g_loging_params_3(t_loging_params *loging_params)
 {
 	g_loging_params = loging_params;
 	return ;
 }
 
-void				ft_log_set_lock(t_loging_lock_function fn, void *udata)
+void	ft_log_set_lock(t_loging_lock_function fn, void *udata)
 {
 	g_loging_params->lock = fn;
 	g_loging_params->udata = udata;
 }
 
-void				ft_log_set_level(int level)
+void	ft_log_set_level(int level)
 {
 	g_loging_params->level = level;
 }
 
-void				ft_log_set_quiet(int enable)
+void	ft_log_set_quiet(int enable)
 {
 	g_loging_params->quiet = enable;
 }
 
-int					log_add_callback(t_loging_function fn, int fd, int level)
+int	log_add_callback(t_loging_function fn, int fd, int level)
 {
 	t_loging_extension		*loging_extension;
 	size_t					i;
 
-	loging_extension =
-				(t_loging_extension *)ft_memalloc(sizeof(*loging_extension));
+	loging_extension
+		= (t_loging_extension *)ft_memalloc(sizeof(*loging_extension));
 	loging_extension->fn = fn;
 	loging_extension->fd = fd;
 	loging_extension->level = level;

@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/24 09:06:48 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/27 10:59:22 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ C_FLAGS			=	-std=gnu17 -g -Wall -Wextra -Werror $(INCLUDES)
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	ft_radian.c ft_max_int.c ft_min_int.c \
 					ft_mod_int.c ft_mod_double.c \
-					ft_matrix_vector_double.c \
+					ft_matrix_x_vector_double.c \
 					ft_max_double.c ft_min_double.c ft_isdigit_base.c \
 					ft_strtoi.c ft_login_event_1.c ft_login_event_2.c \
 					ft_login_event_3.c ft_login_event_4.c ft_login_event_5.c

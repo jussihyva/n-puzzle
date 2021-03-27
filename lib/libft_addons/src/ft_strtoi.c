@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 12:05:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/19 08:41:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 11:49:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-static int		add_digit(long *nbr, char c, int base)
+static int	add_digit(long *nbr, char c, int base)
 {
 	long		tmp;
 
@@ -32,8 +32,17 @@ static int		add_digit(long *nbr, char c, int base)
 	}
 }
 
-static void		set_endptr(char **endptr, const char *str)
+static void	set_endptr(char **endptr, const char *str, const char *start_ptr)
 {
+	if (str == start_ptr)
+	{
+		if (*str == '\0')
+			errno = ECANCELED;
+		else
+			errno = EINVAL;
+	}
+	while (ft_isspace(*str))
+		str++;
 	if (endptr)
 		*endptr = (char *)str;
 	if (*str)
@@ -41,29 +50,34 @@ static void		set_endptr(char **endptr, const char *str)
 	return ;
 }
 
-static int		validate_result(int neg, long nbr)
+static int	validate_result(int neg, long nbr)
 {
 	if ((neg * nbr) > INT_MAX || (neg * nbr) < INT_MIN)
 	{
 		errno = ERANGE;
 		nbr = 0;
 	}
-	return (neg == 1 ? (int)nbr : (int)(nbr * -1));
+	if (neg != 1)
+		nbr = -nbr;
+	return ((int)nbr);
 }
 
-static int		validate_hex_prefixes(int *neg, const char **str)
+static int	validate_hex_prefixes(int *neg, const char **str)
 {
-	if (**str == '0')
+	const char	*ptr;
+
+	ptr = *str;
+	if (*ptr == '0')
 	{
-		(*str)++;
-		if (**str == 'x')
-			(*str)++;
+		ptr++;
+		if (*ptr == 'x')
+			ptr++;
 	}
 	*neg = 0;
 	return (1);
 }
 
-int				ft_strtoi(const char *str, char **endptr, int base)
+int	ft_strtoi(const char *str, char **endptr, int base)
 {
 	int			neg;
 	long		nbr;
@@ -78,16 +92,15 @@ int				ft_strtoi(const char *str, char **endptr, int base)
 		errno = EINVAL;
 	else if (base == 10)
 	{
-		neg = *str == '-' ? -1 : 1;
-		str += (*str == '-' || *str == '+') ? 1 : 0;
+		neg = 1;
+		if (*str == '-')
+			neg = -1;
+		if (*str == '-' || *str == '+')
+			str += 1;
 	}
 	start_ptr = str;
 	while (add_digit(&nbr, *str, base))
 		str++;
-	while (ft_isspace(*str))
-		str++;
-	if (str == start_ptr)
-		errno = *str == '\0' ? ECANCELED : EINVAL;
-	set_endptr(endptr, str);
+	set_endptr(endptr, str, start_ptr);
 	return (validate_result(neg, nbr));
 }

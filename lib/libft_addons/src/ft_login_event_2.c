@@ -6,21 +6,21 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:21:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/24 09:38:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:56:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-static t_loging_params		*g_loging_params;
+static t_loging_params	*g_loging_params;
 
-void				set_g_loging_params_2(t_loging_params *loging_params)
+void	set_g_loging_params_2(t_loging_params *loging_params)
 {
 	g_loging_params = loging_params;
 	return ;
 }
 
-void				execute_login_extensions(t_log_event *event,
+void	execute_login_extensions(t_log_event *event,
 														const char *fmt, ...)
 {
 	size_t					i;
@@ -44,7 +44,7 @@ void				execute_login_extensions(t_log_event *event,
 	return ;
 }
 
-void				ft_login_event(int level, const char *file, int line,
+void	ft_login_event(int level, const char *file, int line,
 														const char *fmt, ...)
 {
 	t_log_event				event;

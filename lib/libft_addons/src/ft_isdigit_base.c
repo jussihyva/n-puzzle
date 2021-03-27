@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 05:53:26 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/19 08:44:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/27 10:53:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-int			ft_isdigit_base(int c, int base)
+int	ft_isdigit_base(int c, int base)
 {
 	int		result;
 
@@ -25,9 +25,9 @@ int			ft_isdigit_base(int c, int base)
 	}
 	else
 	{
-		if (((c >= '0') && (c < '0' + base)) ||
-			((c >= 'A') && (c < 'A' + base)) ||
-			((c >= 'a') && (c < 'a' + base)))
+		if (((c >= '0') && (c < '0' + base))
+			|| ((c >= 'A') && (c < 'A' + base))
+			|| ((c >= 'a') && (c < 'a' + base)))
 			result = 1;
 	}
 	return (result);
