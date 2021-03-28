@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 10:52:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 14:55:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ int	main(int argc, char **argv)
 	set_loging_parameters(input, LOG_TRACE);
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv);
 	ft_log_set_level(input->cmd_args->loging_level);
-	FT_LOG_FATAL("MOI");
-	FT_LOG_ERROR("MOI");
-	FT_LOG_WARN("MOI");
-	FT_LOG_INFO("MOI");
-	FT_LOG_DEBUG("MOI");
-	FT_LOG_TRACE("MOI");
+	input->puzzle_map = read_puzzle_map();
 	return (0);
 }
