@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 15:23:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 17:39:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void	read_tiles(const char *line, int **tile_table, int row_i, int size)
 				"ERROR: Value of a tile should be int. Check line: ", line);
 			exit(42);
 		}
+		ft_strdel(&(str_array[i]));
 		i++;
 	}
+	ft_memdel((void **)&str_array);
 	if (size != i)
 	{
 		FT_LOG_ERROR("%s %s %d %s %s.\n",
@@ -106,6 +108,7 @@ t_map	*read_puzzle_map(void)
 		read_map_line(puzzle_map, line, &state, &row_i);
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	FT_LOG_INFO("Puzzle size: %d", puzzle_map->size);
 	return (puzzle_map);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 15:23:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 17:57:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ t_cmd_args	*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 				char **argv);
 t_map		*read_puzzle_map(void);
 int			remove_comment(char *line);
+void		release_mem(t_input *input);
+void		save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 10:23:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 17:49:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
+# define LOGING_LEVELS				6
 
 typedef enum e_loging_level
 {
@@ -114,6 +115,7 @@ void			file_callback(t_log_event *event);
 void			execute_login_extensions(t_log_event *event,
 					const char *fmt, ...);
 int				log_add_callback(t_loging_function fn, int fd, int level);
+void			ft_release_loging_params(void);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)
