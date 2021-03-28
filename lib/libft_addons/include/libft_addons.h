@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 16:17:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 10:23:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
 
-typedef enum e_event_type
+typedef enum e_loging_level
 {
 	LOG_TRACE = 0,
 	LOG_DEBUG = 1,
@@ -29,7 +29,7 @@ typedef enum e_event_type
 	LOG_WARN = 3,
 	LOG_ERROR = 4,
 	LOG_FATAL = 5
-}				t_event_type;
+}				t_loging_level;
 
 typedef struct s_matrix_size
 {
