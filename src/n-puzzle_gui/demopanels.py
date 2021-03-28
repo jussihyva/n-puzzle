@@ -43,22 +43,13 @@ class SeeDismissPanel(ttk.Frame):
         im = Image.open(module_path + '/images//exit.jpg')   # image file
         im = im.resize((32,32))
         imh = ImageTk.PhotoImage(im)            # handle to file
-        dismissBtn = ttk.Button(text='Dismiss', image=imh, command=self.winfo_toplevel().destroy)
+        dismissBtn = ttk.Button(text='Exit', image=imh, command=self.winfo_toplevel().destroy)
         dismissBtn.image = imh                  # prevent image from being garbage collected
         dismissBtn['compound'] = LEFT           # display image to left of label text
          
-        # 'See Code' button
-        im = Image.open(module_path + '/images//view.png')
-        im = im.resize((32,32))
-        imh = ImageTk.PhotoImage(im)
-        codeBtn = ttk.Button(text='See Code', image=imh, default=ACTIVE, command=lambda: CodeDialog(self.master))
-        codeBtn.image = imh
-        codeBtn['compound'] = LEFT
-        codeBtn.focus()
-                 
+
         # position and register widgets as children of this frame
-        sep.grid(in_=self, row=0, columnspan=4, sticky=EW, pady=5)
-        codeBtn.grid(in_=self, row=1, column=0, sticky=E)
+        sep.grid(in_=self, row=0, columnspan=1, sticky=EW, pady=1)
         dismissBtn.grid(in_=self, row=1, column=1, sticky=E)
          
         # set resize constraints

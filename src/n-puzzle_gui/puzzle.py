@@ -24,12 +24,16 @@ class PuzzleDemo(Frame):
 
     def _create_widgets(self):
         if self.isapp:
-            MsgPanel(self, ["A 15-puzzle appears below as a collection of buttons.  ",
-                            "Click on any of the pieces next to the space and that ",
-                            "piece will slide over the space.\n\n",
-                            "Continue this until the pieces are arranged in numerical ",
-                            "order from upper-left to lower-right."])
-            
+            MsgPanel(self, ["Instruction:\n",
+							"   - Click on any of the pieces next to the space and that\n",
+                            "     piece will slide over the space.\n",
+                            "   -  Continue this until the pieces are arranged in\n",
+                            "      numerical order. Refer 4x4 result below.\n\n",
+							"The end result in 4x4 puzzle:\n",
+							" 1    2    3    4\n",
+							"12  13  14   5\n",
+							"11        15   6\n",
+							"10   9    8    7"])
             SeeDismissPanel(self)
         
         self._create_demo_panel()

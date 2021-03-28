@@ -21,6 +21,6 @@ import threading
 if __name__ == "__main__":
 	(puzzleSize, puzzleTileTable) = read_map()
 	n_puzzle = PuzzleDemo(puzzleTileTable, puzzleSize)
-	t = threading.Thread(group=None,target=readSolution, args=[n_puzzle])
+	t = threading.Thread(group=None,target=readSolution, args=[n_puzzle, puzzleSize])
 	t.start()
 	n_puzzle.mainloop()

@@ -10,7 +10,6 @@ def __split_map_line(line):
 	return (tileArray)
 
 def read_map():
-	print('Read a map file')
 	puzzleTileTable = []
 	puzzleSize = 0
 	tile_line_cnt = 0
@@ -20,6 +19,7 @@ def read_map():
 			continue
 		if state == 'READ_SIZE':
 			puzzleSize = int(line.strip())
+			print("Puzzle size: " + str(puzzleSize))
 			state = 'READ_TILES'
 		elif state == 'READ_TILES':
 			puzzleTileTable.append(__split_map_line(line.strip()))
