@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   puzzle_map.c                                       :+:      :+:    :+:   */
+/*   puzzle_map_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 14:57:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 15:23:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,63 +69,43 @@ static int	**initialize_tile_table(int size)
 	return (tile_table);
 }
 
-static int	remove_comment(char *line)
+static void	read_map_line(t_map *puzzle_map, char *line,
+												t_read_state *state, int *row_i)
 {
-	int		is_line_empty;
-	char	*ptr;
-
-	ptr = ft_strchr(line, '#');
-	if (ptr)
-		*ptr = '\0';
-	ptr = line;
-	while (ft_isspace(*ptr))
-		ptr++;
-	if (*ptr)
-		is_line_empty = 0;
-	else
-		is_line_empty = 1;
-	return (is_line_empty);
-}
-
-static t_map	*read_map_lines(void)
-{
-	t_map			*map;
-	char			*line;
-	int				row_i;
-	t_read_state	state;
-
-	map = (t_map *)ft_memalloc(sizeof(*map));
-	line = NULL;
-	state = E_READ_SIZE;
-	row_i = -1;
-	while (state != E_DONE && ft_get_next_line(0, &line) > 0)
+	if (remove_comment(line))
+		return ;
+	FT_LOG_DEBUG("Line: %s", line);
+	if (*state == E_READ_SIZE)
 	{
-		if (remove_comment(line))
-			continue ;
-		FT_LOG_DEBUG("Line: %s", line);
-		if (state == E_READ_SIZE)
-		{
-			map->size = read_map_size(line);
-			map->tile_table = initialize_tile_table(map->size);
-			state = E_READ_TILES;
-		}
-		else if (state == E_READ_TILES)
-		{
-			read_tiles(line, map->tile_table, ++row_i, map->size);
-			if (map->size == row_i + 1)
-				state = E_DONE;
-		}
-		ft_strdel(&line);
+		puzzle_map->size = read_map_size(line);
+		puzzle_map->tile_table = initialize_tile_table(puzzle_map->size);
+		*state = E_READ_TILES;
 	}
-	ft_strdel(&line);
-	return (map);
+	else if (*state == E_READ_TILES)
+	{
+		read_tiles(line, puzzle_map->tile_table, ++(*row_i), puzzle_map->size);
+		if (puzzle_map->size == *row_i + 1)
+			*state = E_DONE;
+	}
+	return ;
 }
 
 t_map	*read_puzzle_map(void)
 {
 	t_map			*puzzle_map;
+	char			*line;
+	int				row_i;
+	t_read_state	state;
 
-	puzzle_map = read_map_lines();
+	puzzle_map = (t_map *)ft_memalloc(sizeof(*puzzle_map));
+	line = NULL;
+	state = E_READ_SIZE;
+	row_i = -1;
+	while (state != E_DONE && ft_get_next_line(0, &line) > 0)
+	{
+		read_map_line(puzzle_map, line, &state, &row_i);
+		ft_strdel(&line);
+	}
 	FT_LOG_INFO("Puzzle size: %d", puzzle_map->size);
 	return (puzzle_map);
 }

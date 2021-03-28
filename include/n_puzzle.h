@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 14:23:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/28 15:23:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void		set_loging_parameters(t_input *input, t_loging_level event_type);
 t_cmd_args	*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 				char **argv);
 t_map		*read_puzzle_map(void);
+int			remove_comment(char *line);
 
 #endif

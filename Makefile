@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/28 11:49:53 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/28 15:19:58 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ LD_FLAGS		=	-std=gnu17 \
 					-lft_addons -lftprintf -lft -lm
 
 # C (Source code) and H (Header) files
-SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map.c
+SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
+					puzzle_map_2.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files
