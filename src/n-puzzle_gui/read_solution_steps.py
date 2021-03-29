@@ -4,7 +4,6 @@ import time
 
 def		readSolution(n_puzzle, original_size):
 	tileButtonList = n_puzzle.getTileButtons()
-	time.sleep(5)
 	emptyTilePos = n_puzzle.getEmptyTilePos()
 	while (1):
 		(puzzleSize, puzzleTileTable) = read_map()

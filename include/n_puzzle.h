@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 16:27:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 22:44:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "libft_addons.h"
+# include <time.h>
 
 # define MAX_NUM_OF_NEIGHBOR	4
 

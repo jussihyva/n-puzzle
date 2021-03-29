@@ -19,7 +19,6 @@ def read_map():
 			continue
 		if state == 'READ_SIZE':
 			puzzleSize = int(line.strip())
-			print("Puzzle size: " + str(puzzleSize))
 			state = 'READ_TILES'
 		elif state == 'READ_TILES':
 			puzzleTileTable.append(__split_map_line(line.strip()))

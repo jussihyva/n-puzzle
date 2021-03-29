@@ -6,12 +6,16 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/29 14:55:52 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/29 22:30:01 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
-
+ifdef L
+	LOGING_LEVEL	=	$(L)
+else
+	LOGING_LEVEL	=	3
+endif
 
 # Application specific parameters
 NAME			=	n_puzzle
@@ -85,7 +89,8 @@ libraries_norm:
 
 .PHONY: run
 run: all
-	./bin/PuzzleGenerator.py -s 5 | valgrind -s --tool=memcheck --leak-check=full --show-leak-kinds=all $(BIN)/$(NAME)
+	./bin/PuzzleGenerator.py -s 5 | valgrind -s --tool=memcheck \
+	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL)
 
 .PHONY: test
 test: all

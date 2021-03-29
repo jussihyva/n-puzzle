@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 16:56:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 23:37:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,59 @@ static void	print_puzzle(t_puzzle *puzzle)
 {
 	int		i;
 	int		j;
+	char	line[1000];
+	char	string[6];
 
 	ft_printf(" %d\n", puzzle->size);
 	i = -1;
 	while (++i < puzzle->size)
 	{
+		ft_bzero(line, sizeof(line));
 		j = -1;
 		while (++j < puzzle->size)
-			ft_printf(" %4d", puzzle->tile_pos_table[i][j]->order_num);
-		ft_printf("\n");
+		{
+			ft_sprintf(string, " %4d", puzzle->tile_pos_table[i][j]->num);
+			ft_strcat(line, string);
+		}
+		ft_printf("%s\n", line);
 	}
 	return ;
 }
 
-static void	print_neighbors(t_puzzle *puzzle)
+static void	tile_num_swap(t_tile_pos *tile_pos_1, t_tile_pos *tile_pos_2)
 {
-	int		i;
-	int		j;
-	int		k;
+	int		tmp;
 
-	ft_printf(" %d\n", puzzle->size);
-	i = -1;
-	while (++i < puzzle->size)
+	tmp = tile_pos_1->num;
+	tile_pos_1->num = tile_pos_2->num;
+	tile_pos_2->num = tmp;
+	return ;
+}
+
+static void	dfs_no_mem(t_puzzle *puzzle)
+{
+	int				i;
+	t_tile_pos		*tile_pos;
+	t_tile_pos		*next_tile_pos;
+
+	tile_pos = puzzle->root_tile;
+	tile_pos->is_visited = 1;
+	while (1)
 	{
-		j = -1;
-		while (++j < puzzle->size)
+		i = ft_mod_int(rand(), 4) - 1;
+		while (++i < MAX_NUM_OF_NEIGHBOR)
 		{
-			k = -1;
-			while (++k < MAX_NUM_OF_NEIGHBOR)
-				if (puzzle->tile_pos_table[i][j]->neighbors[k])
-					ft_printf(" %4d", ((t_tile_pos *)
-							puzzle->tile_pos_table[i][j]->neighbors[k])->num);
+			next_tile_pos = tile_pos->neighbors[i];
+			if (next_tile_pos && !next_tile_pos->is_visited)
+			{
+				tile_num_swap(tile_pos, next_tile_pos);
+				usleep(300000);
+				print_puzzle(puzzle);
+				tile_pos = next_tile_pos;
+				tile_pos->is_visited = 1;
+				break ;
+			}
 		}
-		ft_printf("\n");
 	}
 	return ;
 }
@@ -59,7 +79,7 @@ void	dfs(t_map *puzzle_map)
 
 	puzzle = initialize_puzzle(puzzle_map);
 	print_puzzle(puzzle);
-	print_neighbors(puzzle);
+	dfs_no_mem(puzzle);
 	release_puzzle(puzzle);
 	return ;
 }
