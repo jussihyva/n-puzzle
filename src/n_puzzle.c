@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 10:56:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 14:57:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int	main(int argc, char **argv)
 	print_map(input->puzzle_map);
 	dfs(input->puzzle_map);
 	print_map(input->puzzle_map);
-	release_mem(input);
+	release_input(input);
 	return (0);
 }

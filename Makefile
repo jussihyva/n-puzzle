@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/29 10:57:34 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/29 14:55:52 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ LD_FLAGS		=	-std=gnu17 \
 
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
-					puzzle_map_2.c memory.c input.c dfs.c
+					puzzle_map_2.c memory.c input.c dfs.c \
+					initialize_puzzle_1.c initialize_puzzle_2.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files
@@ -80,11 +81,11 @@ libraries_re:
 
 .PHONY: libraries_norm
 libraries_norm:
-	@make -C ${LIB} norm
+	-@make -C ${LIB} norm
 
 .PHONY: run
 run: all
-	valgrind -s --tool=memcheck --leak-check=full --show-leak-kinds=all $(BIN)/$(NAME)
+	./bin/PuzzleGenerator.py -s 5 | valgrind -s --tool=memcheck --leak-check=full --show-leak-kinds=all $(BIN)/$(NAME)
 
 .PHONY: test
 test: all

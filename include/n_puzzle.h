@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 12:34:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 15:04:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "libft_addons.h"
+
+typedef enum e_dir
+{
+	E_RIGHT,
+	E_DOWN,
+	E_LEFT,
+	E_UP
+}				t_dir;
 
 typedef enum e_read_state
 {
@@ -69,8 +77,12 @@ t_cmd_args	*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 				char **argv);
 t_map		*read_puzzle_map(void);
 int			remove_comment(char *line);
-void		release_mem(t_input *input);
+void		release_input(t_input *input);
 void		save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg);
 void		dfs(t_map *puzzle_map);
+t_puzzle	*initialize_puzzle(t_map *puzzle_map);
+void		set_order_number(t_puzzle *puzzle, int order_num,
+				t_xy_values xy_pos, t_dir dir);
+void		release_puzzle(t_puzzle *puzzle);
 
 #endif

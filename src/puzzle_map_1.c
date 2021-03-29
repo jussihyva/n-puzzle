@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 11:18:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 15:09:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_map	*read_puzzle_map(void)
 	line = NULL;
 	state = E_READ_SIZE;
 	row_i = -1;
-	while (state != E_DONE && ft_get_next_line(0, &line) > 0)
+	while (ft_get_next_line(0, &line) > 0)
 	{
 		read_map_line(puzzle_map, line, &state, &row_i);
 		ft_strdel(&line);
