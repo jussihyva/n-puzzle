@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 15:04:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 16:23:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	release_puzzle(t_puzzle *puzzle)
 	{
 		j = -1;
 		while (++j < puzzle->size)
+		{
+			ft_memdel((void **)&puzzle->tile_pos_table[i][j]->neighbors);
 			ft_memdel((void **)&puzzle->tile_pos_table[i][j]);
+		}
 		ft_memdel((void **)&puzzle->tile_pos_table[i]);
 	}
 	ft_memdel((void **)&puzzle->tile_pos_table);

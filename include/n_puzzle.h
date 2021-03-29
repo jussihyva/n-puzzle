@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 15:04:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 16:27:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "libft_addons.h"
+
+# define MAX_NUM_OF_NEIGHBOR	4
 
 typedef enum e_dir
 {
@@ -63,12 +65,14 @@ typedef struct s_tile_pos
 	t_xy_values		xy_pos;
 	int				order_num;
 	int				num;
+	void			**neighbors;
 	int				is_visited;
 }				t_tile_pos;
 
 typedef struct s_puzzle
 {
 	int				size;
+	t_tile_pos		*root_tile;
 	t_tile_pos		***tile_pos_table;
 }				t_puzzle;
 
