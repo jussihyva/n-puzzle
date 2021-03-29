@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 22:43:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 10:56:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int argc, char **argv)
 	ft_log_set_level(input->cmd_args->loging_level);
 	input->puzzle_map = read_puzzle_map();
 	print_map(input->puzzle_map);
+	dfs(input->puzzle_map);
 	print_map(input->puzzle_map);
 	release_mem(input);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 17:39:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/29 11:18:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,16 @@ static void	read_tiles(const char *line, int **tile_table, int row_i, int size)
 	{
 		tile_table[row_i][i] = ft_strtoi(str_array[i], &remainings, 10);
 		if (*remainings != '\0' || errno)
-		{
 			FT_LOG_ERROR("%s %s.\n",
 				"ERROR: Value of a tile should be int. Check line: ", line);
-			exit(42);
-		}
 		ft_strdel(&(str_array[i]));
 		i++;
 	}
 	ft_memdel((void **)&str_array);
 	if (size != i)
-	{
 		FT_LOG_ERROR("%s %s %d %s %s.\n",
 			"ERROR: Number of tiles is not valid:", ". Should be: ", size,
 			"Line:", line);
-		exit(42);
-	}
 	return ;
 }
 
