@@ -58,7 +58,6 @@ class SeeDismissPanel(ttk.Frame):
  
         # bind <Return> to demo window, activates 'See Code' button;
         # <'Escape'> activates 'Dismiss' button
-        self.winfo_toplevel().bind('<Return>', lambda x: codeBtn.invoke() )
         self.winfo_toplevel().bind('<Escape>', lambda x: dismissBtn.invoke() )
  
 class CodeDialog(Dialog):

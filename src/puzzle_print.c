@@ -6,20 +6,20 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:59:15 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/30 12:59:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:03:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-void	print_puzzle(t_puzzle *puzzle)
+void	print_puzzle(int fd, t_puzzle *puzzle)
 {
 	int		i;
 	int		j;
 	char	line[1000];
 	char	string[6];
 
-	ft_printf(" %d\n", puzzle->size);
+	ft_dprintf(fd, " %d\n", puzzle->size);
 	i = -1;
 	while (++i < puzzle->size)
 	{
@@ -30,7 +30,7 @@ void	print_puzzle(t_puzzle *puzzle)
 			ft_sprintf(string, " %4d", puzzle->tile_pos_table[i][j]->num);
 			ft_strcat(line, string);
 		}
-		ft_printf("%s\n", line);
+		ft_dprintf(fd, "%s\n", line);
 	}
 	return ;
 }

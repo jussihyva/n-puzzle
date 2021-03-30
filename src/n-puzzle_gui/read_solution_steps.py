@@ -5,7 +5,8 @@ import time
 def		readSolution(n_puzzle, original_size):
 	tileButtonList = n_puzzle.getTileButtons()
 	emptyTilePos = n_puzzle.getEmptyTilePos()
-	while (1):
+	puzzleSize = 1
+	while (puzzleSize > 0):
 		(puzzleSize, puzzleTileTable) = read_map()
 		if (original_size == puzzleSize):
 			tileToMove = puzzleTileTable[emptyTilePos[0]][emptyTilePos[1]]

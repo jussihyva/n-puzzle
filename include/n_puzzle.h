@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/30 13:00:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/30 15:00:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ t_puzzle	*initialize_puzzle(t_map *puzzle_map,
 void		set_order_number(t_puzzle *puzzle, int order_num,
 				t_xy_values xy_pos, t_dir dir);
 void		release_puzzle(t_puzzle *puzzle);
-void		print_puzzle(t_puzzle *puzzle);
+void		print_puzzle(int fd, t_puzzle *puzzle);
 
 #endif

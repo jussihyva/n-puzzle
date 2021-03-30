@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/30 13:08:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/30 14:59:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status)
 	t_tile_pos		*next_tile_pos;
 	int				i;
 
-	FT_LOG_INFO("Righ position status: %u", right_pos_status);
+	FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 	tile_pos = puzzle->root_tile;
 	while (1)
 	{
@@ -63,9 +63,9 @@ static void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status)
 			tile_num_swap(tile_pos, next_tile_pos);
 			update_right_pos_status(tile_pos, &right_pos_status);
 			update_right_pos_status(next_tile_pos, &right_pos_status);
-			FT_LOG_INFO("Righ position status: %u", right_pos_status);
-			print_puzzle(puzzle);
-			if (right_pos_status > 0x1EF)
+			FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
+			print_puzzle(1, puzzle);
+			if (right_pos_status == 0x1FF)
 				return ;
 			tile_pos = next_tile_pos;
 		}
@@ -82,7 +82,8 @@ void	dfs(t_map *puzzle_map)
 
 	time(&start_time);
 	puzzle = initialize_puzzle(puzzle_map, &right_pos_status);
-	print_puzzle(puzzle);
+	print_puzzle(1, puzzle);
+	print_puzzle(2, puzzle);
 	dfs_no_mem(puzzle, right_pos_status);
 	release_puzzle(puzzle);
 	time(&end_time);
