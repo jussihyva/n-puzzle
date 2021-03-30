@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 22:44:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/30 08:55:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_tile_pos
 	int				order_num;
 	int				num;
 	void			**neighbors;
+	int				num_of_neighbors;
+	int				next_neighbor;
 	int				is_visited;
 }				t_tile_pos;
 
@@ -85,7 +87,7 @@ int			remove_comment(char *line);
 void		release_input(t_input *input);
 void		save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg);
 void		dfs(t_map *puzzle_map);
-t_puzzle	*initialize_puzzle(t_map *puzzle_map);
+t_puzzle	*initialize_puzzle(t_map *puzzle_map, unsigned int *right_pos_status);
 void		set_order_number(t_puzzle *puzzle, int order_num,
 				t_xy_values xy_pos, t_dir dir);
 void		release_puzzle(t_puzzle *puzzle);

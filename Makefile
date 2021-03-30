@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/29 22:30:01 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/30 08:16:39 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ libraries_norm:
 
 .PHONY: run
 run: all
-	./bin/PuzzleGenerator.py -s 5 | valgrind -s --tool=memcheck \
+	./bin/PuzzleGenerator.py -s 3 | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL)
 
 .PHONY: test

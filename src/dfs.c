@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 23:37:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/03/30 08:54:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,35 @@ static void	tile_num_swap(t_tile_pos *tile_pos_1, t_tile_pos *tile_pos_2)
 	return ;
 }
 
-static void	dfs_no_mem(t_puzzle *puzzle)
+// static unsigned int	update_right_pos_status(t_puzzle *puzzle)
+// {
+// 	unsigned int	right_pos_status;
+
+
+// 	return (right_pos_status);
+// }
+
+static void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status)
 {
 	int				i;
 	t_tile_pos		*tile_pos;
 	t_tile_pos		*next_tile_pos;
 
+	FT_LOG_INFO("Righ position status: %u", right_pos_status);
 	tile_pos = puzzle->root_tile;
-	tile_pos->is_visited = 1;
 	while (1)
 	{
-		i = ft_mod_int(rand(), 4) - 1;
-		while (++i < MAX_NUM_OF_NEIGHBOR)
+		i = tile_pos->next_neighbor++;
+		tile_pos->next_neighbor = ft_mod_int(tile_pos->next_neighbor,
+				tile_pos->num_of_neighbors);
+		next_tile_pos = tile_pos->neighbors[i];
+		if (next_tile_pos)
 		{
-			next_tile_pos = tile_pos->neighbors[i];
-			if (next_tile_pos && !next_tile_pos->is_visited)
-			{
-				tile_num_swap(tile_pos, next_tile_pos);
-				usleep(300000);
-				print_puzzle(puzzle);
-				tile_pos = next_tile_pos;
-				tile_pos->is_visited = 1;
-				break ;
-			}
+			tile_num_swap(tile_pos, next_tile_pos);
+			// right_pos_status = update_right_pos_status(puzzle, &right_pos_status);
+			usleep(300000);
+			print_puzzle(puzzle);
+			tile_pos = next_tile_pos;
 		}
 	}
 	return ;
@@ -76,10 +82,11 @@ static void	dfs_no_mem(t_puzzle *puzzle)
 void	dfs(t_map *puzzle_map)
 {
 	t_puzzle		*puzzle;
+	unsigned int	right_pos_status;
 
-	puzzle = initialize_puzzle(puzzle_map);
+	puzzle = initialize_puzzle(puzzle_map, &right_pos_status);
 	print_puzzle(puzzle);
-	dfs_no_mem(puzzle);
+	dfs_no_mem(puzzle, right_pos_status);
 	release_puzzle(puzzle);
 	return ;
 }
