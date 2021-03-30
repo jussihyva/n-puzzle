@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/30 08:16:39 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/03/30 12:58:43 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ LD_FLAGS		=	-std=gnu17 \
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					puzzle_map_2.c memory.c input.c dfs.c \
-					initialize_puzzle_1.c initialize_puzzle_2.c
+					initialize_puzzle_1.c initialize_puzzle_2.c \
+					puzzle_print.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files
