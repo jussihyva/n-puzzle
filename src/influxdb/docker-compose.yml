@@ -1,12 +1,13 @@
 version: '3'
 services:
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.7.11
     container_name: influxdb
     env_file:
       - ./.env
     ports:
       - '8086:8086'
+      - '9999:9999'
     volumes:
       - influxdb-storage:/var/lib/influxdb
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
@@ -39,14 +40,14 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
-      - ./influxdb-selfsigned.key_read:/etc/ssl/private/influxdb-selfsigned.key:rw
+      - ./influxdb-selfsigned.key:/etc/ssl/private/influxdb-selfsigned.key:rw
       - ./influxdb-selfsigned.crt:/etc/ssl/certs/influxdb-selfsigned.crt:ro
       - ./grafana.ini:/etc/grafana/grafana.ini:ro
     depends_on:
       - influxdb
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    # environment:
+    #   - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+    #   - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 volumes:
   influxdb-storage:
   chronograf-storage:

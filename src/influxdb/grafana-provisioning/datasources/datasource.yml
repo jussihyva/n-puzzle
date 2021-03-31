@@ -3,9 +3,7 @@ datasources:
   - name: InfluxDB
     type: influxdb
     access: proxy
-    database: Spinelli
-    user: admin
-    password: 1
+    database: Hive
     url: https://influxdb:8086
     isDefault: true
     editable: true
