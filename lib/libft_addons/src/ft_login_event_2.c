@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:21:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 11:15:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 11:20:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	execute_login_extensions(t_log_event *event,
 			loging_extension = g_loging_params->loging_extensions[i];
 			if (event->level >= loging_extension->level)
 			{
-				event->fd = loging_extension->fd;
+				event->additional_event_data
+					= loging_extension->additional_event_data;
 				va_start(event->ap, fmt);
 				loging_extension->fn(event);
 				va_end(event->ap);
@@ -57,7 +58,6 @@ void	ft_loging_event(int level, const char *file, int line,
 	lock();
 	if (!g_loging_params->quiet && level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);
@@ -79,7 +79,6 @@ void	ft_log_error(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 09:07:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 11:15:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 08:35:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	set_g_loging_params_5(t_loging_params *loging_params)
 	return ;
 }
 
-int	ft_log_add_fp(int fd, int level)
+int	ft_log_add_fd(int *fd, int level)
 {
-	return (log_add_callback(file_callback, fd, level));
+	return (ft_log_add_callback(file_callback, (void *)fd, level));
 }
 
 void	ft_log_trace(const char *file, const int line, const char *fmt, ...)
@@ -37,7 +37,6 @@ void	ft_log_trace(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);
@@ -67,7 +66,6 @@ void	ft_log_fatal(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);

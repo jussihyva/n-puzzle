@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   statistics.c                                       :+:      :+:    :+:   */
+/*   statistics_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 23:44:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/31 11:23:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 10:55:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static unsigned long	*g_tile_move_cnt = NULL;
-static time_t			g_start_time;
-static time_t			g_end_time;
+static t_statistics		*g_statistics = NULL;
 
-unsigned long	*get_move_cnt(void)
+t_statistics	*get_statistics(void)
 {
-	if (!g_tile_move_cnt)
-		g_tile_move_cnt
-			= (unsigned long *)ft_memalloc(sizeof(*g_tile_move_cnt));
-	return (g_tile_move_cnt);
+	initialize_statistics(&g_statistics);
+	return (g_statistics);
 }
 
 void	set_start_time(void)
 {
-	g_start_time = time(NULL);
+	initialize_statistics(&g_statistics);
+	g_statistics->start_time = time(NULL);
 	return ;
 }
 
 void	set_end_time(void)
 {
-	g_end_time = time(NULL);
+	initialize_statistics(&g_statistics);
+	g_statistics->end_time = time(NULL);
 	return ;
 }
 
@@ -40,6 +38,15 @@ time_t	get_execution_time(void)
 {
 	time_t	execution_time;
 
-	execution_time = g_end_time - g_start_time;
+	initialize_statistics(&g_statistics);
+	execution_time = g_statistics->end_time - g_statistics->start_time;
 	return (execution_time);
+}
+
+void	ft_release_statistics_params(void)
+{
+	initialize_statistics(&g_statistics);
+	if (g_statistics)
+		ft_memdel((void **)&g_statistics);
+	return ;
 }

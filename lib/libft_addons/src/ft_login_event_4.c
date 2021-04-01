@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:22:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 11:11:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 11:23:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,24 @@ void	stdout_callback(t_log_event *event)
 
 	format_time_stamp(event->tv, buf, sizeof(buf), "%H:%M:%S");
 	ft_dprintf(
-		event->fd, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
+		2, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
 		buf, g_loging_params->level_colors[event->level],
 		g_loging_params->level_strings[event->level],
 		event->file, event->line);
-	ft_vdprintf(event->fd, event->fmt, event->ap);
-	ft_dprintf(event->fd, "\n");
+	ft_vdprintf(2, event->fmt, event->ap);
+	ft_dprintf(2, "\n");
 }
 
 void	file_callback(t_log_event *event)
 {
-	char		buf[64];
+	char			buf[64];
 
 	format_time_stamp(event->tv, buf, sizeof(buf), "%Y-%m-%d %H:%M:%S");
-	ft_dprintf(event->fd, "%s %-5s %s:%d: ", buf,
+	ft_dprintf(*(int *)event->additional_event_data, "%s %-5s %s:%d: ", buf,
 		g_loging_params->level_strings[event->level],
 		event->file, event->line);
-	ft_vdprintf(event->fd, event->fmt, event->ap);
-	ft_dprintf(event->fd, "\n");
+	ft_vdprintf(*(int *)event->additional_event_data, event->fmt, event->ap);
+	ft_dprintf(*(int *)event->additional_event_data, "\n");
 }
 
 void	lock(void)

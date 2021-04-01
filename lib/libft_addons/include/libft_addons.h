@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 17:49:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 11:22:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_log_event
 	const char		*fmt;
 	const char		*file;
 	struct timeval	tv;
-	int				fd;
+	void			*additional_event_data;
 	int				line;
 	int				level;
 }				t_log_event;
@@ -55,7 +55,7 @@ typedef void	(*t_loging_lock_function)(int lock, void *udata);
 typedef struct s_loging_extension
 {
 	t_loging_function	fn;
-	int					fd;
+	void				*additional_event_data;
 	int					level;
 }				t_loging_extension;
 
@@ -86,9 +86,8 @@ void			ft_log_set_lock(t_loging_lock_function fn, void *udata);
 void			ft_log_set_level(int level);
 /*
 ** void			log_set_quiet(int enable);
-** int			log_add_callback(loging_function fn, void *udata, int level);
 */
-int				ft_log_add_fp(int fd, int level);
+int				ft_log_add_fd(int *fd, int level);
 void			ft_loging_event(int level, const char *file, int line,
 					const char *fmt, ...);
 void			ft_log_set_params(const char **level_strings,
@@ -114,8 +113,10 @@ void			lock(void);
 void			file_callback(t_log_event *event);
 void			execute_login_extensions(t_log_event *event,
 					const char *fmt, ...);
-int				log_add_callback(t_loging_function fn, int fd, int level);
+int				ft_log_add_callback(t_loging_function fn,
+					void *additional_event_data, int level);
 void			ft_release_loging_params(void);
+void			ft_release_statistics_params(void);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/31 11:27:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 10:17:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ static void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
 	return ;
 }
 
-void	dfs(t_map *puzzle_map)
+void	dfs(t_map *puzzle_map, t_statistics *statistics)
 {
 	t_puzzle		*puzzle;
 	unsigned int	right_pos_status;
 	unsigned long	*move_cnt;
 
 	set_start_time();
-	move_cnt = get_move_cnt();
+	move_cnt = &statistics->tile_move_cnt;
 	puzzle = initialize_puzzle(puzzle_map, &right_pos_status);
 	print_puzzle(1, puzzle);
 	print_puzzle(2, puzzle);

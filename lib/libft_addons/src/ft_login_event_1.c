@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 10:22:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 17:50:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 08:29:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_log_debug(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);
@@ -67,7 +66,6 @@ void	ft_log_info(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);
@@ -89,7 +87,6 @@ void	ft_log_warn(const char *file, const int line, const char *fmt, ...)
 	lock();
 	if (!g_loging_params->quiet && event.level >= g_loging_params->level)
 	{
-		event.fd = 2;
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);

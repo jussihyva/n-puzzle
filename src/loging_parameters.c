@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 01:33:27 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 10:26:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 10:22:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	set_level_strings(const char **level_strings)
 	return ;
 }
 
-void	set_loging_parameters(t_input *input, t_loging_level event_type)
+void	set_loging_parameters(t_input *input, t_loging_level event_type,
+													t_statistics *statistics)
 {
 	input->level_strings
 		= (const char **)ft_memalloc(sizeof(*input->level_strings) * 6);
@@ -38,5 +39,6 @@ void	set_loging_parameters(t_input *input, t_loging_level event_type)
 	input->level_colors[LOG_FATAL] = ft_strdup("\x1b[35m");
 	ft_log_set_params(input->level_strings, input->level_colors);
 	ft_log_set_level(event_type);
+	ft_log_add_callback(influxdb_plugin, (void *)statistics, LOG_INFO);
 	return ;
 }

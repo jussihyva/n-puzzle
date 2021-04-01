@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/31 11:24:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 11:12:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,16 @@ typedef struct s_puzzle
 	t_tile_pos		***tile_pos_table;
 }				t_puzzle;
 
+typedef struct s_statistics
+{
+	unsigned long	tile_move_cnt;
+	time_t			start_time;
+	time_t			end_time;
+
+}				t_statistics;
+
 void			set_loging_parameters(t_input *input,
-					t_loging_level event_type);
+					t_loging_level event_type, t_statistics *statistics);
 t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 					char **argv);
 t_map			*read_puzzle_map(void);
@@ -88,16 +96,18 @@ int				remove_comment(char *line);
 void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
-void			dfs(t_map *puzzle_map);
+void			dfs(t_map *puzzle_map, t_statistics *statistics);
 t_puzzle		*initialize_puzzle(t_map *puzzle_map,
 					unsigned int *right_pos_status);
 void			set_order_number(t_puzzle *puzzle, int order_num,
 					t_xy_values xy_pos, t_dir dir);
 void			release_puzzle(t_puzzle *puzzle);
 void			print_puzzle(int fd, t_puzzle *puzzle);
-unsigned long	*get_move_cnt(void);
+t_statistics	*get_statistics(void);
 void			set_start_time(void);
 void			set_end_time(void);
 time_t			get_execution_time(void);
+void			initialize_statistics(t_statistics **g_statistics);
+void			influxdb_plugin(t_log_event *event);
 
 #endif
