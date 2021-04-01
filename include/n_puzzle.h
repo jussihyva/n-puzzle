@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 11:12:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 17:13:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <time.h>
 
 # define MAX_NUM_OF_NEIGHBOR	4
+# define READ_BUF_MAX_SIZE		4096
+# define PEM_CERT_FILE			"./tls-selfsigned.crt"
+# define PEM_PRIVTE_KEY_FILE	"./tls-selfsigned.key"
 
 typedef enum e_dir
 {
@@ -33,6 +36,12 @@ typedef enum e_read_state
 	E_READ_SIZE,
 	E_READ_TILES
 }				t_read_state;
+
+typedef enum e_order
+{
+	E_NONE,
+	E_SEND_TO_INFLUXDB
+}				t_order;
 
 typedef struct s_xy_values
 {
@@ -81,11 +90,29 @@ typedef struct s_puzzle
 
 typedef struct s_statistics
 {
+	t_order			order;
 	unsigned long	tile_move_cnt;
 	time_t			start_time;
 	time_t			end_time;
 
 }				t_statistics;
+
+typedef enum e_connection_status
+{
+	e_idle,
+	e_waiting_msg0,
+	e_waiting_msg1,
+	e_waiting_msg2,
+	e_waiting_msg3,
+	e_waiting_msg4,
+	e_send_msg0
+}						t_connection_status;
+
+typedef struct s_influxdb
+{
+	void					*connection;
+	t_connection_status		connection_status;
+}						t_influxdb;
 
 void			set_loging_parameters(t_input *input,
 					t_loging_level event_type, t_statistics *statistics);
@@ -109,5 +136,6 @@ void			set_end_time(void);
 time_t			get_execution_time(void);
 void			initialize_statistics(t_statistics **g_statistics);
 void			influxdb_plugin(t_log_event *event);
+t_influxdb		*setup_influxdb_connection(char *host_name, char *port_number);
 
 #endif

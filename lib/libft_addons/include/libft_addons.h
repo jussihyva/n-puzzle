@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 11:22:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/01 16:56:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include <math.h>
 # include <time.h>
 # include <sys/time.h>
+# include <linux/posix_types.h>
+# include <netinet/in.h>
+# include <netinet/tcp.h>
+# include <arpa/inet.h>
+# include <sys/socket.h>
+# include <sys/types.h>
+# include <openssl/ssl.h>
+# include <openssl/err.h>
 
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
@@ -31,6 +39,19 @@ typedef enum e_loging_level
 	LOG_ERROR = 4,
 	LOG_FATAL = 5
 }				t_loging_level;
+
+typedef struct s_timeval
+{
+	__kernel_time_t			tv_sec;
+	__kernel_suseconds_t	tv_usec;
+}									t_timeval;
+
+typedef struct s_tls_connection
+{
+	int			socket_fd;
+	SSL_CTX		*ctx;
+	SSL			*ssl_bio;
+}				t_tls_connection;
 
 typedef struct s_matrix_size
 {
@@ -70,53 +91,60 @@ typedef struct s_loging_params
 	t_loging_extension		*loging_extensions[MAX_LOGING_EXTENSIONS];
 }				t_loging_params;
 
-void			ft_log_trace(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_debug(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_info(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_warn(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_error(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_fatal(const char *file, const int line,
-					const char *fmt, ...);
-void			ft_log_set_lock(t_loging_lock_function fn, void *udata);
-void			ft_log_set_level(int level);
+void				ft_log_trace(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_debug(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_info(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_warn(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_error(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_fatal(const char *file, const int line,
+						const char *fmt, ...);
+void				ft_log_set_lock(t_loging_lock_function fn, void *udata);
+void				ft_log_set_level(int level);
 /*
 ** void			log_set_quiet(int enable);
 */
-int				ft_log_add_fd(int *fd, int level);
-void			ft_loging_event(int level, const char *file, int line,
-					const char *fmt, ...);
-void			ft_log_set_params(const char **level_strings,
-					const char **level_colors);
-void			set_g_loging_params_2(t_loging_params *loging_params);
-void			set_g_loging_params_3(t_loging_params *loging_params);
-void			set_g_loging_params_4(t_loging_params *loging_params);
-void			set_g_loging_params_5(t_loging_params *loging_params);
-double			ft_radian(double angle_degree);
-int				ft_max_int(int nbr1, int nbr2);
-int				ft_min_int(int nbr1, int nbr2);
-double			ft_max_double(double nbr1, double nbr2);
-double			ft_min_double(double nbr1, double nbr2);
-double			ft_mod_double(double dividend, double divisor);
-int				ft_mod_int(int dividend, int divisor);
-void			ft_matrix_x_vector_double(t_matrix_size matrix_size,
-					double **matrix, double *vector, double *new_vector);
-int				ft_isdigit_base(int c, int base);
-int				ft_strtoi(const char *str, char **endptr, int base);
-void			stdout_callback(t_log_event *event);
-void			unlock(void);
-void			lock(void);
-void			file_callback(t_log_event *event);
-void			execute_login_extensions(t_log_event *event,
-					const char *fmt, ...);
-int				ft_log_add_callback(t_loging_function fn,
-					void *additional_event_data, int level);
-void			ft_release_loging_params(void);
-void			ft_release_statistics_params(void);
+int					ft_log_add_fd(int *fd, int level);
+void				ft_loging_event(int level, const char *file, int line,
+						const char *fmt, ...);
+void				ft_log_set_params(const char **level_strings,
+						const char **level_colors);
+void				set_g_loging_params_2(t_loging_params *loging_params);
+void				set_g_loging_params_3(t_loging_params *loging_params);
+void				set_g_loging_params_4(t_loging_params *loging_params);
+void				set_g_loging_params_5(t_loging_params *loging_params);
+double				ft_radian(double angle_degree);
+int					ft_max_int(int nbr1, int nbr2);
+int					ft_min_int(int nbr1, int nbr2);
+double				ft_max_double(double nbr1, double nbr2);
+double				ft_min_double(double nbr1, double nbr2);
+double				ft_mod_double(double dividend, double divisor);
+int					ft_mod_int(int dividend, int divisor);
+void				ft_matrix_x_vector_double(t_matrix_size matrix_size,
+						double **matrix, double *vector, double *new_vector);
+int					ft_isdigit_base(int c, int base);
+int					ft_strtoi(const char *str, char **endptr, int base);
+void				stdout_callback(t_log_event *event);
+void				unlock(void);
+void				lock(void);
+void				file_callback(t_log_event *event);
+void				execute_login_extensions(t_log_event *event,
+						const char *fmt, ...);
+int					ft_log_add_callback(t_loging_function fn,
+						void *additional_event_data, int level);
+void				ft_release_loging_params(void);
+void				ft_release_statistics_params(void);
+void				ft_openssl_init(void);
+SSL_CTX				*ft_openssl_init_ctx(const SSL_METHOD	*tls_method,
+						char *pem_cert_file, char *pem_private_key_file);
+SSL_CTX				*ft_openssl_init_client(char *pem_cert_file,
+						char *pem_private_key_file, int *socket_fd);
+t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
+						int socket_fd, SSL_CTX *ctx);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)

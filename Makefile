@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/01 09:59:04 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/01 17:02:49 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,13 +36,16 @@ CC				=	clang
 C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES)
 LD_FLAGS		=	-std=gnu17 \
 					-Llib \
-					-lft_addons -lftprintf -lft -lm
+					-lft_addons -lftprintf -lft -lm \
+					-lssl -lcrypto
+
 
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					puzzle_map_2.c memory.c input.c dfs.c \
 					initialize_puzzle_1.c initialize_puzzle_2.c \
-					puzzle_print.c statistics_1.c statistics_2.c
+					puzzle_print.c statistics_1.c statistics_2.c \
+					influxdb_1.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files
@@ -57,8 +60,11 @@ GREEN			=	\033[0;32m
 YELLOW			=	\033[0;33m
 END				=	\033[0m
 
+SELF_SIGNED_CRT	=	./tls-selfsigned.crt
+SELF_SIGNED_KEY	=	./tls-selfsigned.key
+
 .PHONY: all
-all: $(FOLDERS) $(H_FILES) $(C_FILES) libraries $(APP_FILES)
+all: $(SELF_SIGNED_CRT) $(FOLDERS) $(H_FILES) $(C_FILES) libraries $(APP_FILES)
 	@echo "$(GREEN)Done!$(END)"
 
 $(APP_FILES): $(BIN)/%: $(SRC)/%.c $(H_FILES) $(O_FILES) Makefile
@@ -97,6 +103,19 @@ run: all
 test: all
 	-./$(NAME) data/maps/Error/Invalid_param_01
 	-./$(NAME) data/maps/Error/Invalid_param_02
+
+$(SELF_SIGNED_CRT):
+	echo "FI\nUusimaa\n" | \
+	openssl req -x509 -nodes -newkey rsa:2048 \
+	-keyout $(SELF_SIGNED_KEY) \
+	-out $(SELF_SIGNED_CRT) \
+	-days 365 \
+	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=/CN="
+	chmod 644 $(SELF_SIGNED_CRT)
+	chmod +r $(SELF_SIGNED_KEY)
+
+print_key:
+	openssl x509 -in $(SELF_SIGNED_CRT) -text -noout
 
 .PHONY: clean
 clean:
