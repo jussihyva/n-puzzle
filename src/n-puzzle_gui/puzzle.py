@@ -20,11 +20,13 @@ class PuzzleDemo(Frame):
         self.tileButtonList = [None] * puzzleSize ** 2
         self.tilePosArray = []
         self.posFactor = 1 / self.puzzleSize
+        self.msgPanel = None
+        self.seeDismissPanel = None
         self._create_widgets()
 
     def _create_widgets(self):
         if self.isapp:
-            MsgPanel(self, ["Instruction:\n",
+            self.msgPanel = MsgPanel(self, ["Instruction:\n",
 							"   - Click on any of the pieces next to the space and that\n",
                             "     piece will slide over the space.\n",
                             "   -  Continue this until the pieces are arranged in\n",
@@ -34,10 +36,10 @@ class PuzzleDemo(Frame):
 							"12  13  14   5\n",
 							"11        15   6\n",
 							"10   9    8    7"])
-            SeeDismissPanel(self)
+            self.seeDismissPanel = SeeDismissPanel(self)
         
         self._create_demo_panel()
-        
+
     def _create_demo_panel(self):
         bgColor = 'gray80'  # colour for panel background and empty space
         
@@ -96,6 +98,14 @@ class PuzzleDemo(Frame):
         return (self.tileButtonList)
     def getEmptyTilePos(self):
         return (self.tilePosArray[0])
+    def terminate_gui(self):
+        print("EXIT................\n")
+        # self.seeDismissPanel.winfo_toplevel().destroy()
+        print("EXIT................\n")
+        # self.seeDismissPanel.destroy()
+        # self.msgPanel.winfo_toplevel().destroy()
+        # self.msgPanel.destroy()
+        return(self.seeDismissPanel)
 
 if __name__ == '__main__':
 	puzzleSize = 5

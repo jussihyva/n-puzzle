@@ -22,5 +22,16 @@ if __name__ == "__main__":
 	(puzzleSize, puzzleTileTable) = read_map()
 	n_puzzle = PuzzleDemo(puzzleTileTable, puzzleSize)
 	t = threading.Thread(group=None,target=readSolution, args=[n_puzzle, puzzleSize])
+	t.daemon = True
 	t.start()
+	if t.is_alive():
+		print("Thread is alive!")
 	n_puzzle.mainloop()
+	print("MOI 1\n")
+	t.join(10)
+	if t.is_alive():
+		print("Thread is STILL alive!")
+	else:
+		print("Thread is NOT alive!")
+	print("MOI 2\n")
+	raise SystemExit

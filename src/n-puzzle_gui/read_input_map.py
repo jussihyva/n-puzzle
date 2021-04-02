@@ -18,6 +18,9 @@ def read_map():
 		if (re.match("^\s*#.*$", line)):
 			continue
 		if state == 'READ_SIZE':
+			if (re.match("^\s*END\s*$", line)):
+				puzzleSize = 42
+				break
 			puzzleSize = int(line.strip())
 			state = 'READ_TILES'
 		elif state == 'READ_TILES':

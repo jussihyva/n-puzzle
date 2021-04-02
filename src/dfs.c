@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/02 12:09:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/02 13:58:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	dfs(t_map *puzzle_map, t_statistics *statistics)
 	print_puzzle(1, puzzle);
 	print_puzzle(2, puzzle);
 	dfs_no_mem(puzzle, right_pos_status, move_cnt);
+	ft_printf("END\n");
 	release_puzzle(puzzle);
 	set_end_time();
 	statistics->order = E_SEND_TO_INFLUXDB;
