@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:14:25 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 17:11:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/02 13:50:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ t_influxdb	*setup_influxdb_connection(char *host_name, char *port_number)
 	SSL_CTX				*ctx;
 	int					socket_fd;
 	t_influxdb			*influxdb;
-	char				read_buf[READ_BUF_MAX_SIZE];
-	int					chars;
 
 	ft_openssl_init();
 	tls_connection = NULL;
@@ -58,11 +56,31 @@ t_influxdb	*setup_influxdb_connection(char *host_name, char *port_number)
 		influxdb = init_influx_session(tls_connection);
 		influxdb->connection_status = e_send_msg0;
 	}
-	chars = SSL_read(tls_connection->ssl_bio, read_buf, READ_BUF_MAX_SIZE);
-	while (chars > 0)
-	{
-		ft_printf("%s\n", read_buf);
-		chars = SSL_read(tls_connection->ssl_bio, read_buf, READ_BUF_MAX_SIZE);
-	}
 	return (influxdb);
+}
+
+void	write_influxdb(t_tls_connection *connection, char *body, char *database)
+{
+	char		header[READ_BUF_MAX_SIZE];
+	char		read_buf[READ_BUF_MAX_SIZE];
+	int			chars;
+	int			start;
+	int			end;
+
+	sprintf(header,
+		"POST /write?db=%s&precision=s %sContent-Length: %ld\r\n\r\n",
+		database, "HTTP/1.1\r\nHost: none\r\n", strlen(body));
+	SSL_write(connection->ssl_bio, header, strlen(header));
+	SSL_write(connection->ssl_bio, body, strlen(body));
+	start = clock();
+	end = start + CLOCKS_PER_SEC;
+	chars = 1;
+	while (chars == -1 && end > clock())
+		chars = SSL_read(connection->ssl_bio, read_buf, READ_BUF_MAX_SIZE);
+	if (chars == -1)
+		FT_LOG_ERROR("%s", read_buf);
+	chars = 1;
+	while (chars > 0)
+		chars = SSL_read(connection->ssl_bio, read_buf, READ_BUF_MAX_SIZE);
+	return ;
 }

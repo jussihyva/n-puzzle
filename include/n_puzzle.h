@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 17:13:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/02 13:19:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,12 @@ typedef struct s_puzzle
 
 typedef struct s_statistics
 {
-	t_order			order;
-	unsigned long	tile_move_cnt;
-	time_t			start_time;
-	time_t			end_time;
-
+	t_order				order;
+	unsigned long		tile_move_cnt;
+	time_t				start_time;
+	time_t				end_time;
+	t_tls_connection	*connection;
+	int					puzzle_size;
 }				t_statistics;
 
 typedef enum e_connection_status
@@ -137,5 +138,9 @@ time_t			get_execution_time(void);
 void			initialize_statistics(t_statistics **g_statistics);
 void			influxdb_plugin(t_log_event *event);
 t_influxdb		*setup_influxdb_connection(char *host_name, char *port_number);
+void			write_influxdb(t_tls_connection *connection, char *body,
+					char *database);
+void			set_connection(t_tls_connection *connection);
+void			set_puzzle_size(int puzzle_size);
 
 #endif

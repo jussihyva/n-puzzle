@@ -10,7 +10,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/bin/n_puzzle",
-			"args": ["-L", "0", "<", "data/3_3_01.map"],
+			"args": ["-L", "2", "<", "data/3_3_01.map"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

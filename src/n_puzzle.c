@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 17:15:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/02 13:22:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	main(int argc, char **argv)
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv);
 	ft_log_set_level(input->cmd_args->loging_level);
 	influxdb = setup_influxdb_connection("127.0.0.1", "8086");
+	set_connection(influxdb->connection);
 	input->puzzle_map = read_puzzle_map();
+	set_puzzle_size(input->puzzle_map->size);
 	print_map(input->puzzle_map);
 	dfs(input->puzzle_map, statistics);
 	release_input(input);
