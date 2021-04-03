@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:28:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 10:51:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 15:59:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static void	param_error(const char *error_string, const char s)
 }
 
 static void	split_cmd_argument(void (fn)(t_cmd_args *, char, char *),
-										t_cmd_args *cmd_args, int *arg_index)
+							t_cmd_args *cmd_args, int *arg_index, char *options)
 {
 	int			i;
 	char		*arg;
 
 	arg = cmd_args->argv[*arg_index];
 	i = 1;
-	while (arg[i] && ft_strchr("fMLPSFAxyz", arg[i]))
+	while (arg[i] && ft_strchr(options, arg[i]))
 	{
 		if ((*arg_index + 1) < cmd_args->argc)
 		{
@@ -53,6 +53,7 @@ static t_cmd_args	*initialize_cmd_args(int argc, char **argv)
 	cmd_args->argc = argc;
 	cmd_args->argv = argv;
 	cmd_args->loging_level = LOG_ERROR;
+	cmd_args->algorithm = ft_strdup("dfs_1");
 	return (cmd_args);
 }
 
@@ -66,7 +67,7 @@ static void	print_usage(void)
 }
 
 t_cmd_args	*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
-																	char **argv)
+													char **argv, char *options)
 {
 	t_cmd_args			*cmd_args;
 	int					arg_index;
@@ -76,7 +77,7 @@ t_cmd_args	*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 	while (++arg_index < argc)
 	{
 		if (argv[arg_index][0] == '-')
-			split_cmd_argument(fn, cmd_args, &arg_index);
+			split_cmd_argument(fn, cmd_args, &arg_index, options);
 		else
 		{
 			fn(cmd_args, 'f', argv[arg_index]);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 11:08:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 15:54:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_cmd_args
 	int				argc;
 	char			**argv;
 	t_loging_level	loging_level;
+	char			*algorithm;
 }				t_cmd_args;
 
 typedef struct s_map
@@ -120,13 +121,14 @@ typedef struct s_influxdb
 void			set_loging_parameters(t_input *input,
 					t_loging_level event_type, t_statistics *statistics);
 t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
-					char **argv);
+					char **argv, char *options);
 t_map			*read_puzzle_map(void);
 int				remove_comment(char *line);
 void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
-void			dfs(t_map *puzzle_map, t_statistics *statistics);
+void			dfs(t_map *puzzle_map, t_statistics *statistics,
+					t_cmd_args *cmd_args);
 t_puzzle		*initialize_puzzle(t_map *puzzle_map,
 					unsigned int *right_pos_status);
 void			set_order_number(t_puzzle *puzzle, int order_num,

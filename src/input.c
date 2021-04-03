@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 17:57:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 16:00:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,10 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 {
 	if (opt == 'L')
 		cmd_args->loging_level = conv_str_to_int(opt, next_arg);
+	else if (opt == 'A')
+	{
+		ft_strdel(&cmd_args->algorithm);
+		cmd_args->algorithm = next_arg;
+	}
 	return ;
 }
