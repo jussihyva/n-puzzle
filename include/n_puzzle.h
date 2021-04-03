@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/02 13:19:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 11:08:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft_addons.h"
 # include <time.h>
 
-# define MAX_NUM_OF_NEIGHBOR	4
+# define MAX_NUM_OF_NEIGHBORS	4
 # define READ_BUF_MAX_SIZE		4096
 # define PEM_CERT_FILE			"./tls-selfsigned.crt"
 # define PEM_PRIVTE_KEY_FILE	"./tls-selfsigned.key"
@@ -72,13 +72,12 @@ typedef struct s_input
 
 typedef struct s_tile_pos
 {
-	t_xy_values		xy_pos;
-	int				order_num;
-	int				num;
-	void			**neighbors;
-	int				num_of_neighbors;
-	int				next_neighbor;
-	int				is_visited;
+	t_xy_values			xy_pos;
+	int					order_num;
+	int					num;
+	struct s_tile_pos	**neighbors;
+	int					num_of_neighbors;
+	struct s_tile_pos	*prev_tile;
 }				t_tile_pos;
 
 typedef struct s_puzzle
@@ -86,11 +85,14 @@ typedef struct s_puzzle
 	int				size;
 	t_tile_pos		*root_tile;
 	t_tile_pos		***tile_pos_table;
+	unsigned long	*move_cnt;
 }				t_puzzle;
 
 typedef struct s_statistics
 {
 	t_order				order;
+	char				*algorithm;
+	char				*algorithm_substring;
 	unsigned long		tile_move_cnt;
 	time_t				start_time;
 	time_t				end_time;
@@ -142,5 +144,13 @@ void			write_influxdb(t_tls_connection *connection, char *body,
 					char *database);
 void			set_connection(t_tls_connection *connection);
 void			set_puzzle_size(int puzzle_size);
+void			dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
+					t_statistics *statistics);
+void			dfs_deeping(t_puzzle *puzzle, unsigned int right_pos_status,
+					t_statistics *statistics);
+void			tile_num_swap(t_tile_pos *tile_pos_1, t_tile_pos *tile_pos_2,
+					unsigned long *move_cnt);
+void			update_right_pos_status(t_tile_pos *tile_pos,
+					unsigned int *right_pos_status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/30 08:55:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 11:09:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static t_tile_pos	*initialize_tile_pos(t_tile_pos ***tile_pos_table,
 		ft_memalloc(sizeof(*tile_pos_table[xy_pos->y][xy_pos->x]));
 	ft_memcpy(&tile_pos->xy_pos, xy_pos, sizeof(tile_pos->xy_pos));
 	tile_pos->num = tile_table[xy_pos->y][xy_pos->x];
-	tile_pos->neighbors = (void **)ft_memalloc(
-			sizeof(*tile_pos->neighbors) * MAX_NUM_OF_NEIGHBOR);
+	tile_pos->neighbors = (t_tile_pos **)ft_memalloc(
+			sizeof(*tile_pos->neighbors) * MAX_NUM_OF_NEIGHBORS);
 	if (!tile_pos->num)
 		*root_tile = tile_pos;
 	return (tile_pos);

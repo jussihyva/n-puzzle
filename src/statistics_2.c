@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/02 13:24:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/02 23:52:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	influxdb_plugin(t_log_event *event)
 		ft_sprintf(influxdb_query_string,
 			"project=%s,algorithm=%s,algorithm_substring=%s,puzzle_size=%d \
 			execution_time=%di,tile_moves=%di %d\n",
-			"n-puzzle", "dfs", "no_mem_rand", statistics->puzzle_size,
+			"n-puzzle", "dfs", statistics->algorithm_substring,
+			statistics->puzzle_size,
 			(int)get_execution_time(), statistics->tile_move_cnt,
 			statistics->end_time);
 		ft_dprintf(2, "Execution end time: %ld\n", statistics->end_time);
