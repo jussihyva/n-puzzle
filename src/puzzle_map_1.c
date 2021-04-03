@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/29 15:09:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:22:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ static void	read_map_line(t_map *puzzle_map, char *line,
 	if (*state == E_READ_SIZE)
 	{
 		puzzle_map->size = read_map_size(line);
-		puzzle_map->tile_table = initialize_tile_table(puzzle_map->size);
+		puzzle_map->tile_map = initialize_tile_table(puzzle_map->size);
 		*state = E_READ_TILES;
 	}
 	else if (*state == E_READ_TILES)
 	{
-		read_tiles(line, puzzle_map->tile_table, ++(*row_i), puzzle_map->size);
+		read_tiles(line, puzzle_map->tile_map, ++(*row_i), puzzle_map->size);
 		if (puzzle_map->size == *row_i + 1)
 			*state = E_DONE;
 	}

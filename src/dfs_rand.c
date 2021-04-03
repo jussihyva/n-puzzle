@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 16:09:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:08:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,28 @@ static int	fast_rand(void)
 void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
 													t_statistics *statistics)
 {
-	t_tile_pos		*tile_pos;
-	t_tile_pos		*next_tile_pos;
+	t_tile			*tile;
+	t_tile			*next_tile;
 	int				i;
 	unsigned int	puzzle_ready;
 
 	puzzle_ready = (1 << (puzzle->size * puzzle->size)) - 1;
 	FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
-	tile_pos = puzzle->root_tile;
+	tile = puzzle->root_tile;
 	while (1)
 	{
-		i = ft_mod_int(fast_rand(), tile_pos->num_of_neighbors);
-		next_tile_pos = tile_pos->neighbors[i];
-		if (next_tile_pos)
+		i = ft_mod_int(fast_rand(), tile->num_of_neighbors);
+		next_tile = tile->neighbors[i];
+		if (next_tile)
 		{
-			tile_num_swap(tile_pos, next_tile_pos, puzzle->move_cnt);
-			update_right_pos_status(tile_pos, &right_pos_status);
-			update_right_pos_status(next_tile_pos, &right_pos_status);
+			tile_num_swap(tile, next_tile, puzzle->move_cnt);
+			update_right_pos_status(tile, &right_pos_status);
+			update_right_pos_status(next_tile, &right_pos_status);
 			FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 			print_puzzle(1, puzzle);
 			if (right_pos_status == puzzle_ready)
 				break ;
-			tile_pos = next_tile_pos;
+			tile = next_tile;
 		}
 	}
 	set_end_time();

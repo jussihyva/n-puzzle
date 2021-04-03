@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 15:54:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:26:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_cmd_args
 typedef struct s_map
 {
 	int		size;
-	int		**tile_table;
+	int		**tile_map;
 }				t_map;
 
 typedef struct s_input
@@ -71,21 +71,21 @@ typedef struct s_input
 	t_map				*puzzle_map;
 }				t_input;
 
-typedef struct s_tile_pos
+typedef struct s_tile
 {
 	t_xy_values			xy_pos;
 	int					order_num;
 	int					num;
-	struct s_tile_pos	**neighbors;
+	struct s_tile		**neighbors;
 	int					num_of_neighbors;
-	struct s_tile_pos	*prev_tile;
-}				t_tile_pos;
+	struct s_tile		*prev_tile;
+}				t_tile;
 
 typedef struct s_puzzle
 {
 	int				size;
-	t_tile_pos		*root_tile;
-	t_tile_pos		***tile_pos_table;
+	t_tile			*root_tile;
+	t_tile			***tile_table;
 	unsigned long	*move_cnt;
 }				t_puzzle;
 
@@ -150,9 +150,9 @@ void			dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
 					t_statistics *statistics);
 void			dfs_deeping(t_puzzle *puzzle, unsigned int right_pos_status,
 					t_statistics *statistics);
-void			tile_num_swap(t_tile_pos *tile_pos_1, t_tile_pos *tile_pos_2,
+void			tile_num_swap(t_tile *tile_1, t_tile *tile_2,
 					unsigned long *move_cnt);
-void			update_right_pos_status(t_tile_pos *tile_pos,
+void			update_right_pos_status(t_tile *tile,
 					unsigned int *right_pos_status);
 
 #endif

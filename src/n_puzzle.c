@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 16:02:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:32:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	print_map(t_map *map)
 		j = -1;
 		while (++j < map->size)
 		{
-			ft_sprintf(string, " %4d", map->tile_table[i][j]);
+			ft_sprintf(string, " %4d", map->tile_map[i][j]);
 			ft_strcat(line, string);
 		}
 		FT_LOG_INFO("%s", line);
