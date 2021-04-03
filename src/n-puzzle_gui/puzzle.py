@@ -99,13 +99,7 @@ class PuzzleDemo(Frame):
     def getEmptyTilePos(self):
         return (self.tilePosArray[0])
     def terminate_gui(self):
-        print("EXIT................\n")
-        # self.seeDismissPanel.winfo_toplevel().destroy()
-        print("EXIT................\n")
-        # self.seeDismissPanel.destroy()
-        # self.msgPanel.winfo_toplevel().destroy()
-        # self.msgPanel.destroy()
-        return(self.seeDismissPanel)
+        self.seeDismissPanel.winfo_toplevel().destroy()
 
 if __name__ == '__main__':
 	puzzleSize = 5
