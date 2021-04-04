@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:44:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 08:03:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_tile *tile,
 			{
 				tile_num_swap(tile, next_tile, puzzle->move_cnt);
 				print_puzzle(1, puzzle);
-				update_right_pos_status(tile, &right_pos_status);
-				update_right_pos_status(next_tile, &right_pos_status);
+				update_right_pos_status(tile, next_tile, &right_pos_status);
 				FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 				next_tile->prev_tile = tile;
 				is_puzzle_ready = depth_limited_dfs(puzzle, next_tile,
@@ -43,8 +42,7 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_tile *tile,
 				{
 					tile_num_swap(next_tile, tile, puzzle->move_cnt);
 					print_puzzle(1, puzzle);
-					update_right_pos_status(tile, &right_pos_status);
-					update_right_pos_status(next_tile, &right_pos_status);
+					update_right_pos_status(tile, next_tile, &right_pos_status);
 					FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 				}
 			}

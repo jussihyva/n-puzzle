@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:08:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 08:02:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
 		if (next_tile)
 		{
 			tile_num_swap(tile, next_tile, puzzle->move_cnt);
-			update_right_pos_status(tile, &right_pos_status);
-			update_right_pos_status(next_tile, &right_pos_status);
+			update_right_pos_status(tile, next_tile, &right_pos_status);
 			FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 			print_puzzle(1, puzzle);
 			if (right_pos_status == puzzle_ready)

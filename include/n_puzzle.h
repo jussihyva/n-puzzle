@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:26:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 08:01:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void			dfs_deeping(t_puzzle *puzzle, unsigned int right_pos_status,
 					t_statistics *statistics);
 void			tile_num_swap(t_tile *tile_1, t_tile *tile_2,
 					unsigned long *move_cnt);
-void			update_right_pos_status(t_tile *tile,
+void			update_right_pos_status(t_tile *tile1, t_tile *tile2,
 					unsigned int *right_pos_status);
 
 #endif
