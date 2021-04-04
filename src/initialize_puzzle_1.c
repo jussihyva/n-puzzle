@@ -6,15 +6,15 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:38:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:35:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static void	set_tile_neighbors(t_tile ***tile_table, int size)
+static void	set_tile_neighbors(t_pos ***pos_table, int size)
 {
-	t_tile			*tile;
+	t_pos			*pos;
 	int				i;
 	int				j;
 	int				k;
@@ -26,55 +26,55 @@ static void	set_tile_neighbors(t_tile ***tile_table, int size)
 		while (++j < size)
 		{
 			k = 0;
-			tile = tile_table[i][j];
+			pos = pos_table[i][j];
 			if (i > 0)
-				tile->neighbors[k++] = tile_table[i - 1][j];
+				pos->neighbors[k++] = pos_table[i - 1][j];
 			if (j > 0)
-				tile->neighbors[k++] = tile_table[i][j - 1];
+				pos->neighbors[k++] = pos_table[i][j - 1];
 			if (i < size - 1)
-				tile->neighbors[k++] = tile_table[i + 1][j];
+				pos->neighbors[k++] = pos_table[i + 1][j];
 			if (j < size - 1)
-				tile->neighbors[k++] = tile_table[i][j + 1];
-			tile->num_of_neighbors = k;
+				pos->neighbors[k++] = pos_table[i][j + 1];
+			pos->num_of_neighbors = k;
 		}
 	}
 	return ;
 }
 
-static t_tile	*initialize_tile_pos(t_tile ***tile_table,
-				int **tile_map, t_tile **root_tile, t_xy_values *xy_pos)
+static t_pos	*initialize_tile_pos(t_pos ***pos_table,
+				int **tile_map, t_pos **root_tile, t_xy_values *xy_pos)
 {
-	t_tile		*tile;
+	t_pos		*pos;
 
-	tile = (t_tile *)ft_memalloc(sizeof(*tile_table[xy_pos->y][xy_pos->x]));
-	ft_memcpy(&tile->xy_pos, xy_pos, sizeof(tile->xy_pos));
-	tile->num = tile_map[xy_pos->y][xy_pos->x];
-	tile->neighbors = (t_tile **)ft_memalloc(
-			sizeof(*tile->neighbors) * MAX_NUM_OF_NEIGHBORS);
-	if (!tile->num)
-		*root_tile = tile;
-	return (tile);
+	pos = (t_pos *)ft_memalloc(sizeof(*pos_table[xy_pos->y][xy_pos->x]));
+	ft_memcpy(&pos->xy_pos, xy_pos, sizeof(pos->xy_pos));
+	pos->num = tile_map[xy_pos->y][xy_pos->x];
+	pos->neighbors = (t_pos **)ft_memalloc(
+			sizeof(*pos->neighbors) * MAX_NUM_OF_NEIGHBORS);
+	if (!pos->num)
+		*root_tile = pos;
+	return (pos);
 }
 
-static t_tile	***initialize_tile_pos_table(int size, int **tile_map,
-										t_tile **root_tile)
+static t_pos	***initialize_pos_table(int size, int **tile_map,
+										t_pos **root_tile)
 {
-	t_tile		***tile_table;
+	t_pos			***pos_table;
 	t_xy_values		xy_pos;
 
-	tile_table = (t_tile ***)ft_memalloc(sizeof(*tile_table) * size);
+	pos_table = (t_pos ***)ft_memalloc(sizeof(*pos_table) * size);
 	xy_pos.y = -1;
 	while (++xy_pos.y < size)
 	{
-		tile_table[xy_pos.y] = (t_tile **)
-			ft_memalloc(sizeof(*tile_table[xy_pos.y]) * size);
+		pos_table[xy_pos.y] = (t_pos **)
+			ft_memalloc(sizeof(*pos_table[xy_pos.y]) * size);
 		xy_pos.x = -1;
 		while (++xy_pos.x < size)
-			tile_table[xy_pos.y][xy_pos.x]
-				= initialize_tile_pos(tile_table, tile_map, root_tile, &xy_pos);
+			pos_table[xy_pos.y][xy_pos.x]
+				= initialize_tile_pos(pos_table, tile_map, root_tile, &xy_pos);
 	}
-	set_tile_neighbors(tile_table, size);
-	return (tile_table);
+	set_tile_neighbors(pos_table, size);
+	return (pos_table);
 }
 
 static unsigned int	set_right_pos_status(t_puzzle *puzzle)
@@ -90,26 +90,25 @@ static unsigned int	set_right_pos_status(t_puzzle *puzzle)
 		j = -1;
 		while (++j < puzzle->size)
 		{
-			if (puzzle->tile_table[i][j]->num
-				== puzzle->tile_table[i][j]->order_num)
-				right_pos_status |= 1 << puzzle->tile_table[i][j]->num;
+			if (puzzle->pos_table[i][j]->num
+				== puzzle->pos_table[i][j]->order_num)
+				right_pos_status |= 1 << puzzle->pos_table[i][j]->num;
 		}
 	}
 	return (right_pos_status);
 }
 
-t_puzzle	*initialize_puzzle(t_map *puzzle_map,
-												unsigned int *right_pos_status)
+t_puzzle	*initialize_puzzle(t_map *puzzle_map)
 {
 	t_puzzle		*puzzle;
 	t_xy_values		xy_pos;
 
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
 	puzzle->size = puzzle_map->size;
-	puzzle->tile_table = initialize_tile_pos_table(puzzle_map->size,
+	puzzle->pos_table = initialize_pos_table(puzzle_map->size,
 			puzzle_map->tile_map, &puzzle->root_tile);
-	xy_pos = puzzle->tile_table[0][0]->xy_pos;
+	xy_pos = puzzle->pos_table[0][0]->xy_pos;
 	set_order_number(puzzle, 1, xy_pos, E_RIGHT);
-	*right_pos_status = set_right_pos_status(puzzle);
+	puzzle->right_pos_status = set_right_pos_status(puzzle);
 	return (puzzle);
 }

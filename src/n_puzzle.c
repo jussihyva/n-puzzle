@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:32:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 09:11:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 	t_statistics		*statistics;
 	t_influxdb			*influxdb;
 	char				*options;
+	t_puzzle			*puzzle;
 
 	statistics = get_statistics();
 	input = (t_input *)ft_memalloc(sizeof(*input));
@@ -53,8 +54,10 @@ int	main(int argc, char **argv)
 	input->puzzle_map = read_puzzle_map();
 	set_puzzle_size(input->puzzle_map->size);
 	print_map(input->puzzle_map);
+	puzzle = initialize_puzzle(input->puzzle_map);
+	puzzle->move_cnt = &statistics->tile_move_cnt;
 	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
-		dfs(input->puzzle_map, statistics, input->cmd_args);
+		dfs(puzzle, statistics, input->cmd_args);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");

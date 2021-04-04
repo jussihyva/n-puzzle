@@ -6,17 +6,17 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 08:03:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:26:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	depth_limited_dfs(t_puzzle *puzzle, t_tile *tile,
+static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos,
 									unsigned int right_pos_status, int depth)
 {
 	static unsigned int		puzzle_ready = 0;
-	t_tile					*next_tile;
+	t_pos					*next_pos;
 	int						is_puzzle_ready;
 	int						i;
 
@@ -26,24 +26,24 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_tile *tile,
 	if (depth)
 	{
 		i = -1;
-		while (!is_puzzle_ready && ++i < tile->num_of_neighbors)
+		while (!is_puzzle_ready && ++i < pos->num_of_neighbors)
 		{
-			next_tile = tile->neighbors[i];
-			if (next_tile != tile->prev_tile)
+			next_pos = pos->neighbors[i];
+			if (next_pos != pos->prev_tile)
 			{
-				tile_num_swap(tile, next_tile, puzzle->move_cnt);
+				tile_num_swap(pos, next_pos, puzzle->move_cnt);
 				print_puzzle(1, puzzle);
-				update_right_pos_status(tile, next_tile, &right_pos_status);
-				FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
-				next_tile->prev_tile = tile;
-				is_puzzle_ready = depth_limited_dfs(puzzle, next_tile,
+				update_right_pos_status(pos, next_pos, &right_pos_status);
+				FT_LOG_DEBUG("Right position status: %u", right_pos_status);
+				next_pos->prev_tile = pos;
+				is_puzzle_ready = depth_limited_dfs(puzzle, next_pos,
 						right_pos_status, depth - 1);
 				if (!is_puzzle_ready)
 				{
-					tile_num_swap(next_tile, tile, puzzle->move_cnt);
+					tile_num_swap(next_pos, pos, puzzle->move_cnt);
 					print_puzzle(1, puzzle);
-					update_right_pos_status(tile, next_tile, &right_pos_status);
-					FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
+					update_right_pos_status(pos, next_pos, &right_pos_status);
+					FT_LOG_DEBUG("Right position status: %u", right_pos_status);
 				}
 			}
 		}
@@ -56,25 +56,24 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_tile *tile,
 	return (is_puzzle_ready);
 }
 
-void	dfs_deeping(t_puzzle *puzzle, unsigned int right_pos_status,
-													t_statistics *statistics)
+void	dfs_deeping(t_puzzle *puzzle, t_statistics *statistics)
 {
-	t_tile			*tile;
+	t_pos			*pos;
 	int				depth;
 	unsigned int	puzzle_ready;
 	int				is_puzzle_ready;
 
 	puzzle_ready = (1 << (puzzle->size * puzzle->size)) - 1;
-	FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
-	tile = puzzle->root_tile;
+	FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
+	pos = puzzle->root_tile;
 	is_puzzle_ready = 0;
 	depth = -1;
 	while (!is_puzzle_ready && ++depth < INT_MAX)
 	{
-		FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
-		tile->prev_tile = NULL;
-		is_puzzle_ready = depth_limited_dfs(puzzle, tile, right_pos_status,
-				depth);
+		FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
+		pos->prev_tile = NULL;
+		is_puzzle_ready = depth_limited_dfs(puzzle, pos,
+				puzzle->right_pos_status, depth);
 		FT_LOG_INFO("Depth level %2d done", depth);
 	}
 	set_end_time();

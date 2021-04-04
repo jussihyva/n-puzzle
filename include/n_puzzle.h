@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 08:01:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:21:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,23 @@ typedef struct s_input
 	t_map				*puzzle_map;
 }				t_input;
 
-typedef struct s_tile
+typedef struct s_pos
 {
 	t_xy_values			xy_pos;
 	int					order_num;
 	int					num;
-	struct s_tile		**neighbors;
+	struct s_pos		**neighbors;
 	int					num_of_neighbors;
-	struct s_tile		*prev_tile;
-}				t_tile;
+	struct s_pos		*prev_tile;
+}				t_pos;
 
 typedef struct s_puzzle
 {
 	int				size;
-	t_tile			*root_tile;
-	t_tile			***tile_table;
+	t_pos			*root_tile;
+	t_pos			***pos_table;
 	unsigned long	*move_cnt;
+	unsigned int	right_pos_status;
 }				t_puzzle;
 
 typedef struct s_statistics
@@ -127,10 +128,9 @@ int				remove_comment(char *line);
 void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
-void			dfs(t_map *puzzle_map, t_statistics *statistics,
+void			dfs(t_puzzle *puzzle, t_statistics *statistics,
 					t_cmd_args *cmd_args);
-t_puzzle		*initialize_puzzle(t_map *puzzle_map,
-					unsigned int *right_pos_status);
+t_puzzle		*initialize_puzzle(t_map *puzzle_map);
 void			set_order_number(t_puzzle *puzzle, int order_num,
 					t_xy_values xy_pos, t_dir dir);
 void			release_puzzle(t_puzzle *puzzle);
@@ -146,13 +146,11 @@ void			write_influxdb(t_tls_connection *connection, char *body,
 					char *database);
 void			set_connection(t_tls_connection *connection);
 void			set_puzzle_size(int puzzle_size);
-void			dfs_no_mem(t_puzzle *puzzle, unsigned int right_pos_status,
-					t_statistics *statistics);
-void			dfs_deeping(t_puzzle *puzzle, unsigned int right_pos_status,
-					t_statistics *statistics);
-void			tile_num_swap(t_tile *tile_1, t_tile *tile_2,
+void			dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics);
+void			dfs_deeping(t_puzzle *puzzle, t_statistics *statistics);
+void			tile_num_swap(t_pos *pos1, t_pos *pos2,
 					unsigned long *move_cnt);
-void			update_right_pos_status(t_tile *tile1, t_tile *tile2,
+void			update_right_pos_status(t_pos *pos1, t_pos *pos2,
 					unsigned int *right_pos_status);
 
 #endif
