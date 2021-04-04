@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:28:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:51:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics)
 
 	puzzle_ready = (1 << (puzzle->size * puzzle->size)) - 1;
 	FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
-	pos = puzzle->root_tile;
+	pos = puzzle->empty_pos;
 	while (1)
 	{
 		i = ft_mod_int(fast_rand(), pos->num_of_neighbors);

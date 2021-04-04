@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:21:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:51:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,20 @@ typedef struct s_pos
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
 	struct s_pos		*prev_tile;
+	void				*tile;
 }				t_pos;
+
+typedef struct s_tile
+{
+	int			number;
+	t_pos		*curr_pos;
+	t_pos		*prev_pos;
+}				t_tile;
 
 typedef struct s_puzzle
 {
 	int				size;
-	t_pos			*root_tile;
+	t_pos			*empty_pos;
 	t_pos			***pos_table;
 	unsigned long	*move_cnt;
 	unsigned int	right_pos_status;

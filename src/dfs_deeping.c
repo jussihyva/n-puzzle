@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:26:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 17:51:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	dfs_deeping(t_puzzle *puzzle, t_statistics *statistics)
 
 	puzzle_ready = (1 << (puzzle->size * puzzle->size)) - 1;
 	FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
-	pos = puzzle->root_tile;
+	pos = puzzle->empty_pos;
 	is_puzzle_ready = 0;
 	depth = -1;
 	while (!is_puzzle_ready && ++depth < INT_MAX)
