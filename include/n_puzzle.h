@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:51:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/04 19:40:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_puzzle
 	int				size;
 	t_pos			*empty_pos;
 	t_pos			***pos_table;
+	t_tile			**tile_array;
 	unsigned long	*move_cnt;
 	unsigned int	right_pos_status;
 }				t_puzzle;
@@ -160,5 +161,6 @@ void			tile_num_swap(t_pos *pos1, t_pos *pos2,
 					unsigned long *move_cnt);
 void			update_right_pos_status(t_pos *pos1, t_pos *pos2,
 					unsigned int *right_pos_status);
+t_tile			**initialize_tile_array(t_map *puzzle_map);
 
 #endif
