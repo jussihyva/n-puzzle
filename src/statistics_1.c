@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 23:44:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 10:55:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 09:36:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,39 @@ t_statistics	*get_statistics(void)
 
 void	set_start_time(void)
 {
+	double		ms;
+
 	initialize_statistics(&g_statistics);
-	g_statistics->start_time = time(NULL);
+	clock_gettime(_POSIX_MONOTONIC_CLOCK, &g_statistics->start_time);
+	g_statistics->start_time_ms = g_statistics->start_time.tv_sec * 1000;
+	ms = round(g_statistics->start_time.tv_nsec / 1.0e6);
+	if (ms > 999)
+	{
+		g_statistics->start_time_ms++;
+		ms = 0;
+	}
+	g_statistics->start_time_ms += ms;
 	return ;
 }
 
 void	set_end_time(void)
 {
+	double		ms;
+
 	initialize_statistics(&g_statistics);
-	g_statistics->end_time = time(NULL);
+	clock_gettime(_POSIX_MONOTONIC_CLOCK, &g_statistics->end_time);
+	g_statistics->end_time_ms = g_statistics->end_time.tv_sec * 1000;
+	ms = round(g_statistics->end_time.tv_nsec / 1.0e6);
+	if (ms > 999)
+	{
+		g_statistics->end_time_ms++;
+		ms = 0;
+	}
+	g_statistics->end_time_ms += ms;
+
+
+
+
 	return ;
 }
 
@@ -39,7 +63,8 @@ time_t	get_execution_time(void)
 	time_t	execution_time;
 
 	initialize_statistics(&g_statistics);
-	execution_time = g_statistics->end_time - g_statistics->start_time;
+	execution_time = (int)(g_statistics->end_time_ms
+			- g_statistics->start_time_ms);
 	return (execution_time);
 }
 

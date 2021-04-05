@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 08:30:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 09:27:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "libft_addons.h"
+# include <unistd.h>
 # include <time.h>
 
 # define MAX_NUM_OF_NEIGHBORS	4
@@ -104,8 +105,10 @@ typedef struct s_statistics
 	char				*algorithm;
 	char				*algorithm_substring;
 	unsigned long		tile_move_cnt;
-	time_t				start_time;
-	time_t				end_time;
+	struct timespec		start_time;
+	struct timespec		end_time;
+	time_t				start_time_ms;
+	time_t				end_time_ms;
 	t_tls_connection	*connection;
 	int					puzzle_size;
 }				t_statistics;
