@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 19:40:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 08:30:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_pos
 {
 	t_xy_values			xy_pos;
 	int					order_num;
-	int					num;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
 	struct s_pos		*prev_tile;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 21:11:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 08:34:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ static t_pos	*initialize_tile_pos(t_puzzle *puzzle, t_xy_values *xy_pos,
 	tile_array = puzzle->tile_array;
 	pos = (t_pos *)ft_memalloc(sizeof(*pos));
 	ft_memcpy(&pos->xy_pos, xy_pos, sizeof(pos->xy_pos));
-	pos->num = tile->number;
-	pos->tile = tile;
+	pos->tile = (void *)tile;
 	tile->curr_pos = pos;
 	pos->neighbors = (t_pos **)ft_memalloc(sizeof(*pos->neighbors)
 			* MAX_NUM_OF_NEIGHBORS);
@@ -95,6 +94,7 @@ static unsigned int	set_right_pos_status(t_puzzle *puzzle)
 	unsigned int	right_pos_status;
 	int				i;
 	int				j;
+	t_pos			*pos;
 
 	right_pos_status = 0;
 	i = -1;
@@ -103,9 +103,9 @@ static unsigned int	set_right_pos_status(t_puzzle *puzzle)
 		j = -1;
 		while (++j < puzzle->size)
 		{
-			if (puzzle->pos_table[i][j]->num
-				== puzzle->pos_table[i][j]->order_num)
-				right_pos_status |= 1 << puzzle->pos_table[i][j]->num;
+			pos = puzzle->pos_table[i][j];
+			if (((t_tile *)pos->tile)->number == pos->order_num)
+				right_pos_status |= 1 << pos->order_num;
 		}
 	}
 	return (right_pos_status);

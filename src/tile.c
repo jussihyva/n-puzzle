@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 20:25:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 08:37:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	tile_num_swap(t_pos *pos1, t_pos *pos2, unsigned long *move_cnt)
 {
-	int		tmp;
+	t_tile	*tile;
 
-	tmp = pos1->num;
-	pos1->num = pos2->num;
-	pos2->num = tmp;
+	tile = pos1->tile;
+	pos1->tile = pos2->tile;
+	pos2->tile = tile;
 	(*move_cnt)++;
 	return ;
 }
@@ -38,10 +38,13 @@ void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 			*right_pos_status &= ~(1 << pos1->order_num);
 			*right_pos_status &= ~(1 << pos2->order_num);
 		}
-		if (pos1->num == pos1->order_num)
-			*right_pos_status |= 1 << pos1->order_num;
-		if (pos2->num == pos2->order_num)
-			*right_pos_status |= 1 << pos2->order_num;
+		else
+		{
+			if (((t_tile *)pos1->tile)->number == pos1->order_num)
+				*right_pos_status |= 1 << pos1->order_num;
+			if (((t_tile *)pos2->tile)->number == pos2->order_num)
+				*right_pos_status |= 1 << pos2->order_num;
+		}
 	}
 	return ;
 }
@@ -67,5 +70,4 @@ t_tile	**initialize_tile_array(t_map *puzzle_map)
 		}
 	}
 	return (tile_array);
-
 }
