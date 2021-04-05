@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 09:27:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 12:28:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ typedef struct s_influxdb
 	t_connection_status		connection_status;
 }						t_influxdb;
 
+t_input			*read_input_data(int argc, char **argv,
+													t_statistics *statistics);
 void			set_loging_parameters(t_input *input,
 					t_loging_level event_type, t_statistics *statistics);
 t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
@@ -164,5 +166,6 @@ void			tile_num_swap(t_pos *pos1, t_pos *pos2,
 void			update_right_pos_status(t_pos *pos1, t_pos *pos2,
 					unsigned int *right_pos_status);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
+void			release_influxdb(t_influxdb *influxdb);
 
 #endif

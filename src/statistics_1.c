@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 23:44:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 09:36:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 12:11:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ void	set_end_time(void)
 		ms = 0;
 	}
 	g_statistics->end_time_ms += ms;
-
-
-
-
 	return ;
 }
 
@@ -70,8 +66,11 @@ time_t	get_execution_time(void)
 
 void	ft_release_statistics_params(void)
 {
-	initialize_statistics(&g_statistics);
 	if (g_statistics)
+	{
+		ft_strdel(&g_statistics->algorithm);
+		ft_strdel(&g_statistics->algorithm_substring);
 		ft_memdel((void **)&g_statistics);
+	}
 	return ;
 }

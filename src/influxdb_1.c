@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:14:25 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/02 13:50:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 11:55:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_influxdb	*setup_influxdb_connection(char *host_name, char *port_number)
 				socket_fd, ctx);
 		set_client_socket_params(socket_fd);
 		influxdb = init_influx_session(tls_connection);
+		influxdb->connection = (void *)tls_connection;
 		influxdb->connection_status = e_send_msg0;
 	}
 	return (influxdb);

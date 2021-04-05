@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 16:56:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 11:39:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ SSL_CTX				*ft_openssl_init_client(char *pem_cert_file,
 						char *pem_private_key_file, int *socket_fd);
 t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
 						int socket_fd, SSL_CTX *ctx);
+void				ft_openssl_rel_conn(t_tls_connection **connection);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)

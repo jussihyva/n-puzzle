@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:13:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 12:05:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	release_puzzle(t_puzzle *puzzle)
 		{
 			ft_memdel((void **)&puzzle->pos_table[i][j]->neighbors);
 			ft_memdel((void **)&puzzle->pos_table[i][j]);
+			ft_memdel((void **)&puzzle->tile_array[i * puzzle->size + j]);
 		}
 		ft_memdel((void **)&puzzle->pos_table[i]);
 	}
 	ft_memdel((void **)&puzzle->pos_table);
+	ft_memdel((void **)&puzzle->tile_array);
 	ft_memdel((void **)&puzzle);
 	return ;
 }
@@ -54,5 +56,15 @@ void	release_input(t_input *input)
 	ft_memdel((void **)&input);
 	ft_release_loging_params();
 	ft_release_statistics_params();
+	return ;
+}
+
+void	release_influxdb(t_influxdb *influxdb)
+{
+	t_tls_connection	*tls_connection;
+
+	tls_connection = (t_tls_connection *)influxdb->connection;
+	ft_openssl_rel_conn(&tls_connection);
+	ft_memdel((void **)&influxdb);
 	return ;
 }

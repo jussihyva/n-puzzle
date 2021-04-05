@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 16:00:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 12:30:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,19 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 		cmd_args->algorithm = next_arg;
 	}
 	return ;
+}
+
+t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
+{
+	t_input		*input;
+	char		*options;
+
+	input = (t_input *)ft_memalloc(sizeof(*input));
+	set_loging_parameters(input, LOG_TRACE, statistics);
+	options = ft_strdup("LA");
+	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);
+	ft_log_set_level(input->cmd_args->loging_level);
+	input->puzzle_map = read_puzzle_map();
+	ft_strdel(&options);
+	return (input);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 09:11:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 12:30:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,12 @@ int	main(int argc, char **argv)
 	t_input				*input;
 	t_statistics		*statistics;
 	t_influxdb			*influxdb;
-	char				*options;
 	t_puzzle			*puzzle;
 
 	statistics = get_statistics();
-	input = (t_input *)ft_memalloc(sizeof(*input));
-	set_loging_parameters(input, LOG_TRACE, statistics);
-	options = ft_strdup("LA");
-	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);
-	ft_log_set_level(input->cmd_args->loging_level);
+	input = read_input_data(argc, argv, statistics);
 	influxdb = setup_influxdb_connection("127.0.0.1", "8086");
 	set_connection(influxdb->connection);
-	input->puzzle_map = read_puzzle_map();
 	set_puzzle_size(input->puzzle_map->size);
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input->puzzle_map);
@@ -61,6 +55,7 @@ int	main(int argc, char **argv)
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
+	release_influxdb(influxdb);
 	release_input(input);
 	return (0);
 }
