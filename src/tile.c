@@ -6,47 +6,50 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 20:13:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:27:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-void	tile_num_swap(t_pos *pos1, t_pos *pos2, unsigned long *move_cnt)
+static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
+												unsigned int *right_pos_status)
+{
+	update_mem_usage();
+	if (*right_pos_status & (unsigned int)1 << pos1->order_num)
+	{
+		*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
+		*right_pos_status &= ~((unsigned int)1 << pos2->order_num);
+	}
+	else
+	{
+		if (*right_pos_status & (unsigned int)1 << pos2->order_num)
+		{
+			*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
+			*right_pos_status &= ~((unsigned int)1 << pos2->order_num);
+		}
+		else
+		{
+			if (((t_tile *)pos1->tile)->number == pos1->order_num)
+				*right_pos_status |= (unsigned int)1 << pos1->order_num;
+			if (((t_tile *)pos2->tile)->number == pos2->order_num)
+				*right_pos_status |= (unsigned int)1 << pos2->order_num;
+		}
+	}
+	FT_LOG_DEBUG("Righ position status: %u", *right_pos_status);
+	return ;
+}
+
+void	tile_num_swap(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle)
 {
 	t_tile	*tile;
 
 	tile = pos1->tile;
 	pos1->tile = pos2->tile;
 	pos2->tile = tile;
-	(*move_cnt)++;
-	return ;
-}
-
-void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
-												unsigned int *right_pos_status)
-{
-	update_mem_usage();
-	if (*right_pos_status & 1 << pos1->order_num)
-	{
-		*right_pos_status &= ~(1 << pos1->order_num);
-		*right_pos_status &= ~(1 << pos2->order_num);
-	}
-	else
-	{
-		if (*right_pos_status & 1 << pos2->order_num)
-		{
-			*right_pos_status &= ~(1 << pos1->order_num);
-			*right_pos_status &= ~(1 << pos2->order_num);
-		}
-		else
-		{
-			if (((t_tile *)pos1->tile)->number == pos1->order_num)
-				*right_pos_status |= 1 << pos1->order_num;
-			if (((t_tile *)pos2->tile)->number == pos2->order_num)
-				*right_pos_status |= 1 << pos2->order_num;
-		}
-	}
+	(*puzzle->move_cnt)++;
+	update_right_pos_status(pos1, pos2, &puzzle->right_pos_status);
+	print_puzzle(1, puzzle);
 	return ;
 }
 

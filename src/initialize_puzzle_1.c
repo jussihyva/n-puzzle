@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 08:34:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:36:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	initialize_pos_table(t_puzzle *puzzle, int **tile_map)
 				= initialize_tile_pos(puzzle, &xy_pos, tile);
 		}
 	}
-	puzzle->empty_pos = puzzle->tile_array[0]->curr_pos;
 	set_tile_neighbors(pos_table, size);
 	puzzle->pos_table = pos_table;
 	return ;
@@ -108,6 +107,7 @@ static unsigned int	set_right_pos_status(t_puzzle *puzzle)
 				right_pos_status |= 1 << pos->order_num;
 		}
 	}
+	FT_LOG_DEBUG("Righ position status: %u", right_pos_status);
 	return (right_pos_status);
 }
 
@@ -118,6 +118,7 @@ t_puzzle	*initialize_puzzle(t_map *puzzle_map)
 
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
 	puzzle->size = puzzle_map->size;
+	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
 	puzzle->tile_array = initialize_tile_array(puzzle_map);
 	initialize_pos_table(puzzle, puzzle_map->tile_map);
 	xy_pos = puzzle->pos_table[0][0]->xy_pos;

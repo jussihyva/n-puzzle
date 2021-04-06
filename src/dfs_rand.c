@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 17:51:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 15:41:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,16 @@ void	dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics)
 	t_pos			*pos;
 	t_pos			*next_pos;
 	int				i;
-	unsigned int	puzzle_ready;
 
-	puzzle_ready = (1 << (puzzle->size * puzzle->size)) - 1;
-	FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
-	pos = puzzle->empty_pos;
+	pos = puzzle->tile_array[0]->curr_pos;
 	while (1)
 	{
 		i = ft_mod_int(fast_rand(), pos->num_of_neighbors);
 		next_pos = pos->neighbors[i];
 		if (next_pos)
 		{
-			tile_num_swap(pos, next_pos, puzzle->move_cnt);
-			update_right_pos_status(pos, next_pos, &puzzle->right_pos_status);
-			FT_LOG_DEBUG("Righ position status: %u", puzzle->right_pos_status);
-			print_puzzle(1, puzzle);
-			if (puzzle->right_pos_status == puzzle_ready)
+			tile_num_swap(pos, next_pos, puzzle);
+			if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
 				break ;
 			pos = next_pos;
 		}

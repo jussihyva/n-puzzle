@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 12:25:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 15:41:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ typedef struct s_tile
 typedef struct s_puzzle
 {
 	int				size;
-	t_pos			*empty_pos;
 	t_pos			***pos_table;
 	t_tile			**tile_array;
 	unsigned long	*move_cnt;
 	unsigned int	right_pos_status;
+	unsigned int	puzzle_ready_status;
 }				t_puzzle;
 
 typedef struct s_statistics
@@ -164,10 +164,7 @@ void			set_connection(t_tls_connection *connection);
 void			set_puzzle_size(int puzzle_size);
 void			dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics);
 void			dfs_deeping(t_puzzle *puzzle, t_statistics *statistics);
-void			tile_num_swap(t_pos *pos1, t_pos *pos2,
-					unsigned long *move_cnt);
-void			update_right_pos_status(t_pos *pos1, t_pos *pos2,
-					unsigned int *right_pos_status);
+void			tile_num_swap(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
 void			release_influxdb(t_influxdb *influxdb);
 void			update_mem_usage(void);
