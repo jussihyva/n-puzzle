@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 12:28:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/05 23:54:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft_addons.h"
 # include <unistd.h>
 # include <time.h>
+# include <sys/resource.h>
 
 # define MAX_NUM_OF_NEIGHBORS	4
 # define READ_BUF_MAX_SIZE		4096
@@ -110,6 +111,7 @@ typedef struct s_statistics
 	time_t				start_time_ms;
 	time_t				end_time_ms;
 	t_tls_connection	*connection;
+	int					max_mem_usage;
 	int					puzzle_size;
 }				t_statistics;
 
@@ -131,7 +133,7 @@ typedef struct s_influxdb
 }						t_influxdb;
 
 t_input			*read_input_data(int argc, char **argv,
-													t_statistics *statistics);
+					t_statistics *statistics);
 void			set_loging_parameters(t_input *input,
 					t_loging_level event_type, t_statistics *statistics);
 t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
@@ -167,5 +169,6 @@ void			update_right_pos_status(t_pos *pos1, t_pos *pos2,
 					unsigned int *right_pos_status);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
 void			release_influxdb(t_influxdb *influxdb);
+void			update_mem_usage(void);
 
 #endif
