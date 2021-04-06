@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:14:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/04 09:14:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 12:23:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	dfs(t_puzzle *puzzle, t_statistics *statistics, t_cmd_args *cmd_args)
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
-	ft_printf("END\n");
 	release_puzzle(puzzle);
 	return ;
 }

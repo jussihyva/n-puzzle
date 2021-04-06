@@ -94,6 +94,8 @@ class PuzzleDemo(Frame):
             tmp = self.tilePosArray[num]
             self.tilePosArray[num] = self.tilePosArray[0]
             self.tilePosArray[0] = tmp
+        else:
+            print("Invalid move!")
     def getTileButtons(self):
         return (self.tileButtonList)
     def getEmptyTilePos(self):

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 23:54:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 12:25:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_cmd_args
 	char			**argv;
 	t_loging_level	loging_level;
 	char			*algorithm;
+	int				release;
 }				t_cmd_args;
 
 typedef struct s_map

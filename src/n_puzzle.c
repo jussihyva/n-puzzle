@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 12:30:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 12:24:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	main(int argc, char **argv)
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
+	if (input->cmd_args->release)
+		ft_printf("END\n");
 	release_influxdb(influxdb);
 	release_input(input);
 	return (0);

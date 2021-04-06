@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:28:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 15:59:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/06 12:37:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,35 @@ static void	split_cmd_argument(void (fn)(t_cmd_args *, char, char *),
 {
 	int			i;
 	char		*arg;
+	char		*opt_ptr;
 
 	arg = cmd_args->argv[*arg_index];
 	i = 1;
-	while (arg[i] && ft_strchr(options, arg[i]))
+	while (arg[i])
 	{
-		if ((*arg_index + 1) < cmd_args->argc)
+		opt_ptr = ft_strchr(options, arg[i]);
+		if (opt_ptr)
 		{
-			fn(cmd_args, arg[i], cmd_args->argv[*arg_index + 1]);
-			(*arg_index)++;
+			if (*(opt_ptr + 1) == ':')
+			{
+				if ((*arg_index + 1) < cmd_args->argc)
+				{
+					fn(cmd_args, arg[i], cmd_args->argv[*arg_index + 1]);
+					(*arg_index)++;
+					i++;
+					break ;
+				}
+				else
+					param_error("Missing argument for parameter: -%c", arg[i]);
+				i++;
+			}
+			else
+				fn(cmd_args, arg[i], NULL);
 			i++;
-			break ;
 		}
 		else
-			param_error("Missing argument for parameter: -%c", arg[i]);
-		i++;
+			param_error("Unknown parameter: -%c", arg[i]);
 	}
-	if (arg[i])
-		param_error("Unknown parameter: -%c", arg[i]);
 	return ;
 }
 
