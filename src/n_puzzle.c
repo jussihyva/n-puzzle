@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 10:09:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 13:31:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int argc, char **argv)
 	if (input->cmd_args->release)
 		ft_printf("END\n");
 	release_influxdb(influxdb);
+	stat_update_cpu_usage(statistics);
 	release_input(input);
 	return (0);
 }

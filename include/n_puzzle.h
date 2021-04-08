@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 10:23:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 14:34:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_statistics
 	struct timespec		end_time;
 	time_t				start_time_ms;
 	time_t				end_time_ms;
+	clock_t				cpu_usage_ms;
 	t_tls_connection	*connection;
 	int					max_mem_usage;
 	int					puzzle_size;
@@ -168,5 +169,6 @@ t_tile			**initialize_tile_array(t_map *puzzle_map);
 void			release_influxdb(t_influxdb *influxdb);
 void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
+void			stat_update_cpu_usage(t_statistics *statistics);
 
 #endif
