@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 12:45:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 09:24:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 	char		*options;
 
 	input = (t_input *)ft_memalloc(sizeof(*input));
+	input->statistics = statistics;
 	set_loging_parameters(input, LOG_TRACE, statistics);
 	options = ft_strdup("L:rA:");
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);

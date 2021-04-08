@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 15:41:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:22:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	fast_rand(void)
 	return ((seed >> 16) & 0x7FFF);
 }
 
-void	dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics)
+void	dfs_no_mem(t_puzzle *puzzle)
 {
 	t_pos			*pos;
 	t_pos			*next_pos;
@@ -39,17 +39,11 @@ void	dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics)
 		next_pos = pos->neighbors[i];
 		if (next_pos)
 		{
-			tile_num_swap(pos, next_pos, puzzle);
+			tile_move(pos, next_pos, puzzle);
 			if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
 				break ;
 			pos = next_pos;
 		}
 	}
-	set_end_time();
-	statistics->order = E_SEND_TO_INFLUXDB;
-	statistics->algorithm_substring = ft_strdup("no_mem_rand");
-	FT_LOG_INFO("Execution time : %ld", get_execution_time());
-	statistics->order = E_NONE;
-	FT_LOG_INFO("Total num of moves: %lu", *puzzle->move_cnt);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 16:27:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 09:58:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 												unsigned int *right_pos_status)
 {
-	update_mem_usage();
 	if (*right_pos_status & (unsigned int)1 << pos1->order_num)
 	{
 		*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
@@ -40,7 +39,7 @@ static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 	return ;
 }
 
-void	tile_num_swap(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle)
+void	tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle)
 {
 	t_tile	*tile;
 
@@ -48,6 +47,7 @@ void	tile_num_swap(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle)
 	pos1->tile = pos2->tile;
 	pos2->tile = tile;
 	(*puzzle->move_cnt)++;
+	stat_update_mem_usage(puzzle->statistics);
 	update_right_pos_status(pos1, pos2, &puzzle->right_pos_status);
 	print_puzzle(1, puzzle);
 	return ;

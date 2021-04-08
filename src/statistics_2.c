@@ -6,38 +6,18 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 23:58:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:08:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_statistics		*g_statistics = NULL;
-
-void	initialize_statistics(t_statistics	**statistics)
+t_statistics	*initialize_statistics(void)
 {
-	if (g_statistics)
-		*statistics = g_statistics;
-	else if (!*statistics)
-	{
-		*statistics = (t_statistics *)ft_memalloc(sizeof(**statistics));
-		g_statistics = *statistics;
-	}
-	return ;
-}
+	t_statistics	*statistics;
 
-void	set_connection(t_tls_connection *connection)
-{
-	initialize_statistics(&g_statistics);
-	g_statistics->connection = connection;
-	return ;
-}
-
-void	set_puzzle_size(int puzzle_size)
-{
-	initialize_statistics(&g_statistics);
-	g_statistics->puzzle_size = puzzle_size;
-	return ;
+	statistics = (t_statistics *)ft_memalloc(sizeof(*statistics));
+	return (statistics);
 }
 
 void	influxdb_plugin(t_log_event *event)
@@ -48,8 +28,6 @@ void	influxdb_plugin(t_log_event *event)
 	statistics = (t_statistics *)event->additional_event_data;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
-		ft_dprintf(2, "Will be sent to influxdb: %lu (%ld)!\n",
-			statistics->tile_move_cnt, get_execution_time());
 		influxdb_query_string
 			= (char *)ft_memalloc(sizeof(*influxdb_query_string) * 100000);
 		ft_sprintf(influxdb_query_string,
@@ -57,7 +35,7 @@ void	influxdb_plugin(t_log_event *event)
 			execution_time=%di,tile_moves=%di,max_mem_usage=%di %d\n",
 			"n-puzzle", "dfs", statistics->algorithm_substring,
 			statistics->puzzle_size,
-			(int)get_execution_time(), statistics->tile_move_cnt,
+			(int)get_execution_time(statistics), statistics->tile_move_cnt,
 			statistics->max_mem_usage, statistics->end_time);
 		ft_dprintf(2, "Execution end time: %ld\n", statistics->end_time);
 		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
@@ -67,7 +45,7 @@ void	influxdb_plugin(t_log_event *event)
 	return ;
 }
 
-void	update_mem_usage(void)
+void	stat_update_mem_usage(t_statistics *statistics)
 {
 	static long		usage_prev;
 	struct rusage	rusage;
@@ -76,7 +54,7 @@ void	update_mem_usage(void)
 	getrusage(RUSAGE_SELF, &rusage);
 	FT_LOG_TRACE("Mem usage: %ld (+%5ld)", rusage.ru_maxrss, rusage.ru_maxrss
 		- usage_prev);
-	g_statistics->max_mem_usage = ft_max_int(g_statistics->max_mem_usage,
+	statistics->max_mem_usage = ft_max_int(statistics->max_mem_usage,
 			(int)rusage.ru_maxrss);
 	usage_prev = rusage.ru_maxrss;
 	return ;

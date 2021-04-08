@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 12:24:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:09:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int	main(int argc, char **argv)
 	t_influxdb			*influxdb;
 	t_puzzle			*puzzle;
 
-	statistics = get_statistics();
+	statistics = initialize_statistics();
 	input = read_input_data(argc, argv, statistics);
 	influxdb = setup_influxdb_connection("127.0.0.1", "8086");
-	set_connection(influxdb->connection);
-	set_puzzle_size(input->puzzle_map->size);
+	statistics->connection = (t_tls_connection *)influxdb->connection;
+	statistics->puzzle_size = input->puzzle_map->size;
 	print_map(input->puzzle_map);
-	puzzle = initialize_puzzle(input->puzzle_map);
+	puzzle = initialize_puzzle(input);
 	puzzle->move_cnt = &statistics->tile_move_cnt;
 	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
 		dfs(puzzle, statistics, input->cmd_args);

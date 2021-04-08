@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 15:41:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:23:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,21 @@ typedef struct s_xy_values
 	int		y;
 }				t_xy_values;
 
+typedef struct s_statistics
+{
+	t_order				order;
+	char				*algorithm;
+	char				*algorithm_substring;
+	unsigned long		tile_move_cnt;
+	struct timespec		start_time;
+	struct timespec		end_time;
+	time_t				start_time_ms;
+	time_t				end_time_ms;
+	t_tls_connection	*connection;
+	int					max_mem_usage;
+	int					puzzle_size;
+}				t_statistics;
+
 typedef struct s_cmd_args
 {
 	int				argc;
@@ -68,6 +83,7 @@ typedef struct s_map
 
 typedef struct s_input
 {
+	t_statistics		*statistics;
 	const char			**level_strings;
 	const char			**level_colors;
 	t_cmd_args			*cmd_args;
@@ -93,6 +109,7 @@ typedef struct s_tile
 
 typedef struct s_puzzle
 {
+	t_statistics	*statistics;
 	int				size;
 	t_pos			***pos_table;
 	t_tile			**tile_array;
@@ -100,21 +117,6 @@ typedef struct s_puzzle
 	unsigned int	right_pos_status;
 	unsigned int	puzzle_ready_status;
 }				t_puzzle;
-
-typedef struct s_statistics
-{
-	t_order				order;
-	char				*algorithm;
-	char				*algorithm_substring;
-	unsigned long		tile_move_cnt;
-	struct timespec		start_time;
-	struct timespec		end_time;
-	time_t				start_time_ms;
-	time_t				end_time_ms;
-	t_tls_connection	*connection;
-	int					max_mem_usage;
-	int					puzzle_size;
-}				t_statistics;
 
 typedef enum e_connection_status
 {
@@ -146,27 +148,25 @@ void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
 void			dfs(t_puzzle *puzzle, t_statistics *statistics,
 					t_cmd_args *cmd_args);
-t_puzzle		*initialize_puzzle(t_map *puzzle_map);
+t_puzzle		*initialize_puzzle(t_input *input);
 void			set_order_number(t_puzzle *puzzle, int order_num,
 					t_xy_values xy_pos, t_dir dir);
 void			release_puzzle(t_puzzle *puzzle);
 void			print_puzzle(int fd, t_puzzle *puzzle);
-t_statistics	*get_statistics(void);
-void			set_start_time(void);
-void			set_end_time(void);
-time_t			get_execution_time(void);
-void			initialize_statistics(t_statistics **g_statistics);
+void			stat_set_start_time(t_statistics *statistics);
+void			stat_set_end_time(t_statistics *statistics);
+time_t			get_execution_time(t_statistics *statistics);
+t_statistics	*initialize_statistics(void);
 void			influxdb_plugin(t_log_event *event);
 t_influxdb		*setup_influxdb_connection(char *host_name, char *port_number);
 void			write_influxdb(t_tls_connection *connection, char *body,
 					char *database);
-void			set_connection(t_tls_connection *connection);
-void			set_puzzle_size(int puzzle_size);
-void			dfs_no_mem(t_puzzle *puzzle, t_statistics *statistics);
-void			dfs_deeping(t_puzzle *puzzle, t_statistics *statistics);
-void			tile_num_swap(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
+void			dfs_no_mem(t_puzzle *puzzle);
+void			dfs_deeping(t_puzzle *puzzle);
+void			tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
 void			release_influxdb(t_influxdb *influxdb);
-void			update_mem_usage(void);
+void			stat_update_mem_usage(t_statistics *statistics);
+void			release_statistics_params(t_statistics *statistics);
 
 #endif

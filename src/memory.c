@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 12:05:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 09:49:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	release_input(t_input *input)
 {
 	int		i;
 
+	release_statistics_params(input->statistics);
 	i = -1;
 	while (++i < LOGING_LEVELS)
 	{
@@ -55,7 +56,6 @@ void	release_input(t_input *input)
 	ft_memdel((void **)&input->puzzle_map);
 	ft_memdel((void **)&input);
 	ft_release_loging_params();
-	ft_release_statistics_params();
 	return ;
 }
 

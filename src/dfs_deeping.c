@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 15:42:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:22:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth)
 		next_pos = pos->neighbors[i];
 		if (next_pos != pos->prev_tile)
 		{
-			tile_num_swap(pos, next_pos, puzzle);
+			tile_move(pos, next_pos, puzzle);
 			next_pos->prev_tile = pos;
 			is_puzzle_ready = depth_limited_dfs(puzzle, next_pos, depth - 1);
 			if (!is_puzzle_ready)
 			{
-				tile_num_swap(next_pos, pos, puzzle);
+				tile_move(next_pos, pos, puzzle);
 				next_pos->prev_tile = NULL;
 			}
 		}
@@ -40,7 +40,7 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth)
 	return (is_puzzle_ready);
 }
 
-void	dfs_deeping(t_puzzle *puzzle, t_statistics *statistics)
+void	dfs_deeping(t_puzzle *puzzle)
 {
 	t_pos			*pos;
 	int				depth;
@@ -55,11 +55,5 @@ void	dfs_deeping(t_puzzle *puzzle, t_statistics *statistics)
 		is_puzzle_ready = depth_limited_dfs(puzzle, pos, depth);
 		FT_LOG_INFO("Depth level %2d done", depth);
 	}
-	set_end_time();
-	statistics->order = E_SEND_TO_INFLUXDB;
-	statistics->algorithm_substring = ft_strdup("deeping");
-	FT_LOG_INFO("Execution time : %ld", get_execution_time());
-	statistics->order = E_NONE;
-	FT_LOG_INFO("Total num of moves: %lu", *puzzle->move_cnt);
 	return ;
 }

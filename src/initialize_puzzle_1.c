@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 16:36:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 09:42:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,15 @@ static unsigned int	set_right_pos_status(t_puzzle *puzzle)
 	return (right_pos_status);
 }
 
-t_puzzle	*initialize_puzzle(t_map *puzzle_map)
+t_puzzle	*initialize_puzzle(t_input *input)
 {
 	t_puzzle		*puzzle;
 	t_xy_values		xy_pos;
+	t_map			*puzzle_map;
 
+	puzzle_map = input->puzzle_map;
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
+	puzzle->statistics = input->statistics;
 	puzzle->size = puzzle_map->size;
 	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
 	puzzle->tile_array = initialize_tile_array(puzzle_map);

@@ -6,71 +6,60 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 23:44:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 12:11:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 10:10:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_statistics		*g_statistics = NULL;
-
-t_statistics	*get_statistics(void)
-{
-	initialize_statistics(&g_statistics);
-	return (g_statistics);
-}
-
-void	set_start_time(void)
+void	stat_set_start_time(t_statistics *statistics)
 {
 	double		ms;
 
-	initialize_statistics(&g_statistics);
-	clock_gettime(_POSIX_MONOTONIC_CLOCK, &g_statistics->start_time);
-	g_statistics->start_time_ms = g_statistics->start_time.tv_sec * 1000;
-	ms = round(g_statistics->start_time.tv_nsec / 1.0e6);
+	clock_gettime(_POSIX_MONOTONIC_CLOCK, &statistics->start_time);
+	statistics->start_time_ms = statistics->start_time.tv_sec * 1000;
+	ms = round(statistics->start_time.tv_nsec / 1.0e6);
 	if (ms > 999)
 	{
-		g_statistics->start_time_ms++;
+		statistics->start_time_ms++;
 		ms = 0;
 	}
-	g_statistics->start_time_ms += ms;
+	statistics->start_time_ms += ms;
 	return ;
 }
 
-void	set_end_time(void)
+void	stat_set_end_time(t_statistics *statistics)
 {
 	double		ms;
 
-	initialize_statistics(&g_statistics);
-	clock_gettime(_POSIX_MONOTONIC_CLOCK, &g_statistics->end_time);
-	g_statistics->end_time_ms = g_statistics->end_time.tv_sec * 1000;
-	ms = round(g_statistics->end_time.tv_nsec / 1.0e6);
+	clock_gettime(_POSIX_MONOTONIC_CLOCK, &statistics->end_time);
+	statistics->end_time_ms = statistics->end_time.tv_sec * 1000;
+	ms = round(statistics->end_time.tv_nsec / 1.0e6);
 	if (ms > 999)
 	{
-		g_statistics->end_time_ms++;
+		statistics->end_time_ms++;
 		ms = 0;
 	}
-	g_statistics->end_time_ms += ms;
+	statistics->end_time_ms += ms;
 	return ;
 }
 
-time_t	get_execution_time(void)
+time_t	get_execution_time(t_statistics *statistics)
 {
 	time_t	execution_time;
 
-	initialize_statistics(&g_statistics);
-	execution_time = (int)(g_statistics->end_time_ms
-			- g_statistics->start_time_ms);
+	execution_time = (int)(statistics->end_time_ms
+			- statistics->start_time_ms);
 	return (execution_time);
 }
 
-void	ft_release_statistics_params(void)
+void	release_statistics_params(t_statistics *statistics)
 {
-	if (g_statistics)
+	if (statistics)
 	{
-		ft_strdel(&g_statistics->algorithm);
-		ft_strdel(&g_statistics->algorithm_substring);
-		ft_memdel((void **)&g_statistics);
+		ft_strdel(&statistics->algorithm);
+		ft_strdel(&statistics->algorithm_substring);
+		ft_memdel((void **)&statistics);
 	}
 	return ;
 }

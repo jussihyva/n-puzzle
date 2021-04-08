@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 11:39:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/08 09:47:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ void				execute_login_extensions(t_log_event *event,
 int					ft_log_add_callback(t_loging_function fn,
 						void *additional_event_data, int level);
 void				ft_release_loging_params(void);
-void				ft_release_statistics_params(void);
 void				ft_openssl_init(void);
 SSL_CTX				*ft_openssl_init_ctx(const SSL_METHOD	*tls_method,
 						char *pem_cert_file, char *pem_private_key_file);
