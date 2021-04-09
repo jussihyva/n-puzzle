@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 09:24:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/09 13:48:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,32 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 	return ;
 }
 
+t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
+{
+	t_algorithm		algorithm;
+
+	algorithm = 0;
+	if (!ft_strcmp(algorithm_string, "dfs_1"))
+	{
+		algorithm = E_DFS_NO_MEM;
+		statistics->algorithm_substring = ft_strdup("no_mem_rand");
+	}
+	else if (!ft_strcmp(algorithm_string, "dfs_2"))
+	{
+		algorithm = E_DFS_DEEPING;
+		statistics->algorithm_substring = ft_strdup("deeping");
+	}
+	else if (!ft_strcmp(algorithm_string, "dfs_3"))
+	{
+		algorithm = E_DFS_DEEPING_MEM;
+		statistics->algorithm_substring = ft_strdup("deeping_mem");
+	}
+	else
+		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
+			"Specify a valid algorithm with the param -A");
+	return (algorithm);
+}
+
 t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 {
 	t_input		*input;
@@ -57,6 +83,8 @@ t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);
 	ft_log_set_level(input->cmd_args->loging_level);
 	input->puzzle_map = read_puzzle_map();
+	input->algorithm = validate_algorithm(input->cmd_args->algorithm,
+			statistics);
 	ft_strdel(&options);
 	return (input);
 }

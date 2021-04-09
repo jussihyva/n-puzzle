@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 14:34:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/09 14:28:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ typedef enum e_order
 	E_NONE,
 	E_SEND_TO_INFLUXDB
 }				t_order;
+
+typedef enum e_algorithm
+{
+	E_DFS_NO_MEM,
+	E_DFS_DEEPING,
+	E_DFS_DEEPING_MEM
+}				t_algorithm;
 
 typedef struct s_xy_values
 {
@@ -88,6 +95,7 @@ typedef struct s_input
 	const char			**level_strings;
 	const char			**level_colors;
 	t_cmd_args			*cmd_args;
+	t_algorithm			algorithm;
 	t_map				*puzzle_map;
 }				t_input;
 
@@ -112,12 +120,20 @@ typedef struct s_puzzle
 {
 	t_statistics	*statistics;
 	int				size;
+	t_algorithm		algorithm;
 	t_pos			***pos_table;
 	t_tile			**tile_array;
 	unsigned long	*move_cnt;
 	unsigned int	right_pos_status;
 	unsigned int	puzzle_ready_status;
+	int				max_depth;
 }				t_puzzle;
+
+typedef struct s_puzzle_status
+{
+	unsigned long	tiles_status_map;
+	int				visibility_depth;
+}				t_puzzle_status;
 
 typedef enum e_connection_status
 {
@@ -147,8 +163,7 @@ int				remove_comment(char *line);
 void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
-void			dfs(t_puzzle *puzzle, t_statistics *statistics,
-					t_cmd_args *cmd_args);
+void			dfs(t_puzzle *puzzle, t_statistics *statistics);
 t_puzzle		*initialize_puzzle(t_input *input);
 void			set_order_number(t_puzzle *puzzle, int order_num,
 					t_xy_values xy_pos, t_dir dir);
@@ -164,11 +179,16 @@ void			write_influxdb(t_tls_connection *connection, char *body,
 					char *database);
 void			dfs_no_mem(t_puzzle *puzzle);
 void			dfs_deeping(t_puzzle *puzzle);
+void			dfs_deeping_mem(t_puzzle *puzzle);
 void			tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
 void			release_influxdb(t_influxdb *influxdb);
 void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
+void			delete_puzzle_status(void *content, size_t size);
+int				is_visited_puzzle_status(unsigned long puzzle_status,
+					t_list **visited_puzzle_statuses, int depth);
+unsigned long	create_puzzle_status(t_puzzle *puzzle);
 
 #endif

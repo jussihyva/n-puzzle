@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 13:31:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/09 09:48:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	puzzle = initialize_puzzle(input);
 	puzzle->move_cnt = &statistics->tile_move_cnt;
 	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
-		dfs(puzzle, statistics, input->cmd_args);
+		dfs(puzzle, statistics);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
