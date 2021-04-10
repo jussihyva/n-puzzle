@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dfs_deeping_mem.c                                  :+:      :+:    :+:   */
+/*   bfs_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 15:50:53 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/04/10 14:19:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
 	return (is_puzzle_ready);
 }
 
-void	dfs_deeping_mem(t_puzzle *puzzle)
+void	bfs_1(t_puzzle *puzzle)
 {
 	t_pos			*pos;
 	int				depth;

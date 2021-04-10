@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/09 14:06:47 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/10 14:18:24 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					puzzle_print.c statistics_1.c statistics_2.c \
 					influxdb_1.c tile.c \
 					dfs.c dfs_rand.c dfs_deeping.c dfs_deeping_mem.c \
-					puzzle_status.c
+					puzzle_status.c bfs.c bfs_1.c
 SRC_H_FILES		=	n_puzzle.h
 
 # Path folders for H, C, O and APP files

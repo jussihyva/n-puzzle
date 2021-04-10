@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 14:28:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/10 14:17:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef enum e_algorithm
 {
 	E_DFS_NO_MEM,
 	E_DFS_DEEPING,
-	E_DFS_DEEPING_MEM
+	E_DFS_DEEPING_MEM,
+	E_BFS
 }				t_algorithm;
 
 typedef struct s_xy_values
@@ -189,6 +190,8 @@ void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
 int				is_visited_puzzle_status(unsigned long puzzle_status,
 					t_list **visited_puzzle_statuses, int depth);
-unsigned long	create_puzzle_status(t_puzzle *puzzle);
+unsigned long	create_tiles_status_map(t_puzzle *puzzle);
+void			bfs(t_puzzle *puzzle, t_statistics *statistics);
+void			bfs_1(t_puzzle *puzzle);
 
 #endif

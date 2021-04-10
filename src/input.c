@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 13:48:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/10 14:32:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,37 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 	return ;
 }
 
+static char	*set_algorithm_substring(t_algorithm algorithm)
+{
+	static char		*algorithm_substring[4];
+
+	if (!*algorithm_substring)
+	{
+		algorithm_substring[E_DFS_NO_MEM] = ft_strdup("no_mem_rand");
+		algorithm_substring[E_DFS_DEEPING] = ft_strdup("deeping");
+		algorithm_substring[E_DFS_DEEPING_MEM] = ft_strdup("deeping_mem");
+		algorithm_substring[E_BFS] = ft_strdup("mem");
+	}
+	return (algorithm_substring[algorithm]);
+}
+
 t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
 {
 	t_algorithm		algorithm;
 
 	algorithm = 0;
 	if (!ft_strcmp(algorithm_string, "dfs_1"))
-	{
 		algorithm = E_DFS_NO_MEM;
-		statistics->algorithm_substring = ft_strdup("no_mem_rand");
-	}
 	else if (!ft_strcmp(algorithm_string, "dfs_2"))
-	{
 		algorithm = E_DFS_DEEPING;
-		statistics->algorithm_substring = ft_strdup("deeping");
-	}
 	else if (!ft_strcmp(algorithm_string, "dfs_3"))
-	{
 		algorithm = E_DFS_DEEPING_MEM;
-		statistics->algorithm_substring = ft_strdup("deeping_mem");
-	}
+	else if (!ft_strcmp(algorithm_string, "bfs_1"))
+		algorithm = E_BFS;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
+	statistics->algorithm_substring = set_algorithm_substring(algorithm);
 	return (algorithm);
 }
 

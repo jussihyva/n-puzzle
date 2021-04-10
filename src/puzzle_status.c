@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 14:48:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/09 15:51:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	delete_puzzle_status(void *content, size_t size)
 	return ;
 }
 
-unsigned long	create_puzzle_status(t_puzzle *puzzle)
+unsigned long	create_tiles_status_map(t_puzzle *puzzle)
 {
 	unsigned long	puzzle_status;
 	t_tile			**tile_array;
