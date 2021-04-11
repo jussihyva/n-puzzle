@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 09:47:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 02:12:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ typedef struct s_loging_params
 	const char				**level_colors;
 	t_loging_extension		*loging_extensions[MAX_LOGING_EXTENSIONS];
 }				t_loging_params;
+
+typedef struct s_queue
+{
+	t_list		**in_queue;
+	t_list		**out_queue;
+}				t_queue;
 
 void				ft_log_trace(const char *file, const int line,
 						const char *fmt, ...);

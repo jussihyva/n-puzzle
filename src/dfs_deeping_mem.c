@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 15:50:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 04:06:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
 	int						is_puzzle_ready;
 	unsigned long			tiles_status_map;
 	int						i;
+	t_puzzle_status			*puzzle_status;
 
 	is_puzzle_ready = 0;
-	tiles_status_map = create_tiles_status_map(puzzle);
+	tiles_status_map = create_tiles_status_map(puzzle->curr_status->pos_table,
+			puzzle->size);
 	if (!is_visited_puzzle_status(tiles_status_map, visited_puzzle_statuses,
 			depth))
 	{
+		puzzle_status = create_puzzle_status(puzzle->curr_status->pos_table,
+				tiles_status_map, depth);
+		add_visited_puzzle_status(puzzle_status, visited_puzzle_statuses);
 		i = -1;
 		while (depth < puzzle->max_depth && !is_puzzle_ready
 			&& ++i < pos->num_of_neighbors)

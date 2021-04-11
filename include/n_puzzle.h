@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/10 14:17:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 04:07:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,12 @@ typedef struct s_pos
 	void				*tile;
 }				t_pos;
 
+typedef struct s_move
+{
+	t_pos	pos1;
+	t_pos	pos2;
+}				t_move;
+
 typedef struct s_tile
 {
 	int			number;
@@ -117,24 +123,25 @@ typedef struct s_tile
 	t_pos		*prev_pos;
 }				t_tile;
 
-typedef struct s_puzzle
-{
-	t_statistics	*statistics;
-	int				size;
-	t_algorithm		algorithm;
-	t_pos			***pos_table;
-	t_tile			**tile_array;
-	unsigned long	*move_cnt;
-	unsigned int	right_pos_status;
-	unsigned int	puzzle_ready_status;
-	int				max_depth;
-}				t_puzzle;
-
 typedef struct s_puzzle_status
 {
 	unsigned long	tiles_status_map;
-	int				visibility_depth;
+	t_pos			***pos_table;
+	int				depth;
 }				t_puzzle_status;
+
+typedef struct s_puzzle
+{
+	t_statistics		*statistics;
+	int					size;
+	t_algorithm			algorithm;
+	t_tile				**tile_array;
+	unsigned long		*move_cnt;
+	unsigned int		right_pos_status;
+	unsigned int		puzzle_ready_status;
+	int					max_depth;
+	t_puzzle_status		*curr_status;
+}				t_puzzle;
 
 typedef enum e_connection_status
 {
@@ -166,8 +173,8 @@ void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
 void			dfs(t_puzzle *puzzle, t_statistics *statistics);
 t_puzzle		*initialize_puzzle(t_input *input);
-void			set_order_number(t_puzzle *puzzle, int order_num,
-					t_xy_values xy_pos, t_dir dir);
+void			set_order_number(t_puzzle *puzzle, t_pos ***pos_table,
+					int order_num, t_xy_values xy_pos, t_dir dir);
 void			release_puzzle(t_puzzle *puzzle);
 void			print_puzzle(int fd, t_puzzle *puzzle);
 void			stat_set_start_time(t_statistics *statistics);
@@ -188,9 +195,13 @@ void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
-int				is_visited_puzzle_status(unsigned long puzzle_status,
+t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
+					unsigned long tiles_status_map, int depth);
+int				is_visited_puzzle_status(unsigned long tiles_status_map,
 					t_list **visited_puzzle_statuses, int depth);
-unsigned long	create_tiles_status_map(t_puzzle *puzzle);
+void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
+					t_list **visited_puzzle_statuses);
+unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size);
 void			bfs(t_puzzle *puzzle, t_statistics *statistics);
 void			bfs_1(t_puzzle *puzzle);
 

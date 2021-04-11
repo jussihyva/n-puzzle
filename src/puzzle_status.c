@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 15:51:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 03:59:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,44 @@ void	delete_puzzle_status(void *content, size_t size)
 	return ;
 }
 
-unsigned long	create_tiles_status_map(t_puzzle *puzzle)
+unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size)
 {
-	unsigned long	puzzle_status;
-	t_tile			**tile_array;
+	unsigned long	tiles_status_map;
 	int				i;
 	int				j;
+	int				tile_number;
 
-	tile_array = puzzle->tile_array;
-	puzzle_status = 0;
+	tiles_status_map = 0;
 	i = -1;
-	while (++i < puzzle->size)
+	while (++i < puzzle_size)
 	{
 		j = -1;
-		while (++j < puzzle->size)
+		while (++j < puzzle_size)
 		{
-			puzzle_status |= ((t_tile *)puzzle->pos_table[i][j]->tile)->number
-				<< (4 * (i * puzzle->size + j));
+			tile_number = ((t_tile *)pos_table[i][j]->tile)->number;
+			tiles_status_map |= tile_number << (4 * (i * puzzle_size + j));
 		}
 	}
-	return (puzzle_status);
+	return (tiles_status_map);
 }
 
-static void	add_puzzle_status(unsigned long tiles_status_map, int depth,
-											t_list **visited_puzzle_statuses)
+t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
+									unsigned long tiles_status_map, int depth)
 {
-	t_list				*new_elem;
 	t_puzzle_status		*puzzle_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	puzzle_status->tiles_status_map = tiles_status_map;
-	puzzle_status->visibility_depth = depth;
+	puzzle_status->pos_table = pos_table;
+	puzzle_status->depth = depth;
+	return (puzzle_status);
+}
+
+void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
+											t_list **visited_puzzle_statuses)
+{
+	t_list				*new_elem;
+
 	new_elem = ft_lstnew((void *)&puzzle_status, sizeof(*puzzle_status));
 	ft_lstadd(visited_puzzle_statuses, new_elem);
 	return ;
@@ -70,16 +77,14 @@ int	is_visited_puzzle_status(unsigned long tiles_status_map,
 		if (tiles_status_map == puzzle_status->tiles_status_map)
 		{
 			is_visited = 1;
-			if (puzzle_status->visibility_depth > depth)
+			if (puzzle_status->depth > depth)
 			{
-				puzzle_status->visibility_depth = depth;
+				puzzle_status->depth = depth;
 				is_visited = 0;
 			}
 			break ;
 		}
 		elem = elem->next;
 	}
-	if (!is_visited)
-		add_puzzle_status(tiles_status_map, depth, visited_puzzle_statuses);
 	return (is_visited);
 }
