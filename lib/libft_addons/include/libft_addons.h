@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 02:12:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 10:44:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ typedef struct s_loging_params
 
 typedef struct s_queue
 {
-	t_list		**in_queue;
-	t_list		**out_queue;
+	t_list		**in_stack;
+	t_list		**out_stack;
 }				t_queue;
 
 void				ft_log_trace(const char *file, const int line,
@@ -151,6 +151,8 @@ SSL_CTX				*ft_openssl_init_client(char *pem_cert_file,
 t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
 						int socket_fd, SSL_CTX *ctx);
 void				ft_openssl_rel_conn(t_tls_connection **connection);
+void				ft_stack_push(t_list **stack, void *data);
+void				*ft_stack_pull(t_list **stack);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)
