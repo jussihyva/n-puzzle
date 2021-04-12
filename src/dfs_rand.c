@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 19:07:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:24:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	dfs_no_mem(t_puzzle *puzzle)
 	t_pos			*next_pos;
 	int				i;
 
-	pos = puzzle->empty_pos;
+	pos = puzzle->curr_status->empty_pos;
 	while (1)
 	{
 		i = ft_mod_int(fast_rand(), pos->num_of_neighbors);
@@ -40,7 +40,8 @@ void	dfs_no_mem(t_puzzle *puzzle)
 		if (next_pos)
 		{
 			tile_move(pos, next_pos, puzzle);
-			if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
+			if (puzzle->curr_status->right_pos_status
+				== puzzle->puzzle_ready_status)
 				break ;
 			pos = next_pos;
 		}

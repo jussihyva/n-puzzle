@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 10:48:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:25:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
 			depth))
 	{
 		puzzle_status = create_puzzle_status(puzzle->curr_status->pos_table,
-				tiles_status_map, depth);
+				tiles_status_map, depth, puzzle->curr_status->empty_pos);
 		add_visited_puzzle_status(puzzle_status, tiles_status_map_lst);
 		i = -1;
 		while (depth < puzzle->max_depth && !is_puzzle_ready
@@ -39,7 +39,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
 			if (!is_puzzle_ready)
 				tile_move(pos->neighbors[i], pos, puzzle);
 		}
-		if (depth == puzzle->max_depth && puzzle->right_pos_status
+		if (depth == puzzle->max_depth && puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = 1;
 	}
@@ -52,7 +52,7 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 	int				depth;
 	int				is_puzzle_ready;
 
-	pos = puzzle->empty_pos;
+	pos = puzzle->curr_status->empty_pos;
 	is_puzzle_ready = 0;
 	puzzle->max_depth = -1;
 	depth = 0;

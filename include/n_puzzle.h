@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 11:07:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:22:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ typedef struct s_puzzle_status
 	int						depth;
 	struct s_puzzle_status	*prev_status;
 	t_move					prev_move;
+	t_pos					*empty_pos;
+	unsigned int			right_pos_status;
 }				t_puzzle_status;
 
 typedef struct s_puzzle
@@ -136,11 +138,9 @@ typedef struct s_puzzle
 	t_algorithm			algorithm;
 	t_tile				**tile_array;
 	unsigned long		*move_cnt;
-	unsigned int		right_pos_status;
 	unsigned int		puzzle_ready_status;
 	int					max_depth;
 	t_puzzle_status		*curr_status;
-	t_pos				*empty_pos;
 	t_list				**tiles_status_map_lst;
 	t_queue				*status_queue;
 }				t_puzzle;
@@ -198,7 +198,8 @@ void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
 t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
-					unsigned long tiles_status_map, int depth);
+					unsigned long tiles_status_map, int depth,
+					t_pos *empty_pos);
 int				is_visited_puzzle_status(unsigned long tiles_status_map,
 					t_list **tiles_status_map_lst, int depth);
 void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 10:48:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 13:49:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size)
 }
 
 t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
-									unsigned long tiles_status_map, int depth)
+					unsigned long tiles_status_map, int depth, t_pos *empty_pos)
 {
 	t_puzzle_status		*puzzle_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
+	puzzle_status->empty_pos = empty_pos;
 	puzzle_status->tiles_status_map = tiles_status_map;
 	puzzle_status->pos_table = pos_table;
 	puzzle_status->depth = depth;

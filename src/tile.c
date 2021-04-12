@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 19:37:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:23:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,17 @@ static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 	return ;
 }
 
-void	tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle)
+void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 {
 	t_tile	*tile;
 
-	tile = pos1->tile;
-	pos1->tile = pos2->tile;
-	pos2->tile = tile;
+	tile = from_pos->tile;
+	from_pos->tile = to_pos->tile;
+	to_pos->tile = tile;
 	(*puzzle->move_cnt)++;
+	puzzle->curr_status->empty_pos = from_pos;
 	stat_update_mem_usage(puzzle->statistics);
-	update_right_pos_status(pos1, pos2, &puzzle->right_pos_status);
+	update_right_pos_status(from_pos, to_pos, &puzzle->curr_status->right_pos_status);
 	print_puzzle(1, puzzle);
 	return ;
 }

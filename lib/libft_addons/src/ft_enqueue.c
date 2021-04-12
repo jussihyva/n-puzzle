@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:49:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 08:53:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 13:36:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void	ft_enqueue(t_queue *queue, void *data)
+void	ft_enqueue(t_queue *queue, void **data)
 {
 	ft_stack_push(queue->in_stack, data);
 	return ;

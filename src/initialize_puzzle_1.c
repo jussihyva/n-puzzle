@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 11:14:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:22:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	t_map			*puzzle_map;
 	unsigned long	tiles_status_map;
 	t_pos			***pos_table;
+	t_pos			*empty_pos;
 
 	puzzle_map = input->puzzle_map;
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
@@ -128,12 +129,12 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->status_queue->out_stack
 		= (t_list **)ft_memalloc(sizeof(*puzzle->status_queue->out_stack));
 	pos_table = initialize_pos_table(puzzle->tile_array, puzzle->size,
-			puzzle_map->tile_map, &puzzle->empty_pos);
+			puzzle_map->tile_map, &empty_pos);
 	xy_pos = pos_table[0][0]->xy_pos;
 	set_order_number(puzzle, pos_table, 1, xy_pos, E_RIGHT);
-	puzzle->right_pos_status = set_right_pos_status(pos_table, puzzle->size);
 	tiles_status_map = create_tiles_status_map(pos_table, puzzle->size);
 	puzzle->curr_status = create_puzzle_status(pos_table, tiles_status_map,
-			0);
+			0, empty_pos);
+	puzzle->curr_status->right_pos_status = set_right_pos_status(pos_table, puzzle->size);
 	return (puzzle);
 }

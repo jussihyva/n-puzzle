@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 12:34:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 14:27:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,22 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 	{
 		move.from_pos = pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
-		if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
+		if (puzzle->curr_status->right_pos_status
+			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = save_solution(puzzle, pos, pos->neighbors[i]);
 		else
 		{
 			tiles_status_map = create_tiles_status_map(
 					puzzle->curr_status->pos_table, puzzle->size);
 			next_status = create_puzzle_status(puzzle->curr_status->pos_table,
-					tiles_status_map, depth + 1);
+					tiles_status_map, depth + 1,
+					puzzle->curr_status->empty_pos);
 			ft_memcpy(&next_status->prev_move, &move,
 				sizeof(next_status->prev_move));
 			next_status->prev_status = puzzle->curr_status;
 			if (!is_visited_puzzle_status(tiles_status_map,
 					tiles_status_map_lst, INT_MAX))
-				ft_enqueue(puzzle->status_queue, &puzzle->empty_pos);
+				ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		}
 		tile_move(move.to_pos, move.from_pos, puzzle);
 	}
@@ -61,19 +63,21 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 
 void	bfs_1(t_puzzle *puzzle)
 {
-	t_pos			*pos;
-	int				depth;
-	int				is_puzzle_ready;
+	t_pos				*pos;
+	int					depth;
+	int					is_puzzle_ready;
 
 	puzzle->max_depth = -1;
 	depth = 0;
 	is_puzzle_ready = 0;
-	if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
+	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready = 1;
-	ft_enqueue(puzzle->status_queue, &puzzle->empty_pos);
+	ft_enqueue(puzzle->status_queue, (void **)&puzzle->curr_status);
 	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue))
 	{
-		pos = *(t_pos **)ft_dequeue(puzzle->status_queue);
+		puzzle->curr_status
+			= *(t_puzzle_status **)ft_dequeue(puzzle->status_queue);
+		pos = puzzle->curr_status->empty_pos;
 		is_puzzle_ready = breadth_first_search(puzzle, pos,
 				puzzle->tiles_status_map_lst, depth);
 	}
