@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack_push.c                                    :+:      :+:    :+:   */
+/*   ft_stack_pop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/11 10:34:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 12:36:41 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/04/11 10:34:08 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/04/12 12:08:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void	ft_stack_push(t_list **stack, void *data)
+void	*ft_stack_pop(t_list **stack)
 {
-	t_list		*new_elem;
+	void	*data;
 
-	new_elem = ft_lstnew(data, sizeof(data));
-	ft_lstadd(stack, new_elem);
-	return ;
+	data = NULL;
+	if (*stack)
+	{
+		data = (*stack)->content;
+		*stack = (*stack)->next;
+	}
+	return (data);
 }

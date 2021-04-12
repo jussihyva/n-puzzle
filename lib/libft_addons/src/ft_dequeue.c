@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack_push.c                                    :+:      :+:    :+:   */
+/*   ft_dequeue.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/11 10:34:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 12:36:41 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/04/12 08:53:18 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/04/12 12:17:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void	ft_stack_push(t_list **stack, void *data)
+void	*ft_dequeue(t_queue *queue)
 {
-	t_list		*new_elem;
+	void	*data;
 
-	new_elem = ft_lstnew(data, sizeof(data));
-	ft_lstadd(stack, new_elem);
-	return ;
+	data = NULL;
+	if (!*queue->out_stack)
+	{
+		while (*queue->in_stack)
+		{
+			data = ft_stack_pop(queue->in_stack);
+			ft_stack_push(queue->out_stack, data);
+		}
+	}
+	data = ft_stack_pop(queue->out_stack);
+	return (data);
 }

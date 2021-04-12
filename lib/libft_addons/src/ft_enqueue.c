@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack_pull.c                                    :+:      :+:    :+:   */
+/*   ft_enqueue.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/11 10:34:08 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 10:43:41 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/04/12 08:49:21 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/04/12 08:53:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void				*ft_stack_pull(t_list **stack)
+void	ft_enqueue(t_queue *queue, void *data)
 {
-	void	*data;
-
-	data = NULL;
-	if (*stack)
-	{
-		data = (*stack)->content;
-		*stack = (*stack)->next;
-	}
-	return (data);
+	ft_stack_push(queue->in_stack, data);
+	return ;
 }

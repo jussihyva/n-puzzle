@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack_push.c                                    :+:      :+:    :+:   */
+/*   ft_is_queue_empty.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/11 10:34:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 12:36:41 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/04/12 11:15:00 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/04/12 11:18:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-void	ft_stack_push(t_list **stack, void *data)
+int	ft_is_queue_empty(t_queue *queue)
 {
-	t_list		*new_elem;
+	int		is_queue_empty;
 
-	new_elem = ft_lstnew(data, sizeof(data));
-	ft_lstadd(stack, new_elem);
-	return ;
+	is_queue_empty = 0;
+	if (!*queue->in_stack && !*queue->out_stack)
+		is_queue_empty = 1;
+	return (is_queue_empty);
 }

@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/11 10:33:11 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/12 11:13:04 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC_C_FILES		=	ft_radian.c ft_max_int.c ft_min_int.c \
 					ft_login_event_3.c ft_login_event_4.c ft_login_event_5.c \
 					ft_openssl_init_ctx.c ft_openssl_init_client.c \
 					ft_openssl_init.c ft_openssl_connect.c \
-					ft_openssl_rel_conn.c ft_stack_push.c ft_stack_pull.c
+					ft_openssl_rel_conn.c ft_stack_push.c ft_stack_pop.c \
+					ft_enqueue.c ft_dequeue.c ft_is_queue_empty.c
 SRC_H_FILES		=	libft_addons.h
 
 # Path folders for H, C, O and APP files

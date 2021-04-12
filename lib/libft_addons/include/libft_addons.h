@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 10:44:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/12 11:21:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,10 @@ t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
 						int socket_fd, SSL_CTX *ctx);
 void				ft_openssl_rel_conn(t_tls_connection **connection);
 void				ft_stack_push(t_list **stack, void *data);
-void				*ft_stack_pull(t_list **stack);
+void				*ft_stack_pop(t_list **stack);
+void				ft_enqueue(t_queue *queue, void *data);
+void				*ft_dequeue(t_queue *queue);
+int					ft_is_queue_empty(t_queue *queue);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)
