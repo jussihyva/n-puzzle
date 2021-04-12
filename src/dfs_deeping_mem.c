@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 10:12:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:15:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 
 	puzzle_status_lst
 		= (t_list **)ft_memalloc(sizeof(*puzzle_status_lst));
-	pos = puzzle->tile_array[0]->curr_pos;
+	pos = puzzle->empty_pos;
 	is_puzzle_ready = 0;
 	puzzle->max_depth = -1;
 	depth = 0;
 	while (!is_puzzle_ready && ++puzzle->max_depth < INT_MAX)
 	{
-		pos->prev_tile = NULL;
 		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos, depth,
 				puzzle_status_lst);
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);

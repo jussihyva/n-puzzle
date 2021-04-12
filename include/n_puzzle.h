@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 10:12:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:36:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,18 @@ typedef struct s_input
 	t_map				*puzzle_map;
 }				t_input;
 
+typedef struct s_tile
+{
+	int			number;
+}				t_tile;
+
 typedef struct s_pos
 {
 	t_xy_values			xy_pos;
 	int					order_num;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
-	struct s_pos		*prev_tile;
-	void				*tile;
+	t_tile				*tile;
 }				t_pos;
 
 typedef struct s_move
@@ -115,13 +119,6 @@ typedef struct s_move
 	t_pos	pos1;
 	t_pos	pos2;
 }				t_move;
-
-typedef struct s_tile
-{
-	int			number;
-	t_pos		*curr_pos;
-	t_pos		*prev_pos;
-}				t_tile;
 
 typedef struct s_puzzle_status
 {
@@ -141,6 +138,7 @@ typedef struct s_puzzle
 	unsigned int		puzzle_ready_status;
 	int					max_depth;
 	t_puzzle_status		*curr_status;
+	t_pos				*empty_pos;
 }				t_puzzle;
 
 typedef enum e_connection_status

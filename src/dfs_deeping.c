@@ -6,13 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 10:22:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:17:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth)
+static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
+																t_pos *prev_pos)
 {
 	t_pos					*next_pos;
 	int						is_puzzle_ready;
@@ -23,16 +24,13 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth)
 	while (depth && !is_puzzle_ready && ++i < pos->num_of_neighbors)
 	{
 		next_pos = pos->neighbors[i];
-		if (next_pos != pos->prev_tile)
+		if (next_pos != prev_pos)
 		{
 			tile_move(pos, next_pos, puzzle);
-			next_pos->prev_tile = pos;
-			is_puzzle_ready = depth_limited_dfs(puzzle, next_pos, depth - 1);
+			is_puzzle_ready = depth_limited_dfs(puzzle, next_pos, depth - 1,
+					pos);
 			if (!is_puzzle_ready)
-			{
 				tile_move(next_pos, pos, puzzle);
-				next_pos->prev_tile = NULL;
-			}
 		}
 	}
 	if (!depth && puzzle->right_pos_status == puzzle->puzzle_ready_status)
@@ -46,13 +44,12 @@ void	dfs_deeping(t_puzzle *puzzle)
 	int				depth;
 	int				is_puzzle_ready;
 
-	pos = puzzle->tile_array[0]->curr_pos;
+	pos = puzzle->empty_pos;
 	is_puzzle_ready = 0;
 	depth = -1;
 	while (!is_puzzle_ready && ++depth < INT_MAX)
 	{
-		pos->prev_tile = NULL;
-		is_puzzle_ready = depth_limited_dfs(puzzle, pos, depth);
+		is_puzzle_ready = depth_limited_dfs(puzzle, pos, depth, NULL);
 		FT_LOG_INFO("Depth level %2d done", depth);
 	}
 	return ;

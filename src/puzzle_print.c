@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:59:15 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 03:56:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:37:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_puzzle(int fd, t_puzzle *puzzle)
 		while (++j < puzzle->size)
 		{
 			pos = puzzle->curr_status->pos_table[i][j];
-			ft_sprintf(string, " %4d", ((t_tile *)pos->tile)->number);
+			ft_sprintf(string, " %4d", pos->tile->number);
 			ft_strcat(line, string);
 		}
 		ft_dprintf(fd, "%s\n", line);

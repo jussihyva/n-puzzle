@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 11:03:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:10:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 		tile_move(pos, pos->neighbors[i], puzzle);
 		if (puzzle->right_pos_status == puzzle->puzzle_ready_status)
 			is_puzzle_ready = save_solution(puzzle, pos, pos->neighbors[i]);
+		tile_move(pos, pos->neighbors[i], puzzle);
 		// else
 		// {
 		// 	tiles_status_map = create_tiles_status_map(puzzle);
@@ -68,7 +69,7 @@ void	bfs_1(t_puzzle *puzzle)
 	puzzle_status_queue.in_stack
 		= (t_list **)ft_memalloc(sizeof(*puzzle_status_queue.in_stack));
 	ft_stack_push(puzzle_status_queue.in_stack,
-		puzzle->tile_array[0]->curr_pos);
+		puzzle->empty_pos);
 	while (!is_puzzle_ready && *puzzle_status_queue.in_stack)
 	{
 		pos = *(t_pos **)ft_stack_pull(puzzle_status_queue.in_stack);

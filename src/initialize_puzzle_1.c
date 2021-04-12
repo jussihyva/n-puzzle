@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 03:53:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/11 19:41:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ static t_pos	*initialize_tile_pos(t_xy_values *xy_pos, t_tile *tile)
 
 	pos = (t_pos *)ft_memalloc(sizeof(*pos));
 	ft_memcpy(&pos->xy_pos, xy_pos, sizeof(pos->xy_pos));
-	pos->tile = (void *)tile;
-	tile->curr_pos = pos;
+	pos->tile = tile;
 	pos->neighbors = (t_pos **)ft_memalloc(sizeof(*pos->neighbors)
 			* MAX_NUM_OF_NEIGHBORS);
 	return (pos);
 }
 
 static t_pos	***initialize_pos_table(t_tile **tile_array, int puzzle_size,
-																int **tile_map)
+											int **tile_map, t_pos **empty_pos)
 {
 	t_pos			***pos_table;
 	t_xy_values		xy_pos;
@@ -74,6 +73,8 @@ static t_pos	***initialize_pos_table(t_tile **tile_array, int puzzle_size,
 			tile_number = tile_map[xy_pos.y][xy_pos.x];
 			tile = tile_array[tile_number];
 			pos_table[xy_pos.y][xy_pos.x] = initialize_tile_pos(&xy_pos, tile);
+			if (!tile_number)
+				*empty_pos = pos_table[xy_pos.y][xy_pos.x];
 		}
 	}
 	set_tile_neighbors(pos_table, puzzle_size);
@@ -95,7 +96,7 @@ static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size)
 		while (++j < puzzle_size)
 		{
 			pos = pos_table[i][j];
-			if (((t_tile *)pos->tile)->number == pos->order_num)
+			if (pos->tile->number == pos->order_num)
 				right_pos_status |= 1 << pos->order_num;
 		}
 	}
@@ -120,12 +121,13 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
 	puzzle->tile_array = initialize_tile_array(puzzle_map);
 	pos_table = initialize_pos_table(puzzle->tile_array, puzzle->size,
-			puzzle_map->tile_map);
+			puzzle_map->tile_map, &puzzle->empty_pos);
 	xy_pos = pos_table[0][0]->xy_pos;
 	set_order_number(puzzle, pos_table, 1, xy_pos, E_RIGHT);
 	puzzle->right_pos_status = set_right_pos_status(pos_table, puzzle->size);
 	tiles_status_map = create_tiles_status_map(pos_table, puzzle->size);
 	depth = 0;
-	puzzle->curr_status = create_puzzle_status(pos_table, tiles_status_map, depth);
+	puzzle->curr_status = create_puzzle_status(pos_table, tiles_status_map,
+			depth);
 	return (puzzle);
 }
