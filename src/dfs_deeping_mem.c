@@ -6,34 +6,34 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 09:00:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 10:28:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
 static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
-											t_list **tiles_status_map_lst)
+											t_list **tiles_pos_map_lst)
 {
 	int						is_puzzle_ready;
 	int						i;
 	t_puzzle_status			*puzzle_status;
 
 	is_puzzle_ready = 0;
-	if (!is_visited_puzzle_status(puzzle->curr_status->tiles_status_map,
-			tiles_status_map_lst, depth))
+	if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
+			tiles_pos_map_lst, depth))
 	{
 		puzzle_status = create_puzzle_status(puzzle->curr_status->pos_table,
-				puzzle->curr_status->tiles_status_map, depth,
+				puzzle->curr_status->tiles_pos_map, depth,
 				puzzle->curr_status->empty_pos);
-		add_visited_puzzle_status(puzzle_status, tiles_status_map_lst);
+		add_visited_puzzle_status(puzzle_status, tiles_pos_map_lst);
 		i = -1;
 		while (depth < puzzle->max_depth && !is_puzzle_ready
 			&& ++i < pos->num_of_neighbors)
 		{
 			tile_move(pos, pos->neighbors[i], puzzle);
 			is_puzzle_ready = depth_limited_dfs_mem(puzzle,
-					pos->neighbors[i], depth + 1, tiles_status_map_lst);
+					pos->neighbors[i], depth + 1, tiles_pos_map_lst);
 			if (!is_puzzle_ready)
 				tile_move(pos->neighbors[i], pos, puzzle);
 		}

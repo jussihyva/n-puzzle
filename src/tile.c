@@ -6,15 +6,28 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 08:51:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 11:54:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
+int	get_tile_number(unsigned long tiles_pos_map, t_pos *pos, int puzzle_size)
+{
+	int		tile_number;
+
+	tile_number = (tiles_pos_map >> (4 * (pos->xy_pos.y * puzzle_size
+					+ pos->xy_pos.x))) & 0xF;
+	return (tile_number);
+}
+
+static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 												unsigned int *right_pos_status)
 {
+	int				tile_number;
+	unsigned long	tiles_pos_map;
+
+	tiles_pos_map = puzzle->curr_status->tiles_pos_map;
 	if (*right_pos_status & (unsigned int)1 << pos1->order_num)
 	{
 		*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
@@ -29,9 +42,11 @@ static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 		}
 		else
 		{
-			if (((t_tile *)pos1->tile)->number == pos1->order_num)
+			tile_number = get_tile_number(tiles_pos_map, pos1, puzzle->size);
+			if (tile_number == pos1->order_num)
 				*right_pos_status |= (unsigned int)1 << pos1->order_num;
-			if (((t_tile *)pos2->tile)->number == pos2->order_num)
+			tile_number = get_tile_number(tiles_pos_map, pos2, puzzle->size);
+			if (tile_number == pos2->order_num)
 				*right_pos_status |= (unsigned int)1 << pos2->order_num;
 		}
 	}
@@ -41,17 +56,12 @@ static void	update_right_pos_status(t_pos *pos1, t_pos *pos2,
 
 void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 {
-	t_tile	*tile;
-
-	tile = from_pos->tile;
-	from_pos->tile = to_pos->tile;
-	to_pos->tile = tile;
 	(*puzzle->move_cnt)++;
 	puzzle->curr_status->empty_pos = from_pos;
 	stat_update_mem_usage(puzzle->statistics);
-	update_tiles_status_map(from_pos, to_pos, puzzle->size,
-		&puzzle->curr_status->tiles_status_map);
-	update_right_pos_status(from_pos, to_pos,
+	update_tiles_pos_map(from_pos, to_pos, puzzle->size,
+		&puzzle->curr_status->tiles_pos_map);
+	update_right_pos_status(puzzle, from_pos, to_pos,
 		&puzzle->curr_status->right_pos_status);
 	print_puzzle(1, puzzle);
 	return ;

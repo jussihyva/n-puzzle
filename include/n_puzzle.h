@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 08:48:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 11:40:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ typedef struct s_pos
 	int					order_num;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
-	t_tile				*tile;
 }				t_pos;
 
 typedef struct s_move
@@ -122,7 +121,7 @@ typedef struct s_move
 
 typedef struct s_puzzle_status
 {
-	unsigned long			tiles_status_map;
+	unsigned long			tiles_pos_map;
 	t_pos					***pos_table;
 	int						depth;
 	struct s_puzzle_status	*prev_status;
@@ -198,16 +197,19 @@ void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
 t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
-					unsigned long tiles_status_map, int depth,
+					unsigned long tiles_pos_map, int depth,
 					t_pos *empty_pos);
-int				is_visited_puzzle_status(unsigned long tiles_status_map,
+int				is_visited_puzzle_status(unsigned long tiles_pos_map,
 					t_list **tiles_status_map_lst, int depth);
 void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 					t_list **tiles_status_map_lst);
-unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size);
+unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
+											int puzzle_size, t_pos **empty_pos);
 void			bfs(t_puzzle *puzzle, t_statistics *statistics);
 void			bfs_1(t_puzzle *puzzle);
-void			update_tiles_status_map(t_pos *pos1, t_pos *pos2,
-					int puzzle_size, unsigned long *tiles_status_map);
+void			update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
+					int puzzle_size, unsigned long *tiles_pos_map);
+int				get_tile_number(unsigned long tiles_pos_map, t_pos *pos,
+					int puzzle_size);
 
 #endif

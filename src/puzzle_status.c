@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 09:19:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 11:37:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,57 +19,59 @@ void	delete_puzzle_status(void *content, size_t size)
 	return ;
 }
 
-void	update_tiles_status_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
-												unsigned long *tiles_status_map)
+void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
+												unsigned long *tiles_pos_map)
 {
 	unsigned long	tile_number1;
 	unsigned long	tile_number2;
 
-	tile_number1 = (*tiles_status_map >> (4 * (pos1->xy_pos.y
+	tile_number1 = (*tiles_pos_map >> (4 * (pos1->xy_pos.y
 					* puzzle_size + pos1->xy_pos.x))) & 0xF;
-	tile_number2 = (*tiles_status_map >> (4 * (pos2->xy_pos.y
+	tile_number2 = (*tiles_pos_map >> (4 * (pos2->xy_pos.y
 					* puzzle_size + pos2->xy_pos.x))) & 0xF;
-	*tiles_status_map &= ~((unsigned long)0xF << (4 * (pos1->xy_pos.y
+	*tiles_pos_map &= ~((unsigned long)0xF << (4 * (pos1->xy_pos.y
 					* puzzle_size + pos1->xy_pos.x)));
-	*tiles_status_map &= ~((unsigned long)0xF << (4 * (pos2->xy_pos.y
+	*tiles_pos_map &= ~((unsigned long)0xF << (4 * (pos2->xy_pos.y
 					* puzzle_size + pos2->xy_pos.x)));
-	*tiles_status_map |= tile_number1 << (4 * (pos2->xy_pos.y
+	*tiles_pos_map |= tile_number1 << (4 * (pos2->xy_pos.y
 				* puzzle_size + pos2->xy_pos.x));
-	*tiles_status_map |= tile_number2 << (4 * (pos1->xy_pos.y
+	*tiles_pos_map |= tile_number2 << (4 * (pos1->xy_pos.y
 				* puzzle_size + pos1->xy_pos.x));
 	return ;
 }
 
-unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size)
+unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
+											int puzzle_size, t_pos **empty_pos)
 {
-	unsigned long	tiles_status_map;
+	unsigned long	tiles_pos_map;
 	int				i;
 	int				j;
 	unsigned long	tile_number;
 
-	tiles_status_map = 0;
+	tiles_pos_map = 0;
 	i = -1;
 	while (++i < puzzle_size)
 	{
 		j = -1;
 		while (++j < puzzle_size)
 		{
-			tile_number
-				= (unsigned long)((t_tile *)pos_table[i][j]->tile)->number;
-			tiles_status_map |= tile_number << (4 * (i * puzzle_size + j));
+			tile_number = (unsigned long)tile_map[i][j];
+			tiles_pos_map |= tile_number << (4 * (i * puzzle_size + j));
+			if (!tile_number)
+				*empty_pos = pos_table[i][j];
 		}
 	}
-	return (tiles_status_map);
+	return (tiles_pos_map);
 }
 
 t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
-					unsigned long tiles_status_map, int depth, t_pos *empty_pos)
+					unsigned long tiles_pos_map, int depth, t_pos *empty_pos)
 {
 	t_puzzle_status		*puzzle_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	puzzle_status->empty_pos = empty_pos;
-	puzzle_status->tiles_status_map = tiles_status_map;
+	puzzle_status->tiles_pos_map = tiles_pos_map;
 	puzzle_status->pos_table = pos_table;
 	puzzle_status->depth = depth;
 	return (puzzle_status);
@@ -85,19 +87,19 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 	return ;
 }
 
-int	is_visited_puzzle_status(unsigned long tiles_status_map,
-									t_list **tiles_status_map_lst, int depth)
+int	is_visited_puzzle_status(unsigned long tiles_pos_map,
+									t_list **tiles_pos_map_lst, int depth)
 {
 	int					is_visited;
 	t_list				*elem;
 	t_puzzle_status		*puzzle_status;
 
 	is_visited = 0;
-	elem = *tiles_status_map_lst;
+	elem = *tiles_pos_map_lst;
 	while (elem)
 	{
 		puzzle_status = *(t_puzzle_status **)elem->content;
-		if (tiles_status_map == puzzle_status->tiles_status_map)
+		if (tiles_pos_map == puzzle_status->tiles_pos_map)
 		{
 			is_visited = 1;
 			if (puzzle_status->depth > depth)
