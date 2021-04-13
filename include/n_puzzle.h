@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 14:22:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 08:48:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,5 +207,7 @@ void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size);
 void			bfs(t_puzzle *puzzle, t_statistics *statistics);
 void			bfs_1(t_puzzle *puzzle);
+void			update_tiles_status_map(t_pos *pos1, t_pos *pos2,
+					int puzzle_size, unsigned long *tiles_status_map);
 
 #endif

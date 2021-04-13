@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 14:27:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 09:04:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 									t_list **tiles_status_map_lst, int depth)
 {
 	int					is_puzzle_ready;
-	unsigned long		tiles_status_map;
 	int					i;
 	t_puzzle_status		*next_status;
 	t_move				move;
@@ -44,15 +43,13 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 			is_puzzle_ready = save_solution(puzzle, pos, pos->neighbors[i]);
 		else
 		{
-			tiles_status_map = create_tiles_status_map(
-					puzzle->curr_status->pos_table, puzzle->size);
 			next_status = create_puzzle_status(puzzle->curr_status->pos_table,
-					tiles_status_map, depth + 1,
+					puzzle->curr_status->tiles_status_map, depth + 1,
 					puzzle->curr_status->empty_pos);
 			ft_memcpy(&next_status->prev_move, &move,
 				sizeof(next_status->prev_move));
 			next_status->prev_status = puzzle->curr_status;
-			if (!is_visited_puzzle_status(tiles_status_map,
+			if (!is_visited_puzzle_status(puzzle->curr_status->tiles_status_map,
 					tiles_status_map_lst, INT_MAX))
 				ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		}

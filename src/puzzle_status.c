@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 13:49:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 09:19:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,33 @@ void	delete_puzzle_status(void *content, size_t size)
 	return ;
 }
 
+void	update_tiles_status_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
+												unsigned long *tiles_status_map)
+{
+	unsigned long	tile_number1;
+	unsigned long	tile_number2;
+
+	tile_number1 = (*tiles_status_map >> (4 * (pos1->xy_pos.y
+					* puzzle_size + pos1->xy_pos.x))) & 0xF;
+	tile_number2 = (*tiles_status_map >> (4 * (pos2->xy_pos.y
+					* puzzle_size + pos2->xy_pos.x))) & 0xF;
+	*tiles_status_map &= ~((unsigned long)0xF << (4 * (pos1->xy_pos.y
+					* puzzle_size + pos1->xy_pos.x)));
+	*tiles_status_map &= ~((unsigned long)0xF << (4 * (pos2->xy_pos.y
+					* puzzle_size + pos2->xy_pos.x)));
+	*tiles_status_map |= tile_number1 << (4 * (pos2->xy_pos.y
+				* puzzle_size + pos2->xy_pos.x));
+	*tiles_status_map |= tile_number2 << (4 * (pos1->xy_pos.y
+				* puzzle_size + pos1->xy_pos.x));
+	return ;
+}
+
 unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size)
 {
 	unsigned long	tiles_status_map;
 	int				i;
 	int				j;
-	int				tile_number;
+	unsigned long	tile_number;
 
 	tiles_status_map = 0;
 	i = -1;
@@ -33,7 +54,8 @@ unsigned long	create_tiles_status_map(t_pos ***pos_table, int puzzle_size)
 		j = -1;
 		while (++j < puzzle_size)
 		{
-			tile_number = ((t_tile *)pos_table[i][j]->tile)->number;
+			tile_number
+				= (unsigned long)((t_tile *)pos_table[i][j]->tile)->number;
 			tiles_status_map |= tile_number << (4 * (i * puzzle_size + j));
 		}
 	}
