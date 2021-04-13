@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/08 14:28:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 15:28:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	influxdb_plugin(t_log_event *event)
 			= (char *)ft_memalloc(sizeof(*influxdb_query_string) * 100000);
 		format_string = create_format_string();
 		ft_sprintf(influxdb_query_string, format_string,
-			"n-puzzle", "dfs", statistics->algorithm_substring,
+			"n-puzzle", statistics->algorithm, statistics->algorithm_substring,
 			statistics->puzzle_size,
 			(int)get_execution_time(statistics), (int)statistics->cpu_usage_ms,
 			statistics->tile_move_cnt, statistics->max_mem_usage,

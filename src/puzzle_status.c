@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 11:37:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 22:10:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 }
 
 t_puzzle_status	*create_puzzle_status(t_pos ***pos_table,
-					unsigned long tiles_pos_map, int depth, t_pos *empty_pos)
+					unsigned long tiles_pos_map, int depth, t_pos *empty_pos,
+					unsigned int right_pos_status)
 {
 	t_puzzle_status		*puzzle_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	puzzle_status->empty_pos = empty_pos;
 	puzzle_status->tiles_pos_map = tiles_pos_map;
+	puzzle_status->right_pos_status = right_pos_status;
 	puzzle_status->pos_table = pos_table;
 	puzzle_status->depth = depth;
 	return (puzzle_status);
@@ -82,7 +84,7 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 {
 	t_list				*new_elem;
 
-	new_elem = ft_lstnew((void *)&puzzle_status, sizeof(*puzzle_status));
+	new_elem = ft_lstnew((void *)puzzle_status, sizeof(*puzzle_status));
 	ft_lstadd(tiles_status_map_lst, new_elem);
 	return ;
 }
@@ -98,7 +100,7 @@ int	is_visited_puzzle_status(unsigned long tiles_pos_map,
 	elem = *tiles_pos_map_lst;
 	while (elem)
 	{
-		puzzle_status = *(t_puzzle_status **)elem->content;
+		puzzle_status = (t_puzzle_status *)elem->content;
 		if (tiles_pos_map == puzzle_status->tiles_pos_map)
 		{
 			is_visited = 1;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 10:33:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 22:59:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 	t_puzzle_status		*next_status;
 	t_move				move;
 
+	add_visited_puzzle_status(puzzle->curr_status, tiles_pos_map_lst);
 	is_puzzle_ready = 0;
 	i = -1;
 	move.to_pos = pos;
@@ -45,11 +46,12 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 		{
 			next_status = create_puzzle_status(puzzle->curr_status->pos_table,
 					puzzle->curr_status->tiles_pos_map, depth + 1,
-					puzzle->curr_status->empty_pos);
+					puzzle->curr_status->empty_pos,
+					puzzle->curr_status->right_pos_status);
 			ft_memcpy(&next_status->prev_move, &move,
 				sizeof(next_status->prev_move));
 			next_status->prev_status = puzzle->curr_status;
-			if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
+			if (!is_visited_puzzle_status(next_status->tiles_pos_map,
 					tiles_pos_map_lst, INT_MAX))
 				ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		}
@@ -63,8 +65,10 @@ void	bfs_1(t_puzzle *puzzle)
 	t_pos				*pos;
 	int					depth;
 	int					is_puzzle_ready;
+	int					printed_depth;
 
 	puzzle->max_depth = -1;
+	printed_depth = -1;
 	depth = 0;
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
@@ -76,7 +80,12 @@ void	bfs_1(t_puzzle *puzzle)
 			= *(t_puzzle_status **)ft_dequeue(puzzle->status_queue);
 		pos = puzzle->curr_status->empty_pos;
 		is_puzzle_ready = breadth_first_search(puzzle, pos,
-				puzzle->tiles_status_map_lst, depth);
+				puzzle->tiles_status_map_lst, puzzle->curr_status->depth);
+		if (printed_depth < puzzle->curr_status->depth)
+		{
+			FT_LOG_INFO("Depth level %d done", puzzle->curr_status->depth);
+			printed_depth = puzzle->curr_status->depth;
+		}
 	}
 	ft_lstdel(puzzle->tiles_status_map_lst, delete_puzzle_status);
 	return ;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/10 14:32:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 15:27:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 	return ;
 }
 
+static char	*set_algorithm_string(t_algorithm algorithm)
+{
+	static char		*algorithm_string[4];
+
+	if (!*algorithm_string)
+	{
+		algorithm_string[E_DFS_NO_MEM] = ft_strdup("dfs");
+		algorithm_string[E_DFS_DEEPING] = ft_strdup("dfs");
+		algorithm_string[E_DFS_DEEPING_MEM] = ft_strdup("dfs");
+		algorithm_string[E_BFS] = ft_strdup("bfs");
+	}
+	return (algorithm_string[algorithm]);
+}
+
 static char	*set_algorithm_substring(t_algorithm algorithm)
 {
 	static char		*algorithm_substring[4];
@@ -75,6 +89,7 @@ t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
+	statistics->algorithm = set_algorithm_string(algorithm);
 	statistics->algorithm_substring = set_algorithm_substring(algorithm);
 	return (algorithm);
 }

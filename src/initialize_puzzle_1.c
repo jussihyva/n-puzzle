@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 11:42:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/13 15:16:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	unsigned long	tiles_pos_map;
 	t_pos			***pos_table;
 	t_pos			*empty_pos;
+	unsigned int	right_pos_status;
 
 	puzzle_map = input->puzzle_map;
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
@@ -126,9 +127,9 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	set_order_number(puzzle, pos_table, 1, xy_pos, E_RIGHT);
 	tiles_pos_map = create_tiles_pos_map(puzzle_map->tile_map, pos_table,
 			puzzle->size, &empty_pos);
-	puzzle->curr_status = create_puzzle_status(pos_table, tiles_pos_map, 0,
-			empty_pos);
-	puzzle->curr_status->right_pos_status = set_right_pos_status(pos_table,
+	right_pos_status = set_right_pos_status(pos_table,
 			puzzle->size, tiles_pos_map);
+	puzzle->curr_status = create_puzzle_status(pos_table, tiles_pos_map, 0,
+			empty_pos, right_pos_status);
 	return (puzzle);
 }
