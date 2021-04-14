@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 15:16:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/14 09:03:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	t_xy_values		xy_pos;
 	t_map			*puzzle_map;
 	unsigned long	tiles_pos_map;
-	t_pos			***pos_table;
 	t_pos			*empty_pos;
 	unsigned int	right_pos_status;
 
@@ -122,14 +121,14 @@ t_puzzle	*initialize_puzzle(t_input *input)
 		= (t_list **)ft_memalloc(sizeof(*puzzle->status_queue->in_stack));
 	puzzle->status_queue->out_stack
 		= (t_list **)ft_memalloc(sizeof(*puzzle->status_queue->out_stack));
-	pos_table = initialize_pos_table(puzzle->size);
-	xy_pos = pos_table[0][0]->xy_pos;
-	set_order_number(puzzle, pos_table, 1, xy_pos, E_RIGHT);
-	tiles_pos_map = create_tiles_pos_map(puzzle_map->tile_map, pos_table,
-			puzzle->size, &empty_pos);
-	right_pos_status = set_right_pos_status(pos_table,
+	puzzle->pos_table = initialize_pos_table(puzzle->size);
+	xy_pos = puzzle->pos_table[0][0]->xy_pos;
+	set_order_number(puzzle, puzzle->pos_table, 1, xy_pos, E_RIGHT);
+	tiles_pos_map = create_tiles_pos_map(puzzle_map->tile_map,
+			puzzle->pos_table, puzzle->size, &empty_pos);
+	right_pos_status = set_right_pos_status(puzzle->pos_table,
 			puzzle->size, tiles_pos_map);
-	puzzle->curr_status = create_puzzle_status(pos_table, tiles_pos_map, 0,
-			empty_pos, right_pos_status);
+	puzzle->curr_status = create_puzzle_status(tiles_pos_map, 0, empty_pos,
+			right_pos_status);
 	return (puzzle);
 }

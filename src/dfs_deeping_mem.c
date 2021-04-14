@@ -6,58 +6,69 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 21:55:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/14 09:22:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos, int depth,
-											t_list **tiles_pos_map_lst)
+static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
+				t_puzzle_status *prev_puzzle_status, t_list **tiles_pos_map_lst)
 {
 	int						is_puzzle_ready;
 	int						i;
 	t_puzzle_status			*puzzle_status;
+	unsigned int			saved_right_pos_status;
+	unsigned long			saved_tiles_pos_map;
 
 	is_puzzle_ready = 0;
-	if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
-			tiles_pos_map_lst, depth))
+	add_visited_puzzle_status(prev_puzzle_status, tiles_pos_map_lst);
+	i = -1;
+	while (prev_puzzle_status->depth < puzzle->max_depth && !is_puzzle_ready
+		&& ++i < pos->num_of_neighbors)
 	{
-		puzzle_status = create_puzzle_status(puzzle->curr_status->pos_table,
-				puzzle->curr_status->tiles_pos_map, depth,
-				puzzle->curr_status->empty_pos,
-				puzzle->curr_status->right_pos_status);
-		add_visited_puzzle_status(puzzle_status, tiles_pos_map_lst);
-		i = -1;
-		while (depth < puzzle->max_depth && !is_puzzle_ready
-			&& ++i < pos->num_of_neighbors)
+		saved_right_pos_status = puzzle->curr_status->right_pos_status;
+		saved_tiles_pos_map = puzzle->curr_status->tiles_pos_map;
+		tile_move(pos, pos->neighbors[i], puzzle);
+		if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
+				tiles_pos_map_lst, prev_puzzle_status->depth + 1))
 		{
-			tile_move(pos, pos->neighbors[i], puzzle);
+			puzzle_status = create_puzzle_status(puzzle->curr_status->tiles_pos_map,
+				prev_puzzle_status, puzzle->curr_status->empty_pos,
+				puzzle->curr_status->right_pos_status);
 			is_puzzle_ready = depth_limited_dfs_mem(puzzle,
-					pos->neighbors[i], depth + 1, tiles_pos_map_lst);
-			if (!is_puzzle_ready)
-				tile_move(pos->neighbors[i], pos, puzzle);
+					pos->neighbors[i], puzzle_status, tiles_pos_map_lst);
 		}
-		if (depth == puzzle->max_depth && puzzle->curr_status->right_pos_status
-			== puzzle->puzzle_ready_status)
-			is_puzzle_ready = 1;
+		if (!is_puzzle_ready)
+		{
+			puzzle->curr_status->right_pos_status = saved_right_pos_status;
+			puzzle->curr_status->tiles_pos_map = saved_tiles_pos_map;
+			print_puzzle(1, puzzle);
+		}
 	}
+	if (prev_puzzle_status->depth == puzzle->max_depth
+		&& puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
+		is_puzzle_ready = 1;
 	return (is_puzzle_ready);
 }
 
 void	dfs_deeping_mem(t_puzzle *puzzle)
 {
-	t_pos			*pos;
-	int				depth;
-	int				is_puzzle_ready;
+	t_pos				*pos;
+	int					depth;
+	int					is_puzzle_ready;
+	t_puzzle_status		*puzzle_status;
 
 	pos = puzzle->curr_status->empty_pos;
 	is_puzzle_ready = 0;
 	puzzle->max_depth = -1;
+	puzzle_status = create_puzzle_status(puzzle->curr_status->tiles_pos_map,
+		NULL, puzzle->curr_status->empty_pos,
+		puzzle->curr_status->right_pos_status);
 	depth = 0;
 	while (!is_puzzle_ready && ++puzzle->max_depth < INT_MAX)
 	{
-		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos, depth,
+		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos, puzzle_status,
 				puzzle->tiles_status_map_lst);
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);
 		ft_lstdel(puzzle->tiles_status_map_lst, delete_puzzle_status);
