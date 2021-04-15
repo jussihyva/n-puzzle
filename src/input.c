@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 15:27:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 10:40:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,34 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 
 static char	*set_algorithm_string(t_algorithm algorithm)
 {
-	static char		*algorithm_string[4];
+	char		*algorithm_string;
 
-	if (!*algorithm_string)
-	{
-		algorithm_string[E_DFS_NO_MEM] = ft_strdup("dfs");
-		algorithm_string[E_DFS_DEEPING] = ft_strdup("dfs");
-		algorithm_string[E_DFS_DEEPING_MEM] = ft_strdup("dfs");
-		algorithm_string[E_BFS] = ft_strdup("bfs");
-	}
-	return (algorithm_string[algorithm]);
+	algorithm_string = NULL;
+	if (algorithm == E_DFS_NO_MEM)
+		algorithm_string = ft_strdup("dfs");
+	else if (algorithm == E_DFS_DEEPING)
+		algorithm_string = ft_strdup("dfs");
+	else if (algorithm == E_DFS_DEEPING_MEM)
+		algorithm_string = ft_strdup("dfs");
+	else if (algorithm == E_BFS)
+		algorithm_string = ft_strdup("bfs");
+	return (algorithm_string);
 }
 
 static char	*set_algorithm_substring(t_algorithm algorithm)
 {
-	static char		*algorithm_substring[4];
+	char		*algorithm_substring;
 
-	if (!*algorithm_substring)
-	{
-		algorithm_substring[E_DFS_NO_MEM] = ft_strdup("no_mem_rand");
-		algorithm_substring[E_DFS_DEEPING] = ft_strdup("deeping");
-		algorithm_substring[E_DFS_DEEPING_MEM] = ft_strdup("deeping_mem");
-		algorithm_substring[E_BFS] = ft_strdup("mem");
-	}
-	return (algorithm_substring[algorithm]);
+	algorithm_substring = NULL;
+	if (algorithm == E_DFS_NO_MEM)
+		algorithm_substring = ft_strdup("no_mem_rand");
+	else if (algorithm == E_DFS_DEEPING)
+		algorithm_substring = ft_strdup("deeping");
+	else if (algorithm == E_DFS_DEEPING_MEM)
+		algorithm_substring = ft_strdup("deeping_mem");
+	else if (algorithm == E_BFS)
+		algorithm_substring = ft_strdup("mem");
+	return (algorithm_substring);
 }
 
 t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)

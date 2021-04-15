@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/14 07:51:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 15:04:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,20 @@
 
 void	release_puzzle(t_puzzle *puzzle)
 {
-	int		i;
-	int		j;
+	int					i;
+	int					j;
+	t_puzzle_status		*puzzle_status;
 
+	while (!ft_is_queue_empty(puzzle->status_queue))
+	{
+		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
+		ft_memdel((void **)&puzzle_status);
+	}
+	ft_memdel((void **)&puzzle->status_queue->in_stack);
+	ft_memdel((void **)&puzzle->status_queue->out_stack);
+	ft_memdel((void **)&puzzle->status_queue);
+	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
+	ft_memdel((void **)&puzzle->puzzle_status_lst);
 	i = -1;
 	while (++i < puzzle->size)
 	{
@@ -31,6 +42,7 @@ void	release_puzzle(t_puzzle *puzzle)
 	}
 	ft_memdel((void **)&puzzle->pos_table);
 	ft_memdel((void **)&puzzle->tile_array);
+	ft_memdel((void **)&puzzle->curr_status);
 	ft_memdel((void **)&puzzle);
 	return ;
 }

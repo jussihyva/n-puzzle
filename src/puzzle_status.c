@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/14 08:54:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 14:56:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	delete_puzzle_status(void *content, size_t size)
 {
+	t_puzzle_status		*puzzle_status;
+
 	(void)size;
-	ft_memdel(&content);
+	puzzle_status = *(t_puzzle_status **)content;
+	ft_memdel((void **)&puzzle_status);
+	ft_memdel((void **)&content);
 	return ;
 }
 
@@ -75,8 +79,10 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 	puzzle_status->tiles_pos_map = tiles_pos_map;
 	puzzle_status->right_pos_status = right_pos_status;
 	if (prev_puzzle_status)
+	{
 		puzzle_status->depth = prev_puzzle_status->depth + 1;
-	puzzle_status->prev_status = prev_puzzle_status;
+		puzzle_status->prev_status = prev_puzzle_status;
+	}
 	return (puzzle_status);
 }
 
@@ -91,14 +97,14 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 }
 
 int	is_visited_puzzle_status(unsigned long tiles_pos_map,
-									t_list **tiles_pos_map_lst, int depth)
+										t_list **puzzle_status_lst, int depth)
 {
 	int					is_visited;
 	t_list				*elem;
 	t_puzzle_status		*puzzle_status;
 
 	is_visited = 0;
-	elem = *tiles_pos_map_lst;
+	elem = *puzzle_status_lst;
 	while (elem)
 	{
 		puzzle_status = *(t_puzzle_status **)elem->content;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 10:34:08 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/12 12:08:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 15:00:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 void	*ft_stack_pop(t_list **stack)
 {
 	void	*data;
+	t_list	*old_elem;
 
 	data = NULL;
 	if (*stack)
 	{
-		data = (*stack)->content;
+		data = *(void **)((*stack)->content);
+		old_elem = *stack;
 		*stack = (*stack)->next;
+		ft_memdel((void **)&old_elem->content);
+		ft_memdel((void **)&old_elem);
 	}
 	return (data);
 }

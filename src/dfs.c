@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:14:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/09 10:01:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 14:15:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ void	dfs(t_puzzle *puzzle, t_statistics *statistics)
 	FT_LOG_INFO("Execution time : %ld", get_execution_time(puzzle->statistics));
 	statistics->order = E_NONE;
 	FT_LOG_INFO("Total num of moves: %lu", *puzzle->move_cnt);
-	release_puzzle(puzzle);
 	return ;
 }

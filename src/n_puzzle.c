@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/10 14:14:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 14:15:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv)
 			"Specify a valid algorithm with the param -A");
 	if (input->cmd_args->release)
 		ft_printf("END\n");
+	release_puzzle(puzzle);
 	release_influxdb(influxdb);
 	stat_update_cpu_usage(statistics);
 	release_input(input);

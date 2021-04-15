@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/14 09:50:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/15 15:03:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	save_solution(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2)
 }
 
 static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
-					t_list **tiles_pos_map_lst, t_puzzle_status *puzzle_status)
+					t_list **puzzle_status_lst, t_puzzle_status *puzzle_status)
 {
 	int					is_puzzle_ready;
 	int					i;
@@ -33,7 +33,7 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 	unsigned int		saved_right_pos_status;
 	unsigned long		saved_tiles_pos_map;
 
-	add_visited_puzzle_status(puzzle_status, tiles_pos_map_lst);
+	add_visited_puzzle_status(puzzle_status, puzzle_status_lst);
 	is_puzzle_ready = 0;
 	i = -1;
 	move.to_pos = pos;
@@ -49,7 +49,7 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 		else
 		{
 			if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
-					tiles_pos_map_lst, INT_MAX))
+					puzzle_status_lst, INT_MAX))
 			{
 				next_status = create_puzzle_status(
 						puzzle->curr_status->tiles_pos_map, puzzle_status,
@@ -86,21 +86,19 @@ void	bfs_1(t_puzzle *puzzle)
 	ft_enqueue(puzzle->status_queue, (void **)&puzzle_status);
 	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue))
 	{
-		puzzle_status
-			= *(t_puzzle_status **)ft_dequeue(puzzle->status_queue);
+		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
 		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
 		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
 		puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
 		puzzle->curr_status->depth = puzzle_status->depth;
 		pos = puzzle->curr_status->empty_pos;
 		is_puzzle_ready = breadth_first_search(puzzle, pos,
-				puzzle->tiles_status_map_lst, puzzle_status);
+				puzzle->puzzle_status_lst, puzzle_status);
 		if (printed_depth < puzzle->curr_status->depth)
 		{
 			FT_LOG_INFO("Depth level %d done", puzzle->curr_status->depth);
 			printed_depth = puzzle->curr_status->depth;
 		}
 	}
-	ft_lstdel(puzzle->tiles_status_map_lst, delete_puzzle_status);
 	return ;
 }
