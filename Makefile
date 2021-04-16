@@ -6,11 +6,17 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/15 13:30:49 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/16 10:17:57 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
+ifdef F
+	MAP_FILE		=	$(F)
+else
+	MAP_FILE		=	data/3_3_01.map
+endif
+
 ifdef L
 	LOGING_LEVEL	=	$(L)
 else
@@ -103,7 +109,7 @@ libraries_norm:
 
 .PHONY: run
 run: all
-	cat data/3_3_01.map | valgrind -s --tool=memcheck \
+	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
 	-A $(ALGORITHM)
 

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 15:01:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/16 12:50:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
 # define LOGING_LEVELS				6
+# define MAX_NUM_OF_B_TREE_ELEMS	3
 
 typedef enum e_loging_level
 {
@@ -97,6 +98,31 @@ typedef struct s_queue
 	t_list		**out_stack;
 }				t_queue;
 
+typedef struct s_bt_key
+{
+	void				*key;
+	size_t				key_size;
+}				t_bt_key;
+
+typedef struct s_bt_data
+{
+	void				*data;
+	size_t				data_size;
+}				t_bt_data;
+
+typedef struct s_bt_elem
+{
+	t_bt_data			bt_data;
+	t_bt_key			bt_key;
+}				t_bt_elem;
+
+typedef struct s_bt_node
+{
+	int					num_of_elems;
+	t_bt_elem			bt_elem[MAX_NUM_OF_B_TREE_ELEMS];
+	struct s_bt_node	*child[MAX_NUM_OF_B_TREE_ELEMS + 1];
+}				t_bt_node;
+
 void				ft_log_trace(const char *file, const int line,
 						const char *fmt, ...);
 void				ft_log_debug(const char *file, const int line,
@@ -156,6 +182,8 @@ void				*ft_stack_pop(t_list **stack);
 void				ft_enqueue(t_queue *queue, void **data);
 void				*ft_dequeue(t_queue *queue);
 int					ft_is_queue_empty(t_queue *queue);
+void				ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data,
+														t_bt_node **bt_root);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)

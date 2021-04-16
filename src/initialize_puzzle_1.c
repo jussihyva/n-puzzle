@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 11:21:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/16 13:00:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->algorithm = input->algorithm;
 	puzzle->size = puzzle_map->size;
 	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
+	puzzle->bt_root
+		= (t_bt_node **)ft_memalloc(sizeof(*puzzle->bt_root));
 	puzzle->puzzle_status_lst
 		= (t_list **)ft_memalloc(sizeof(*puzzle->puzzle_status_lst));
 	puzzle->tile_array = initialize_tile_array(puzzle_map);

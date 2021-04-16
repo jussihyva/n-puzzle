@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 11:16:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/16 13:02:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_puzzle
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
 	t_queue				*status_queue;
+	t_bt_node			**bt_root;
 }				t_puzzle;
 
 typedef enum e_connection_status
@@ -202,7 +203,7 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 int				is_visited_puzzle_status(unsigned long tiles_pos_map,
 					t_list **puzzle_status_lst, int depth);
 void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
-					t_list **puzzle_status_lst);
+					t_list **puzzle_status_lst, t_bt_node **bt_root);
 unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 					int puzzle_size, t_pos **empty_pos);
 void			bfs(t_puzzle *puzzle, t_statistics *statistics);

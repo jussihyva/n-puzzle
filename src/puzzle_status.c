@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 14:56:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/16 13:01:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,19 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 }
 
 void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
-												t_list **tiles_status_map_lst)
+							t_list **tiles_status_map_lst, t_bt_node **bt_root)
 {
 	t_list				*new_elem;
+	t_bt_key			bt_key;
+	t_bt_data			bt_data;
 
 	new_elem = ft_lstnew((void **)&puzzle_status, sizeof(puzzle_status));
 	ft_lstadd(tiles_status_map_lst, new_elem);
+	bt_key.key = (void *)&puzzle_status->tiles_pos_map;
+	bt_key.key_size = sizeof(puzzle_status->tiles_pos_map);
+	bt_data.data = (void *)puzzle_status;
+	bt_data.data_size = sizeof(puzzle_status);
+	ft_bt_instert(&bt_key, &bt_data, bt_root);
 	return ;
 }
 

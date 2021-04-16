@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 22:18:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/16 13:03:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	unsigned long			saved_tiles_pos_map;
 
 	is_puzzle_ready = 0;
-	add_visited_puzzle_status(prev_puzzle_status, puzzle_status_lst);
+	add_visited_puzzle_status(prev_puzzle_status, puzzle_status_lst,
+		puzzle->bt_root);
 	i = -1;
 	while (prev_puzzle_status->depth < puzzle->max_depth && !is_puzzle_ready
 		&& ++i < pos->num_of_neighbors)
