@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/04/17 10:44:29 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/17 12:18:24 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ H_FILES				=	libft/libft.h libft_printf/include/ft_printf.h \
 LIB_FOLDERS			=	$(dir $(A_FILES))
 
 .PHONY: all
-all: h_files libraries
+all: h_files $(A_FILES) libraries
+
+$(A_FILES):
+	ar rcs $@
 
 .PHONY: h_files
 h_files: $(H_FILES)

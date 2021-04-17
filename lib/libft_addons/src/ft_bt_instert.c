@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/17 10:58:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/17 12:20:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,22 @@ static void	split_node(t_bt_node **bt_node, int i)
 	t_bt_node	*new_root;
 	t_bt_node	*new_node;
 
+	return ;
 	mid = (*bt_node)->num_of_elems / 2;
+	if (i > mid && mid * 2 < (*bt_node)->num_of_elems)
+		mid++;
 	new_node = (t_bt_node *)ft_memalloc(sizeof(*new_node));
 	new_root = (t_bt_node *)ft_memalloc(sizeof(*new_root));
-	(void)i;
+	ft_memcpy(&new_node->bt_elem, &(*bt_node)->bt_elem[mid + 1],
+		sizeof(new_node->bt_elem[0]) * (new_node->num_of_elems - i - 1));
+	new_node->num_of_elems = (*bt_node)->num_of_elems - mid;
+	(*bt_node)->num_of_elems = mid;
+	ft_memcpy(&new_root->bt_elem, &(*bt_node)->bt_elem[mid],
+		sizeof(new_root->bt_elem[0]));
+	new_root->child[0] = *bt_node;
+	new_root->child[1] = new_node;
+	if (i > mid)
+		i = new_node->num_of_elems;
 	return ;
 }
 
