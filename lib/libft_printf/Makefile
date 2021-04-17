@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: juhani <juhani@student.42.fr>              +#+  +:+       +#+         #
+#    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2021/03/05 18:44:14 by juhani           ###   ########.fr        #
+#    Updated: 2021/04/17 10:33:36 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ CC				=	clang
 C_FLAGS			=	-std=gnu17 -fPIE -g -Wall -Wextra -Werror $(INCLUDES)
 
 # C (Source code) and H (Header) files
+TARGET_NAME		=	../$(NAME)
 SRC_C_FILES		=	ft_printf.c split_input_string.c create_converters.c \
 					ft_lltoa_base.c ft_ulltoa_base.c param_type.c \
 					width_and_prediction.c modify_character.c \
@@ -50,14 +51,15 @@ YELLOW			=	\033[0;33m
 END				=	\033[0m
 
 .PHONY: all
-all: libraries $(NAME)
+all: libraries $(TARGET_NAME)
+	@echo "$(GREEN)Done!$(END)"
 
-$(NAME): $(FOLDERS) $(C_FILES) $(O_FILES)
-	cp -f ${LIBFT_FOLDER}/$(LIBFT) ${NAME}
-	ar -rcs ${NAME} ${O_FILES}
+$(TARGET_NAME): ../%: % $(FOLDERS) $(C_FILES) $(O_FILES)
+	cp $< $@
 
 $(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile
 	$(CC) -c -o $@ $< $(C_FLAGS)
+	ar -rcs $(NAME) $@
 
 $(FOLDERS):
 	mkdir $@

@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/16 10:23:18 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/17 10:27:30 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ CC				=	clang
 C_FLAGS			=	-std=gnu17 -g -Wall -Wextra -Werror $(INCLUDES)
 
 # C (Source code) and H (Header) files
+TARGET_NAME		=	../$(NAME)
 SRC_C_FILES		=	ft_radian.c ft_max_int.c ft_min_int.c \
 					ft_mod_int.c ft_mod_double.c \
 					ft_matrix_x_vector_double.c \
@@ -49,14 +50,15 @@ YELLOW			=	\033[0;33m
 END				=	\033[0m
 
 .PHONY: all
-all: $(NAME)
+all: $(TARGET_NAME)
 	@echo "$(GREEN)Done!$(END)"
 
-$(NAME): $(FOLDERS) $(H_FILES) $(C_FILES) $(O_FILES)
-	ar -rcs $(NAME) $(O_FILES)
+$(TARGET_NAME): ../%: % $(FOLDERS) $(H_FILES) $(C_FILES) $(O_FILES)
+	cp $< $@
 
 $(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile
 	$(CC) -c -o $@ $< $(C_FLAGS)
+	ar -rcs $(NAME) $@
 
 $(FOLDERS):
 	mkdir $@

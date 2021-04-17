@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/16 10:17:57 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/17 10:12:01 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,14 +43,6 @@ INCLUDE			=	include
 FOLDERS			=	$(LIB) $(BIN) $(DATA) $(OBJ) $(SRC) $(INCLUDE)
 INCLUDES		=	-I $(INCLUDE) -I $(LIB)
 
-# Compiler and linking parameters
-CC				=	clang
-C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES)
-LD_FLAGS		=	-std=gnu17 \
-					-Llib \
-					-lft_addons -lftprintf -lft -lm \
-					-lssl -lcrypto
-
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					puzzle_map_2.c memory.c input.c \
@@ -60,12 +52,23 @@ SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					dfs.c dfs_rand.c dfs_deeping.c dfs_deeping_mem.c \
 					puzzle_status.c bfs.c bfs_1.c
 SRC_H_FILES		=	n_puzzle.h
+LOCAL_LIBS		=	libft_addons.a libftprintf.a libft.a
+GLOBAL_LIBS		=	libssl.a libcrypto.a libm.a
+LOCAL_LIB_FILES	=	$(addprefix $(LIB)/, $(LOCAL_LIBS))
+LIB_FILES		=	$(addprefix -l , $(patsubst lib%.a, %, $(LOCAL_LIBS)))
+LIB_FILES		+=	$(addprefix -l , $(patsubst lib%.a, %, $(GLOBAL_LIBS)))
 
 # Path folders for H, C, O and APP files
 H_FILES			=	$(addprefix $(INCLUDE)/, $(SRC_H_FILES))
 C_FILES			=	$(addprefix $(SRC)/, $(SRC_C_FILES))
 O_FILES			=	$(addprefix $(OBJ)/, $(patsubst %.c, %.o, $(SRC_C_FILES)))
 APP_FILES		=	$(addprefix $(BIN)/, $(NAMES))
+
+# Compiler and linking parameters
+CC				=	clang
+C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES)
+LD_FLAGS		=	-std=gnu17 \
+					-L$(LIB) $(LIB_FILES)
 
 # Colours for printouts
 RED				=	\033[0;31m
@@ -78,12 +81,13 @@ SELF_SIGNED_KEY	=	./tls-selfsigned.key
 
 .PHONY: all
 all: $(SELF_SIGNED_CRT) $(FOLDERS) $(H_FILES) $(C_FILES) libraries $(APP_FILES)
+	@echo "$(LOCAL_LIB_FILES)"
 	@echo "$(GREEN)Done!$(END)"
 
-$(APP_FILES): $(BIN)/%: $(SRC)/%.c $(H_FILES) $(O_FILES) Makefile
+$(APP_FILES): $(BIN)/%: $(SRC)/%.c $(H_FILES) $(O_FILES)
 	$(CC) -o $@ $< $(O_FILES) $(LD_FLAGS) $(C_FLAGS)
 
-$(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile
+$(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile $(LOCAL_LIB_FILES)
 	$(CC) -c -o $@ $< $(C_FLAGS)
 
 $(FOLDERS):

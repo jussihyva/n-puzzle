@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/16 15:03:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/17 10:58:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ static int	update_min_max_values(t_bt_node *bt_node, t_bt_key *bt_key,
 	return (cmp_result);
 }
 
-static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node)
+static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
+																int *is_found)
 {
 	int		min;
 	int		mid;
 	int		max;
 	int		cmp_result;
 
+	*is_found = 0;
 	min = -1;
 	max = (*bt_node)->num_of_elems;
 	mid = max;
@@ -47,10 +49,26 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node)
 	{
 		cmp_result = update_min_max_values(*bt_node, bt_key, &min, &max);
 		if (!cmp_result)
-			FT_LOG_ERROR("New key value is already saved into B-tree!");
+		{
+			*is_found = 1;
+			break ;
+		}
 	}
 	mid = (min + max) / 2;
 	return (mid);
+}
+
+static void	split_node(t_bt_node **bt_node, int i)
+{
+	int			mid;
+	t_bt_node	*new_root;
+	t_bt_node	*new_node;
+
+	mid = (*bt_node)->num_of_elems / 2;
+	new_node = (t_bt_node *)ft_memalloc(sizeof(*new_node));
+	new_root = (t_bt_node *)ft_memalloc(sizeof(*new_root));
+	(void)i;
+	return ;
 }
 
 static void	instert_elem(t_bt_node **bt_node, t_bt_key *bt_key,
@@ -59,8 +77,14 @@ static void	instert_elem(t_bt_node **bt_node, t_bt_key *bt_key,
 	int				i;
 	t_bt_elem		*bt_elem;
 	size_t			move_size;
+	int				is_found;
 
-	i = find_elem_index(bt_key, bt_node);
+	i = find_elem_index(bt_key, bt_node, &is_found);
+	if (is_found || (*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS - 1)
+	{
+		split_node(bt_node, i);
+		return ;
+	}
 	if (i != (*bt_node)->num_of_elems)
 	{
 		move_size = sizeof((*bt_node)->bt_elem[i + 1])

@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/03/27 07:37:34 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/17 10:44:29 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ H_FILES				=	libft/libft.h libft_printf/include/ft_printf.h \
 LIB_FOLDERS			=	$(dir $(A_FILES))
 
 .PHONY: all
-all: h_files libraries archives
+all: h_files libraries
 
 .PHONY: h_files
 h_files: $(H_FILES)
@@ -28,10 +28,6 @@ libraries:
 	for folder in $(LIB_FOLDERS) ; do \
 	    make -C $$folder ; \
 	done
-
-.PHONY: archives
-archives: $(A_FILES)
-	@cp -f $^ ./
 
 .PHONY: clean
 clean:
