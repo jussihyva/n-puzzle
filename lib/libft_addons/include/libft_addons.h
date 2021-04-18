@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/16 12:50:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/18 07:56:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,14 @@ typedef struct s_bt_elem
 {
 	t_bt_data			bt_data;
 	t_bt_key			bt_key;
+	struct s_bt_node	*left_child;
+	struct s_bt_node	*right_child;
 }				t_bt_elem;
 
 typedef struct s_bt_node
 {
 	int					num_of_elems;
 	t_bt_elem			bt_elem[MAX_NUM_OF_B_TREE_ELEMS];
-	struct s_bt_node	*child[MAX_NUM_OF_B_TREE_ELEMS + 1];
 }				t_bt_node;
 
 void				ft_log_trace(const char *file, const int line,

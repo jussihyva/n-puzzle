@@ -6,11 +6,42 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/17 13:56:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/18 09:08:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
+
+static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_key *bt_key,
+															t_bt_data *bt_data)
+{
+	t_bt_elem	*bt_elem;
+	size_t		move_size;
+
+	bt_elem = &bt_node->bt_elem[i];
+	if (i != bt_node->num_of_elems)
+	{
+		move_size = sizeof(bt_node->bt_elem[i + 1])
+			* (bt_node->num_of_elems - i);
+		ft_memmove(&bt_node->bt_elem[i + 1], &bt_node->bt_elem[i], move_size);
+	}
+	bt_node->num_of_elems++;
+	bt_elem->bt_data.data = bt_data->data;
+	bt_elem->bt_data.data_size = bt_data->data_size;
+	bt_elem->bt_key.key = bt_key->key;
+	bt_elem->bt_key.key_size = bt_key->key_size;
+	return ;
+}
+
+static int	get_mid_elem_pos(t_bt_node *bt_node, int i)
+{
+	int		mid;
+
+	mid = bt_node->num_of_elems / 2;
+	if (i > mid && mid * 2 < bt_node->num_of_elems)
+		mid++;
+	return (mid);
+}
 
 static int	update_min_max_values(t_bt_node *bt_node, t_bt_key *bt_key,
 															int *min, int *max)
@@ -45,73 +76,59 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 	min = -1;
 	max = (*bt_node)->num_of_elems;
 	mid = max;
-	while (min + 1 < max)
+	while (min + 1 < max && !*is_found)
 	{
 		cmp_result = update_min_max_values(*bt_node, bt_key, &min, &max);
 		if (!cmp_result)
-		{
 			*is_found = 1;
-			break ;
-		}
 	}
 	mid = (min + max) / 2;
 	return (mid);
 }
 
-static void	split_node(t_bt_node **bt_node, int i)
+static void	split_node(t_bt_node **bt_node, int i, t_bt_elem *parent_elem)
 {
 	int			mid;
-	t_bt_node	*new_root;
 	t_bt_node	*new_node;
 
-	mid = (*bt_node)->num_of_elems / 2;
-	if (i > mid && mid * 2 < (*bt_node)->num_of_elems)
-		mid++;
+	mid = get_mid_elem_pos(*bt_node, i);
 	new_node = (t_bt_node *)ft_memalloc(sizeof(*new_node));
-	new_root = (t_bt_node *)ft_memalloc(sizeof(*new_root));
 	ft_memcpy(&new_node->bt_elem, &(*bt_node)->bt_elem[mid],
 		sizeof(new_node->bt_elem[0]) * ((*bt_node)->num_of_elems - mid - 1));
-	ft_memcpy(&new_node->child, &(*bt_node)->child[mid],
-		sizeof(new_node->child[0]) * ((*bt_node)->num_of_elems - mid));
 	new_node->num_of_elems = (*bt_node)->num_of_elems - mid;
 	(*bt_node)->num_of_elems = mid;
-	ft_memcpy(&new_root->bt_elem, &(*bt_node)->bt_elem[mid],
-		sizeof(new_root->bt_elem[0]));
-	new_root->child[0] = *bt_node;
-	new_root->child[1] = new_node;
-	new_root->num_of_elems = 1;
-	if (i > mid)
+	parent_elem->left_child = *bt_node;
+	parent_elem->right_child = new_node;
+	if (i >= mid)
+	{
 		i = new_node->num_of_elems;
+		*bt_node = new_node;
+	}
 	return ;
 }
 
 static void	instert_elem(t_bt_node **bt_node, t_bt_key *bt_key,
-															t_bt_data *bt_data)
+										t_bt_data *bt_data, t_bt_node *parent)
 {
 	int				i;
-	t_bt_elem		*bt_elem;
-	size_t			move_size;
 	int				is_found;
+	int				mid;
 
 	i = find_elem_index(bt_key, bt_node, &is_found);
-	if (is_found || (*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
-	{
-		split_node(bt_node, i);
+	if (is_found)
 		return ;
-	}
-	if (i != (*bt_node)->num_of_elems)
+	if ((*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
 	{
-		move_size = sizeof((*bt_node)->bt_elem[i + 1])
-			* ((*bt_node)->num_of_elems - i);
-		ft_memmove(&(*bt_node)->bt_elem[i + 1], &(*bt_node)->bt_elem[i],
-			move_size);
+		mid = get_mid_elem_pos(*bt_node, i);
+		if (!parent)
+		{
+			parent = (t_bt_node *)ft_memalloc(sizeof(*parent));
+			save_new_elem(parent, 0, &(*bt_node)->bt_elem[mid].bt_key,
+				&(*bt_node)->bt_elem[mid].bt_data);
+		}
+		split_node(bt_node, i, &parent->bt_elem[mid]);
 	}
-	bt_elem = (t_bt_elem *)ft_memalloc(sizeof(*bt_elem));
-	(*bt_node)->bt_elem[i].bt_data.data = bt_data->data;
-	(*bt_node)->bt_elem[i].bt_data.data_size = bt_data->data_size;
-	(*bt_node)->bt_elem[i].bt_key.key = bt_key->key;
-	(*bt_node)->bt_elem[i].bt_key.key_size = bt_key->key_size;
-	(*bt_node)->num_of_elems++;
+	save_new_elem(*bt_node, i, bt_key, bt_data);
 	return ;
 }
 
@@ -124,6 +141,6 @@ void	ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data, t_bt_node **bt_root)
 		bt_node = (t_bt_node *)ft_memalloc(sizeof(*bt_node));
 		*bt_root = bt_node;
 	}
-	instert_elem(bt_root, bt_key, bt_data);
+	instert_elem(bt_root, bt_key, bt_data, NULL);
 	return ;
 }
