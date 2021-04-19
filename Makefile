@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/17 10:12:01 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/19 14:07:58 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,12 +127,11 @@ test: all
 	-./$(NAME) data/maps/Error/Invalid_param_02
 
 $(SELF_SIGNED_CRT):
-	echo "FI\nUusimaa\n" | \
 	openssl req -x509 -nodes -newkey rsa:2048 \
 	-keyout $(SELF_SIGNED_KEY) \
 	-out $(SELF_SIGNED_CRT) \
 	-days 365 \
-	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=/CN="
+	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=Hive/CN=n-puzzle"
 	chmod 644 $(SELF_SIGNED_CRT)
 	chmod +r $(SELF_SIGNED_KEY)
 

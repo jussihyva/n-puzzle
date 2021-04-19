@@ -6,36 +6,35 @@ SELF_SIGNED_KEY	=	./influxdb-selfsigned.key
 all: start
 
 build: $(SELF_SIGNED_CRT)
-	sudo docker-compose build
+	docker-compose build
 
 start: build
-	sudo docker-compose up -d
+	docker-compose up -d
 
 login:
-	sudo docker exec -it influxdb bash
+	docker exec -it influxdb bash
 	# influx  -ssl -unsafeSsl
 	# create database Hive
 
 login_grafana:
-	sudo docker exec -it grafana bash
+	docker exec -it grafana bash
 
 stop:
-	-sudo docker kill chronograf
-	-sudo docker kill grafana
-	-sudo docker kill influxdb
+	-docker kill chronograf
+	-docker kill grafana
+	-docker kill influxdb
 
 remove: stop
-	-sudo docker rm chronograf
-	-sudo docker rm grafana
-	-sudo docker rm influxdb
+	-docker rm chronograf
+	-docker rm grafana
+	-docker rm influxdb
 
 $(SELF_SIGNED_CRT):
-	echo "FI\nUusimaa\n" | \
 	openssl req -x509 -nodes -newkey rsa:2048 \
 	-keyout $(SELF_SIGNED_KEY) \
 	-out $(SELF_SIGNED_CRT) \
 	-days 365 \
-	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=/CN="
+	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=Hive/CN=influxdb"
 	chmod 644 $(SELF_SIGNED_CRT)
 	chmod +r $(SELF_SIGNED_KEY)
 
