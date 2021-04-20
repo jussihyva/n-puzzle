@@ -49,8 +49,21 @@ services:
     # environment:
     #   - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
     #   - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+  n_puzzle:
+    build: .
+    container_name: n_puzzle
+    hostname: n_puzzle
+    env_file:
+      - .env
+    # ports:
+    # networks:
+    # devices:
+    volumes:
+      - ./n-puzzle:/home/user/n-puzzle:rw
+    entrypoint: tail -f /dev/null
+    working_dir: /home/user/n-puzzle
+    user: user
 volumes:
   influxdb-storage:
   chronograf-storage:
   grafana-storage:
-  n-puzzle:
