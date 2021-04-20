@@ -13,7 +13,6 @@ services:
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
       - ./influxdb-selfsigned.key:/etc/ssl/private/influxdb-selfsigned.key:ro
       - ./influxdb-selfsigned.crt:/etc/ssl/certs/influxdb-selfsigned.crt:ro
-      - ./plugins:/var/lib/grafana/plugins
     environment:
       - INFLUXDB_DB=${INFLUXDB_DB}
       - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_NAME}
@@ -44,6 +43,7 @@ services:
       - ./influxdb-selfsigned.key:/etc/ssl/private/influxdb-selfsigned.key:rw
       - ./influxdb-selfsigned.crt:/etc/ssl/certs/influxdb-selfsigned.crt:ro
       - ./grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./plugins:/var/lib/grafana/plugins
     depends_on:
       - influxdb
     # environment:
@@ -53,4 +53,4 @@ volumes:
   influxdb-storage:
   chronograf-storage:
   grafana-storage:
-
+  n-puzzle:
