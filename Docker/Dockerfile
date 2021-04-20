@@ -17,13 +17,15 @@ RUN	apt-get install -y autoconf ; \
 	apt-get install -y automake ; \
 	apt-get install -y build-essential ; \
 	apt-get install -y clang ; \
+	apt-get install -y iproute2 ; \
 	apt-get install -y libcurl4-openssl-dev ;\
 	apt-get install -y libssl-dev ; \
 	apt-get install -y python ; \
 	apt-get install -y python3-pip
 RUN	apt-get install -y ssh ; \
-	apt-get install -y telnet
-RUN	apt-get install -y valgrind
+	apt-get install -y sudo ; \
+	apt-get install -y telnet ; \
+	apt-get install -y valgrind
 
 # User Setup
 ARG USER=user
@@ -56,4 +58,6 @@ WORKDIR /root
 RUN apt-get update -y
 RUN apt-get upgrade -y
 
+# Additional python modules
 RUN	apt-get install -y python3-tk
+RUN pip3 install Pillow

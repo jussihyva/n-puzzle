@@ -55,14 +55,15 @@ services:
     hostname: n_puzzle
     env_file:
       - .env
-    # ports:
+    ports:
+      - '2222:22'
     # networks:
     # devices:
     volumes:
       - ./n-puzzle:/home/user/n-puzzle:rw
     entrypoint: tail -f /dev/null
     working_dir: /home/user/n-puzzle
-    user: user
+    user: root
 volumes:
   influxdb-storage:
   chronograf-storage:
