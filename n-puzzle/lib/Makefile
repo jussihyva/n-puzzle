@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/04/19 12:08:51 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/21 11:37:13 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ LIB_FOLDERS			=	$(dir $(A_FILES))
 all: h_files $(A_FILES) libraries
 
 $(A_FILES):
-	ar rcs $@ Makefile
+	ar -rcs $@ Makefile
+	ar -d $@ Makefile
 
 .PHONY: h_files
 h_files: $(H_FILES)

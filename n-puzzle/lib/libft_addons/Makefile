@@ -6,9 +6,15 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/17 10:27:30 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/21 12:38:52 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+OS				=	$(shell uname -s)
+ifeq ($(OS), Darwin)
+	D_ATTRIBUTES	=	-D DARWIN
+	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/include
+endif
 
 NAME			=	libft_addons.a
 
@@ -17,11 +23,13 @@ OBJ				=	obj
 SRC				=	src
 INCLUDE			=	include
 FOLDERS			=	$(OBJ) $(SRC) $(INCLUDE)
-INCLUDES		=	-I $(INCLUDE) -I ../libft -I ../libft_printf/include
+INCLUDES		=	-I $(INCLUDE) -I ../libft -I ../libft_printf/include \
+					$(MAC_INCLUDES)
 
 # Compiler and linking parameters
 CC				=	clang
 C_FLAGS			=	-std=gnu17 -g -Wall -Wextra -Werror $(INCLUDES)
+LD_FLAGS		=	$(D_ATTRIBUTES)
 
 # C (Source code) and H (Header) files
 TARGET_NAME		=	../$(NAME)
@@ -57,7 +65,7 @@ $(TARGET_NAME): ../%: % $(FOLDERS) $(H_FILES) $(C_FILES) $(O_FILES)
 	cp $< $@
 
 $(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile
-	$(CC) -c -o $@ $< $(C_FLAGS)
+	$(CC) -c -o $@ $< $(C_FLAGS) $(LD_FLAGS)
 	ar -rcs $(NAME) $@
 
 $(FOLDERS):

@@ -63,7 +63,7 @@ services:
       - ./n-puzzle:/home/user/n-puzzle:rw
     entrypoint: tail -f /dev/null
     working_dir: /home/user/n-puzzle
-    user: root
+    user: user
 volumes:
   influxdb-storage:
   chronograf-storage:

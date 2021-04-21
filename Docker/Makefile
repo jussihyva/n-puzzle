@@ -1,8 +1,11 @@
 .PHONY: all build start login stop remove create_keys print_key clean fclean
 
+SELF_SIGNED_CRT	=	./influxdb-selfsigned.crt
+SELF_SIGNED_KEY	=	./influxdb-selfsigned.key
+
 all: start
 
-build:
+build: $(SELF_SIGNED_CRT)
 	docker-compose build
 
 start: build
@@ -30,6 +33,15 @@ remove: stop
 	-docker rm chronograf
 	-docker rm grafana
 	-docker rm influxdb
+
+$(SELF_SIGNED_CRT):
+	openssl req -x509 -nodes -newkey rsa:2048 \
+	-keyout $(SELF_SIGNED_KEY) \
+	-out $(SELF_SIGNED_CRT) \
+	-days 365 \
+	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=Hive/CN=influxdb"
+	chmod 644 $(SELF_SIGNED_CRT)
+	chmod +r $(SELF_SIGNED_KEY)
 
 clean: remove
 

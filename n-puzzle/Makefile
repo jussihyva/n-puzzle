@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/19 14:07:58 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/21 12:44:25 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,13 @@ ifdef A
 	ALGORITHM	=	$(A)
 else
 	ALGORITHM	=	dfs_1
+endif
+
+OS				=	$(shell uname -s)
+ifeq ($(OS), Darwin)
+	D_ATTRIBUTES	=	-D DARWIN
+	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/include
+	MAC_LD_FLAGS	=	-L/Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/lib
 endif
 
 # Application specific parameters
@@ -66,9 +73,10 @@ APP_FILES		=	$(addprefix $(BIN)/, $(NAMES))
 
 # Compiler and linking parameters
 CC				=	clang
-C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES)
-LD_FLAGS		=	-std=gnu17 \
-					-L$(LIB) $(LIB_FILES)
+C_FLAGS			=	-g -Wall -Wextra -Werror $(INCLUDES) $(MAC_INCLUDES)
+LD_FLAGS		=	-std=gnu17 $(MAC_LD_FLAGS) \
+					-L$(LIB) $(LIB_FILES) \
+					$(D_ATTRIBUTES)
 
 # Colours for printouts
 RED				=	\033[0;31m
@@ -88,7 +96,7 @@ $(APP_FILES): $(BIN)/%: $(SRC)/%.c $(H_FILES) $(O_FILES)
 	$(CC) -o $@ $< $(O_FILES) $(LD_FLAGS) $(C_FLAGS)
 
 $(O_FILES): $(OBJ)/%.o: $(SRC)/%.c $(H_FILES) Makefile $(LOCAL_LIB_FILES)
-	$(CC) -c -o $@ $< $(C_FLAGS)
+	$(CC) -c -o $@ $< $(C_FLAGS) $(D_ATTRIBUTES)
 
 $(FOLDERS):
 	mkdir $@
@@ -113,14 +121,22 @@ libraries_norm:
 
 .PHONY: run
 run: all
+ifeq ($(OS), Darwin)
+	cat $(MAP_FILE) | $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
+	-A $(ALGORITHM)
+else
 	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
 	-A $(ALGORITHM)
+endif
 
 .PHONY: run_loop
 run_loop: all
+ifeq ($(OS), Darwin)
+	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s 3 | ./bin/n_puzzle -L 2 -rA dfs_1 | ./bin/n-puzzle_gui.py ; done
+else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s 3 | ./bin/n_puzzle -L 2 -rA dfs_1 | ./bin/n-puzzle_gui.py ; done
-
+endif
 .PHONY: test
 test: all
 	-./$(NAME) data/maps/Error/Invalid_param_01

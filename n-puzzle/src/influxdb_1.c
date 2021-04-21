@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 13:14:25 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/05 11:55:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/21 11:04:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	write_influxdb(t_tls_connection *connection, char *body, char *database)
 	char		header[READ_BUF_MAX_SIZE];
 	char		read_buf[READ_BUF_MAX_SIZE];
 	int			chars;
-	int			start;
-	int			end;
+	clock_t		start;
+	clock_t		end;
 
 	sprintf(header,
 		"POST /write?db=%s&precision=s %sContent-Length: %ld\r\n\r\n",

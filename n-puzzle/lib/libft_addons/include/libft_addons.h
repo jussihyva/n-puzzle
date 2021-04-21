@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/18 07:56:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/21 12:36:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <math.h>
 # include <time.h>
 # include <sys/time.h>
-# include <linux/posix_types.h>
 # include <netinet/in.h>
 # include <netinet/tcp.h>
 # include <arpa/inet.h>
@@ -41,11 +40,19 @@ typedef enum e_loging_level
 	LOG_FATAL = 5
 }				t_loging_level;
 
+# if DARWIN
+typedef struct s_timeval
+{
+	__darwin_time_t			tv_sec;
+	__darwin_suseconds_t	tv_usec;
+}									t_timeval;
+# else
 typedef struct s_timeval
 {
 	__kernel_time_t			tv_sec;
 	__kernel_suseconds_t	tv_usec;
 }									t_timeval;
+# endif
 
 typedef struct s_tls_connection
 {
