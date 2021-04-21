@@ -3,29 +3,22 @@
 	// Hover to view descriptions of existing attributes.
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
-	"configurations":
-	[
+	"configurations": [
 		{
-			"name": "(gdb) Launch",
+			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/bin/n_puzzle",
-			// "args": ["-L", "2", "-rA", "dfs_1", "<", "data/3_3_01.map"],
-			// "args": ["-L", "2", "-A", "dfs_3", "<", "data/3_3_05.map"],
-			// "args": ["-L", "2", "-A", "bfs_1", "<", "data/3_3_03.map"],
-			// "args": ["-L", "2", "-A", "bfs_1", "<", "data/3_3_01.map"],
-			"args": ["-L", "2", "-A", "bfs_1", "<", "data/3_3_05.map"],
+			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
+			"args": ["-L", "2", "-A", "bfs_1"],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}",
+			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "gdb",
+			"MIMode": "lldb",
 			"setupCommands": [
-				{
-					"description": "Enable pretty-printing for gdb",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
-				}
+                {
+                    "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
+                }
 			]
 		}
 	]
