@@ -6,7 +6,8 @@
 			[
 				"${default}",
 				"${workspaceFolder}/**",
-				"/usr/include/**"
+				"/usr/include/**",
+				"/Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
