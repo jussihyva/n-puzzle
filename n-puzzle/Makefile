@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/21 12:44:25 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/22 13:25:49 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,9 +133,13 @@ endif
 .PHONY: run_loop
 run_loop: all
 ifeq ($(OS), Darwin)
-	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s 3 | ./bin/n_puzzle -L 2 -rA dfs_1 | ./bin/n-puzzle_gui.py ; done
+	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s 3 \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) >/dev/null ; \
+		done
 else
-	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s 3 | ./bin/n_puzzle -L 2 -rA dfs_1 | ./bin/n-puzzle_gui.py ; done
+	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s 3 \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) \
+		| ./bin/n-puzzle_gui.py ; done
 endif
 .PHONY: test
 test: all
