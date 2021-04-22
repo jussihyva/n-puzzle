@@ -6,11 +6,11 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/04/22 15:57:38 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/22 18:09:24 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT_FOLDERS		=	n-puzzle Docker
+PROJECT_FOLDERS		=	Docker n-puzzle
 
 .PHONY: all
 all: folders
