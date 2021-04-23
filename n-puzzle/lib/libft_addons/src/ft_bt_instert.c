@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/22 20:12:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/23 10:06:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_elem *new_bt_elem)
 			* (bt_node->num_of_elems - i);
 		ft_memmove(&bt_node->bt_elem[i + 1], &bt_node->bt_elem[i], move_size);
 	}
-	bt_node->num_of_elems++;
 	ft_memcpy(bt_elem, new_bt_elem, sizeof(*bt_elem));
+	if (i && new_bt_elem->left_child)
+		bt_node->bt_elem[i - 1].right_child = new_bt_elem->left_child;
+	if (i < bt_node->num_of_elems && new_bt_elem->right_child)
+		bt_node->bt_elem[i + 1].left_child = new_bt_elem->right_child;
+	bt_node->num_of_elems++;
 	return ;
 }
 
@@ -33,9 +37,9 @@ static int	get_mid_elem_pos(t_bt_node *bt_node, int i)
 {
 	int		mid;
 
-	mid = bt_node->num_of_elems / 2 - 1;
-	if (i > mid && mid * 2 < bt_node->num_of_elems)
-		mid++;
+	mid = bt_node->num_of_elems / 2;
+	if (!(bt_node->num_of_elems % 2) && mid >= i + 1)
+		mid--;
 	return (mid);
 }
 
@@ -61,7 +65,7 @@ static int	update_min_max_values(t_bt_node *bt_node, t_bt_key *bt_key,
 }
 
 static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
-																int *is_found)
+												int recursive, int *is_found)
 {
 	int		min;
 	int		mid;
@@ -79,10 +83,10 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 			*is_found = 1;
 	}
 	mid = (min + max) / 2;
-	if ((*bt_node)->bt_elem[mid].left_child)
+	if (recursive && (*bt_node)->bt_elem[mid].left_child)
 	{
 		*bt_node = (*bt_node)->bt_elem[mid].left_child;
-		mid = find_elem_index(bt_key, bt_node, is_found);
+		mid = find_elem_index(bt_key, bt_node, recursive, is_found);
 	}
 	return (mid);
 }
@@ -109,24 +113,26 @@ static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
 	return ;
 }
 
-static void	instert_elem(t_bt_node *bt_node, t_bt_elem *bt_elem)
+static void	instert_elem(t_bt_node *bt_node, t_bt_elem *bt_elem, int recursive)
 {
 	int				i;
 	int				is_found;
 	int				mid;
 	t_bt_elem		*parent_new_bt_elem;
 
-	i = find_elem_index(&bt_elem->bt_key, &bt_node, &is_found);
+	i = find_elem_index(&bt_elem->bt_key, &bt_node, recursive, &is_found);
 	if (is_found)
 		return ;
 	if (bt_node->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
 	{
 		mid = get_mid_elem_pos(bt_node, i);
 		if (!bt_node->parent)
-			bt_node->parent = (t_bt_node *)ft_memalloc(sizeof(*bt_node->parent));
+			bt_node->parent
+				= (t_bt_node *)ft_memalloc(sizeof(*bt_node->parent));
 		parent_new_bt_elem = &bt_node->bt_elem[mid];
 		split_node(&bt_node, &i, parent_new_bt_elem);
-		instert_elem(bt_node->parent, parent_new_bt_elem);
+		recursive = 0;
+		instert_elem(bt_node->parent, parent_new_bt_elem, recursive);
 	}
 	save_new_elem(bt_node, i, bt_elem);
 	return ;
@@ -135,20 +141,18 @@ static void	instert_elem(t_bt_node *bt_node, t_bt_elem *bt_elem)
 void	ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data, t_bt_node **bt_root)
 {
 	t_bt_node		*bt_node;
-	t_bt_node		*parent;
 	t_bt_elem		bt_elem;
+	int				recursive;
 
+	recursive = 1;
 	ft_bzero(&bt_elem, sizeof(bt_elem));
 	if (!(*bt_root))
 	{
 		bt_node = (t_bt_node *)ft_memalloc(sizeof(*bt_node));
 		*bt_root = bt_node;
 	}
-	parent = NULL;
 	ft_memcpy(&bt_elem.bt_data, bt_data, sizeof(bt_elem.bt_data));
 	ft_memcpy(&bt_elem.bt_key, bt_key, sizeof(bt_elem.bt_key));
-	instert_elem(*bt_root, &bt_elem);
-	if (parent)
-		*bt_root = parent;
+	instert_elem(*bt_root, &bt_elem, recursive);
 	return ;
 }
