@@ -6,11 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/24 07:07:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/24 11:13:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
+
+static void	instert_elem(t_bt_node *bt_node, t_bt_elem *bt_elem, int recursive);
 
 static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_elem *new_bt_elem)
 {
@@ -33,13 +35,13 @@ static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_elem *new_bt_elem)
 	return ;
 }
 
-static int	get_mid_elem_pos(t_bt_node *bt_node, int i)
+static int	get_mid_elem_pos(t_bt_node *bt_node)
 {
 	int		mid;
 
 	mid = bt_node->num_of_elems / 2;
-	if (!(bt_node->num_of_elems % 2) && mid >= i + 1)
-		mid--;
+	// if (!(bt_node->num_of_elems % 2) && mid >= i + 1)
+	// 	mid--;
 	return (mid);
 }
 
@@ -64,13 +66,52 @@ static int	update_min_max_values(t_bt_node *bt_node, t_bt_key *bt_key,
 	return (is_found);
 }
 
+static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
+{
+	int			mid;
+	t_bt_node	*new_node;
+	size_t		move_size;
+
+	mid = get_mid_elem_pos(*bt_node);
+	if (!((*bt_node)->num_of_elems % 2) && mid >= *i + 1)
+		mid--;
+	new_node = (t_bt_node *)ft_memalloc(sizeof(*new_node));
+	new_node->parent = (*bt_node)->parent;
+	move_size = sizeof(new_node->bt_elem[0])
+		* ((*bt_node)->num_of_elems - mid - 1);
+	ft_memcpy(&new_node->bt_elem[0], &(*bt_node)->bt_elem[mid + 1], move_size);
+	new_node->num_of_elems = (*bt_node)->num_of_elems - mid - 1;
+	(*bt_node)->num_of_elems = mid;
+	parent_elem->left_child = *bt_node;
+	parent_elem->right_child = new_node;
+	if (*i >= mid)
+	{
+		*i = new_node->num_of_elems;
+		*bt_node = new_node;
+	}
+	return ;
+}
+
 static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 												int recursive, int *is_found)
 {
 	int			min;
+	int			mid;
 	int			max;
 	t_bt_node	*bt_child_node;
+	t_bt_elem	*parent_new_bt_elem;
 
+	if ((*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
+	{
+		mid = get_mid_elem_pos(*bt_node);
+		if (!(*bt_node)->parent)
+			(*bt_node)->parent
+				= (t_bt_node *)ft_memalloc(sizeof(*(*bt_node)->parent));
+		parent_new_bt_elem = &(*bt_node)->bt_elem[mid];
+		split_node(bt_node, &mid, parent_new_bt_elem);
+		instert_elem((*bt_node)->parent, parent_new_bt_elem, 0);
+		*bt_node = (*bt_node)->parent;
+	}
 	*is_found = 0;
 	min = -1;
 	max = (*bt_node)->num_of_elems;
@@ -90,51 +131,14 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 	return (max);
 }
 
-static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
-{
-	int			mid;
-	t_bt_node	*new_node;
-	size_t		move_size;
-
-	mid = get_mid_elem_pos(*bt_node, *i);
-	new_node = (t_bt_node *)ft_memalloc(sizeof(*new_node));
-	new_node->parent = (*bt_node)->parent;
-	move_size = sizeof(new_node->bt_elem[0])
-		* ((*bt_node)->num_of_elems - mid - 1);
-	ft_memcpy(&new_node->bt_elem[0], &(*bt_node)->bt_elem[mid + 1], move_size);
-	new_node->num_of_elems = (*bt_node)->num_of_elems - mid - 1;
-	(*bt_node)->num_of_elems = mid;
-	parent_elem->left_child = *bt_node;
-	parent_elem->right_child = new_node;
-	if (*i >= mid)
-	{
-		*i = new_node->num_of_elems;
-		*bt_node = new_node;
-	}
-	return ;
-}
-
 static void	instert_elem(t_bt_node *bt_node, t_bt_elem *bt_elem, int recursive)
 {
 	int				i;
 	int				is_found;
-	int				mid;
-	t_bt_elem		*parent_new_bt_elem;
 
 	i = find_elem_index(&bt_elem->bt_key, &bt_node, recursive, &is_found);
 	if (is_found)
 		return ;
-	if (bt_node->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
-	{
-		mid = get_mid_elem_pos(bt_node, i);
-		if (!bt_node->parent)
-			bt_node->parent
-				= (t_bt_node *)ft_memalloc(sizeof(*bt_node->parent));
-		parent_new_bt_elem = &bt_node->bt_elem[mid];
-		split_node(&bt_node, &i, parent_new_bt_elem);
-		recursive = 0;
-		instert_elem(bt_node->parent, parent_new_bt_elem, recursive);
-	}
 	save_new_elem(bt_node, i, bt_elem);
 	return ;
 }
