@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 11:54:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/24 06:19:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 				*right_pos_status |= (unsigned int)1 << pos2->order_num;
 		}
 	}
-	FT_LOG_DEBUG("Righ position status: %u", *right_pos_status);
+	FT_LOG_TRACE("Right position status: %u", *right_pos_status);
 	return ;
 }
 

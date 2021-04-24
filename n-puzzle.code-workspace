@@ -12,7 +12,11 @@
 			"string_view": "c",
 			"initializer_list": "c",
 			"utility": "c",
-			"libft_addons.h": "c"
+			"libft_addons.h": "c",
+			"chrono": "c",
+			"random": "c",
+			"limits": "c",
+			"algorithm": "c"
 		}
 	}
 }

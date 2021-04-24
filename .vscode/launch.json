@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-			"args": ["-L", "2", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
+			"args": ["-L", "1", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],
