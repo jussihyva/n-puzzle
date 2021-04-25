@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/24 11:13:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/25 23:01:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 		parent_new_bt_elem = &(*bt_node)->bt_elem[mid];
 		split_node(bt_node, &mid, parent_new_bt_elem);
 		instert_elem((*bt_node)->parent, parent_new_bt_elem, 0);
-		*bt_node = (*bt_node)->parent;
 	}
 	*is_found = 0;
 	min = -1;
