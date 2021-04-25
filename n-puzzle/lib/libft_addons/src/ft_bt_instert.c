@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/25 23:01:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/26 00:39:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,21 @@ static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_elem *new_bt_elem)
 			* (bt_node->num_of_elems - i);
 		ft_memmove(&bt_node->bt_elem[i + 1], &bt_node->bt_elem[i], move_size);
 	}
+	if (i)
+	{
+		if (new_bt_elem->left_child)
+			bt_node->bt_elem[i - 1].right_child = new_bt_elem->left_child;
+		else
+			new_bt_elem->left_child = bt_node->bt_elem[i - 1].right_child;
+	}
+	if (i < bt_node->num_of_elems)
+	{
+		if (new_bt_elem->right_child)
+			bt_node->bt_elem[i + 1].left_child = new_bt_elem->right_child;
+		else
+			new_bt_elem->right_child = bt_node->bt_elem[i + 1].left_child;
+	}
 	ft_memcpy(bt_elem, new_bt_elem, sizeof(*bt_elem));
-	if (i && new_bt_elem->left_child)
-		bt_node->bt_elem[i - 1].right_child = new_bt_elem->left_child;
-	if (i < (bt_node->num_of_elems) && new_bt_elem->right_child)
-		bt_node->bt_elem[i + 1].left_child = new_bt_elem->right_child;
 	bt_node->num_of_elems++;
 	return ;
 }
@@ -82,6 +92,8 @@ static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
 	ft_memcpy(&new_node->bt_elem[0], &(*bt_node)->bt_elem[mid + 1], move_size);
 	new_node->num_of_elems = (*bt_node)->num_of_elems - mid - 1;
 	(*bt_node)->num_of_elems = mid;
+	(*bt_node)->bt_elem[(*bt_node)->num_of_elems - 1].right_child = NULL;
+	new_node->bt_elem[0].left_child = NULL;
 	parent_elem->left_child = *bt_node;
 	parent_elem->right_child = new_node;
 	if (*i >= mid)
