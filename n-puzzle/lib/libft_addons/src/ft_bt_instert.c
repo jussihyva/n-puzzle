@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/26 00:39:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/26 10:19:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,8 @@ static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
 	ft_memcpy(&new_node->bt_elem[0], &(*bt_node)->bt_elem[mid + 1], move_size);
 	new_node->num_of_elems = (*bt_node)->num_of_elems - mid - 1;
 	(*bt_node)->num_of_elems = mid;
-	(*bt_node)->bt_elem[(*bt_node)->num_of_elems - 1].right_child = NULL;
-	new_node->bt_elem[0].left_child = NULL;
 	parent_elem->left_child = *bt_node;
 	parent_elem->right_child = new_node;
-	if (*i >= mid)
-	{
-		*i = new_node->num_of_elems;
-		*bt_node = new_node;
-	}
 	return ;
 }
 
@@ -110,6 +103,7 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 	int			min;
 	int			mid;
 	int			max;
+	int			cmp_result;
 	t_bt_node	*bt_child_node;
 	t_bt_elem	*parent_new_bt_elem;
 
@@ -122,6 +116,10 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 		parent_new_bt_elem = &(*bt_node)->bt_elem[mid];
 		split_node(bt_node, &mid, parent_new_bt_elem);
 		instert_elem((*bt_node)->parent, parent_new_bt_elem, 0);
+		cmp_result = ft_memcmp(bt_key->key,
+				parent_new_bt_elem->bt_key.key, bt_key->key_size);
+		if (cmp_result > 0)
+			*bt_node = parent_new_bt_elem->right_child;
 	}
 	*is_found = 0;
 	min = -1;
