@@ -1,19 +1,4 @@
 {
-  "__inputs": [],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.5.4"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -30,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -46,6 +31,132 @@
       "panels": [],
       "title": "3x3 Puzzle",
       "type": "row"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 19,
+        "x": 0,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "border": {
+          "show": false,
+          "color": "yellow",
+          "size": 1
+        },
+        "fieldSets": [
+          {
+            "col": 1,
+            "color": "#e5ed15",
+            "dotSize": 3,
+            "lineSize": 1,
+            "lineType": "none",
+            "hidden": false
+          },
+          {
+            "col": 1,
+            "color": "#b0a2f2",
+            "dotSize": 3,
+            "lineSize": 1,
+            "lineType": "none",
+            "hidden": false
+          }
+        ],
+        "grid": {
+          "color": "gray"
+        },
+        "legend": {
+          "show": false,
+          "size": 3
+        },
+        "rotateYAxisTitle": true,
+        "xAxis": {
+          "col": 2,
+          "inverted": false
+        },
+        "xAxisExtents": {
+          "min": 0,
+          "max": null
+        },
+        "xAxisTitle": {
+          "text": "Tile moves",
+          "color": "white",
+          "textSize": 1
+        },
+        "yAxisExtents": {
+          "min": 0,
+          "max": null
+        },
+        "yAxisTitle": {
+          "text": "CPU Usage time / Min.",
+          "color": "#777",
+          "textSize": 1
+        }
+      },
+      "pluginVersion": "7.5.2",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "project=n-puzzle",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "total_cpu_usage_time"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 1000 / 60"
+                ],
+                "type": "math"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "tile_moves"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "puzzle_size",
+              "operator": "=",
+              "value": "3"
+            },
+            {
+              "condition": "AND",
+              "key": "algorithm",
+              "operator": "=",
+              "value": "dfs"
+            },
+            {
+              "condition": "AND",
+              "key": "algorithm_substring",
+              "operator": "=",
+              "value": "no_mem_rand"
+            }
+          ]
+        }
+      ],
+      "title": "CPU time vs. Tile moves (DFS Random)",
+      "type": "michaeldmoore-scatter-panel"
     },
     {
       "aliasColors": {},
@@ -64,7 +175,7 @@
         "h": 12,
         "w": 19,
         "x": 0,
-        "y": 1
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 2,
@@ -84,7 +195,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -283,7 +394,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU Usage time (min)",
+      "title": "Puzzle solve time (CPU Usage time)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -299,15 +410,15 @@
       },
       "yaxes": [
         {
-          "format": "short",
-          "label": null,
+          "format": "none",
+          "label": "Minutes",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
-          "format": "short",
+          "format": "none",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -336,7 +447,7 @@
         "h": 10,
         "w": 19,
         "x": 0,
-        "y": 13
+        "y": 22
       },
       "hiddenSeries": false,
       "id": 6,
@@ -356,7 +467,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -615,7 +726,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Tile moves / sec",
+      "title": "Tile moves",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -631,15 +742,15 @@
       },
       "yaxes": [
         {
-          "format": "short",
-          "label": null,
+          "format": "none",
+          "label": "Moves / sec.",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
-          "format": "short",
+          "format": "none",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -661,12 +772,12 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-14d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "3x3 Puzzle CPU usage and tile moves.",
   "uid": "aZLjn6XGk",
-  "version": 2
+  "version": 9
 }
