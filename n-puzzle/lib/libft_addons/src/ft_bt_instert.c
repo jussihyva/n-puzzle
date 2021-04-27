@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/26 10:19:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/27 10:23:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ static void	save_new_elem(t_bt_node *bt_node, int i, t_bt_elem *new_bt_elem)
 			new_bt_elem->right_child = bt_node->bt_elem[i + 1].left_child;
 	}
 	ft_memcpy(bt_elem, new_bt_elem, sizeof(*bt_elem));
+	if (bt_elem->left_child)
+		bt_elem->left_child->parent = bt_node;
+	if (bt_elem->right_child)
+		bt_elem->right_child->parent = bt_node;
 	bt_node->num_of_elems++;
 	return ;
 }
@@ -90,6 +94,10 @@ static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
 	move_size = sizeof(new_node->bt_elem[0])
 		* ((*bt_node)->num_of_elems - mid - 1);
 	ft_memcpy(&new_node->bt_elem[0], &(*bt_node)->bt_elem[mid + 1], move_size);
+	if (new_node->bt_elem[0].left_child)
+		new_node->bt_elem[0].left_child->parent = new_node;
+	if (new_node->bt_elem[0].right_child)
+		new_node->bt_elem[0].right_child->parent = new_node;
 	new_node->num_of_elems = (*bt_node)->num_of_elems - mid - 1;
 	(*bt_node)->num_of_elems = mid;
 	parent_elem->left_child = *bt_node;
