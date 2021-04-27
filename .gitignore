@@ -2,3 +2,6 @@ __pycache__
 *.key
 *.crt
 *.dSYM
+chronograf-storage
+influxdb-storage
+grafana-storage
