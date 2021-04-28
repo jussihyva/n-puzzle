@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/13 15:28:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 12:40:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static char	*create_format_string(void)
 	ft_strcat(string, "project=%s,algorithm=%s,algorithm_substring=%s");
 	ft_strcat(string, ",puzzle_size=%d");
 	ft_strcat(string, " execution_time=%di,total_cpu_usage_time=%di");
-	ft_strcat(string, ",tile_moves=%di,max_mem_usage=%di %d\n");
+	ft_strcat(string, ",tile_moves=%di,max_mem_usage=%di");
+	ft_strcat(string, ",puzzle_states=%di");
+	ft_strcat(string, " %d\n");
 	return (string);
 }
 
@@ -49,6 +51,7 @@ void	influxdb_plugin(t_log_event *event)
 			statistics->puzzle_size,
 			(int)get_execution_time(statistics), (int)statistics->cpu_usage_ms,
 			statistics->tile_move_cnt, statistics->max_mem_usage,
+			statistics->puzzle_states,
 			statistics->end_time);
 		ft_dprintf(2, "Execution time (ms): %ld\n",
 			get_execution_time(statistics));

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/18 11:16:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 12:27:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static int	breadth_first_search(t_puzzle *puzzle, t_pos *pos,
 	unsigned int		saved_right_pos_status;
 	unsigned long		saved_tiles_pos_map;
 
-	add_visited_puzzle_status(puzzle_status, puzzle_status_lst,
-		puzzle->bt_root);
+	add_visited_puzzle_status(puzzle_status, puzzle);
 	is_puzzle_ready = 0;
 	i = -1;
 	move.to_pos = pos;

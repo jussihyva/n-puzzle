@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 14:15:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 12:53:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ static void	print_map(t_map *map)
 	return ;
 }
 
+static void	send_stat_report(t_puzzle *puzzle)
+{
+	stat_set_end_time(puzzle->statistics);
+	stat_update_cpu_usage(puzzle->statistics);
+	puzzle->statistics->puzzle_states = puzzle->status_count;
+	puzzle->statistics->order = E_SEND_TO_INFLUXDB;
+	FT_LOG_INFO("Execution time : %ld", get_execution_time(puzzle->statistics));
+	puzzle->statistics->order = E_NONE;
+	FT_LOG_INFO("Total num of moves: %lu", *puzzle->move_cnt);
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	t_input				*input;
@@ -51,12 +63,13 @@ int	main(int argc, char **argv)
 	puzzle = initialize_puzzle(input);
 	puzzle->move_cnt = &statistics->tile_move_cnt;
 	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
-		dfs(puzzle, statistics);
+		dfs(puzzle);
 	else if (!ft_strncmp(input->cmd_args->algorithm, "bfs", 3))
-		bfs(puzzle, statistics);
+		bfs(puzzle);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
+	send_stat_report(puzzle);
 	if (input->cmd_args->release)
 		ft_printf("END\n");
 	release_puzzle(puzzle);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/16 13:02:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 12:52:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_statistics
 	t_tls_connection	*connection;
 	int					max_mem_usage;
 	int					puzzle_size;
+	int					puzzle_states;
 }				t_statistics;
 
 typedef struct s_cmd_args
@@ -141,6 +142,7 @@ typedef struct s_puzzle
 	int					max_depth;
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
+	int					status_count;
 	t_queue				*status_queue;
 	t_bt_node			**bt_root;
 }				t_puzzle;
@@ -173,7 +175,7 @@ int				remove_comment(char *line);
 void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
-void			dfs(t_puzzle *puzzle, t_statistics *statistics);
+void			dfs(t_puzzle *puzzle);
 t_puzzle		*initialize_puzzle(t_input *input);
 void			set_order_number(t_puzzle *puzzle, t_pos ***pos_table,
 					int order_num, t_xy_values xy_pos, t_dir dir);
@@ -203,10 +205,10 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 int				is_visited_puzzle_status(unsigned long tiles_pos_map,
 					t_list **puzzle_status_lst, int depth);
 void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
-					t_list **puzzle_status_lst, t_bt_node **bt_root);
+					t_puzzle *puzzle);
 unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 					int puzzle_size, t_pos **empty_pos);
-void			bfs(t_puzzle *puzzle, t_statistics *statistics);
+void			bfs(t_puzzle *puzzle);
 void			bfs_1(t_puzzle *puzzle);
 void			update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
 					int puzzle_size, unsigned long *tiles_pos_map);
