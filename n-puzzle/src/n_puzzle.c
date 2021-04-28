@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 12:53:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:25:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ int	main(int argc, char **argv)
 	send_stat_report(puzzle);
 	if (input->cmd_args->release)
 		ft_printf("END\n");
-	release_puzzle(puzzle);
-	release_influxdb(influxdb);
-	stat_update_cpu_usage(statistics);
-	release_input(input);
+	release(input, influxdb, puzzle);
 	return (0);
 }

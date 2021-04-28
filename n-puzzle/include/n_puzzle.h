@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 12:52:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:24:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,14 +172,12 @@ t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 					char **argv, char *options);
 t_map			*read_puzzle_map(void);
 int				remove_comment(char *line);
-void			release_input(t_input *input);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
 void			dfs(t_puzzle *puzzle);
 t_puzzle		*initialize_puzzle(t_input *input);
-void			set_order_number(t_puzzle *puzzle, t_pos ***pos_table,
-					int order_num, t_xy_values xy_pos, t_dir dir);
-void			release_puzzle(t_puzzle *puzzle);
+void			set_order_number(t_pos ***pos_table, int size);
+void			release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle);
 void			print_puzzle(int fd, t_puzzle *puzzle);
 void			stat_set_start_time(t_statistics *statistics);
 void			stat_set_end_time(t_statistics *statistics);
@@ -194,7 +192,6 @@ void			dfs_deeping(t_puzzle *puzzle);
 void			dfs_deeping_mem(t_puzzle *puzzle);
 void			tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
 t_tile			**initialize_tile_array(t_map *puzzle_map);
-void			release_influxdb(t_influxdb *influxdb);
 void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/24 06:19:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:01:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,23 @@ int	get_tile_number(unsigned long tiles_pos_map, t_pos *pos, int puzzle_size)
 	return (tile_number);
 }
 
+static unsigned long	set_position_match(unsigned long tiles_pos_map,
+													t_pos *pos, int puzzle_size)
+{
+	int					tile_number;
+	unsigned long		match;
+
+	tile_number = get_tile_number(tiles_pos_map, pos, puzzle_size);
+	if (tile_number == pos->order_num)
+		match = (unsigned int)1 << pos->order_num;
+	else
+		match = 0;
+	return (match);
+}
+
 static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 												unsigned int *right_pos_status)
 {
-	int				tile_number;
 	unsigned long	tiles_pos_map;
 
 	tiles_pos_map = puzzle->curr_status->tiles_pos_map;
@@ -42,12 +55,10 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 		}
 		else
 		{
-			tile_number = get_tile_number(tiles_pos_map, pos1, puzzle->size);
-			if (tile_number == pos1->order_num)
-				*right_pos_status |= (unsigned int)1 << pos1->order_num;
-			tile_number = get_tile_number(tiles_pos_map, pos2, puzzle->size);
-			if (tile_number == pos2->order_num)
-				*right_pos_status |= (unsigned int)1 << pos2->order_num;
+			*right_pos_status |= set_position_match(tiles_pos_map, pos1,
+					puzzle->size);
+			*right_pos_status |= set_position_match(tiles_pos_map, pos2,
+					puzzle->size);
 		}
 	}
 	FT_LOG_TRACE("Right position status: %u", *right_pos_status);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:26:25 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/11 03:54:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 17:44:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,30 @@ static void	go_up(t_pos ***pos_table, t_xy_values *xy_pos, int size, t_dir *dir)
 	return ;
 }
 
-void	set_order_number(t_puzzle *puzzle, t_pos ***pos_table, int order_num,
-	t_xy_values xy_pos, t_dir dir)
+void	set_order_number(t_pos ***pos_table, int size)
 {
-	int			size;
+	int				num_of_tiles;
+	t_xy_values		xy_pos;
+	int				order_num;
+	t_dir			dir;
 
-	size = puzzle->size;
-	if (size * size == order_num)
+	xy_pos.x = 0;
+	xy_pos.y = 0;
+	dir = E_RIGHT;
+	num_of_tiles = size * size;
+	order_num = 0;
+	while (++order_num < num_of_tiles)
 	{
-		pos_table[xy_pos.y][xy_pos.x]->order_num = 0;
-		return ;
+		pos_table[xy_pos.y][xy_pos.x]->order_num = order_num;
+		if (dir == E_RIGHT)
+			go_right(pos_table, &xy_pos, size, &dir);
+		else if (dir == E_DOWN)
+			go_down(pos_table, &xy_pos, size, &dir);
+		else if (dir == E_LEFT)
+			go_left(pos_table, &xy_pos, &dir);
+		else if (dir == E_UP)
+			go_up(pos_table, &xy_pos, size, &dir);
 	}
-	pos_table[xy_pos.y][xy_pos.x]->order_num = order_num;
-	order_num++;
-	if (dir == E_RIGHT)
-		go_right(pos_table, &xy_pos, size, &dir);
-	else if (dir == E_DOWN)
-		go_down(pos_table, &xy_pos, size, &dir);
-	else if (dir == E_LEFT)
-		go_left(pos_table, &xy_pos, &dir);
-	else if (dir == E_UP)
-		go_up(pos_table, &xy_pos, size, &dir);
-	else
-		return ;
-	set_order_number(puzzle, pos_table, order_num, xy_pos, dir);
+	pos_table[xy_pos.y][xy_pos.x]->order_num = 0;
 	return ;
 }

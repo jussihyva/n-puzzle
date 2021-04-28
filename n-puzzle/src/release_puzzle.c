@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory.c                                           :+:      :+:    :+:   */
+/*   release_puzzle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/15 15:04:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:29:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-void	release_puzzle(t_puzzle *puzzle)
+static void	release_status_queue(t_queue *status_queue)
+{
+	t_puzzle_status		*puzzle_status;
+
+	while (!ft_is_queue_empty(status_queue))
+	{
+		puzzle_status = (t_puzzle_status *)ft_dequeue(status_queue);
+		ft_memdel((void **)&puzzle_status);
+	}
+	ft_memdel((void **)&status_queue->in_stack);
+	ft_memdel((void **)&status_queue->out_stack);
+	ft_memdel((void **)&status_queue);
+	return ;
+}
+
+static void	release_puzzle(t_puzzle *puzzle)
 {
 	int					i;
 	int					j;
-	t_puzzle_status		*puzzle_status;
 
-	while (!ft_is_queue_empty(puzzle->status_queue))
-	{
-		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
-		ft_memdel((void **)&puzzle_status);
-	}
-	ft_memdel((void **)&puzzle->status_queue->in_stack);
-	ft_memdel((void **)&puzzle->status_queue->out_stack);
-	ft_memdel((void **)&puzzle->status_queue);
+	release_status_queue(puzzle->status_queue);
 	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	ft_memdel((void **)&puzzle->puzzle_status_lst);
 	i = -1;
@@ -47,7 +54,7 @@ void	release_puzzle(t_puzzle *puzzle)
 	return ;
 }
 
-void	release_input(t_input *input)
+static void	release_input(t_input *input)
 {
 	int		i;
 
@@ -71,12 +78,20 @@ void	release_input(t_input *input)
 	return ;
 }
 
-void	release_influxdb(t_influxdb *influxdb)
+static void	release_influxdb(t_influxdb *influxdb)
 {
 	t_tls_connection	*tls_connection;
 
 	tls_connection = (t_tls_connection *)influxdb->connection;
 	ft_openssl_rel_conn(&tls_connection);
 	ft_memdel((void **)&influxdb);
+	return ;
+}
+
+void	release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle)
+{
+	release_puzzle(puzzle);
+	release_influxdb(influxdb);
+	release_input(input);
 	return ;
 }

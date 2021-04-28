@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/22 13:25:49 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/04/28 18:31:51 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,13 @@ INCLUDES		=	-I $(INCLUDE) -I $(LIB)
 
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
-					puzzle_map_2.c memory.c input.c \
+					puzzle_map_2.c release_puzzle.c input_1.c input_2.c \
 					initialize_puzzle_1.c initialize_puzzle_2.c \
 					puzzle_print.c statistics_1.c statistics_2.c \
+					statistics_3.c \
 					influxdb_1.c tile.c \
 					dfs.c dfs_rand.c dfs_deeping.c dfs_deeping_mem.c \
-					puzzle_status.c bfs.c bfs_1.c
+					puzzle_status_1.c puzzle_status_2.c bfs.c bfs_1.c
 SRC_H_FILES		=	n_puzzle.h
 LOCAL_LIBS		=	libft_addons.a libftprintf.a libft.a
 GLOBAL_LIBS		=	libssl.a libcrypto.a libm.a
@@ -173,4 +174,8 @@ re: fclean all
 
 .PHONY: norm
 norm: libraries_norm
+ifeq ($(OS), Darwin)
+	norminette-beta $(SRC)/* $(INCLUDE)/*
+else
 	norminette $(SRC)/* $(INCLUDE)/*
+endif

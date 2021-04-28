@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/24 07:06:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/28 18:52:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void				*ft_stack_pop(t_list **stack);
 void				ft_enqueue(t_queue *queue, void **data);
 void				*ft_dequeue(t_queue *queue);
 int					ft_is_queue_empty(t_queue *queue);
+t_queue				*ft_queue_init(void);
 void				ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data,
 														t_bt_node **bt_root);
 void				ft_bt_print(t_bt_node *bt_node, int *count);
