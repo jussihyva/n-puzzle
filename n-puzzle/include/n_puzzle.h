@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:24:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/29 09:59:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ void			dfs(t_puzzle *puzzle);
 t_puzzle		*initialize_puzzle(t_input *input);
 void			set_order_number(t_pos ***pos_table, int size);
 void			release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle);
-void			print_puzzle(int fd, t_puzzle *puzzle);
+void			print_puzzle(int fd, unsigned long tiles_pos_map,
+					int puzzle_size);
 void			stat_set_start_time(t_statistics *statistics);
 void			stat_set_end_time(t_statistics *statistics);
 time_t			get_execution_time(t_statistics *statistics);

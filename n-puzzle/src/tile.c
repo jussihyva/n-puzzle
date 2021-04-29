@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:01:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/29 10:50:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 		&puzzle->curr_status->tiles_pos_map);
 	update_right_pos_status(puzzle, from_pos, to_pos,
 		&puzzle->curr_status->right_pos_status);
-	print_puzzle(1, puzzle);
 	return ;
 }
 
