@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/27 10:23:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 15:29:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ static void	split_node(t_bt_node **bt_node, int *i, t_bt_elem *parent_elem)
 	return ;
 }
 
-static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
-												int recursive, int *is_found)
+int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node, int recursive,
+																int *is_found)
 {
 	int			min;
 	int			mid;
@@ -115,7 +115,7 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 	t_bt_node	*bt_child_node;
 	t_bt_elem	*parent_new_bt_elem;
 
-	if ((*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
+	if ((*bt_node)->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS && recursive != 2)
 	{
 		mid = get_mid_elem_pos(*bt_node);
 		if (!(*bt_node)->parent)
@@ -134,16 +134,19 @@ static int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 	max = (*bt_node)->num_of_elems;
 	while (min + 1 < max && !*is_found)
 		*is_found = update_min_max_values(*bt_node, bt_key, &min, &max);
-	if (!(*bt_node)->num_of_elems || max == MAX_NUM_OF_B_TREE_ELEMS)
-		bt_child_node = NULL;
-	else if (max == (*bt_node)->num_of_elems)
-		bt_child_node = (*bt_node)->bt_elem[max - 1].right_child;
-	else
-		bt_child_node = (*bt_node)->bt_elem[max].left_child;
-	if (recursive && bt_child_node)
+	if (!*is_found)
 	{
-		*bt_node = bt_child_node;
-		max = find_elem_index(bt_key, bt_node, recursive, is_found);
+		if (!(*bt_node)->num_of_elems)
+			bt_child_node = NULL;
+		else if (max == (*bt_node)->num_of_elems)
+			bt_child_node = (*bt_node)->bt_elem[max - 1].right_child;
+		else
+			bt_child_node = (*bt_node)->bt_elem[max].left_child;
+		if (recursive && bt_child_node)
+		{
+			*bt_node = bt_child_node;
+			max = find_elem_index(bt_key, bt_node, recursive, is_found);
+		}
 	}
 	return (max);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:17:55 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/25 23:12:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 14:14:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_bt_print(t_bt_node *bt_node, int *count)
 		if (bt_child_node)
 			ft_bt_print(bt_child_node, count);
 		(*count)++;
-		FT_LOG_DEBUG("KEY %03d: %#.9lx (%p)", *count,
+		FT_LOG_TRACE("KEY %03d: %#.9lx (%p)", *count,
 			*(unsigned long *)bt_elem->bt_key.key,
 			bt_elem->bt_key.key);
 		bt_child_node = bt_elem->right_child;
