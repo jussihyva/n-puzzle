@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:25:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 10:32:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ static void	send_stat_report(t_puzzle *puzzle)
 {
 	stat_set_end_time(puzzle->statistics);
 	stat_update_cpu_usage(puzzle->statistics);
-	puzzle->statistics->puzzle_states = puzzle->status_count;
 	puzzle->statistics->order = E_SEND_TO_INFLUXDB;
 	FT_LOG_INFO("Execution time : %ld", get_execution_time(puzzle->statistics));
 	puzzle->statistics->order = E_NONE;
-	FT_LOG_INFO("Total num of moves: %lu", *puzzle->move_cnt);
+	FT_LOG_INFO("Total num of moves: %d", *puzzle->tile_move_cnt);
 	return ;
 }
 
@@ -61,7 +60,9 @@ int	main(int argc, char **argv)
 	statistics->puzzle_size = input->puzzle_map->size;
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input);
-	puzzle->move_cnt = &statistics->tile_move_cnt;
+	puzzle->tile_move_cnt = &statistics->tile_move_cnt;
+	puzzle->states_cnt = &statistics->puzzle_states_cnt;
+	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
 		dfs(puzzle);
 	else if (!ft_strncmp(input->cmd_args->algorithm, "bfs", 3))

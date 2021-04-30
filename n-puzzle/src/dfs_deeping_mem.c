@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/29 10:52:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 10:56:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);
 		ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	}
+	*puzzle->solution_move_cnt = puzzle->max_depth + 1;
 	return ;
 }

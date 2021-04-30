@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/29 10:53:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 11:02:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	dfs_no_mem(t_puzzle *puzzle)
 			pos = next_pos;
 		}
 	}
+	*puzzle->solution_move_cnt = *puzzle->tile_move_cnt;
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/29 09:59:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/04/30 10:30:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,17 @@ typedef struct s_statistics
 	t_order				order;
 	char				*algorithm;
 	char				*algorithm_substring;
-	unsigned long		tile_move_cnt;
 	struct timespec		start_time;
 	struct timespec		end_time;
 	time_t				start_time_ms;
 	time_t				end_time_ms;
 	clock_t				cpu_usage_ms;
 	t_tls_connection	*connection;
+	int					tile_move_cnt;
+	int					solution_move_cnt;
 	int					max_mem_usage;
 	int					puzzle_size;
-	int					puzzle_states;
+	int					puzzle_states_cnt;
 }				t_statistics;
 
 typedef struct s_cmd_args
@@ -137,12 +138,13 @@ typedef struct s_puzzle
 	t_algorithm			algorithm;
 	t_pos				***pos_table;
 	t_tile				**tile_array;
-	unsigned long		*move_cnt;
+	int					*tile_move_cnt;
+	int					*solution_move_cnt;
 	unsigned int		puzzle_ready_status;
 	int					max_depth;
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
-	int					status_count;
+	int					*states_cnt;
 	t_queue				*status_queue;
 	t_bt_node			**bt_root;
 }				t_puzzle;
