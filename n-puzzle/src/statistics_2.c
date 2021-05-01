@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/30 10:38:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 19:50:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	influxdb_plugin(t_log_event *event)
 			statistics->puzzle_size,
 			(int)get_execution_time(statistics), (int)statistics->cpu_usage_ms,
 			statistics->tile_move_cnt, statistics->max_mem_usage,
-			statistics->solution_move_cnt,
-			statistics->puzzle_states_cnt,
+			statistics->solution_move_cnt, statistics->puzzle_states_cnt,
 			statistics->end_time);
 		ft_dprintf(2, "Execution time (ms): %ld\n",
 			get_execution_time(statistics));

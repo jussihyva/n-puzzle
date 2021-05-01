@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/30 14:09:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 20:51:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 		tile_move(pos, pos->neighbors[i], puzzle);
 		print_puzzle(1, puzzle->curr_status->tiles_pos_map, puzzle->size);
 		if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map,
-				puzzle, puzzle_status->depth + 1))
+				puzzle))
 		{
 			next_puzzle_status
 				= create_puzzle_status(puzzle->curr_status->tiles_pos_map,
@@ -73,6 +73,7 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos, puzzle_status,
 				puzzle->puzzle_status_lst);
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);
+		ft_bt_remove(puzzle->bt_root, NULL);
 		ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	}
 	*puzzle->solution_move_cnt = puzzle->max_depth + 1;

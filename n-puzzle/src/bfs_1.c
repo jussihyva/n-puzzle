@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/30 14:10:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 19:48:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static t_puzzle_status	*add_next_status_to_queue(t_puzzle *puzzle,
 	t_puzzle_status		*next_status;
 
 	next_status = NULL;
-	if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map, puzzle,
-			INT_MAX))
+	if (!is_visited_puzzle_status(puzzle->curr_status->tiles_pos_map, puzzle))
 	{
 		next_status = create_puzzle_status(
 				puzzle->curr_status->tiles_pos_map, puzzle_status,

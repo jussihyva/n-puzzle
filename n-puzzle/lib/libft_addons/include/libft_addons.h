@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/01 13:04:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 20:39:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void				ft_bt_print(t_bt_node *bt_node, int *count);
 int					find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 						int recursive, int *is_found);
 int					ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root);
+void				ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:29:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 20:42:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	release_puzzle(t_puzzle *puzzle)
 	int					j;
 
 	release_status_queue(puzzle->status_queue);
+	ft_bt_remove(puzzle->bt_root, NULL);
+	ft_memdel((void **)&puzzle->bt_root);
 	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	ft_memdel((void **)&puzzle->puzzle_status_lst);
 	i = -1;
@@ -90,6 +92,8 @@ static void	release_influxdb(t_influxdb *influxdb)
 
 void	release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle)
 {
+	if (input->cmd_args->release)
+		ft_printf("END\n");
 	release_puzzle(puzzle);
 	release_influxdb(influxdb);
 	release_input(input);

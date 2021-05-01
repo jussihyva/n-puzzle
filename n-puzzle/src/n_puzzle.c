@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/30 10:32:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/01 19:51:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ int	main(int argc, char **argv)
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
 	send_stat_report(puzzle);
-	if (input->cmd_args->release)
-		ft_printf("END\n");
 	release(input, influxdb, puzzle);
 	return (0);
 }
