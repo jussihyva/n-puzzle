@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/01 20:13:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/02 12:22:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	is_visited_puzzle_status(unsigned long tiles_pos_map, t_puzzle *puzzle)
 	bt_key.key = (void *)&tiles_pos_map;
 	bt_key.key_size = sizeof(tiles_pos_map);
 	is_visited = ft_bt_find(&bt_key, *puzzle->bt_root);
-	if (1 == 1)
+	if (1 == 2)
 		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited);
 	return (is_visited);
 }

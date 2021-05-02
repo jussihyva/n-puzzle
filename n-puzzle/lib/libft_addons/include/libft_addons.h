@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/01 20:39:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/02 12:21:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void				ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data,
 						t_bt_node **bt_root);
 void				ft_bt_print(t_bt_node *bt_node, int *count);
 int					find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
-						int recursive, int *is_found);
+						t_bt_node **parent, int recursive, int *is_found);
 int					ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root);
 void				ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key);
 
