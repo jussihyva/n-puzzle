@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 19:30:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/03 16:43:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 	int				i;
 	int				j;
 	unsigned long	tile_number;
+	int				shift;
 
 	tiles_pos_map = 0;
 	i = -1;
@@ -49,7 +50,8 @@ unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 		while (++j < puzzle_size)
 		{
 			tile_number = (unsigned long)tile_map[i][j];
-			tiles_pos_map |= tile_number << (4 * (i * puzzle_size + j));
+			shift = 4 * (i * puzzle_size + j);
+			tiles_pos_map |= tile_number << shift;
 			if (!tile_number)
 				*empty_pos = pos_table[i][j];
 		}
