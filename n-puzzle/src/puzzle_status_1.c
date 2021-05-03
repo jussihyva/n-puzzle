@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 17:01:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/02 19:30:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	is_visited_puzzle_status(unsigned long tiles_pos_map, t_puzzle *puzzle)
 	is_visited = 0;
 	if (bt_data)
 		is_visited = 1;
-	if (1 == 1)
+	if (1 == 2)
 		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited);
 	return (is_visited);
 }

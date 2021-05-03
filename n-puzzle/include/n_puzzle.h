@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/01 19:47:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/02 19:12:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_puzzle_status
 	t_move					prev_move;
 	t_pos					*empty_pos;
 	unsigned int			right_pos_status;
+	int						is_in_queue;
 }				t_puzzle_status;
 
 typedef struct s_puzzle

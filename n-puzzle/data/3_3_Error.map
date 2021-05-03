@@ -1,0 +1,10 @@
+# More than 41 moves
+# Date: 02.02.2021
+# 18:55:22.371 INFO  src/dfs_deeping_mem.c:75: Depth level 38 done
+# 18:57:08.068 INFO  src/puzzle_status_1.c:117: Tiles pos map: 854203761
+# 18:57:08.068 INFO  src/puzzle_status_1.c:118: Is visited: 1 0
+# 19:00:40.318 INFO  src/dfs_deeping_mem.c:75: Depth level 39 done
+ 3
+    8    5    1
+    3    0    7
+    2    4    6
