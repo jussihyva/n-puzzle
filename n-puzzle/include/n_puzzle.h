@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 19:12:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/03 11:49:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_printf.h"
 # include "libft_addons.h"
 # include <unistd.h>
+# include <fcntl.h>
 # include <time.h>
 # include <sys/resource.h>
 
@@ -84,6 +85,7 @@ typedef struct s_cmd_args
 	t_loging_level	loging_level;
 	char			*algorithm;
 	int				release;
+	char			*input_file;
 }				t_cmd_args;
 
 typedef struct s_map
@@ -173,7 +175,7 @@ void			set_loging_parameters(t_input *input,
 					t_loging_level event_type, t_statistics *statistics);
 t_cmd_args		*arg_parser(void (fn)(t_cmd_args *, char, char *), int argc,
 					char **argv, char *options);
-t_map			*read_puzzle_map(void);
+t_map			*read_puzzle_map(char *input_file);
 int				remove_comment(char *line);
 void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);

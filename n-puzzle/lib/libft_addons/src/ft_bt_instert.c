@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 10:23:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 16:56:02 by jkauppi          ###   ########.fr       */
+/*   Created: 2021/05/03 13:32:44 by jkauppi           #+#    #+#             */
+/*   Updated: 2021/05/03 13:55:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ static int	get_mid_elem_pos(t_bt_node *bt_node)
 	return (mid);
 }
 
+/**
+ * @brief 
+ * 
+ * @param bt_node 
+ * @param bt_key 
+ * @param bt_data 
+ * @return int 
+ */
 static int	search_key_position(t_bt_node *bt_node, t_bt_key *bt_key,
 															void **bt_data)
 {
@@ -168,7 +176,6 @@ void	ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data, t_bt_node **bt_root)
 {
 	t_bt_node		*bt_node;
 	t_bt_elem		bt_elem;
-	int				count;
 	t_bt_node		*parent;
 
 	FT_LOG_DEBUG("New key: %#lx", *(unsigned long *)bt_key->key);
@@ -184,7 +191,5 @@ void	ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data, t_bt_node **bt_root)
 	instert_elem(*bt_root, &parent, &bt_elem);
 	if (parent)
 		*bt_root = parent;
-	count = 0;
-	ft_bt_print(*bt_root, &count);
 	return ;
 }

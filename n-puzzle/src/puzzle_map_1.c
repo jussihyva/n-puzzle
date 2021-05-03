@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/03 18:22:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/03 11:48:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,46 @@ static void	read_map_line(t_map *puzzle_map, char *line,
 	return ;
 }
 
-t_map	*read_puzzle_map(void)
+int	open_fd(char *file_path)
+{
+	int		fd;
+
+	fd = 0;
+	if (file_path)
+	{
+		fd = open(file_path, O_RDONLY);
+		if (fd == -1)
+		{
+			FT_LOG_ERROR("%s (%s) failed! errno=%d. %s: %s",
+					"Opening of a file", file_path, errno, "Detail info",
+															strerror(errno));
+			exit(42);
+		}
+	}
+	return (fd);
+}
+
+t_map	*read_puzzle_map(char *input_file)
 {
 	t_map			*puzzle_map;
 	char			*line;
 	int				row_i;
 	t_read_state	state;
+	int				fd;
 
 	puzzle_map = (t_map *)ft_memalloc(sizeof(*puzzle_map));
 	line = NULL;
 	state = E_READ_SIZE;
 	row_i = -1;
-	while (ft_get_next_line(0, &line) > 0)
+	fd = open_fd(input_file);
+	while (ft_get_next_line(fd, &line) > 0)
 	{
 		read_map_line(puzzle_map, line, &state, &row_i);
 		ft_strdel(&line);
 	}
 	ft_strdel(&line);
+	if (fd)
+		close(fd);
 	FT_LOG_INFO("Puzzle size: %d", puzzle_map->size);
 	return (puzzle_map);
 }

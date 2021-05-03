@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:21:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/01 11:20:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/03 13:38:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	set_g_loging_params_2(t_loging_params *loging_params)
 	return ;
 }
 
-void	execute_login_extensions(t_log_event *event,
-														const char *fmt, ...)
+void	execute_login_extensions(t_log_event *event, const char *fmt, ...)
 {
 	size_t					i;
 	t_loging_extension		*loging_extension;

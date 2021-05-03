@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:32:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:33:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/03 11:33:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 	{
 		ft_strdel(&cmd_args->algorithm);
 		cmd_args->algorithm = next_arg;
+	}
+	else if (opt == 'f')
+	{
+		cmd_args->input_file = next_arg;
 	}
 	else if (opt == 'r')
 		cmd_args->release = 1;
