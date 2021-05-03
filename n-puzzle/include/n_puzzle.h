@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/03 11:49:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 00:12:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_cmd_args
 	char			*algorithm;
 	int				release;
 	char			*input_file;
+	int				print_delay;
 }				t_cmd_args;
 
 typedef struct s_map
@@ -150,6 +151,7 @@ typedef struct s_puzzle
 	int					*states_cnt;
 	t_queue				*status_queue;
 	t_bt_node			**bt_root;
+	int					print_delay;
 }				t_puzzle;
 
 typedef enum e_connection_status

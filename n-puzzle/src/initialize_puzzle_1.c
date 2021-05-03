@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:51:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 00:12:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 
 	puzzle_map = input->puzzle_map;
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
+	puzzle->print_delay = input->cmd_args->print_delay;
 	puzzle->statistics = input->statistics;
 	puzzle->algorithm = input->algorithm;
 	puzzle->size = puzzle_map->size;

@@ -6,23 +6,21 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 19:16:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 00:17:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	print_solution(t_puzzle_status *puzzle_status, int puzzle_size,
-														int *solution_move_cnt)
+static int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 {
 	int		is_puzzle_ready;
 
 	if (puzzle_status->prev_status)
-		is_puzzle_ready = print_solution(puzzle_status->prev_status,
-				puzzle_size, solution_move_cnt);
-	print_puzzle(1, puzzle_status->tiles_pos_map, puzzle_size);
-	(*solution_move_cnt)++;
-	sleep(2);
+		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
+	print_puzzle(1, puzzle_status->tiles_pos_map, puzzle->size);
+	(*puzzle->solution_move_cnt)++;
+	sleep(puzzle->print_delay / 10);
 	is_puzzle_ready = 1;
 	return (is_puzzle_ready);
 }
@@ -68,8 +66,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 			== puzzle->puzzle_ready_status)
 		{
 			*puzzle->solution_move_cnt = -1;
-			is_puzzle_ready = print_solution(next_status, puzzle->size,
-					puzzle->solution_move_cnt);
+			is_puzzle_ready = print_solution(next_status, puzzle);
 		}
 		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
 		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;

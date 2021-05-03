@@ -6,11 +6,23 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/03 11:03:10 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/04 00:24:07 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
+ifdef S
+	PUZZLE_SIZE		=	$(S)
+else
+	PUZZLE_SIZE		=	3
+endif
+
+ifdef D
+	PRINT_DELAY		=	$(D)
+else
+	PRINT_DELAY		=	0
+endif
+
 ifdef F
 	MAP_FILE		=	$(F)
 else
@@ -124,23 +136,23 @@ libraries_norm:
 run: all
 ifeq ($(OS), Darwin)
 	cat $(MAP_FILE) | $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM)
+	-A $(ALGORITHM) -D $(PRINT_DELAY)
 else
 	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM)
+	-A $(ALGORITHM) -D $(PRINT_DELAY)
 endif
 
 .PHONY: run_loop
 run_loop: all
 ifeq ($(OS), Darwin)
-	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s 3 \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) \
+	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
 		>/dev/null ; \
 		done
 else
-	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s 3 \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) \
+	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
 		| ./bin/n-puzzle_gui.py ; done
 endif
 .PHONY: test
