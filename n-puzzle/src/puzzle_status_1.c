@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/03 16:43:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 07:20:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 	return ;
 }
 
-static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
-											t_puzzle *puzzle, int bt_is_visited)
+int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle)
 {
 	int					is_visited;
 	t_list				*elem;
@@ -114,6 +113,15 @@ static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
 		}
 		elem = elem->next;
 	}
+	return (is_visited);
+}
+
+static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
+											t_puzzle *puzzle, int bt_is_visited)
+{
+	int					is_visited;
+
+	is_visited = is_visited_puzzle_status_list(tiles_pos_map, puzzle);
 	if (is_visited != bt_is_visited)
 	{
 		FT_LOG_INFO("Tiles pos map: %lx", tiles_pos_map);
@@ -122,7 +130,8 @@ static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
 	return ;
 }
 
-int	is_visited_puzzle_status(unsigned long tiles_pos_map, t_puzzle *puzzle)
+int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
+															t_puzzle *puzzle)
 {
 	int					is_visited;
 	t_bt_key			bt_key;

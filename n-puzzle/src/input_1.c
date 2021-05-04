@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 00:13:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 07:23:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ static char	*set_algorithm_string(t_algorithm algorithm)
 		algorithm_string = ft_strdup("dfs");
 	else if (algorithm == E_DFS_DEEPING_MEM)
 		algorithm_string = ft_strdup("dfs");
-	else if (algorithm == E_BFS)
+	else if (algorithm == E_BFS_1)
+		algorithm_string = ft_strdup("bfs");
+	else if (algorithm == E_BFS_2)
 		algorithm_string = ft_strdup("bfs");
 	return (algorithm_string);
 }
@@ -39,8 +41,10 @@ static char	*set_algorithm_substring(t_algorithm algorithm)
 		algorithm_substring = ft_strdup("deeping");
 	else if (algorithm == E_DFS_DEEPING_MEM)
 		algorithm_substring = ft_strdup("deeping_mem");
-	else if (algorithm == E_BFS)
-		algorithm_substring = ft_strdup("mem");
+	else if (algorithm == E_BFS_1)
+		algorithm_substring = ft_strdup("list");
+	else if (algorithm == E_BFS_2)
+		algorithm_substring = ft_strdup("b_tree");
 	return (algorithm_substring);
 }
 
@@ -56,7 +60,9 @@ t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
 	else if (!ft_strcmp(algorithm_string, "dfs_3"))
 		algorithm = E_DFS_DEEPING_MEM;
 	else if (!ft_strcmp(algorithm_string, "bfs_1"))
-		algorithm = E_BFS;
+		algorithm = E_BFS_1;
+	else if (!ft_strcmp(algorithm_string, "bfs_2"))
+		algorithm = E_BFS_2;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
