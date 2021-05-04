@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 07:41:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 16:22:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
 
 	next_status = NULL;
 	if (!is_visited_puzzle_status_list(puzzle->curr_status->tiles_pos_map,
-			puzzle))
+			puzzle, puzzle_status->depth))
 	{
 		next_status = create_puzzle_status(
 				puzzle->curr_status->tiles_pos_map, puzzle_status,
@@ -54,7 +54,7 @@ static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle,
 
 	next_status = NULL;
 	if (!is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
-			puzzle))
+			puzzle, puzzle_status->depth + 1))
 	{
 		next_status = create_puzzle_status(
 				puzzle->curr_status->tiles_pos_map, puzzle_status,

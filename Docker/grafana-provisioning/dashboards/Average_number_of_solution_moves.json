@@ -1,452 +1,664 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "type": "dashboard"
-      }
-    ]
-  },
-  "editable": true,
-  "gnetId": null,
-  "graphTooltip": 0,
-  "id": 3,
-  "links": [],
-  "panels": [
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 18,
-        "w": 7,
-        "x": 0,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.5.2",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "1h"
-              ],
-              "type": "time"
-            }
-          ],
-          "measurement": "project=n-puzzle",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'no_mem_rand') AND $timeFilter GROUP BY time(1h)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "solution_moves"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "solution_moves"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "count"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "puzzle_size",
-              "operator": "=",
-              "value": "3"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm",
-              "operator": "=",
-              "value": "dfs"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm_substring",
-              "operator": "=",
-              "value": "no_mem_rand"
-            }
-          ]
-        }
-      ],
-      "title": "DFS Random",
-      "type": "table"
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 18,
-        "w": 7,
-        "x": 7,
-        "y": 0
-      },
-      "id": 3,
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.5.2",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "1h"
-              ],
-              "type": "time"
-            }
-          ],
-          "measurement": "project=n-puzzle",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'deeping_mem') AND $timeFilter GROUP BY time(1h)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "solution_moves"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "puzzle_size",
-              "operator": "=",
-              "value": "3"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm",
-              "operator": "=",
-              "value": "dfs"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm_substring",
-              "operator": "=",
-              "value": "deeping_mem"
-            }
-          ]
-        }
-      ],
-      "title": "DFS Deeping",
-      "type": "table"
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 18,
-        "w": 7,
-        "x": 14,
-        "y": 0
-      },
-      "id": 4,
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.5.2",
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "1h"
-              ],
-              "type": "time"
-            }
-          ],
-          "measurement": "project=n-puzzle",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'mem') AND $timeFilter GROUP BY time(1h)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "solution_moves"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "puzzle_size",
-              "operator": "=",
-              "value": "3"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm",
-              "operator": "=",
-              "value": "bfs"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm_substring",
-              "operator": "=",
-              "value": "mem"
-            }
-          ]
-        }
-      ],
-      "title": "BFS",
-      "type": "table"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 21,
-        "x": 0,
-        "y": 18
-      },
-      "id": 6,
-      "options": {
-        "border": {
-          "show": false,
-          "color": "yellow",
-          "size": 1
-        },
-        "fieldSets": [
-          {
-            "col": 2,
-            "color": "#bf69f4",
-            "dotSize": 3,
-            "hidden": false,
-            "lineSize": 1,
-            "lineType": "none"
-          }
-        ],
-        "grid": {
-          "color": "gray"
-        },
-        "legend": {
-          "show": false,
-          "size": 3
-        },
-        "rotateYAxisTitle": true,
-        "xAxis": {
-          "col": 1,
-          "inverted": false
-        },
-        "xAxisExtents": {
-          "min": 0,
-          "max": null
-        },
-        "xAxisTitle": {
-          "text": "Solution moves",
-          "color": "white",
-          "textSize": 1
-        },
-        "yAxisExtents": {
-          "min": 0,
-          "max": null
-        },
-        "yAxisTitle": {
-          "text": "CPU time / Min.",
-          "color": "#777",
-          "textSize": 1
-        }
-      },
-      "pluginVersion": "7.5.2",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "project=n-puzzle",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "solution_moves"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "total_cpu_usage_time"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [
-                  " / 1000 / 60"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "puzzle_size",
-              "operator": "=",
-              "value": "3"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm",
-              "operator": "=",
-              "value": "bfs"
-            },
-            {
-              "condition": "AND",
-              "key": "algorithm_substring",
-              "operator": "=",
-              "value": "mem"
-            }
-          ]
-        }
-      ],
-      "title": "BFS",
-      "type": "michaeldmoore-scatter-panel"
-    }
-  ],
-  "refresh": "5s",
-  "schemaVersion": 27,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "",
-  "title": "Average number of solution moves.",
-  "uid": "eI1XL-9Gz",
-  "version": 3
-}
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": "-- Grafana --",
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"editable": true,
+	"gnetId": null,
+	"graphTooltip": 0,
+	"id": 3,
+	"links": [],
+	"panels": [
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 18,
+		  "w": 5,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 2,
+		"options": {
+		  "showHeader": true
+		},
+		"pluginVersion": "7.5.4",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'no_mem_rand') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "count"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "no_mem_rand"
+			  }
+			]
+		  }
+		],
+		"title": "DFS Random",
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 18,
+		  "w": 6,
+		  "x": 5,
+		  "y": 0
+		},
+		"id": 3,
+		"options": {
+		  "showHeader": true
+		},
+		"pluginVersion": "7.5.4",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'deeping_mem') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "deeping_mem"
+			  }
+			]
+		  }
+		],
+		"title": "DFS Deeping",
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 18,
+		  "w": 5,
+		  "x": 11,
+		  "y": 0
+		},
+		"id": 4,
+		"options": {
+		  "showHeader": true
+		},
+		"pluginVersion": "7.5.4",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'list') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "mem"
+			  }
+			]
+		  }
+		],
+		"title": "BFS (List)",
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 18,
+		  "w": 5,
+		  "x": 16,
+		  "y": 0
+		},
+		"id": 7,
+		"options": {
+		  "showHeader": true
+		},
+		"pluginVersion": "7.5.4",
+		"targets": [
+		  {
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'b_tree') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "mem"
+			  }
+			]
+		  }
+		],
+		"title": "BFS (B_Tree)",
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 21,
+		  "x": 0,
+		  "y": 18
+		},
+		"id": 6,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#bf69f4",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Solution moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU time / Min.",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [
+					" / 1000 / 60"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "list"
+			  }
+			]
+		  }
+		],
+		"title": "BFS (List)",
+		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 21,
+		  "x": 0,
+		  "y": 27
+		},
+		"id": 8,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#bf69f4",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Solution moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU time / Min.",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [
+					" / 1000 / 60"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
+			  }
+			]
+		  }
+		],
+		"title": "BFS (B Tree)",
+		"type": "michaeldmoore-scatter-panel"
+	  }
+	],
+	"refresh": "5s",
+	"schemaVersion": 27,
+	"style": "dark",
+	"tags": [],
+	"templating": {
+	  "list": []
+	},
+	"time": {
+	  "from": "now-6h",
+	  "to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "Average number of solution moves.",
+	"uid": "eI1XL-9Gz",
+	"version": 1
+  }

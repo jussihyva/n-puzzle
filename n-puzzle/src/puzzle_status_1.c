@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 07:20:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 16:39:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,14 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 	return ;
 }
 
-int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle)
+int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
+																	int depth)
 {
 	int					is_visited;
 	t_list				*elem;
 	t_puzzle_status		*puzzle_status;
 
+	(void)depth;
 	is_visited = 0;
 	elem = *puzzle->puzzle_status_lst;
 	while (elem)
@@ -117,11 +119,11 @@ int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle)
 }
 
 static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
-											t_puzzle *puzzle, int bt_is_visited)
+								t_puzzle *puzzle, int bt_is_visited, int depth)
 {
 	int					is_visited;
 
-	is_visited = is_visited_puzzle_status_list(tiles_pos_map, puzzle);
+	is_visited = is_visited_puzzle_status_list(tiles_pos_map, puzzle, depth);
 	if (is_visited != bt_is_visited)
 	{
 		FT_LOG_INFO("Tiles pos map: %lx", tiles_pos_map);
@@ -131,19 +133,28 @@ static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
 }
 
 int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
-															t_puzzle *puzzle)
+													t_puzzle *puzzle, int depth)
 {
 	int					is_visited;
 	t_bt_key			bt_key;
-	t_bt_data			*bt_data;
+	t_bt_data			return_bt_data;
+	t_puzzle_status		*puzzle_status;
 
 	bt_key.key = (void *)&tiles_pos_map;
 	bt_key.key_size = sizeof(tiles_pos_map);
-	bt_data = (t_bt_data *)ft_bt_find(&bt_key, *puzzle->bt_root);
+	ft_bt_find(&bt_key, *puzzle->bt_root, &return_bt_data);
 	is_visited = 0;
-	if (bt_data)
+	if (return_bt_data.data)
+	{
 		is_visited = 1;
+		puzzle_status = (t_puzzle_status *)return_bt_data.data;
+		if (puzzle_status->depth > depth)
+		{
+			puzzle_status->depth = depth;
+			is_visited = 0;
+		}
+	}
 	if (1 == 2)
-		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited);
+		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited, depth);
 	return (is_visited);
 }

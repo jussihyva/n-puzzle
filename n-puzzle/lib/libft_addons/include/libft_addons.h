@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/02 17:01:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/04 15:18:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,9 @@ void				ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data,
 						t_bt_node **bt_root);
 void				ft_bt_print(t_bt_node *bt_node, int *count);
 int					find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
-						void **bt_data);
-void				*ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root);
+						t_bt_data *bt_data);
+void				ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root,
+						t_bt_data *return_bt_data);
 void				ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)

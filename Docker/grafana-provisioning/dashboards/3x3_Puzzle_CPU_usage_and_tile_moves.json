@@ -402,12 +402,138 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "mem"
+				"value": "list"
 			  }
 			]
 		  }
 		],
-		"title": "CPU time vs. Tile moves (BFS)",
+		"title": "CPU time vs. Tile moves (BFS List)",
+		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 19,
+		  "x": 0,
+		  "y": 28
+		},
+		"id": 13,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 1,
+			  "color": "#e5ed15",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			},
+			{
+			  "col": 1,
+			  "color": "#b0a2f2",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 2,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Tile moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU Usage time / Min.",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [
+					" / 1000 / 60"
+				  ],
+				  "type": "math"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"tile_moves"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
+			  }
+			]
+		  }
+		],
+		"title": "CPU time vs. Tile moves (BFS B Tree)",
 		"type": "michaeldmoore-scatter-panel"
 	  },
 	  {
@@ -427,7 +553,7 @@
 		  "h": 12,
 		  "w": 19,
 		  "x": 0,
-		  "y": 28
+		  "y": 37
 		},
 		"hiddenSeries": false,
 		"id": 2,
@@ -580,7 +706,7 @@
 			]
 		  },
 		  {
-			"alias": "BFS",
+			"alias": "BFS (List)",
 			"groupBy": [
 			  {
 				"params": [
@@ -637,7 +763,69 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "mem"
+				"value": "list"
+			  }
+			]
+		  },
+		  {
+			"alias": "BFS (B Tree)",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000 / 60"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
 			  }
 			]
 		  }
@@ -699,7 +887,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 40
+		  "y": 49
 		},
 		"hiddenSeries": false,
 		"id": 6,
@@ -892,7 +1080,7 @@
 			]
 		  },
 		  {
-			"alias": "BFS",
+			"alias": "BFS (List)",
 			"groupBy": [
 			  {
 				"params": [
@@ -911,9 +1099,91 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'mem') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'list') AND $timeFilter GROUP BY time($__interval) fill(null)",
 			"rawQuery": true,
 			"refId": "C",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"tile_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "no_mem_rand"
+			  }
+			]
+		  },
+		  {
+			"alias": "BFS (B Tree)",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'b_tree') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"rawQuery": true,
+			"refId": "D",
 			"resultFormat": "time_series",
 			"select": [
 			  [
@@ -1031,7 +1301,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 50
+		  "y": 59
 		},
 		"hiddenSeries": false,
 		"id": 12,
@@ -1172,7 +1442,7 @@
 			]
 		  },
 		  {
-			"alias": "BFS",
+			"alias": "BFS (List)",
 			"groupBy": [
 			  {
 				"params": [
@@ -1223,7 +1493,63 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "mem"
+				"value": "list"
+			  }
+			]
+		  },
+		  {
+			"alias": "BFS (B Tree)",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
 			  }
 			]
 		  }
@@ -1249,7 +1575,7 @@
 		"yaxes": [
 		  {
 			"format": "short",
-			"label": null,
+			"label": "Puzzle states",
 			"logBase": 1,
 			"max": null,
 			"min": null,
@@ -1285,5 +1611,5 @@
 	"timezone": "",
 	"title": "3x3 Puzzle CPU usage and tile moves.",
 	"uid": "aZLjn6XGk",
-	"version": 2
+	"version": 3
   }

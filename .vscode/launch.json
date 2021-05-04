@@ -44,7 +44,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-			"args": ["-L", "2", "-A", "bfs_1"],
+			"args": ["-L", "2", "-A", "dfs_3"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],
