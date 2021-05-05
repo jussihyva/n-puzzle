@@ -6,11 +6,17 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/04 00:24:07 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/05 06:45:38 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
+ifdef Q
+	PUZZLE_QUI		=	| ./bin/n-puzzle_gui.py
+else
+	PUZZLE_QUI		=	>/dev/null
+endif
+
 ifdef S
 	PUZZLE_SIZE		=	$(S)
 else
@@ -153,7 +159,7 @@ ifeq ($(OS), Darwin)
 else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
-		| ./bin/n-puzzle_gui.py ; done
+		$(PUZZLE_QUI) ; done
 endif
 .PHONY: test
 test: all

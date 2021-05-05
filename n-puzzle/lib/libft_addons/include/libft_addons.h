@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 15:18:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/05 06:52:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ typedef struct s_bt_node
 {
 	int					num_of_elems;
 	t_bt_elem			bt_elem[MAX_NUM_OF_B_TREE_ELEMS];
-	struct s_bt_node	*parent;
 }				t_bt_node;
 
 void				ft_log_trace(const char *file, const int line,
