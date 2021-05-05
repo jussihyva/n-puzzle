@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 16:04:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/05 09:10:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ typedef struct s_puzzle_status
 	unsigned long			tiles_pos_map;
 	int						depth;
 	struct s_puzzle_status	*prev_status;
-	t_move					prev_move;
 	t_pos					*empty_pos;
 	unsigned int			right_pos_status;
 	int						is_in_queue;
@@ -208,6 +207,7 @@ void			delete_puzzle_status(void *content, size_t size);
 t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 					t_puzzle_status *prev_puzzle_status, t_pos *empty_pos,
 					unsigned int right_pos_status);
+t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status);
 int				is_visited_puzzle_status_list(unsigned long tiles_pos_map,
 					t_puzzle *puzzle, int depth);
 int				is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,

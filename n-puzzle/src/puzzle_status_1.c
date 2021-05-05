@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 16:39:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/05 08:54:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 		}
 	}
 	return (tiles_pos_map);
+}
+
+t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
+{
+	t_puzzle_status		*puzzle_status;
+
+	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
+	ft_memcpy(puzzle_status, curr_status, sizeof(*puzzle_status));
+	return (puzzle_status);
 }
 
 t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,

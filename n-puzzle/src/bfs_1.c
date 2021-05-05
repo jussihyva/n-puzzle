@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 16:22:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/05 09:17:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 }
 
 static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
-								t_move *move, t_puzzle_status *puzzle_status)
+												t_puzzle_status *puzzle_status)
 {
 	t_puzzle_status		*next_status;
 
@@ -34,12 +34,7 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
 	if (!is_visited_puzzle_status_list(puzzle->curr_status->tiles_pos_map,
 			puzzle, puzzle_status->depth))
 	{
-		next_status = create_puzzle_status(
-				puzzle->curr_status->tiles_pos_map, puzzle_status,
-				puzzle->curr_status->empty_pos,
-				puzzle->curr_status->right_pos_status);
-		ft_memcpy(&next_status->prev_move, &move,
-			sizeof(next_status->prev_move));
+		next_status = save_current_puzzle_status(puzzle->curr_status);
 		ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		next_status->is_in_queue = 1;
 		add_visited_puzzle_status(next_status, puzzle);
@@ -48,7 +43,7 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
 }
 
 static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle,
-								t_move *move, t_puzzle_status *puzzle_status)
+												t_puzzle_status *puzzle_status)
 {
 	t_puzzle_status		*next_status;
 
@@ -56,12 +51,7 @@ static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle,
 	if (!is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
 			puzzle, puzzle_status->depth + 1))
 	{
-		next_status = create_puzzle_status(
-				puzzle->curr_status->tiles_pos_map, puzzle_status,
-				puzzle->curr_status->empty_pos,
-				puzzle->curr_status->right_pos_status);
-		ft_memcpy(&next_status->prev_move, &move,
-			sizeof(next_status->prev_move));
+		next_status = save_current_puzzle_status(puzzle->curr_status);
 		ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		next_status->is_in_queue = 1;
 		add_visited_puzzle_status(next_status, puzzle);
@@ -84,17 +74,17 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	{
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
+		puzzle->curr_status->depth++;
 		if (puzzle->algorithm == E_BFS_1)
-			next_status = add_next_status_to_queue_1(puzzle, &move,
-					puzzle_status);
+			next_status = add_next_status_to_queue_1(puzzle, puzzle_status);
 		else
-			next_status = add_next_status_to_queue_2(puzzle, &move,
-					puzzle_status);
+			next_status = add_next_status_to_queue_2(puzzle, puzzle_status);
 		if (next_status && puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(next_status, puzzle);
 		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
 		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
+		puzzle->curr_status->depth--;
 	}
 	return (is_puzzle_ready);
 }
@@ -110,9 +100,7 @@ void	bfs_1(t_puzzle *puzzle)
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready = 1;
-	puzzle_status = create_puzzle_status(puzzle->curr_status->tiles_pos_map,
-			NULL, puzzle->curr_status->empty_pos,
-			puzzle->curr_status->right_pos_status);
+	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 	ft_enqueue(puzzle->status_queue, (void **)&puzzle_status);
 	puzzle_status->is_in_queue = 1;
 	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue))
@@ -121,6 +109,7 @@ void	bfs_1(t_puzzle *puzzle)
 		puzzle_status->is_in_queue = 0;
 		ft_memcpy(puzzle->curr_status, puzzle_status,
 			sizeof(*puzzle->curr_status));
+		puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = breadth_first_search(puzzle, puzzle_status);
 		if (printed_depth < puzzle->curr_status->depth)
 		{
