@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 10:14:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 13:31:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_statistics
 	int					max_mem_usage;
 	int					puzzle_size;
 	int					puzzle_states_cnt;
+	int					puzzle_state_collision_cnt;
 }				t_statistics;
 
 typedef struct s_cmd_args
@@ -149,6 +150,7 @@ typedef struct s_puzzle
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
 	int					*states_cnt;
+	int					*state_collision_cnt;
 	t_queue				*status_queue;
 	t_bt_node			**bt_root;
 	int					print_delay;

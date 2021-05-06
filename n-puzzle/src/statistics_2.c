@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 09:42:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 13:31:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static char	*create_format_string(void)
 	ft_strcat(string, ",tile_moves=%di,max_mem_usage=%di");
 	ft_strcat(string, ",solution_moves=%di");
 	ft_strcat(string, ",puzzle_states=%di");
+	ft_strcat(string, ",state_collisions=%di");
 	ft_strcat(string, " %d\n");
 	return (string);
 }
@@ -53,6 +54,7 @@ void	influxdb_plugin(t_log_event *event)
 			(int)get_execution_time(statistics), (int)statistics->cpu_usage_ms,
 			statistics->tile_move_cnt, statistics->max_mem_usage,
 			statistics->solution_move_cnt, statistics->puzzle_states_cnt,
+			statistics->puzzle_state_collision_cnt,
 			statistics->end_time);
 		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
 		ft_strdel(&influxdb_query_string);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 09:56:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 13:40:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
 		if (tiles_pos_map == puzzle_status->tiles_pos_map)
 		{
 			is_visited = 1;
+			(*puzzle->state_collision_cnt)++;
 			break ;
 		}
 		elem = elem->next;
@@ -156,6 +157,8 @@ int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
 			puzzle_status->depth = depth;
 			is_visited = 0;
 		}
+		else
+			(*puzzle->state_collision_cnt)++;
 	}
 	if (1 == 2)
 		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited, depth);
