@@ -45,7 +45,56 @@
 			  ]
 			}
 		  },
-		  "overrides": []
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 151
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 69
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Solutions"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 80
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves (Avg.)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 105
+				}
+			  ]
+			}
+		  ]
 		},
 		"gridPos": {
 		  "h": 18,
@@ -55,7 +104,8 @@
 		},
 		"id": 2,
 		"options": {
-		  "showHeader": true
+		  "showHeader": true,
+		  "sortBy": []
 		},
 		"pluginVersion": "7.5.2",
 		"targets": [
@@ -71,7 +121,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'no_mem_rand') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves (Avg.)\" , count(\"solution_moves\") AS \"Solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'no_mem_rand') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "table",
@@ -152,7 +202,68 @@
 			  ]
 			}
 		  },
-		  "overrides": []
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 73
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 158
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Num of solutions"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 141
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Solutions"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 73
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves (Avg.)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 103
+				}
+			  ]
+			}
+		  ]
 		},
 		"gridPos": {
 		  "h": 18,
@@ -162,7 +273,8 @@
 		},
 		"id": 3,
 		"options": {
-		  "showHeader": true
+		  "showHeader": true,
+		  "sortBy": []
 		},
 		"pluginVersion": "7.5.2",
 		"targets": [
@@ -178,7 +290,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'deeping_mem') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves (Avg.)\" , count(\"solution_moves\") AS \"Solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'dfs' AND \"algorithm_substring\" = 'deeping_mem') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "table",
@@ -245,9 +357,59 @@
 				  "value": 80
 				}
 			  ]
-			}
+			},
+			"unit": "none"
 		  },
-		  "overrides": []
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 159
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 70
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Solutions"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 94
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves (Avg.)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 106
+				}
+			  ]
+			}
+		  ]
 		},
 		"gridPos": {
 		  "h": 18,
@@ -257,7 +419,8 @@
 		},
 		"id": 4,
 		"options": {
-		  "showHeader": true
+		  "showHeader": true,
+		  "sortBy": []
 		},
 		"pluginVersion": "7.5.2",
 		"targets": [
@@ -270,11 +433,12 @@
 				"type": "time"
 			  }
 			],
+			"limit": "",
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
 			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'list') AND $timeFilter GROUP BY time(1h)",
-			"rawQuery": true,
+			"rawQuery": false,
 			"refId": "A",
 			"resultFormat": "table",
 			"select": [
@@ -288,6 +452,30 @@
 				{
 				  "params": [],
 				  "type": "mean"
+				},
+				{
+				  "params": [
+					"Moves (Avg.)"
+				  ],
+				  "type": "alias"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "count"
+				},
+				{
+				  "params": [
+					"Solutions"
+				  ],
+				  "type": "alias"
 				}
 			  ]
 			],
@@ -307,9 +495,10 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "mem"
+				"value": "list"
 			  }
-			]
+			],
+			"tz": ""
 		  }
 		],
 		"title": "BFS (List)",
@@ -342,7 +531,44 @@
 			  ]
 			}
 		  },
-		  "overrides": []
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Moves (Avg.)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 101
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 148
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Solutions"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 80
+				}
+			  ]
+			}
+		  ]
 		},
 		"gridPos": {
 		  "h": 18,
@@ -352,7 +578,8 @@
 		},
 		"id": 7,
 		"options": {
-		  "showHeader": true
+		  "showHeader": true,
+		  "sortBy": []
 		},
 		"pluginVersion": "7.5.2",
 		"targets": [
@@ -368,7 +595,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT mean(\"solution_moves\") AS \"Moves\" , count(\"solution_moves\") AS \"Num of solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'b_tree') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT mean(\"solution_moves\") AS \"Moves (Avg.)\" , count(\"solution_moves\") AS \"Solutions\" FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'bfs' AND \"algorithm_substring\" = 'b_tree') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "table",
@@ -777,5 +1004,5 @@
 	"timezone": "",
 	"title": "Average number of solution moves.",
 	"uid": "eI1XL-9Gz",
-	"version": 2
+	"version": 3
   }

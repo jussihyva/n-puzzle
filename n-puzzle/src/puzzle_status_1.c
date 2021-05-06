@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/05 08:54:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 09:56:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 }
 
 t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
-						t_puzzle_status *prev_puzzle_status, t_pos *empty_pos,
-												unsigned int right_pos_status)
+								t_pos *empty_pos, unsigned int right_pos_status)
 {
 	t_puzzle_status		*puzzle_status;
 
@@ -78,11 +77,6 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 	puzzle_status->empty_pos = empty_pos;
 	puzzle_status->tiles_pos_map = tiles_pos_map;
 	puzzle_status->right_pos_status = right_pos_status;
-	if (prev_puzzle_status)
-	{
-		puzzle_status->depth = prev_puzzle_status->depth + 1;
-		puzzle_status->prev_status = prev_puzzle_status;
-	}
 	return (puzzle_status);
 }
 

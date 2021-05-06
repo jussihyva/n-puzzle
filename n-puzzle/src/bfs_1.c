@@ -6,17 +6,17 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/05 09:17:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 10:38:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
+int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 {
 	int		is_puzzle_ready;
 
-	if (puzzle_status->prev_status->prev_status)
+	if (puzzle_status->prev_status && puzzle_status->prev_status->prev_status)
 		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
 	print_puzzle(1, puzzle_status->tiles_pos_map, puzzle->size);
 	(*puzzle->solution_move_cnt)++;
