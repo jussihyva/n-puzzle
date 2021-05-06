@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 13:31:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 17:56:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef enum e_algorithm
 	E_DFS_DEEPING,
 	E_DFS_DEEPING_MEM,
 	E_BFS_1,
-	E_BFS_2
+	E_BFS_2,
+	E_TOOP_1
 }				t_algorithm;
 
 typedef struct s_xy_values
@@ -218,6 +219,8 @@ void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 					int puzzle_size, t_pos **empty_pos);
 void			bfs(t_puzzle *puzzle);
+void			alg_toop(t_puzzle *puzzle);
+void			alg_toop_1(t_puzzle *puzzle);
 void			bfs_1(t_puzzle *puzzle);
 void			update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
 					int puzzle_size, unsigned long *tiles_pos_map);

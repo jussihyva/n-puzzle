@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 13:31:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/06 17:47:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,15 @@ static void	send_stat_report(t_puzzle *puzzle)
 	FT_LOG_INFO("Execution time : %ld", get_execution_time(puzzle->statistics));
 	puzzle->statistics->order = E_NONE;
 	FT_LOG_INFO("Total num of moves: %d", *puzzle->tile_move_cnt);
+	ft_dprintf(2, "\n\033[0;32mSUMMARY\n");
+	ft_dprintf(2, "Puzzle size: %d\n", statistics->puzzle_size);
+	ft_dprintf(2, "Used algorithm: %s %s\n", statistics->algorithm,
+		statistics->algorithm_substring);
 	ft_dprintf(2, "Execution time (ms): %ld\n", get_execution_time(statistics));
 	ft_dprintf(2, "CPU usage time (ms): %ld\n", statistics->cpu_usage_ms);
 	ft_dprintf(2, "Number of solution moves: %d\n",
 		statistics->solution_move_cnt);
+	ft_dprintf(2, "======================================\033[0m\n\n");
 	return ;
 }
 
@@ -75,6 +80,8 @@ int	main(int argc, char **argv)
 		dfs(puzzle);
 	else if (!ft_strncmp(input->cmd_args->algorithm, "bfs", 3))
 		bfs(puzzle);
+	else if (!ft_strncmp(input->cmd_args->algorithm, "toop", 3))
+		alg_toop(puzzle);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");
