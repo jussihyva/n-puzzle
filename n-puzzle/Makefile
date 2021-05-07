@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/06 17:53:46 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/07 17:43:30 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,7 +155,7 @@ run_loop: all
 ifeq ($(OS), Darwin)
 	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
-		>/dev/null ; \
+		$(PUZZLE_QUI) ; \
 		done
 else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
