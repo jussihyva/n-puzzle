@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 13:40:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/08 06:20:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,18 @@ void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
 }
 
 int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
-																	int depth)
+												t_puzzle_status **puzzle_status)
 {
 	int					is_visited;
 	t_list				*elem;
-	t_puzzle_status		*puzzle_status;
 
-	(void)depth;
+	*puzzle_status = NULL;
 	is_visited = 0;
 	elem = *puzzle->puzzle_status_lst;
 	while (elem)
 	{
-		puzzle_status = *(t_puzzle_status **)elem->content;
-		if (tiles_pos_map == puzzle_status->tiles_pos_map)
+		*puzzle_status = *(t_puzzle_status **)elem->content;
+		if (tiles_pos_map == (*puzzle_status)->tiles_pos_map)
 		{
 			is_visited = 1;
 			(*puzzle->state_collision_cnt)++;
@@ -123,44 +122,40 @@ int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
 }
 
 static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
-								t_puzzle *puzzle, int bt_is_visited, int depth)
+								t_puzzle *puzzle, int bt_is_visited)
 {
 	int					is_visited;
+	t_puzzle_status		*puzzle_status;
 
-	is_visited = is_visited_puzzle_status_list(tiles_pos_map, puzzle, depth);
+	is_visited = is_visited_puzzle_status_list(tiles_pos_map, puzzle,
+			&puzzle_status);
 	if (is_visited != bt_is_visited)
 	{
-		FT_LOG_INFO("Tiles pos map: %lx", tiles_pos_map);
-		FT_LOG_INFO("Is visited: %d %d", is_visited, bt_is_visited);
+		FT_LOG_WARN("Tiles pos map: %lx", tiles_pos_map);
+		FT_LOG_WARN("Is visited: %d %d", is_visited, bt_is_visited);
 	}
 	return ;
 }
 
 int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
-													t_puzzle *puzzle, int depth)
+							t_puzzle *puzzle, t_puzzle_status **puzzle_status)
 {
 	int					is_visited;
 	t_bt_key			bt_key;
 	t_bt_data			return_bt_data;
-	t_puzzle_status		*puzzle_status;
 
 	bt_key.key = (void *)&tiles_pos_map;
 	bt_key.key_size = sizeof(tiles_pos_map);
 	ft_bt_find(&bt_key, *puzzle->bt_root, &return_bt_data);
+	*puzzle_status = NULL;
 	is_visited = 0;
 	if (return_bt_data.data)
 	{
 		is_visited = 1;
-		puzzle_status = (t_puzzle_status *)return_bt_data.data;
-		if (puzzle_status->depth > depth)
-		{
-			puzzle_status->depth = depth;
-			is_visited = 0;
-		}
-		else
-			(*puzzle->state_collision_cnt)++;
+		*puzzle_status = (t_puzzle_status *)return_bt_data.data;
+		(*puzzle->state_collision_cnt)++;
 	}
 	if (1 == 2)
-		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited, depth);
+		verify_visited_puzzle_status(tiles_pos_map, puzzle, is_visited);
 	return (is_visited);
 }

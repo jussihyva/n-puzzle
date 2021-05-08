@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 10:38:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/08 06:32:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 	return (is_puzzle_ready);
 }
 
-static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
-												t_puzzle_status *puzzle_status)
+static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle)
 {
 	t_puzzle_status		*next_status;
 
-	next_status = NULL;
-	if (!is_visited_puzzle_status_list(puzzle->curr_status->tiles_pos_map,
-			puzzle, puzzle_status->depth))
+	if (is_visited_puzzle_status_list(puzzle->curr_status->tiles_pos_map,
+			puzzle, &next_status))
+		next_status = NULL;
+	else
 	{
 		next_status = save_current_puzzle_status(puzzle->curr_status);
 		ft_enqueue(puzzle->status_queue, (void **)&next_status);
@@ -42,14 +42,14 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle,
 	return (next_status);
 }
 
-static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle,
-												t_puzzle_status *puzzle_status)
+static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle)
 {
 	t_puzzle_status		*next_status;
 
-	next_status = NULL;
-	if (!is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
-			puzzle, puzzle_status->depth + 1))
+	if (is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
+			puzzle, &next_status))
+		next_status = NULL;
+	else
 	{
 		next_status = save_current_puzzle_status(puzzle->curr_status);
 		ft_enqueue(puzzle->status_queue, (void **)&next_status);
@@ -65,26 +65,26 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	int					is_puzzle_ready;
 	int					i;
 	t_move				move;
-	t_puzzle_status		*next_status;
+	t_puzzle_status		*curr_status;
 
 	is_puzzle_ready = 0;
 	i = -1;
-	move.to_pos = puzzle->curr_status->empty_pos;
+	curr_status = puzzle->curr_status;
+	move.to_pos = curr_status->empty_pos;
 	while (!is_puzzle_ready && ++i < move.to_pos->num_of_neighbors)
 	{
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
-		puzzle->curr_status->depth++;
+		curr_status->depth++;
 		if (puzzle->algorithm == E_BFS_1)
-			next_status = add_next_status_to_queue_1(puzzle, puzzle_status);
+			add_next_status_to_queue_1(puzzle);
 		else
-			next_status = add_next_status_to_queue_2(puzzle, puzzle_status);
-		if (next_status && puzzle->curr_status->right_pos_status
-			== puzzle->puzzle_ready_status)
-			is_puzzle_ready = print_solution(next_status, puzzle);
-		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
-		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
-		puzzle->curr_status->depth--;
+			add_next_status_to_queue_2(puzzle);
+		if (curr_status->right_pos_status == puzzle->puzzle_ready_status)
+			is_puzzle_ready = print_solution(curr_status, puzzle);
+		curr_status->right_pos_status = puzzle_status->right_pos_status;
+		curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
+		curr_status->depth--;
 	}
 	return (is_puzzle_ready);
 }

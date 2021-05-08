@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 17:47:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/08 07:06:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,21 @@ static void	send_stat_report(t_puzzle *puzzle)
 	stat_set_end_time(puzzle->statistics);
 	stat_update_cpu_usage(puzzle->statistics);
 	puzzle->statistics->order = E_SEND_TO_INFLUXDB;
-	FT_LOG_INFO("Execution time : %ld", get_execution_time(puzzle->statistics));
+	FT_LOG_INFO("%-20s %ld", "Execution time:",
+		get_execution_time(puzzle->statistics));
 	puzzle->statistics->order = E_NONE;
-	FT_LOG_INFO("Total num of moves: %d", *puzzle->tile_move_cnt);
+	FT_LOG_INFO("%-20s %d", "Total num of moves:", *puzzle->tile_move_cnt);
 	ft_dprintf(2, "\n\033[0;32mSUMMARY\n");
-	ft_dprintf(2, "Puzzle size: %d\n", statistics->puzzle_size);
-	ft_dprintf(2, "Used algorithm: %s %s\n", statistics->algorithm,
+	ft_dprintf(2, "%-26s %d\n", "Puzzle size:", statistics->puzzle_size);
+	ft_dprintf(2, "%-26s %s %s\n", "Used algorithm:", statistics->algorithm,
 		statistics->algorithm_substring);
-	ft_dprintf(2, "Execution time (ms): %ld\n", get_execution_time(statistics));
-	ft_dprintf(2, "CPU usage time (ms): %ld\n", statistics->cpu_usage_ms);
-	ft_dprintf(2, "Number of solution moves: %d\n",
+	ft_dprintf(2, "%-26s %ld ms\n", "Execution time:",
+		get_execution_time(statistics));
+	ft_dprintf(2, "%-26s %ld ms\n", "CPU usage time:",
+		statistics->cpu_usage_ms);
+	ft_dprintf(2, "%-26s %d Mb\n", "Memory usage:",
+		statistics->max_mem_usage / 1000);
+	ft_dprintf(2, "%-26s %d\n", "Number of solution moves:",
 		statistics->solution_move_cnt);
 	ft_dprintf(2, "======================================\033[0m\n\n");
 	return ;

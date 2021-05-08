@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 10:50:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/08 08:14:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	unsigned int			saved_right_pos_status;
 	unsigned long			saved_tiles_pos_map;
 	t_puzzle_status			*puzzle_status;
+	int						is_visited;
 
 	is_puzzle_ready = 0;
 	i = -1;
@@ -30,11 +31,20 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 		saved_tiles_pos_map = puzzle->curr_status->tiles_pos_map;
 		tile_move(pos, pos->neighbors[i], puzzle);
 		puzzle->curr_status->depth++;
-		if (!is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
-				puzzle, puzzle->curr_status->depth))
+		is_visited = is_visited_puzzle_status_b_tree(
+				puzzle->curr_status->tiles_pos_map, puzzle, &puzzle_status);
+		if (!is_visited || puzzle_status->depth > puzzle->curr_status->depth)
 		{
-			puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-			add_visited_puzzle_status(puzzle_status, puzzle);
+			if (is_visited)
+			{
+				puzzle_status->depth = puzzle->curr_status->depth;
+				puzzle_status->prev_status = puzzle->curr_status->prev_status;
+			}
+			else
+			{
+				puzzle_status = save_current_puzzle_status(puzzle->curr_status);
+				add_visited_puzzle_status(puzzle_status, puzzle);
+			}
 			puzzle->curr_status->prev_status = puzzle_status;
 			is_puzzle_ready = depth_limited_dfs_mem(puzzle,
 					pos->neighbors[i], puzzle_status_lst);
@@ -46,7 +56,8 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	}
 	if (puzzle_status->depth == puzzle->max_depth
 		&& puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
-		is_puzzle_ready = print_solution(puzzle->curr_status->prev_status, puzzle);
+		is_puzzle_ready
+			= print_solution(puzzle->curr_status->prev_status, puzzle);
 	return (is_puzzle_ready);
 }
 
