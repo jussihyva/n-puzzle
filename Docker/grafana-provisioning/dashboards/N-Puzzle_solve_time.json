@@ -1,0 +1,857 @@
+{
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": "-- Grafana --",
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"editable": true,
+	"gnetId": null,
+	"graphTooltip": 0,
+	"id": 9,
+	"links": [],
+	"panels": [
+	  {
+		"collapsed": false,
+		"datasource": null,
+		"gridPos": {
+		  "h": 1,
+		  "w": 24,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 4,
+		"panels": [],
+		"title": "3x3 Puzzle solve time",
+		"type": "row"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 166
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 0,
+		  "y": 1
+		},
+		"id": 2,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "DFS Random",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "no_mem_rand"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 146
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 101
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 4,
+		  "y": 1
+		},
+		"id": 5,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "DFS Deeping",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "deeping"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 166
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping mem"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 147
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 5,
+		  "x": 8,
+		  "y": 1
+		},
+		"id": 6,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "DFS Deeping mem",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "deeping_mem"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 166
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping mem"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 147
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS List"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 87
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 13,
+		  "y": 1
+		},
+		"id": 7,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "BFS List",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "list"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 150
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping mem"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 147
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS List"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 87
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS B-Tree"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 105
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 17,
+		  "y": 1
+		},
+		"id": 8,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "BFS B-Tree",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  }
+	],
+	"schemaVersion": 27,
+	"style": "dark",
+	"tags": [],
+	"templating": {
+	  "list": []
+	},
+	"time": {
+	  "from": "now-6h",
+	  "to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "N-Puzzle solve time",
+	"uid": "WZnMjZjGz",
+	"version": 1
+  }
+  
