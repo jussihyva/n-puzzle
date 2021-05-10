@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/08 06:20:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/10 15:21:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
 
 	bt_key.key = (void *)&tiles_pos_map;
 	bt_key.key_size = sizeof(tiles_pos_map);
+	FT_LOG_TRACE("KEY to find: %#.9lx (%p)",
+		*(unsigned long *)bt_key.key, bt_key.key);
 	ft_bt_find(&bt_key, *puzzle->bt_root, &return_bt_data);
 	*puzzle_status = NULL;
 	is_visited = 0;

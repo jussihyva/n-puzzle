@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 13:52:53 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/05 08:02:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/10 15:19:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node, t_bt_data *bt_data)
 {
 	int			i;
 	t_bt_node	*bt_child_node;
+	t_bt_node	*parent;
 
 	i = search_key_position(*bt_node, bt_key, bt_data);
 	if (!bt_data->data)
@@ -58,9 +59,33 @@ int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node, t_bt_data *bt_data)
 			bt_child_node = (*bt_node)->bt_elem[i].left_child;
 		if (bt_child_node)
 		{
+			parent = *bt_node;
 			if (bt_child_node->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
 				split_node(&bt_child_node, bt_node, bt_key);
 			i = find_elem_index(bt_key, &bt_child_node, bt_data);
+			*bt_node = bt_child_node;
+		}
+	}
+	return (i);
+}
+
+static int	find_elem_index_2(t_bt_key *bt_key, t_bt_node **bt_node, t_bt_data *bt_data)
+{
+	int			i;
+	t_bt_node	*bt_child_node;
+
+	i = search_key_position(*bt_node, bt_key, bt_data);
+	if (!bt_data->data)
+	{
+		if (!(*bt_node)->num_of_elems)
+			bt_child_node = NULL;
+		else if (i == (*bt_node)->num_of_elems)
+			bt_child_node = (*bt_node)->bt_elem[i - 1].right_child;
+		else
+			bt_child_node = (*bt_node)->bt_elem[i].left_child;
+		if (bt_child_node)
+		{
+			i = find_elem_index_2(bt_key, &bt_child_node, bt_data);
 			*bt_node = bt_child_node;
 		}
 	}
@@ -72,6 +97,6 @@ void	ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root,
 {
 	return_bt_data->data = NULL;
 	if (bt_root)
-		find_elem_index(bt_key, &bt_root, return_bt_data);
+		find_elem_index_2(bt_key, &bt_root, return_bt_data);
 	return ;
 }
