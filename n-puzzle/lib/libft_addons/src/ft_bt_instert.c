@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 13:32:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 08:47:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 14:01:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,26 @@ static void	instert_elem(t_bt_node *bt_node, t_bt_node **parent,
 {
 	int				i;
 	t_bt_data		bt_data;
+	t_queue			*queue;
 
 	if (bt_node->num_of_elems >= MAX_NUM_OF_B_TREE_ELEMS)
 		split_node(&bt_node, parent, &bt_elem->bt_key);
 	i = find_elem_index(&bt_elem->bt_key, &bt_node, &bt_data);
 	if (bt_data.data)
-		FT_LOG_FATAL("Key already saved");
-	save_bt_elem(bt_node, i, bt_elem);
+	{
+		if (bt_node->bt_elem[i].is_queue)
+			queue = (t_queue *)bt_data.data;
+		else
+		{
+			queue = ft_queue_init();
+			ft_enqueue(queue, &bt_node->bt_elem[i].bt_data.data);
+			bt_node->bt_elem[i].bt_data.data = (void *)queue;
+		}
+		ft_enqueue(queue, &bt_elem->bt_data.data);
+		bt_node->bt_elem[i].is_queue = 1;
+	}
+	else
+		save_bt_elem(bt_node, i, bt_elem);
 	return ;
 }
 
