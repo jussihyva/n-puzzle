@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 07:52:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 15:13:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle)
 	else
 	{
 		next_status = save_current_puzzle_status(puzzle->curr_status);
-		ft_enqueue(puzzle->status_queue, (void **)&next_status);
+		ft_enqueue(puzzle->status_queue, (void *)next_status);
 		next_status->is_in_queue = 1;
 		store_visited_puzzle_status(next_status, puzzle);
 	}
@@ -52,7 +52,7 @@ static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle)
 	else
 	{
 		next_status = save_current_puzzle_status(puzzle->curr_status);
-		ft_enqueue(puzzle->status_queue, (void **)&next_status);
+		ft_enqueue(puzzle->status_queue, (void *)next_status);
 		next_status->is_in_queue = 1;
 		store_visited_puzzle_status(next_status, puzzle);
 	}
@@ -101,7 +101,7 @@ void	bfs_1(t_puzzle *puzzle)
 	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-	ft_enqueue(puzzle->status_queue, (void **)&puzzle_status);
+	ft_enqueue(puzzle->status_queue, (void *)puzzle_status);
 	puzzle_status->is_in_queue = 1;
 	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue))
 	{

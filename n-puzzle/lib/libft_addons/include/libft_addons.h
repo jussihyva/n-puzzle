@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 11:21:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 15:13:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,9 +186,9 @@ SSL_CTX				*ft_openssl_init_client(char *pem_cert_file,
 t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
 						int socket_fd, SSL_CTX *ctx);
 void				ft_openssl_rel_conn(t_tls_connection **connection);
-void				ft_stack_push(t_list **stack, void **data);
+void				ft_stack_push(t_list **stack, void *data);
 void				*ft_stack_pop(t_list **stack);
-void				ft_enqueue(t_queue *queue, void **data);
+void				ft_enqueue(t_queue *queue, void *data);
 void				*ft_dequeue(t_queue *queue);
 int					ft_is_queue_empty(t_queue *queue);
 t_queue				*ft_queue_init(void);

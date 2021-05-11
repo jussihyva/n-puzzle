@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 13:32:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 14:01:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 15:14:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ static void	instert_elem(t_bt_node *bt_node, t_bt_node **parent,
 		else
 		{
 			queue = ft_queue_init();
-			ft_enqueue(queue, &bt_node->bt_elem[i].bt_data.data);
+			ft_enqueue(queue, bt_node->bt_elem[i].bt_data.data);
 			bt_node->bt_elem[i].bt_data.data = (void *)queue;
 		}
-		ft_enqueue(queue, &bt_elem->bt_data.data);
+		ft_enqueue(queue, bt_elem->bt_data.data);
 		bt_node->bt_elem[i].is_queue = 1;
 	}
 	else
