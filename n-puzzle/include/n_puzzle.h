@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 08:40:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 19:13:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ typedef struct s_puzzle_status
 {
 	unsigned long			tiles_pos_map;
 	int						depth;
+	int						tiles_out_of_place;
+	int						prio;
 	struct s_puzzle_status	*prev_status;
 	t_pos					*empty_pos;
 	unsigned int			right_pos_status;

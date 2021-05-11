@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 15:13:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 19:26:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int					search_key_position(t_bt_node *bt_node, t_bt_key *bt_key,
 						t_bt_data *bt_data);
 void				split_node(t_bt_node **bt_node, t_bt_node **parent,
 						t_bt_key *bt_key);
-void				ft_prio_enqueue(t_bt_node **states_prio_queue, int prio,
+void				ft_prio_enqueue(t_bt_node **states_prio_queue, int *prio,
 						void **puzzle_status);
 void				*ft_prio_dequeue(t_bt_node **states_prio_queue);
 

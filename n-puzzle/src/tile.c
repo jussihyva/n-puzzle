@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/30 10:14:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 19:13:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 
 void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 {
+	unsigned int	tmp_pos_status;
+
 	(*puzzle->tile_move_cnt)++;
 	puzzle->curr_status->empty_pos = from_pos;
 	stat_update_mem_usage(puzzle->statistics);
@@ -74,6 +76,16 @@ void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 		&puzzle->curr_status->tiles_pos_map);
 	update_right_pos_status(puzzle, from_pos, to_pos,
 		&puzzle->curr_status->right_pos_status);
+	tmp_pos_status = puzzle->curr_status->right_pos_status;
+	puzzle->curr_status->tiles_out_of_place = puzzle->size * puzzle->size;
+	while (tmp_pos_status)
+	{
+		if (tmp_pos_status % 2)
+			puzzle->curr_status->tiles_out_of_place--;
+		tmp_pos_status = tmp_pos_status >> 1;
+	}
+	puzzle->curr_status->prio = puzzle->curr_status->tiles_out_of_place
+		+ puzzle->curr_status->depth;
 	return ;
 }
 
