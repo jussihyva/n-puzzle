@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 08:55:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 11:49:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle)
+static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle, int prio)
 {
 	t_puzzle_status		*next_status;
 
@@ -22,7 +22,7 @@ static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle)
 	else
 	{
 		next_status = save_current_puzzle_status(puzzle->curr_status);
-		ft_enqueue(puzzle->status_queue, (void **)&next_status);
+		ft_prio_enqueue(puzzle->states_prio_queue, prio, (void **)&next_status);
 		next_status->is_in_queue = 1;
 		store_visited_puzzle_status(next_status, puzzle);
 	}
@@ -35,6 +35,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	int					is_puzzle_ready;
 	int					i;
 	t_move				move;
+	int					prio;
 
 	is_puzzle_ready = 0;
 	i = -1;
@@ -44,7 +45,8 @@ static int	breadth_first_search(t_puzzle *puzzle,
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		puzzle->curr_status->depth++;
-		add_state_to_prio_queue(puzzle);
+		prio = 0;
+		add_state_to_prio_queue(puzzle, prio);
 		if (puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
@@ -55,14 +57,24 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	return (is_puzzle_ready);
 }
 
+static void	print_depth_level(int depth)
+{
+	static int	printed_depth = -1;
+
+	if (printed_depth < depth)
+	{
+		FT_LOG_INFO("Depth level %d done", depth);
+		printed_depth = depth;
+	}
+	return ;
+}
+
 void	alg_toop_1(t_puzzle *puzzle)
 {
 	int					is_puzzle_ready;
-	int					printed_depth;
 	t_puzzle_status		*puzzle_status;
 	int					prio;
 
-	printed_depth = -1;
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready = 1;
@@ -73,17 +85,14 @@ void	alg_toop_1(t_puzzle *puzzle)
 	store_visited_puzzle_status(puzzle_status, puzzle);
 	while (!is_puzzle_ready && *puzzle->states_prio_queue)
 	{
-		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
+		puzzle_status
+			= *(t_puzzle_status **)ft_prio_dequeue(puzzle->states_prio_queue);
 		puzzle_status->is_in_queue = 0;
 		ft_memcpy(puzzle->curr_status, puzzle_status,
 			sizeof(*puzzle->curr_status));
 		puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = breadth_first_search(puzzle, puzzle_status);
-		if (printed_depth < puzzle->curr_status->depth)
-		{
-			FT_LOG_INFO("Depth level %d done", puzzle->curr_status->depth);
-			printed_depth = puzzle->curr_status->depth;
-		}
+		print_depth_level(puzzle->curr_status->depth);
 	}
 	return ;
 }

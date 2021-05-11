@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 08:15:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 11:21:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_bt_data
 
 typedef struct s_bt_elem
 {
+	int					is_queue;
 	t_bt_data			bt_data;
 	t_bt_key			bt_key;
 	struct s_bt_node	*left_child;
@@ -205,6 +206,7 @@ void				split_node(t_bt_node **bt_node, t_bt_node **parent,
 						t_bt_key *bt_key);
 void				ft_prio_enqueue(t_bt_node **states_prio_queue, int prio,
 						void **puzzle_status);
+void				*ft_prio_dequeue(t_bt_node **states_prio_queue);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
 # define FT_LOG_ERROR(...)	ft_log_error(__FILE__, __LINE__, __VA_ARGS__)
