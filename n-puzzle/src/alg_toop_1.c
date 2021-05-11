@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/08 06:43:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 08:55:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle)
 		next_status = save_current_puzzle_status(puzzle->curr_status);
 		ft_enqueue(puzzle->status_queue, (void **)&next_status);
 		next_status->is_in_queue = 1;
-		add_visited_puzzle_status(next_status, puzzle);
+		store_visited_puzzle_status(next_status, puzzle);
 	}
 	return (next_status);
 }
@@ -60,16 +60,18 @@ void	alg_toop_1(t_puzzle *puzzle)
 	int					is_puzzle_ready;
 	int					printed_depth;
 	t_puzzle_status		*puzzle_status;
+	int					prio;
 
-	puzzle->max_depth = -1;
 	printed_depth = -1;
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-	ft_enqueue(puzzle->status_queue, (void **)&puzzle_status);
+	prio = 0;
+	ft_prio_enqueue(puzzle->states_prio_queue, prio, (void **)&puzzle_status);
 	puzzle_status->is_in_queue = 1;
-	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue))
+	store_visited_puzzle_status(puzzle_status, puzzle);
+	while (!is_puzzle_ready && *puzzle->states_prio_queue)
 	{
 		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
 		puzzle_status->is_in_queue = 0;

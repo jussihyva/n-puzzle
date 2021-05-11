@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/08 06:03:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 08:40:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_puzzle
 	int					*state_collision_cnt;
 	t_queue				*status_queue;
 	t_bt_node			**bt_root;
+	t_bt_node			**states_prio_queue;
 	int					print_delay;
 }				t_puzzle;
 
@@ -207,17 +208,15 @@ void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
-t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
-					t_pos *empty_pos, unsigned int right_pos_status);
+t_puzzle_status	*create_puzzle_status(int **tile_map, t_pos ***pos_table,
+					int puzzle_size);
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status);
 int				is_visited_puzzle_status_list(unsigned long tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
 int				is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
-void			add_visited_puzzle_status(t_puzzle_status *puzzle_status,
+void			store_visited_puzzle_status(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
-unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
-					int puzzle_size, t_pos **empty_pos);
 void			bfs(t_puzzle *puzzle);
 void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);

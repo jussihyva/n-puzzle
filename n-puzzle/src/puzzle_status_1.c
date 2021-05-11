@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/10 15:21:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 08:39:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
 	return ;
 }
 
-unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
+static unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 											int puzzle_size, t_pos **empty_pos)
 {
 	unsigned long	tiles_pos_map;
@@ -68,11 +68,44 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 	return (puzzle_status);
 }
 
-t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
-								t_pos *empty_pos, unsigned int right_pos_status)
+static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
+													unsigned long tiles_pos_map)
+{
+	unsigned int	right_pos_status;
+	int				i;
+	int				j;
+	t_pos			*pos;
+	int				tile_number;
+
+	right_pos_status = 0;
+	i = -1;
+	while (++i < puzzle_size)
+	{
+		j = -1;
+		while (++j < puzzle_size)
+		{
+			pos = pos_table[i][j];
+			tile_number = (tiles_pos_map >> (4 * (i * puzzle_size + j))) & 0xF;
+			if (tile_number == pos->order_num)
+				right_pos_status |= 1 << pos->order_num;
+		}
+	}
+	FT_LOG_TRACE("Right position status: %u", right_pos_status);
+	return (right_pos_status);
+}
+
+t_puzzle_status	*create_puzzle_status(int **tile_map, t_pos ***pos_table,
+																int puzzle_size)
 {
 	t_puzzle_status		*puzzle_status;
+	t_pos				*empty_pos;
+	unsigned long		tiles_pos_map;
+	unsigned int		right_pos_status;
 
+	tiles_pos_map = create_tiles_pos_map(tile_map,
+			pos_table, puzzle_size, &empty_pos);
+	right_pos_status = set_right_pos_status(pos_table, puzzle_size,
+			tiles_pos_map);
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	puzzle_status->empty_pos = empty_pos;
 	puzzle_status->tiles_pos_map = tiles_pos_map;
@@ -80,7 +113,7 @@ t_puzzle_status	*create_puzzle_status(unsigned long tiles_pos_map,
 	return (puzzle_status);
 }
 
-void	add_visited_puzzle_status(t_puzzle_status *puzzle_status,
+void	store_visited_puzzle_status(t_puzzle_status *puzzle_status,
 															t_puzzle *puzzle)
 {
 	t_list				*new_elem;

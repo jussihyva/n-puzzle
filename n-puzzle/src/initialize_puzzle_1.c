@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 09:55:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 08:39:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,39 +71,10 @@ static t_pos	***initialize_pos_table(int puzzle_size)
 	return (pos_table);
 }
 
-static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
-													unsigned long tiles_pos_map)
-{
-	unsigned int	right_pos_status;
-	int				i;
-	int				j;
-	t_pos			*pos;
-	int				tile_number;
-
-	right_pos_status = 0;
-	i = -1;
-	while (++i < puzzle_size)
-	{
-		j = -1;
-		while (++j < puzzle_size)
-		{
-			pos = pos_table[i][j];
-			tile_number = (tiles_pos_map >> (4 * (i * puzzle_size + j))) & 0xF;
-			if (tile_number == pos->order_num)
-				right_pos_status |= 1 << pos->order_num;
-		}
-	}
-	FT_LOG_TRACE("Right position status: %u", right_pos_status);
-	return (right_pos_status);
-}
-
 t_puzzle	*initialize_puzzle(t_input *input)
 {
 	t_puzzle		*puzzle;
 	t_map			*puzzle_map;
-	unsigned long	tiles_pos_map;
-	t_pos			*empty_pos;
-	unsigned int	right_pos_status;
 
 	puzzle_map = input->puzzle_map;
 	puzzle = (t_puzzle *)ft_memalloc(sizeof(*puzzle));
@@ -112,6 +83,8 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->algorithm = input->algorithm;
 	puzzle->size = puzzle_map->size;
 	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
+	puzzle->states_prio_queue
+		= (t_bt_node **)ft_memalloc(sizeof(*puzzle->states_prio_queue));
 	puzzle->bt_root
 		= (t_bt_node **)ft_memalloc(sizeof(*puzzle->bt_root));
 	puzzle->puzzle_status_lst
@@ -120,11 +93,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->status_queue = ft_queue_init();
 	puzzle->pos_table = initialize_pos_table(puzzle->size);
 	set_order_number(puzzle->pos_table, puzzle->size);
-	tiles_pos_map = create_tiles_pos_map(puzzle_map->tile_map,
-			puzzle->pos_table, puzzle->size, &empty_pos);
-	right_pos_status = set_right_pos_status(puzzle->pos_table,
-			puzzle->size, tiles_pos_map);
-	puzzle->curr_status = create_puzzle_status(tiles_pos_map, empty_pos,
-			right_pos_status);
+	puzzle->curr_status = create_puzzle_status(puzzle_map->tile_map,
+			puzzle->pos_table, puzzle->size);
 	return (puzzle);
 }

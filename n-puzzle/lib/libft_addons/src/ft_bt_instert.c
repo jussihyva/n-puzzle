@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 13:32:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/10 17:04:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/11 08:47:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	instert_elem(t_bt_node *bt_node, t_bt_node **parent,
 		split_node(&bt_node, parent, &bt_elem->bt_key);
 	i = find_elem_index(&bt_elem->bt_key, &bt_node, &bt_data);
 	if (bt_data.data)
-		return ;
+		FT_LOG_FATAL("Key already saved");
 	save_bt_elem(bt_node, i, bt_elem);
 	return ;
 }
