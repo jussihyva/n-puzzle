@@ -143,6 +143,6 @@ make
 
 ## 5. Examples
 
-![file:](./data/Manual_Puzzle_demo.mov)
+### 5.1 Manual N-puzzle GUI
 
-![file:](./data/Picture.png)
+![caption](n-puzzle/data/Manual_Puzzle_demo.gif)
