@@ -145,9 +145,13 @@ make
 
 ## 5. Examples
 
-### 5.1 Manual N-puzzle GUI
+### 5.1 N-Puzzle input creator
 
-![Manual_Puzzle_demo](n-puzzle/data/Manual_Puzzle_demo.gif)
+### 5.2 N-Puzzle solver (My Solution)
+
+### 5.2 N-puzzle GUI (Modified in my solution)
+
+![N-puzzle GUI](n-puzzle/data/Manual_Puzzle_demo.gif)
 
 ## 6. Lessons learned
 

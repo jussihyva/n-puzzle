@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 17:45:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/12 18:24:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*set_algorithm_substring(t_algorithm algorithm)
 	else if (algorithm == E_BFS_2)
 		algorithm_substring = ft_strdup("b_tree");
 	else if (algorithm == E_TOOP_1)
-		algorithm_substring = ft_strdup("out_of_place");
+		algorithm_substring = ft_strdup("tiles_out_of_place");
 	return (algorithm_substring);
 }
 
