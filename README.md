@@ -145,4 +145,20 @@ make
 
 ### 5.1 Manual N-puzzle GUI
 
-![caption](n-puzzle/data/Manual_Puzzle_demo.gif)
+![Manual_Puzzle_demo](n-puzzle/data/Manual_Puzzle_demo.gif)
+
+## 6. Lessons learned
+
+### 6.1 BFS (Breadth-First Search)
+
+Some details, what exactly I learned.
+
+### 6.2 DFS (Depth-First Search)
+
+Some details, what exactly I learned.
+
+### 6.3 Heurestic Algorithms related to N-puzzle
+
+#### 6.3.1 Tiles-Out-Of-Place
+
+Some details, what exactly I learned.
