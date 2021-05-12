@@ -103,6 +103,42 @@ Here is link to a page which demonstrate different kind of solutions (algorithms
 
 ## 3. Installation
 
+### 1. Verify prerequisites
+
+python2 --version
+>Should be like:
+Python 2.xxxxx
+
+python3 --version
+>Should be like:
+Python 3.xxxxx
+
+docker --version
+>Should be like:
+Docker version 20.10.5, build 55c4c88
+
+docker-compose --version
+>Should be like:
+docker-compose version 1.29.0, build 07737305
+
+### 2. Clone the project from github
+
+git clone https://github.com/jussihyva/n-puzzle.git
+
+### 3. Compile and start docker containers
+
+cd n-puzzle
+>NOTE. make commmand may require sudo. This because of some environment settings usage of Docker requires always admin rights.
+
+make
+
+### 4. Verify installation
+
+./bin/n_puzzle -h
+
+>Reply should be something like this:
+11:14:04.199 ERROR src/arg_parser.c:17: Unknown parameter: -h
+
 ## 4. Use cases
 
 ## 5. Examples
