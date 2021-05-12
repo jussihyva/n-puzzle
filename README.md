@@ -50,14 +50,16 @@ towards an empty space).
 
 ### 1.2 Visualization of 3x3 Puzzle algorithms
 
-Here is link to a page which demonstrate different kind of solutions (algorithms) to solve 3x3 Puzzle. The page is not related to the Hive N-Puzzle project.
+Here is a link to a page which demonstrate (visualize) solutions for solving 3x3 Puzzle. The page is not related to the Hive N-Puzzle project.
 * https://tristanpenman.com/demos/n-puzzle/
 
 ### 1.3 Ready made script for creating input (N-puzzle) for a solution
 
 ## 2. My Solution
 
-### 2.1 Implemented search algorithms
+### 2.1 Solution description
+
+### 2.2 Implemented search algorithms
 
 | Based on | Algorithm name | Abbreviation| Description | Refer to |
 | :- | :- | :-: | :- | - |
@@ -69,14 +71,14 @@ Here is link to a page which demonstrate different kind of solutions (algorithms
 |*Linked list*| BFS List | bfs_1 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a linked list ||
 |*B-Tree*| BFS B-tree | bfs_2 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a B-tree ||
 
-### 2.2 Implemented heuristic algorihms
+### 2.3 Implemented heuristic algorihms
 
 | Algorithm | Abbreviation| Description | Refer to |
 | :- | :-: | :- | -|
 |**Tiles out of place**||||
 ||toop_1| Selcection of the next move is based a number of tile moves (already done) and a number of tiles out of a right place. Lowest value is the first in a priority queue. ||
 
-### 2.3 Implemented utilities
+### 2.4 Implemented utilities
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
@@ -95,7 +97,7 @@ Here is link to a page which demonstrate different kind of solutions (algorithms
 | | ft_prio_enqueue | Push data to a queue | |
 | | ft_prio_dequeue | Pop data from a queue | |
 
-## 2.4 Adapted (modified) open source functions
+## 2.5 Adapted (modified) open source functions
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
@@ -149,16 +151,20 @@ make
 
 ## 6. Lessons learned
 
-### 6.1 BFS (Breadth-First Search)
+### 6.1 Stack, Queue, B-Tree and Prio-Queue
 
 Some details, what exactly I learned.
 
-### 6.2 DFS (Depth-First Search)
+### 6.2 BFS (Breadth-First Search)
 
 Some details, what exactly I learned.
 
-### 6.3 Heurestic Algorithms related to N-puzzle
+### 6.3 DFS (Depth-First Search)
 
-#### 6.3.1 Tiles-Out-Of-Place
+Some details, what exactly I learned.
+
+### 6.4 Heuristic Algorithms related to N-puzzle
+
+#### 6.4.1 Tiles-Out-Of-Place
 
 Some details, what exactly I learned.
