@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 13:32:44 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 15:14:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/12 05:31:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	ft_bt_instert(t_bt_key *bt_key, t_bt_data *bt_data, t_bt_node **bt_root)
 	}
 	ft_memcpy(&bt_elem.bt_data, bt_data, sizeof(bt_elem.bt_data));
 	ft_memcpy(&bt_elem.bt_key, bt_key, sizeof(bt_elem.bt_key));
+	bt_elem.is_queue = 0;
 	bt_elem.left_child = NULL;
 	bt_elem.right_child = NULL;
 	parent = NULL;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:24:29 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 13:51:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/12 06:40:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static void	remove_node(t_bt_node *bt_node, t_bt_node *parent,
 			parent->bt_elem[0].left_child = bt_node->bt_elem[0].right_child;
 		else
 			*states_prio_queue = bt_node->bt_elem[0].right_child;
+	}
+	else
+	{
+		if (parent)
+			parent->bt_elem[0].left_child = NULL;
 	}
 	if (bt_node == *states_prio_queue)
 		*states_prio_queue = NULL;

@@ -1065,6 +1065,218 @@
 		"dashLength": 10,
 		"dashes": false,
 		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"fill": 0,
+		"fillGradient": 0,
+		"gridPos": {
+		  "h": 12,
+		  "w": 19,
+		  "x": 0,
+		  "y": 58
+		},
+		"hiddenSeries": false,
+		"id": 16,
+		"legend": {
+		  "avg": false,
+		  "current": false,
+		  "max": false,
+		  "min": false,
+		  "show": true,
+		  "total": false,
+		  "values": false
+		},
+		"lines": true,
+		"linewidth": 1,
+		"nullPointMode": "connected",
+		"options": {
+		  "alertThreshold": true
+		},
+		"percentage": false,
+		"pluginVersion": "7.5.2",
+		"pointradius": 2,
+		"points": false,
+		"renderer": "flot",
+		"seriesOverrides": [],
+		"spaceLength": 10,
+		"stack": false,
+		"steppedLine": false,
+		"targets": [
+		  {
+			"alias": "TOOP",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "C",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "toop"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "out_of_place"
+			  }
+			]
+		  },
+		  {
+			"alias": "BFS (B Tree)",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "bfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "b_tree"
+			  }
+			]
+		  }
+		],
+		"thresholds": [],
+		"timeFrom": null,
+		"timeRegions": [],
+		"timeShift": null,
+		"title": "Puzzle solve time (CPU Usage time)",
+		"tooltip": {
+		  "shared": true,
+		  "sort": 0,
+		  "value_type": "individual"
+		},
+		"type": "graph",
+		"xaxis": {
+		  "buckets": null,
+		  "mode": "time",
+		  "name": null,
+		  "show": true,
+		  "values": []
+		},
+		"yaxes": [
+		  {
+			"format": "none",
+			"label": "Seconds",
+			"logBase": 1,
+			"max": null,
+			"min": null,
+			"show": true
+		  },
+		  {
+			"format": "none",
+			"label": null,
+			"logBase": 1,
+			"max": null,
+			"min": null,
+			"show": true
+		  }
+		],
+		"yaxis": {
+		  "align": false,
+		  "alignLevel": null
+		}
+	  },
+	  {
+		"aliasColors": {},
+		"bars": false,
+		"dashLength": 10,
+		"dashes": false,
+		"datasource": null,
 		"fieldConfig": {
 		  "defaults": {},
 		  "overrides": []
@@ -1075,7 +1287,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 58
+		  "y": 70
 		},
 		"hiddenSeries": false,
 		"id": 6,
@@ -1512,6 +1724,88 @@
 				"value": "no_mem_rand"
 			  }
 			]
+		  },
+		  {
+			"alias": "TOOP",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'toop' AND \"algorithm_substring\" = 'out_of_place') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"rawQuery": true,
+			"refId": "F",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"tile_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "no_mem_rand"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -1571,7 +1865,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 68
+		  "y": 80
 		},
 		"hiddenSeries": false,
 		"id": 12,
@@ -1878,6 +2172,62 @@
 				"value": "deeping"
 			  }
 			]
+		  },
+		  {
+			"alias": "TOOP",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "F",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "toop"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "out_of_place"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -1937,7 +2287,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 78
+		  "y": 90
 		},
 		"hiddenSeries": false,
 		"id": 15,
@@ -2244,6 +2594,62 @@
 				"value": "deeping"
 			  }
 			]
+		  },
+		  {
+			"alias": "TOOP",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "F",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"state_collisions"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "toop"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "out_of_place"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -2303,5 +2709,6 @@
 	"timezone": "",
 	"title": "3x3 Puzzle CPU usage and tile moves.",
 	"uid": "aZLjn6XGk",
-	"version": 14
+	"version": 15
   }
+  

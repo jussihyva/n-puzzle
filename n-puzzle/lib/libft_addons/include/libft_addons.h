@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 19:26:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/12 06:47:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define MAX_LOGING_EXTENSIONS		32
 # define PI							3.141592654
 # define LOGING_LEVELS				6
-# define MAX_NUM_OF_B_TREE_ELEMS	10
+# define MAX_NUM_OF_B_TREE_ELEMS	20
 
 typedef enum e_loging_level
 {
