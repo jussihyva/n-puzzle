@@ -128,7 +128,7 @@ git clone https://github.com/jussihyva/n-puzzle.git
 ### 3. Compile and start docker containers
 
 cd n-puzzle
->NOTE. make commmand may require sudo. This because of some environment settings usage of Docker requires always admin rights.
+>NOTE. make command might fail without sudo command (sudo make). This becuse of usage of Docker requires admin rights (sudo) in some environments.
 
 make
 
@@ -142,3 +142,7 @@ make
 ## 4. Use cases
 
 ## 5. Examples
+
+![file:](./data/Manual_Puzzle_demo.mov)
+
+![file:](./data/Picture.png)
