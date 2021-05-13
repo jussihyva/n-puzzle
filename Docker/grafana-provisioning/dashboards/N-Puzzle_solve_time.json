@@ -259,7 +259,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 150
+				  "value": null
 				}
 			  ]
 			},
@@ -355,7 +355,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 103
+				  "value": 91
 				}
 			  ]
 			}
@@ -367,7 +367,7 @@
 		  "x": 4,
 		  "y": 1
 		},
-		"id": 11,
+		"id": 12,
 		"options": {
 		  "showHeader": true,
 		  "sortBy": []
@@ -419,7 +419,7 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "out_of_place"
+				"value": "tiles_out_of_place"
 			  }
 			]
 		  }
@@ -1124,6 +1124,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 2
+	"version": 4
   }
-  

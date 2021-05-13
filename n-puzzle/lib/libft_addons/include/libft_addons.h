@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/12 06:47:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/13 08:55:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int					search_key_position(t_bt_node *bt_node, t_bt_key *bt_key,
 void				split_node(t_bt_node **bt_node, t_bt_node **parent,
 						t_bt_key *bt_key);
 void				ft_prio_enqueue(t_bt_node **states_prio_queue, int *prio,
-						void **puzzle_status);
+						void *puzzle_status);
 void				*ft_prio_dequeue(t_bt_node **states_prio_queue);
 
 # define FT_LOG_FATAL(...)	ft_log_fatal(__FILE__, __LINE__, __VA_ARGS__)
