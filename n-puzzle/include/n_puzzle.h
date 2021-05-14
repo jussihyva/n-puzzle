@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/11 19:13:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/14 20:30:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef enum e_algorithm
 	E_DFS_DEEPING_MEM,
 	E_BFS_1,
 	E_BFS_2,
-	E_TOOP_1
+	E_TOOP_1,
+	E_A_STAR_T
 }				t_algorithm;
 
 typedef struct s_xy_values
@@ -229,5 +230,7 @@ int				get_tile_number(unsigned long tiles_pos_map, t_pos *pos,
 					int puzzle_size);
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
+void			alg_a_star(t_puzzle *puzzle);
+int				calculate_taxicab_based_prio(t_puzzle *puzzle);
 
 #endif

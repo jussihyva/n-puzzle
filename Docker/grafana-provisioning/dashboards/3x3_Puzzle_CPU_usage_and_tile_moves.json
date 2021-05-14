@@ -663,6 +663,126 @@
 		"type": "michaeldmoore-scatter-panel"
 	  },
 	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 9,
+		  "w": 19,
+		  "x": 0,
+		  "y": 46
+		},
+		"id": 17,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 1,
+			  "color": "#e5ed15",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			},
+			{
+			  "col": 1,
+			  "color": "#b0a2f2",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 2,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Tile moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU Usage time (ms)",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"tile_moves"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  }
+		],
+		"title": "CPU time vs. Tile moves (A* Taxicab)",
+		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
 		"aliasColors": {},
 		"bars": false,
 		"dashLength": 10,
@@ -679,7 +799,7 @@
 		  "h": 12,
 		  "w": 19,
 		  "x": 0,
-		  "y": 46
+		  "y": 55
 		},
 		"hiddenSeries": false,
 		"id": 2,
@@ -1076,7 +1196,7 @@
 		  "h": 12,
 		  "w": 19,
 		  "x": 0,
-		  "y": 58
+		  "y": 67
 		},
 		"hiddenSeries": false,
 		"id": 16,
@@ -1287,7 +1407,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 70
+		  "y": 79
 		},
 		"hiddenSeries": false,
 		"id": 6,
@@ -1806,6 +1926,88 @@
 				"value": "no_mem_rand"
 			  }
 			]
+		  },
+		  {
+			"alias": "A* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  },
+			  {
+				"params": [
+				  "null"
+				],
+				"type": "fill"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"rawQuery": true,
+			"refId": "G",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"tile_moves"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "dfs"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "no_mem_rand"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -1865,7 +2067,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 80
+		  "y": 89
 		},
 		"hiddenSeries": false,
 		"id": 12,
@@ -2287,7 +2489,7 @@
 		  "h": 10,
 		  "w": 19,
 		  "x": 0,
-		  "y": 90
+		  "y": 99
 		},
 		"hiddenSeries": false,
 		"id": 15,
@@ -2709,6 +2911,5 @@
 	"timezone": "",
 	"title": "3x3 Puzzle CPU usage and tile moves.",
 	"uid": "aZLjn6XGk",
-	"version": 15
+	"version": 17
   }
-  

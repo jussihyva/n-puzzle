@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/12 18:24:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/14 18:41:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static char	*set_algorithm_string(t_algorithm algorithm)
 		algorithm_string = ft_strdup("bfs");
 	else if (algorithm == E_TOOP_1)
 		algorithm_string = ft_strdup("toop");
+	else if (algorithm == E_A_STAR_T)
+		algorithm_string = ft_strdup("a_star");
 	return (algorithm_string);
 }
 
@@ -49,6 +51,8 @@ static char	*set_algorithm_substring(t_algorithm algorithm)
 		algorithm_substring = ft_strdup("b_tree");
 	else if (algorithm == E_TOOP_1)
 		algorithm_substring = ft_strdup("tiles_out_of_place");
+	else if (algorithm == E_A_STAR_T)
+		algorithm_substring = ft_strdup("taxicab");
 	return (algorithm_substring);
 }
 
@@ -69,6 +73,8 @@ t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
 		algorithm = E_BFS_2;
 	else if (!ft_strcmp(algorithm_string, "toop_1"))
 		algorithm = E_TOOP_1;
+	else if (!ft_strcmp(algorithm_string, "a_star_t"))
+		algorithm = E_A_STAR_T;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
