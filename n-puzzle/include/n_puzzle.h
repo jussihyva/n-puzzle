@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 20:30:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/16 14:27:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,10 @@ int				is_visited_puzzle_status_list(unsigned long tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
 int				is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
-void			store_visited_puzzle_status(t_puzzle_status *puzzle_status,
+void			store_visited_puzzle_status_list(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
+void			store_visited_puzzle_status_b_tree(
+					t_puzzle_status *puzzle_status, t_bt_node **bt_root);
 void			bfs(t_puzzle *puzzle);
 void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);
@@ -231,6 +233,10 @@ int				get_tile_number(unsigned long tiles_pos_map, t_pos *pos,
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			alg_a_star(t_puzzle *puzzle);
-int				calculate_taxicab_based_prio(t_puzzle *puzzle);
+int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
+					t_pos ***pos_table, int puzzle_size);
+t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
+void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
+												t_bt_node **states_prio_queue);
 
 #endif

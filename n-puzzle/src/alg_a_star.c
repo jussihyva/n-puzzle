@@ -6,29 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 20:29:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/16 13:50:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
-
-static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle)
-{
-	t_puzzle_status		*next_status;
-
-	if (is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
-			puzzle, &next_status))
-		next_status = NULL;
-	else
-	{
-		next_status = save_current_puzzle_status(puzzle->curr_status);
-		ft_prio_enqueue(puzzle->states_prio_queue, &next_status->prio,
-			(void *)next_status);
-		next_status->is_in_queue = 1;
-		store_visited_puzzle_status(next_status, puzzle);
-	}
-	return (next_status);
-}
 
 static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 												t_puzzle_status *puzzle_status)
@@ -46,8 +28,10 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		puzzle->curr_status->depth++;
 		if (puzzle->algorithm == E_A_STAR_T)
-			puzzle->curr_status->prio = calculate_taxicab_based_prio(puzzle);
-		add_state_to_prio_queue(puzzle);
+			puzzle->curr_status->prio
+				= calculate_taxicab_based_prio(puzzle->curr_status,
+					puzzle->pos_table, puzzle->size);
+		add_puzzle_state_to_prio_queue(puzzle);
 		if (puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
@@ -82,7 +66,8 @@ void	alg_a_star(t_puzzle *puzzle)
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 		(void *)puzzle_status);
 	puzzle_status->is_in_queue = 1;
-	store_visited_puzzle_status(puzzle_status, puzzle);
+	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
+	(*puzzle->states_cnt)++;
 	while (!is_puzzle_ready && *puzzle->states_prio_queue)
 	{
 		puzzle_status

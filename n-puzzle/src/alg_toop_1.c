@@ -6,28 +6,29 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 19:59:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/16 14:28:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_puzzle_status	*add_state_to_prio_queue(t_puzzle *puzzle)
+static t_puzzle_status	*add_state_to_prio_queue_1(t_puzzle *puzzle)
 {
-	t_puzzle_status		*next_status;
+	t_puzzle_status		*puzzle_status;
 
 	if (is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
-			puzzle, &next_status))
-		next_status = NULL;
+			puzzle, &puzzle_status))
+		puzzle_status = NULL;
 	else
 	{
-		next_status = save_current_puzzle_status(puzzle->curr_status);
-		ft_prio_enqueue(puzzle->states_prio_queue, &next_status->prio,
-			(void *)next_status);
-		next_status->is_in_queue = 1;
-		store_visited_puzzle_status(next_status, puzzle);
+		puzzle_status = save_current_puzzle_status(puzzle->curr_status);
+		ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
+			(void *)puzzle_status);
+		puzzle_status->is_in_queue = 1;
+		store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
+		(*puzzle->states_cnt)++;
 	}
-	return (next_status);
+	return (puzzle_status);
 }
 
 static int	breadth_first_search(t_puzzle *puzzle,
@@ -56,7 +57,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 		puzzle->curr_status->depth++;
 		puzzle->curr_status->prio = puzzle->curr_status->tiles_out_of_place
 			+ puzzle->curr_status->depth;
-		add_state_to_prio_queue(puzzle);
+		add_state_to_prio_queue_1(puzzle);
 		if (puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
@@ -91,7 +92,8 @@ void	alg_toop_1(t_puzzle *puzzle)
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 		(void *)puzzle_status);
 	puzzle_status->is_in_queue = 1;
-	store_visited_puzzle_status(puzzle_status, puzzle);
+	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
+	(*puzzle->states_cnt)++;
 	while (!is_puzzle_ready && *puzzle->states_prio_queue)
 	{
 		puzzle_status

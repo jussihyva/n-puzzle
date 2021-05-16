@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 21:13:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/16 13:06:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ static int	calculate_taxicab_distance(unsigned long tiles_pos_map,
 	return (taxicab_distance);
 }
 
-int	calculate_taxicab_based_prio(t_puzzle *puzzle)
+int	calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
+											t_pos ***pos_table, int puzzle_size)
 {
 	int				prio;
 	int				taxicab_distance;
 
-	taxicab_distance
-		= calculate_taxicab_distance(puzzle->curr_status->tiles_pos_map,
-			puzzle->pos_table, puzzle->size);
-	prio = taxicab_distance + puzzle->curr_status->depth;
+	taxicab_distance = calculate_taxicab_distance(puzzle_status->tiles_pos_map,
+			pos_table, puzzle_size);
+	prio = taxicab_distance + puzzle_status->depth;
 	return (prio);
 }
