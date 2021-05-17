@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 14:27:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 10:59:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ typedef enum e_order
 	E_SEND_TO_INFLUXDB
 }				t_order;
 
+typedef enum e_heuristic_alg
+{
+	E_NO_HEURISTIC_ALG,
+	E_TAXICAB
+}				t_heuristic_alg;
+
 typedef enum e_algorithm
 {
 	E_DFS_NO_MEM,
@@ -54,7 +60,8 @@ typedef enum e_algorithm
 	E_BFS_1,
 	E_BFS_2,
 	E_TOOP_1,
-	E_A_STAR_T
+	E_A_STAR_T,
+	E_IDA_STAR
 }				t_algorithm;
 
 typedef struct s_xy_values
@@ -88,6 +95,7 @@ typedef struct s_cmd_args
 	char			**argv;
 	t_loging_level	loging_level;
 	char			*algorithm;
+	char			*heurestic_algorithm;
 	int				release;
 	char			*input_file;
 	int				print_delay;
@@ -106,6 +114,7 @@ typedef struct s_input
 	const char			**level_colors;
 	t_cmd_args			*cmd_args;
 	t_algorithm			algorithm;
+	t_heuristic_alg		heuristic_algorithm;
 	t_map				*puzzle_map;
 }				t_input;
 
@@ -238,5 +247,6 @@ int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
 t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
 												t_bt_node **states_prio_queue);
+void			alg_ida_star(t_puzzle *puzzle);
 
 #endif

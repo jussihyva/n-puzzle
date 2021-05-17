@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 15:43:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 12:47:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static t_puzzle_status	*n_puzzle_search_algorithm(t_puzzle *puzzle,
 	move.to_pos = puzzle_status->empty_pos;
 	while (*search_pos_index < move.to_pos->num_of_neighbors)
 	{
+		ft_memcpy(puzzle->curr_status, puzzle_status,
+			sizeof(*puzzle->curr_status));
 		move.from_pos = move.to_pos->neighbors[*search_pos_index];
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		puzzle->curr_status->depth++;
@@ -35,6 +37,7 @@ static t_puzzle_status	*n_puzzle_search_algorithm(t_puzzle *puzzle,
 		}
 		(*search_pos_index)++;
 	}
+	ft_memcpy(puzzle->curr_status, puzzle_status, sizeof(*puzzle->curr_status));
 	return (next_puzzle_status);
 }
 
@@ -49,12 +52,11 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	selected_puzzle_state = NULL;
 	searched_puzzle_state = puzzle_status;
 	search_pos_index = 0;
+	searched_puzzle_state = n_puzzle_search_algorithm(puzzle, puzzle_status,
+			&search_pos_index);
 	while (searched_puzzle_state)
 	{
-		searched_puzzle_state
-			= n_puzzle_search_algorithm(puzzle, puzzle_status,
-				&search_pos_index);
-		if (puzzle->algorithm == E_A_STAR_T)
+		if (puzzle->algorithm == E_IDA_STAR)
 			searched_puzzle_state->prio
 				= calculate_taxicab_based_prio(searched_puzzle_state,
 					puzzle->pos_table, puzzle->size);
@@ -65,16 +67,26 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		}
 		else
 			selected_puzzle_state = searched_puzzle_state;
+		search_pos_index++;
+		searched_puzzle_state
+			= n_puzzle_search_algorithm(puzzle, puzzle_status,
+				&search_pos_index);
 	}
 	is_puzzle_ready = 0;
-	if (selected_puzzle_state->right_pos_status
-		== puzzle->puzzle_ready_status)
-		is_puzzle_ready = print_solution(selected_puzzle_state, puzzle);
-	else
+	if (selected_puzzle_state)
 	{
-		add_puzzle_state_to_prio_queue_1(selected_puzzle_state,
-			puzzle->states_prio_queue);
-		(*puzzle->states_cnt)++;
+		selected_puzzle_state->prev_status = puzzle_status;
+		if (selected_puzzle_state->right_pos_status
+			== puzzle->puzzle_ready_status)
+			is_puzzle_ready = print_solution(selected_puzzle_state, puzzle);
+		else
+		{
+			add_puzzle_state_to_prio_queue_1(selected_puzzle_state,
+				puzzle->states_prio_queue);
+			store_visited_puzzle_status_b_tree(selected_puzzle_state,
+				puzzle->bt_root);
+			(*puzzle->states_cnt)++;
+		}
 	}
 	return (is_puzzle_ready);
 }
@@ -113,6 +125,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 		ft_memcpy(puzzle->curr_status, puzzle_status,
 			sizeof(*puzzle->curr_status));
 		puzzle->curr_status->prev_status = puzzle_status;
+		print_puzzle(1, puzzle_status->tiles_pos_map, puzzle->size);
 		is_puzzle_ready = ida_star_search_algorithm(puzzle, puzzle_status);
 		print_depth_level(puzzle->curr_status->depth);
 	}

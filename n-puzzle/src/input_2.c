@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:32:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 00:13:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 10:35:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 	{
 		ft_strdel(&cmd_args->algorithm);
 		cmd_args->algorithm = next_arg;
+	}
+	else if (opt == 'H')
+	{
+		ft_strdel(&cmd_args->heurestic_algorithm);
+		cmd_args->heurestic_algorithm = next_arg;
 	}
 	else if (opt == 'f')
 	{

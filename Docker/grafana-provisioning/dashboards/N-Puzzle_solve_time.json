@@ -15,7 +15,6 @@
 	"editable": true,
 	"gnetId": null,
 	"graphTooltip": 0,
-	"id": 9,
 	"links": [],
 	"panels": [
 	  {
@@ -1322,9 +1321,116 @@
 		  }
 		],
 		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 20,
+		  "x": 0,
+		  "y": 22
+		},
+		"id": 15,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#76e887",
+			  "dotSize": 3,
+			  "lineSize": 1,
+			  "lineType": "none",
+			  "hidden": false
+			},
+			{
+			  "col": 2,
+			  "color": "#c183e2",
+			  "dotSize": 3,
+			  "lineSize": 1,
+			  "lineType": "none",
+			  "hidden": false
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Number of tile moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU usage time (ms)",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  }
+			]
+		  }
+		],
+		"title": "Number of tile moves vs time (A* taxicab)",
+		"type": "michaeldmoore-scatter-panel"
 	  }
 	],
-	"refresh": "5s",
+	"refresh": "",
 	"schemaVersion": 27,
 	"style": "dark",
 	"tags": [],
@@ -1339,5 +1445,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 5
+	"version": 6
   }

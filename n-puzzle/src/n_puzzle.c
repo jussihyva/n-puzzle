@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 18:43:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 10:45:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	main(int argc, char **argv)
 		alg_toop(puzzle);
 	else if (!ft_strncmp(input->cmd_args->algorithm, "a_star", 3))
 		alg_a_star(puzzle);
+	else if (!ft_strncmp(input->cmd_args->algorithm, "ida*", 3))
+		alg_ida_star(puzzle);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
 			"Specify a valid algorithm with the param -A");

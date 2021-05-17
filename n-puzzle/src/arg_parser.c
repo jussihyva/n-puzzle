@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 18:28:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/06 13:24:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 10:41:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static t_cmd_args	*initialize_cmd_args(int argc, char **argv)
 	cmd_args->argc = argc;
 	cmd_args->argv = argv;
 	cmd_args->loging_level = LOG_ERROR;
-	cmd_args->algorithm = ft_strdup("dfs_1");
+	cmd_args->algorithm = ft_strdup("a_star_t");
+	cmd_args->heurestic_algorithm = ft_strdup("t");
 	return (cmd_args);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/14 18:41:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 13:42:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ static char	*set_algorithm_string(t_algorithm algorithm)
 		algorithm_string = ft_strdup("toop");
 	else if (algorithm == E_A_STAR_T)
 		algorithm_string = ft_strdup("a_star");
+	else if (algorithm == E_IDA_STAR)
+		algorithm_string = ft_strdup("ida*");
 	return (algorithm_string);
 }
 
-static char	*set_algorithm_substring(t_algorithm algorithm)
+static char	*based_on_search_alg(t_algorithm algorithm)
 {
 	char		*algorithm_substring;
 
@@ -56,7 +58,29 @@ static char	*set_algorithm_substring(t_algorithm algorithm)
 	return (algorithm_substring);
 }
 
-t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
+static char	*based_on_heuristic_alg(t_heuristic_alg algorithm)
+{
+	char		*algorithm_substring;
+
+	algorithm_substring = NULL;
+	if (algorithm == E_TAXICAB)
+		algorithm_substring = ft_strdup("taxicab");
+	return (algorithm_substring);
+}
+
+static char	*set_algorithm_substring(t_algorithm algorithm,
+											t_heuristic_alg heuristic_algorithm)
+{
+	char		*algorithm_substring;
+
+	if (heuristic_algorithm == E_NO_HEURISTIC_ALG)
+		algorithm_substring = based_on_search_alg(algorithm);
+	else
+		algorithm_substring = based_on_heuristic_alg(heuristic_algorithm);
+	return (algorithm_substring);
+}
+
+static t_algorithm	validate_search_algorithm(char *algorithm_string)
 {
 	t_algorithm		algorithm;
 
@@ -75,12 +99,39 @@ t_algorithm	validate_algorithm(char *algorithm_string, t_statistics *statistics)
 		algorithm = E_TOOP_1;
 	else if (!ft_strcmp(algorithm_string, "a_star_t"))
 		algorithm = E_A_STAR_T;
+	else if (!ft_strcmp(algorithm_string, "ida*"))
+		algorithm = E_IDA_STAR;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
-	statistics->algorithm = set_algorithm_string(algorithm);
-	statistics->algorithm_substring = set_algorithm_substring(algorithm);
 	return (algorithm);
+}
+
+static t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string)
+{
+	t_heuristic_alg		heuristic_algorithm;
+
+	heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	if (!ft_strcmp(algorithm_string, "dfs_1"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "dfs_2"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "dfs_3"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "bfs_1"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "bfs_2"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "toop_1"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "a_star_t"))
+		heuristic_algorithm = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(algorithm_string, "ida*"))
+		heuristic_algorithm = E_TAXICAB;
+	else
+		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
+			"Specify a valid algorithm with the param -A");
+	return (heuristic_algorithm);
 }
 
 t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
@@ -91,12 +142,16 @@ t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 	input = (t_input *)ft_memalloc(sizeof(*input));
 	input->statistics = statistics;
 	set_loging_parameters(input, LOG_TRACE, statistics);
-	options = ft_strdup("L:rA:f:D:");
+	options = ft_strdup("L:rA:f:D:H:");
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);
 	ft_log_set_level(input->cmd_args->loging_level);
 	input->puzzle_map = read_puzzle_map(input->cmd_args->input_file);
-	input->algorithm = validate_algorithm(input->cmd_args->algorithm,
-			statistics);
+	input->heuristic_algorithm
+		= validate_heuristic_algorithm(input->cmd_args->algorithm);
+	input->algorithm = validate_search_algorithm(input->cmd_args->algorithm);
+	statistics->algorithm = set_algorithm_string(input->algorithm);
+	statistics->algorithm_substring = set_algorithm_substring(input->algorithm,
+			input->heuristic_algorithm);
 	ft_strdel(&options);
 	return (input);
 }

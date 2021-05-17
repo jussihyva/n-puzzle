@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 13:06:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/17 12:54:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ static int	calculate_taxicab_distance(unsigned long tiles_pos_map,
 			tile_number = (int)(tiles_pos_map
 					>> (4 * (xy.y * puzzle_size + xy.x))) & 0xF;
 			tile_pos = tile_right_pos_array[tile_number];
-			taxicab_distance += ft_abs(tile_pos.y - xy.y)
-				+ ft_abs(tile_pos.x - xy.x);
+			if (tile_number)
+				taxicab_distance += ft_abs(tile_pos.y - xy.y)
+					+ ft_abs(tile_pos.x - xy.x);
 		}
 	}
 	ft_memdel((void *)&tile_right_pos_array);
