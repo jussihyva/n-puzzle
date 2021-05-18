@@ -71,10 +71,10 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 |*Linked list*| BFS List | bfs_1 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a linked list ||
 |*B-Tree*| BFS B-tree | bfs_2 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a B-tree ||
 | **A*** |
-| | a_star_t | | | |
+| | A* with taxicab (hardcoded heuristic algorithm) | a_star_t | | |
 | | | | | |
 | **IDA*** |
-| | ida* | | | |
+| | IDA* with a heuristic algorithm | ida* | IDA* based algorithm with a heuristic algorithm to priorize tile moves. Taxicab is a default algorithm for cli param -H | |
 | | | | | |
 
 ### 2.3 Implemented heuristic algorihms
@@ -186,3 +186,5 @@ Some details, what exactly I learned.
 #### 6.4.1 Tiles-Out-Of-Place
 
 Some details, what exactly I learned.
+
+[Test](Slide1.jpg)
