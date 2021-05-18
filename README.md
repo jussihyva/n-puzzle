@@ -70,6 +70,12 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 |**BFS**|
 |*Linked list*| BFS List | bfs_1 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a linked list ||
 |*B-Tree*| BFS B-tree | bfs_2 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a B-tree ||
+| **A*** |
+| | a_star_t | | | |
+| | | | | |
+| **IDA*** |
+| | ida* | | | |
+| | | | | |
 
 ### 2.3 Implemented heuristic algorihms
 
@@ -78,7 +84,13 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 |**Tiles out of place**||||
 ||toop_1| Selcection of the next move is based a number of tile moves (already done) and a number of tiles out of a right place. Lowest value is the first in a priority queue. ||
 
-### 2.4 Implemented utilities
+### 2.4 Implemented N-puzzle search algorithm
+
+| Function | Function name | Description | Refer to |
+| :- | :- | :- | :- |
+| n_puzzle_search_algorithm | n_puzzle_search_algorithm | Searches all possible tile move alternatives from an n-puzzle state. The function is used for higher-level algorithms (A*, IDA*, etc.) as input (the next possible n-puzzle states). | |
+
+### 2.5 Implemented utilities
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
@@ -96,12 +108,14 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | **Prio Queue** | | **Save data to a priorized queue** | |
 | | ft_prio_enqueue | Push data to a queue | |
 | | ft_prio_dequeue | Pop data from a queue | |
+| **Event logging** | | Print events to stderr during a program execution. A logging level (five levels) could be specified in input argument (-L) | Based on [A simple logging library implemented in C99](https://github.com/rxi/log.c)|
+| | FT_LOG_\<level\>| level = TRACE, DEBUG, INFO, WARN, ERROR, FATAL.  Logging level TRACE (0) print all kind of events to stderr during execution of a program. A default value is WARN (3). | |
 
-## 2.5 Adapted (modified) open source functions
+## 2.6 Adapted (modified) open source programs
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
-| **N-Puzzle GUI** | | **Visualize tile moves in N-Puzzle** | [Welcome to N-Puzzle](https://pyinmyeye.blogspot.com/2012/07/tkinter-15-puzzle-demo-placer-geometry.html) |
+| **N-Puzzle GUI** | | **Visualize tile moves in N-Puzzle** | Based on [Welcome to N-Puzzle](https://pyinmyeye.blogspot.com/2012/07/tkinter-15-puzzle-demo-placer-geometry.html) |
 
 ## 3. Installation
 
