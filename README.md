@@ -6,10 +6,7 @@ N-Puzzle is a project at Hive (Helsinki) coding school.
 
 ### 1.1 A goal of the project
 
-NOTE. Text below is direct copy from the N-Puzzle project description from Hive Coding school.
-
-The goal of this project is to solve the N-puzzle ("taquin" in French) game using the A*
-search algorithm or one of its variants.
+The goal of this project is to solve the N-puzzle game using the A\* search algorithm or one of its variants.
 You start with a square board made up of N*N cells. One of these cells will be empty,
 the others will contain numbers, starting from 1, that will be unique in this instance of
 the puzzle.
@@ -43,7 +40,6 @@ solve a 3-puzzle is pushing it, ten seconds is unacceptable.
 |14|23|22|21|8|
 |13|12|11|10|9|
 
-
 The only move one can do in the N-puzzle is to swap the empty cell with one of its
 neighbors (No diagonals, of course. Imagine you’re sliding a block with a number on it
 towards an empty space).
@@ -58,6 +54,8 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 ## 2. My Solution
 
 ### 2.1 Solution description
+
+<iframe src="https://onedrive.live.com/embed?cid=7AEA86BDEF93781E&amp;resid=7AEA86BDEF93781E%2178221&amp;authkey=AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="962px" height="565px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
 
 ### 2.2 Implemented search algorithms
 
@@ -186,5 +184,3 @@ Some details, what exactly I learned.
 #### 6.4.1 Tiles-Out-Of-Place
 
 Some details, what exactly I learned.
-
-[Test](Slide1.jpg)
