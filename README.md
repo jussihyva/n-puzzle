@@ -55,18 +55,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 ### 2.1 Solution description
 
-<table>
-<tr><td>dsfdf<td>ddsfd<td>dsfdfs</tr>
-<tr><td>sddfds<td>sdfdfd</tr>
-</table>
-
-<object>
-<embed src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="600" height="400" frameborder="10"></embed>
-</object>
-
-<iframe src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="350px" height="221px" frameborder="10">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
-
-[EEE](https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777)
+[Link to Solution description (PPT)](https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777)
 
 ### 2.2 Implemented search algorithms
 
