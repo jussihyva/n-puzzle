@@ -61,10 +61,10 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 </table>
 
 <object>
-<embed src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="600" height="400"></embed>
+<embed src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="600" height="400" frameborder="10"></embed>
 </object>
 
-<iframe src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="350px" height="221px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+<iframe src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="350px" height="221px" frameborder="10">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
 
 ### 2.2 Implemented search algorithms
 
