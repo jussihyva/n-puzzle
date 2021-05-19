@@ -59,7 +59,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 #### 2.1.1 Visualized solution descriptions
 
-* [N-Puzzle creator](n-puzzle/data/N-Puzzle_Creator_Description.gif)
+* ![N-Puzzle creator](n-puzzle/data/N-Puzzle_Creator_Description.gif)
 * [N-Puzzle solver]()
 * [N-Puzzle tile move visualizer]()
 * [Database (Influxdb)]()
