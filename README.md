@@ -62,7 +62,9 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 [ddfsfd](_selects.html ':include :type=iframe width=100% height=650px')
 
-<iframe width="100%" height="650" src="_selects.html" /></iframe>
+<iframe width="100%" height="650" src="_selects.html"></iframe>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/EKoxLxzWNOk" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
 ### 2.2 Implemented search algorithms
 
