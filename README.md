@@ -68,6 +68,11 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 <iframe src="http://showterm.io/someurl" width="640" height="480" style="display:block; margin: 0 auto;">&nbsp;</iframe>
 
+<object data="http://www.web-source.net" width="600" height="400">
+    <embed src="http://www.web-source.net" width="600" height="400"> </embed>
+    Error: Embedded data could not be displayed.
+</object>
+
 ### 2.2 Implemented search algorithms
 
 | Based on | Algorithm name | Abbreviation| Description | Refer to |
