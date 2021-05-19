@@ -56,6 +56,8 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 ### 2.1 Solution description
 
 <iframe
+id="fdddddfs"
+tile="dddsfds"
 src="https://onedrive.live.com/embed?cid=7AEA86BDEF93781E&amp;resid=7AEA86BDEF93781E%2178221&amp;authkey=AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777"
 width="462px"
 height="565px"
