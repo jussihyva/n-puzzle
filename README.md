@@ -55,6 +55,11 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 ### 2.1 Solution description
 
+<table>
+<tr><td>dsfdf<td>ddsfd<td>dsfdfs
+<tr><td>sddfds<td>sdfdfd
+</table>
+
 <iframe
 id="fdddddfs"
 tile="dddsfds"
