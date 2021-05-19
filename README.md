@@ -56,11 +56,13 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 ### 2.1 Solution description
 
 <table>
-<tr><td>dsfdf<td>ddsfd<td>dsfdfs
-<tr><td>sddfds<td>sdfdfd
+<tr><td>dsfdf<td>ddsfd<td>dsfdfs</tr>
+<tr><td>sddfds<td>sdfdfd</tr>
 </table>
 
-<iframe src="https://ericsson.com"></iframe>
+<figure class="video_container">
+  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
 ### 2.2 Implemented search algorithms
 
