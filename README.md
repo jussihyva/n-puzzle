@@ -66,6 +66,8 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 <iframe width="560" height="315" src="http://www.youtube.com/embed/EKoxLxzWNOk" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 
+<iframe src="http://showterm.io/someurl" width="640" height="480" style="display:block; margin: 0 auto;">&nbsp;</iframe>
+
 ### 2.2 Implemented search algorithms
 
 | Based on | Algorithm name | Abbreviation| Description | Refer to |
