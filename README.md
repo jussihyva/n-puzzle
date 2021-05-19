@@ -60,9 +60,9 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 <tr><td>sddfds<td>sdfdfd</tr>
 </table>
 
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[ddfsfd](_selects.html ':include :type=iframe width=100% height=650px')
+
+<iframe width="100%" height="650" src="_selects.html" /></iframe>
 
 ### 2.2 Implemented search algorithms
 
