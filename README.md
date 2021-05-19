@@ -60,15 +60,9 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 <tr><td>sddfds<td>sdfdfd</tr>
 </table>
 
-[ddfsfd](_selects.html ':include :type=iframe width=100% height=650px')
-
-<iframe width="100%" height="650" src="_selects.html"></iframe>
-
-<iframe width="560" height="315" src="http://www.youtube.com/embed/EKoxLxzWNOk" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-
-<iframe src="http://showterm.io/someurl" width="640" height="480" style="display:block; margin: 0 auto;">&nbsp;</iframe>
-
+<object>
 <embed src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="600" height="400"></embed>
+</object>
 
 <iframe src="https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777" width="350px" height="221px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
 
