@@ -57,6 +57,14 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 [Link to Solution description (PPT)](https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777)
 
+#### 2.1.1 Visualized solution descriptions
+
+* [N-Puzzle creator]()
+* [N-Puzzle solver]()
+* [N-Puzzle tile move visualizer]()
+* [Database (Influxdb)]()
+* [Stat visualizer (Grafana)]()
+
 ### 2.2 Implemented search algorithms
 
 | Based on | Algorithm name | Abbreviation| Description | Refer to |
