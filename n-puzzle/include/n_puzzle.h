@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/17 10:59:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/20 15:36:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,6 @@ typedef struct s_input
 	t_map				*puzzle_map;
 }				t_input;
 
-typedef struct s_tile
-{
-	int			number;
-}				t_tile;
-
 typedef struct s_pos
 {
 	t_xy_values			xy_pos;
@@ -155,7 +150,6 @@ typedef struct s_puzzle
 	int					size;
 	t_algorithm			algorithm;
 	t_pos				***pos_table;
-	t_tile				**tile_array;
 	int					*tile_move_cnt;
 	int					*solution_move_cnt;
 	unsigned int		puzzle_ready_status;
@@ -215,7 +209,7 @@ void			dfs_no_mem(t_puzzle *puzzle);
 void			dfs_deeping(t_puzzle *puzzle);
 void			dfs_deeping_mem(t_puzzle *puzzle);
 void			tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
-t_tile			**initialize_tile_array(t_map *puzzle_map);
+int				is_puzzle_solvable(t_map *puzzle_map, t_pos ***pos_table);
 void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
