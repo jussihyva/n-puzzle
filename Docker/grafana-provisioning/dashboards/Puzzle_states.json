@@ -53,7 +53,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -348,7 +348,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -555,6 +555,56 @@
 				"value": "taxicab"
 			  }
 			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "E",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -577,6 +627,7 @@
 		},
 		"yaxes": [
 		  {
+			"$$hashKey": "object:1299",
 			"format": "short",
 			"label": "Number of visited states",
 			"logBase": 1,
@@ -585,6 +636,7 @@
 			"show": true
 		  },
 		  {
+			"$$hashKey": "object:1300",
 			"format": "short",
 			"label": null,
 			"logBase": 1,
@@ -635,7 +687,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -793,6 +845,56 @@
 				"value": "taxicab"
 			  }
 			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "1m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "min"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -815,6 +917,7 @@
 		},
 		"yaxes": [
 		  {
+			"$$hashKey": "object:930",
 			"format": "short",
 			"label": "Number of visited states",
 			"logBase": 1,
@@ -823,6 +926,7 @@
 			"show": true
 		  },
 		  {
+			"$$hashKey": "object:931",
 			"format": "short",
 			"label": null,
 			"logBase": 1,
@@ -873,7 +977,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -1031,6 +1135,56 @@
 				"value": "taxicab"
 			  }
 			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "1m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
@@ -1053,6 +1207,7 @@
 		},
 		"yaxes": [
 		  {
+			"$$hashKey": "object:622",
 			"format": "short",
 			"label": "Number of visited states",
 			"logBase": 1,
@@ -1061,6 +1216,7 @@
 			"show": true
 		  },
 		  {
+			"$$hashKey": "object:623",
 			"format": "short",
 			"label": null,
 			"logBase": 1,
@@ -1111,7 +1267,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -1261,6 +1417,56 @@
 				"key": "algorithm",
 				"operator": "=",
 				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "$__interval"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"state_collisions"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
 			  },
 			  {
 				"condition": "AND",
@@ -1339,9 +1545,9 @@
 			  "col": 2,
 			  "color": "#e28cc6",
 			  "dotSize": 3,
+			  "hidden": false,
 			  "lineSize": 1,
-			  "lineType": "none",
-			  "hidden": false
+			  "lineType": "none"
 			}
 		  ],
 		  "grid": {
@@ -1428,6 +1634,122 @@
 		"timeFrom": null,
 		"timeShift": null,
 		"title": "Total number of state collisions (a* taxicab)",
+		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 24,
+		  "x": 0,
+		  "y": 57
+		},
+		"id": 9,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#e28cc6",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Number of states",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "Number of collisions",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"alias": "A* Taxicab",
+			"groupBy": [],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"state_collisions"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  }
+		],
+		"timeFrom": null,
+		"timeShift": null,
+		"title": "Total number of state collisions (IDA* taxicab)",
 		"type": "michaeldmoore-scatter-panel"
 	  }
 	],

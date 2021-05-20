@@ -6,14 +6,14 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/11 10:13:55 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/20 13:11:49 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 OS				=	$(shell uname -s)
 ifeq ($(OS), Darwin)
 	D_ATTRIBUTES	=	-D DARWIN
-	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/include
+	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1k/include
 endif
 
 NAME			=	libft_addons.a
@@ -45,7 +45,7 @@ SRC_C_FILES		=	ft_radian.c ft_max_int.c ft_min_int.c \
 					ft_enqueue.c ft_dequeue.c ft_is_queue_empty.c \
 					ft_queue_init.c \
 					ft_bt_instert.c ft_bt_print.c ft_bt_find.c ft_bt_remove.c \
-					ft_prio_enqueue.c ft_prio_dequeue.c
+					ft_prio_enqueue.c ft_prio_dequeue.c ft_print_memory.c
 SRC_H_FILES		=	libft_addons.h
 
 # Path folders for H, C, O and APP files

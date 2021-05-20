@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/17 10:45:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/20 13:49:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,24 @@ static void	send_stat_report(t_puzzle *puzzle)
 	return ;
 }
 
+static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
+{
+	if (!ft_strncmp(algorithm, "dfs", 3))
+		dfs(puzzle);
+	else if (!ft_strncmp(algorithm, "bfs", 3))
+		bfs(puzzle);
+	else if (!ft_strncmp(algorithm, "toop", 3))
+		alg_toop(puzzle);
+	else if (!ft_strncmp(algorithm, "a_star", 3))
+		alg_a_star(puzzle);
+	else if (!ft_strncmp(algorithm, "ida*", 3))
+		alg_ida_star(puzzle);
+	else
+		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm,
+			"Specify a valid algorithm with the param -A");
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	t_input				*input;
@@ -81,19 +99,7 @@ int	main(int argc, char **argv)
 	puzzle->states_cnt = &statistics->puzzle_states_cnt;
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	puzzle->state_collision_cnt = &statistics->puzzle_state_collision_cnt;
-	if (!ft_strncmp(input->cmd_args->algorithm, "dfs", 3))
-		dfs(puzzle);
-	else if (!ft_strncmp(input->cmd_args->algorithm, "bfs", 3))
-		bfs(puzzle);
-	else if (!ft_strncmp(input->cmd_args->algorithm, "toop", 3))
-		alg_toop(puzzle);
-	else if (!ft_strncmp(input->cmd_args->algorithm, "a_star", 3))
-		alg_a_star(puzzle);
-	else if (!ft_strncmp(input->cmd_args->algorithm, "ida*", 3))
-		alg_ida_star(puzzle);
-	else
-		FT_LOG_ERROR("Unknown algorithm: %s. %s", input->cmd_args->algorithm,
-			"Specify a valid algorithm with the param -A");
+	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);
 	release(input, influxdb, puzzle);
 	return (0);

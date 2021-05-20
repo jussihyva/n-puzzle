@@ -168,7 +168,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "BFS B-Tree (ms)",
@@ -371,7 +371,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "TOOP (ms)",
@@ -586,7 +586,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "A* Taxicab (ms)",
@@ -813,7 +813,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "IDA* Taxicab (ms)",
@@ -970,7 +970,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "DFS Random (Sec.)",
@@ -1131,7 +1131,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "DFS Deeping (Sec.)",
@@ -1304,7 +1304,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "DFS Deeping mem (Sec.)",
@@ -1489,7 +1489,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.4",
 		"targets": [
 		  {
 			"alias": "BFS List (Sec.)",
@@ -1667,6 +1667,125 @@
 		],
 		"title": "Number of tile moves vs time (A* taxicab)",
 		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 20,
+		  "x": 0,
+		  "y": 34
+		},
+		"id": 17,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#76e887",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			},
+			{
+			  "col": 2,
+			  "color": "#c183e2",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Number of tile moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU usage time (ms)",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"total_cpu_usage_time"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  }
+		],
+		"title": "Number of tile moves vs time (IDA* taxicab)",
+		"type": "michaeldmoore-scatter-panel"
 	  }
 	],
 	"refresh": "5s",
@@ -1684,5 +1803,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 7
+	"version": 2
   }

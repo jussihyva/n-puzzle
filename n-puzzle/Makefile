@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/16 12:45:04 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/20 13:11:24 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,8 @@ endif
 OS				=	$(shell uname -s)
 ifeq ($(OS), Darwin)
 	D_ATTRIBUTES	=	-D DARWIN
-	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/include
-	MAC_LD_FLAGS	=	-L/Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1g/lib
+	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1k/include
+	MAC_LD_FLAGS	=	-L/Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1k/lib
 endif
 
 # Application specific parameters
