@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/03 11:48:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/21 16:42:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	open_fd(char *file_path)
 		if (fd == -1)
 		{
 			FT_LOG_ERROR("%s (%s) failed! errno=%d. %s: %s",
-					"Opening of a file", file_path, errno, "Detail info",
-															strerror(errno));
+				"Opening of a file", file_path, errno, "Detail info",
+				strerror(errno));
 			exit(42);
 		}
 	}
@@ -127,5 +127,7 @@ t_map	*read_puzzle_map(char *input_file)
 	if (fd)
 		close(fd);
 	FT_LOG_INFO("Puzzle size: %d", puzzle_map->size);
+	if (puzzle_map->size < 3)
+		FT_LOG_ERROR("Size of a N-puzzle is too small. Minimum size is 3x3.");
 	return (puzzle_map);
 }

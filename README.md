@@ -97,7 +97,13 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | :- | :- | :- | :- |
 | n_puzzle_search_algorithm | n_puzzle_search_algorithm | Searches all possible tile move alternatives from an n-puzzle state. The function is used for higher-level algorithms (A*, IDA*, etc.) as input (the next possible n-puzzle states). | |
 
-### 2.5 Implemented utilities
+### 2.5 Implemented N-Puzzle specific functions
+
+| Function | Function name | Description | Refer to |
+| :- | :- | :- | :- |
+| **Is N-Puzzle solvable** | is_puzzle_solvable | Verifies is N-puzzle initail state solvable. | [Check if 15 puzzle is solvable](https://stackoverflow.com/questions/34570344/check-if-15-puzzle-is-solvable) |
+
+### 2.6 Implemented utilities
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
@@ -118,7 +124,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | **Event logging** | | Print events to stderr during a program execution. A logging level (five levels) could be specified in input argument (-L) | Based on [A simple logging library implemented in C99](https://github.com/rxi/log.c)|
 | | FT_LOG_\<level\>| level = TRACE, DEBUG, INFO, WARN, ERROR, FATAL.  Logging level TRACE (0) print all kind of events to stderr during execution of a program. A default value is WARN (3). | |
 
-## 2.6 Adapted (modified) open source programs
+## 2.7 Adapted (modified) open source programs
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
