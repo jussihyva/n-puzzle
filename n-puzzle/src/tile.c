@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/20 20:20:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/21 15:46:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,58 +78,81 @@ void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 
 int	is_puzzle_solvable(t_map *puzzle_map, t_pos ***pos_table)
 {
-	int				*pos_array;
+	int				*order_num_array;
 	t_xy_values		xy_pos;
-	int				num_of_tiles;
+	int				num_of_positions;
 	int				is_solvable;
 	int				order_num;
 	int				i;
 	int				j;
 	int				num_of_inversions;
-	int				right_tile_number;
 	int				current_tile_number;
 	int				tile_number;
+	int				add_value;
+	int				add_inversion;
+	int				empty_tile_row_nbr;
 
-	num_of_tiles = (puzzle_map->size  * puzzle_map->size) - 1;
+	num_of_positions = (puzzle_map->size * puzzle_map->size);
 	is_solvable = 1;
-	pos_array = (int *)ft_memalloc(sizeof(*pos_array) * (puzzle_map->size
-			* puzzle_map->size + 1));
+	order_num_array = (int *)ft_memalloc(sizeof(*order_num_array)
+			* num_of_positions);
+	add_value = 1;
 	xy_pos.y = -1;
 	while (++xy_pos.y < puzzle_map->size)
 	{
 		xy_pos.x = -1;
 		while (++xy_pos.x < puzzle_map->size)
 		{
-			order_num = xy_pos.y * puzzle_map->size + xy_pos.x;
-			i = pos_table[xy_pos.y][xy_pos.x]->order_num;
-			pos_array[i] = order_num;
+			tile_number = pos_table[xy_pos.y][xy_pos.x]->order_num;
+			if (!tile_number)
+				add_value = 0;
+			order_num = xy_pos.y * puzzle_map->size + xy_pos.x + add_value;
+			order_num_array[tile_number] = order_num;
 		}
 	}
 	num_of_inversions = 0;
 	i = -1;
-	while (++i <= num_of_tiles)
+	while (++i < num_of_positions)
 	{
 		xy_pos.y = i / puzzle_map->size;
 		xy_pos.x = i % puzzle_map->size;
-		right_tile_number = pos_table[xy_pos.y][xy_pos.x]->order_num;
 		current_tile_number = puzzle_map->tile_map[xy_pos.y][xy_pos.x];
 		if (current_tile_number)
 		{
-			order_num = pos_array[current_tile_number];
-			num_of_inversions += order_num - 1;
+			order_num = order_num_array[current_tile_number];
+			add_inversion = order_num - 1;
 			j = -1;
 			while (++j < i)
 			{
 				xy_pos.y = j / puzzle_map->size;
 				xy_pos.x = j % puzzle_map->size;
 				tile_number = puzzle_map->tile_map[xy_pos.y][xy_pos.x];
-				if (tile_number && pos_array[tile_number] < order_num)
-					num_of_inversions--;
+				if (!tile_number)
+					empty_tile_row_nbr = xy_pos.y;
+				else if (order_num_array[tile_number] < order_num)
+					add_inversion--;
 			}
+			num_of_inversions += add_inversion;
 		}
 	}
-	ft_memdel((void **)&pos_array);
-	if (num_of_inversions % 2)
-		FT_LOG_FATAL("Puzzle is NOT solvable!");
+	if (num_of_positions % 2)
+	{
+		if (num_of_inversions % 2)
+			FT_LOG_FATAL("Puzzle is NOT solvable!");
+	}
+	else
+	{
+		if (empty_tile_row_nbr % 2)
+		{
+			if (!(num_of_inversions % 2))
+				FT_LOG_FATAL("Puzzle is NOT solvable!");
+		}
+		else
+		{
+			if (num_of_inversions % 2)
+				FT_LOG_FATAL("Puzzle is NOT solvable!");
+		}
+	}
+	ft_memdel((void **)&order_num_array);
 	return (is_solvable);
 }
