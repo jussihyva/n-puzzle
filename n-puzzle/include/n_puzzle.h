@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/20 15:36:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 10:48:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_input
 typedef struct s_pos
 {
 	t_xy_values			xy_pos;
-	int					order_num;
+	int					right_tile_number;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
 }				t_pos;
@@ -193,7 +193,7 @@ void			save_cmd_arguments(t_cmd_args *cmd_args, char opt,
 					char *next_arg);
 void			dfs(t_puzzle *puzzle);
 t_puzzle		*initialize_puzzle(t_input *input);
-void			set_order_number(t_pos ***pos_table, int size);
+void			set_tile_numbers_target_positions(t_pos ***pos_table, int size);
 void			release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle);
 void			print_puzzle(int fd, unsigned long tiles_pos_map,
 					int puzzle_size);

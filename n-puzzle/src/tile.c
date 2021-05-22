@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/21 15:46:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 11:01:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static unsigned long	set_position_match(unsigned long tiles_pos_map,
 	unsigned long		match;
 
 	tile_number = get_tile_number(tiles_pos_map, pos, puzzle_size);
-	if (tile_number == pos->order_num)
-		match = (unsigned int)1 << pos->order_num;
+	if (tile_number == pos->right_tile_number)
+		match = (unsigned int)1 << pos->right_tile_number;
 	else
 		match = 0;
 	return (match);
@@ -41,17 +41,17 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 	unsigned long	tiles_pos_map;
 
 	tiles_pos_map = puzzle->curr_status->tiles_pos_map;
-	if (*right_pos_status & (unsigned int)1 << pos1->order_num)
+	if (*right_pos_status & (unsigned int)1 << pos1->right_tile_number)
 	{
-		*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
-		*right_pos_status &= ~((unsigned int)1 << pos2->order_num);
+		*right_pos_status &= ~((unsigned int)1 << pos1->right_tile_number);
+		*right_pos_status &= ~((unsigned int)1 << pos2->right_tile_number);
 	}
 	else
 	{
-		if (*right_pos_status & (unsigned int)1 << pos2->order_num)
+		if (*right_pos_status & (unsigned int)1 << pos2->right_tile_number)
 		{
-			*right_pos_status &= ~((unsigned int)1 << pos1->order_num);
-			*right_pos_status &= ~((unsigned int)1 << pos2->order_num);
+			*right_pos_status &= ~((unsigned int)1 << pos1->right_tile_number);
+			*right_pos_status &= ~((unsigned int)1 << pos2->right_tile_number);
 		}
 		else
 		{
@@ -103,7 +103,7 @@ int	is_puzzle_solvable(t_map *puzzle_map, t_pos ***pos_table)
 		xy_pos.x = -1;
 		while (++xy_pos.x < puzzle_map->size)
 		{
-			tile_number = pos_table[xy_pos.y][xy_pos.x]->order_num;
+			tile_number = pos_table[xy_pos.y][xy_pos.x]->right_tile_number;
 			if (!tile_number)
 				add_value = 0;
 			order_num = xy_pos.y * puzzle_map->size + xy_pos.x + add_value;
@@ -154,5 +154,7 @@ int	is_puzzle_solvable(t_map *puzzle_map, t_pos ***pos_table)
 		}
 	}
 	ft_memdel((void **)&order_num_array);
+	if (puzzle_map->size == 4)
+		FT_LOG_FATAL("4-Puzzle");
 	return (is_solvable);
 }

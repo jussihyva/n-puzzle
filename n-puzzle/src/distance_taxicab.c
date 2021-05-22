@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/17 12:54:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 10:42:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_xy_values	*create_tile_right_pos_array(t_pos ***pos_table,
 	{
 		xy.x = -1;
 		while (++xy.x < puzzle_size)
-			tile_right_pos_array[pos_table[xy.y][xy.x]->order_num] = xy;
+			tile_right_pos_array[pos_table[xy.y][xy.x]->right_tile_number] = xy;
 	}
 	return (tile_right_pos_array);
 }

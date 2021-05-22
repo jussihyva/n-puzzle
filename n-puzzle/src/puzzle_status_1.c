@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 13:53:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 10:37:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
 		{
 			pos = pos_table[i][j];
 			tile_number = (tiles_pos_map >> (4 * (i * puzzle_size + j))) & 0xF;
-			if (tile_number == pos->order_num)
-				right_pos_status |= 1 << pos->order_num;
+			if (tile_number == pos->right_tile_number)
+				right_pos_status |= 1 << pos->right_tile_number;
 		}
 	}
 	FT_LOG_TRACE("Right position status: %u", right_pos_status);
