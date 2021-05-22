@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 13:50:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 11:18:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 		if (puzzle->algorithm == E_A_STAR_T)
 			puzzle->curr_status->prio
 				= calculate_taxicab_based_prio(puzzle->curr_status,
-					puzzle->pos_table, puzzle->size);
+					puzzle->size, puzzle->tile_right_pos_array);
 		add_puzzle_state_to_prio_queue(puzzle);
 		if (puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)

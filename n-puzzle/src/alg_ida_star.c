@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/17 16:46:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 11:18:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		if (puzzle->algorithm == E_IDA_STAR)
 			searched_puzzle_state->prio
 				= calculate_taxicab_based_prio(searched_puzzle_state,
-					puzzle->pos_table, puzzle->size);
+					puzzle->size, puzzle->tile_right_pos_array);
 		if (selected_puzzle_state)
 		{
 			if (selected_puzzle_state->prio > searched_puzzle_state->prio)

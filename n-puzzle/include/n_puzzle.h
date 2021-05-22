@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/22 10:48:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/22 12:17:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef enum e_algorithm
 
 typedef struct s_xy_values
 {
-	int		x;
 	int		y;
+	int		x;
 }				t_xy_values;
 
 typedef struct s_statistics
@@ -153,6 +153,7 @@ typedef struct s_puzzle
 	int					*tile_move_cnt;
 	int					*solution_move_cnt;
 	unsigned int		puzzle_ready_status;
+	t_xy_values			*tile_right_pos_array;
 	int					max_depth;
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
@@ -209,7 +210,8 @@ void			dfs_no_mem(t_puzzle *puzzle);
 void			dfs_deeping(t_puzzle *puzzle);
 void			dfs_deeping_mem(t_puzzle *puzzle);
 void			tile_move(t_pos *pos1, t_pos *pos2, t_puzzle *puzzle);
-int				is_puzzle_solvable(t_map *puzzle_map, t_pos ***pos_table);
+int				is_puzzle_solvable(t_map *puzzle_map,
+					t_xy_values *tile_right_pos_array);
 void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
@@ -237,10 +239,10 @@ int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			alg_a_star(t_puzzle *puzzle);
 int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
-					t_pos ***pos_table, int puzzle_size);
+					int puzzle_size, t_xy_values *tile_right_pos_array);
 t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
-												t_bt_node **states_prio_queue);
+					t_bt_node **states_prio_queue);
 void			alg_ida_star(t_puzzle *puzzle);
 
 #endif
