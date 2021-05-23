@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 10:24:29 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/13 08:08:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 11:36:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ static void	*get_data_from_queue(t_bt_node *bt_node)
 	queue = (t_queue *)bt_node->bt_elem[0].bt_data.data;
 	data = ft_dequeue(queue);
 	if (ft_is_queue_empty(queue))
+	{
+		ft_memdel((void **)&queue->in_stack);
+		ft_memdel((void **)&queue->out_stack);
+		ft_memdel((void **)&queue);
 		remove_first_element(&bt_node->bt_elem[0], &bt_node->num_of_elems);
+	}
 	return (data);
 }
 

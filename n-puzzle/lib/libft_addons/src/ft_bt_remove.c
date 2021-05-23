@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 19:25:31 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/01 20:46:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 11:27:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,23 @@ void	ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key)
 	t_bt_elem	*bt_elem;
 	t_bt_node	*bt_child_node;
 	int			i;
+	t_queue		*queue;
 
 	i = -1;
 	while (*bt_node && ++i < (*bt_node)->num_of_elems)
 	{
 		bt_elem = &(*bt_node)->bt_elem[i];
+		if (bt_elem->is_queue)
+		{
+			queue = (t_queue *)bt_elem->bt_data.data;
+			while (!ft_is_queue_empty(queue))
+				ft_dequeue(queue);
+			ft_memdel((void **)&queue->in_stack);
+			ft_memdel((void **)&queue->out_stack);
+			ft_memdel((void **)&queue);
+		}
+		else if (bt_key)
+			ft_memdel((void **)&bt_elem->bt_data.data);
 		bt_child_node = bt_elem->left_child;
 		if (bt_child_node)
 			ft_bt_remove(&bt_child_node, bt_key);
@@ -29,7 +41,6 @@ void	ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key)
 		if (bt_child_node && i == (*bt_node)->num_of_elems - 1)
 			ft_bt_remove(&bt_child_node, bt_key);
 	}
-	if (!bt_key)
-		ft_memdel((void **)bt_node);
+	ft_memdel((void **)bt_node);
 	return ;
 }

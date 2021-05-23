@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/22 11:18:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 11:51:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,12 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		if (selected_puzzle_state)
 		{
 			if (selected_puzzle_state->prio > searched_puzzle_state->prio)
+			{
+				ft_memdel((void **)&selected_puzzle_state);
 				selected_puzzle_state = searched_puzzle_state;
+			}
+			else
+				ft_memdel((void **)&searched_puzzle_state);
 		}
 		else
 			selected_puzzle_state = searched_puzzle_state;
@@ -86,17 +91,14 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	if (selected_puzzle_state)
 	{
 		selected_puzzle_state->prev_status = puzzle_status;
+		add_puzzle_state_to_prio_queue_1(selected_puzzle_state,
+			puzzle->states_prio_queue);
+		store_visited_puzzle_status_b_tree(selected_puzzle_state,
+			puzzle->bt_root);
+		(*puzzle->states_cnt)++;
 		if (selected_puzzle_state->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(selected_puzzle_state, puzzle);
-		else
-		{
-			add_puzzle_state_to_prio_queue_1(selected_puzzle_state,
-				puzzle->states_prio_queue);
-			store_visited_puzzle_status_b_tree(selected_puzzle_state,
-				puzzle->bt_root);
-			(*puzzle->states_cnt)++;
-		}
 	}
 	return (is_puzzle_ready);
 }

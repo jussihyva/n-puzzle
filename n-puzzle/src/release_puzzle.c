@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/22 11:10:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 10:42:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static void	release_status_queue(t_queue *status_queue)
 	t_puzzle_status		*puzzle_status;
 
 	while (!ft_is_queue_empty(status_queue))
+	{
 		puzzle_status = (t_puzzle_status *)ft_dequeue(status_queue);
+		ft_memdel((void **)&puzzle_status);
+	}
 	ft_memdel((void **)&status_queue->in_stack);
 	ft_memdel((void **)&status_queue->out_stack);
 	ft_memdel((void **)&status_queue);
@@ -40,7 +43,7 @@ static void	release_puzzle(t_puzzle *puzzle)
 
 	ft_bt_remove(puzzle->states_prio_queue, NULL);
 	ft_memdel((void **)&puzzle->states_prio_queue);
-	ft_bt_remove(puzzle->bt_root, NULL);
+	ft_bt_remove(puzzle->bt_root, &(*puzzle->bt_root)->bt_elem[0].bt_key);
 	ft_memdel((void **)&puzzle->bt_root);
 	release_status_queue(puzzle->status_queue);
 	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);

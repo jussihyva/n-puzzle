@@ -6,32 +6,48 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/20 13:49:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 10:04:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
+static void	initialize_print_strings(int map_size, char **string, char **line)
+{
+	int				len_of_tile_number;
+	char			*size_string;
+
+	size_string = ft_itoa(map_size * map_size);
+	len_of_tile_number = ft_max_int(4, ft_strlen(size_string));
+	*string = ft_strnew(sizeof(**string) * (len_of_tile_number + 1));
+	*line = ft_strnew(sizeof(**line) * ((len_of_tile_number + 1) * map_size
+				* map_size));
+	ft_strdel(&size_string);
+	return ;
+}
+
 static void	print_map(t_map *map)
 {
-	int		i;
-	int		j;
-	char	line[1000];
-	char	string[6];
+	t_xy_values		yx_pos;
+	char			*line;
+	char			*string;
 
-	FT_LOG_INFO(" %d", map->size);
-	i = -1;
-	while (++i < map->size)
+	initialize_print_strings(map->size, &string, &line);
+	FT_LOG_INFO("Puzzle size: %d", map->size);
+	yx_pos.y = -1;
+	while (++yx_pos.y < map->size)
 	{
 		ft_bzero(line, sizeof(line));
-		j = -1;
-		while (++j < map->size)
+		yx_pos.x = -1;
+		while (++yx_pos.x < map->size)
 		{
-			ft_sprintf(string, " %4d", map->tile_map[i][j]);
+			ft_sprintf(string, " %4d", map->tile_map[yx_pos.y][yx_pos.x]);
 			ft_strcat(line, string);
 		}
 		FT_LOG_INFO("%s", line);
 	}
+	ft_memdel((void **)&line);
+	ft_memdel((void **)&string);
 	return ;
 }
 
