@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/23 08:50:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 23:07:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ static int	decide_is_puzzle_solvable(int puzzle_size, int num_of_inversions,
 	}
 	if (!is_solvable)
 		FT_LOG_FATAL("Puzzle is NOT solvable!");
-	else if (puzzle_size == 4)
-		FT_LOG_FATAL("4-Puzzle");
+	else if (puzzle_size > 4)
+		FT_LOG_FATAL("%d-Puzzle", puzzle_size);
 	return (is_solvable);
 }
 

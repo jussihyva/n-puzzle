@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 15:23:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/28 15:27:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/23 22:04:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	remove_comment(char *line)
 	{
 		FT_LOG_DEBUG("Comment line: %s", line);
 		*ptr = '\0';
-		ptr = line;
-		while (ft_isspace(*ptr))
-			ptr++;
-		if (!(*ptr))
-			is_line_empty = 1;
 	}
+	ptr = line;
+	while (ft_isspace(*ptr))
+		ptr++;
+	if (!(*ptr))
+		is_line_empty = 1;
 	return (is_line_empty);
 }
