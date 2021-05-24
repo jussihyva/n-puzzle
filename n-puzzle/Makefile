@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/20 13:11:24 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/24 15:08:22 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ endif
 ifdef F
 	MAP_FILE		=	$(F)
 else
-	MAP_FILE		=	data/3_3_01.map
+	MAP_FILE		=	data/3_3_05.map
 endif
 
 ifdef L
@@ -107,8 +107,8 @@ GREEN			=	\033[0;32m
 YELLOW			=	\033[0;33m
 END				=	\033[0m
 
-SELF_SIGNED_CRT	=	./tls-selfsigned.crt
-SELF_SIGNED_KEY	=	./tls-selfsigned.key
+SELF_SIGNED_CRT	=	/var/tmp/tls-selfsigned.crt
+SELF_SIGNED_KEY	=	/var/tmp/tls-selfsigned.key
 
 .PHONY: all
 all: $(SELF_SIGNED_CRT) $(FOLDERS) $(H_FILES) $(C_FILES) libraries $(APP_FILES)

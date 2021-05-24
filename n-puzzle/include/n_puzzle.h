@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/22 12:17:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/24 15:06:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 # define MAX_NUM_OF_NEIGHBORS	4
 # define READ_BUF_MAX_SIZE		4096
-# define PEM_CERT_FILE			"./tls-selfsigned.crt"
-# define PEM_PRIVTE_KEY_FILE	"./tls-selfsigned.key"
+# define PEM_CERT_FILE			"/var/tmp/tls-selfsigned.crt"
+# define PEM_PRIVTE_KEY_FILE	"/var/tmp/tls-selfsigned.key"
 
 typedef enum e_dir
 {
