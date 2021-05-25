@@ -80,7 +80,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | **A*** | A* with taxicab (hardcoded heuristic algorithm) | a | A* is based BFS, a heuristic algorithm and path cost to priorize tile moves. | [A* search algorithm](https://en.m.wikipedia.org/wiki/A*_search_algorithm) |
 | **IDA*** | IDA* with a heuristic algorithm | ida | IDA* is based DFS, a heuristic algorithm and path cost to priorize tile moves. | [Iterative deepening A*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) |
 | **Uniform-cost search** | UCS | ucs | Selection of the next move is based on a cost from an initial (root) state. A lowest value is the first in a priority queue. | [What is uniform-cost search?](https://www.educative.io/edpresso/what-is-uniform-cost-search) |
-| **Greedy search** |  | g | Greedy is based a search with a heuristic algorithm (only) to priorize tile moves. Taxicab is a default algorithm | |
+| **Greedy search** |  | g | Greedy is based a search with a heuristic algorithm (only) to priorize tile moves. | [Greedy algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm) |
 
 ### 2.3 Implemented heuristic algorihms
 
