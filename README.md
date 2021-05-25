@@ -90,6 +90,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | :- | :-: | :- | -|
 |**Tiles out of place**||||
 ||toop_1| Selcection of the next move is based a number of tile moves (already done) and a number of tiles out of a right place. Lowest value is the first in a priority queue. ||
+| | taxicab | Selection of next move is based sum of tile distances from right place. Lowest value is the first in a priority queue. | |
 
 ### 2.4 Implemented N-puzzle search algorithm
 
