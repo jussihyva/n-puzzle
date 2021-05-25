@@ -77,21 +77,18 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 |**BFS**|
 |*Linked list*| BFS List | bfs_1 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a linked list ||
 |*B-Tree*| BFS B-tree | bfs_2 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a B-tree ||
-| **A*** |
-| | A* with taxicab (hardcoded heuristic algorithm) | a_star_t | | |
-| | | | | |
-| **IDA*** |
-| | IDA* with a heuristic algorithm | ida* | IDA* based algorithm with a heuristic algorithm to priorize tile moves. Taxicab is a default algorithm for cli param -H | |
-| | | | | |
+| **A*** | A* with taxicab (hardcoded heuristic algorithm) | a_star_t | | [A* search algorithm](https://en.m.wikipedia.org/wiki/A*_search_algorithm) |
+| **IDA*** | IDA* with a heuristic algorithm | ida | IDA* based a search with a heuristic algorithm and path cost priorize tile moves. | [Iterative deepening A*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) |
+| **Uniform-cost search** | UCS | ucs | Selection of the next move is based on a cost from an initial (root) state. A lowest value is the first in a priority queue. | [What is uniform-cost search?](https://www.educative.io/edpresso/what-is-uniform-cost-search) |
+| **Greedy search** |  | g | Greedy is based a search with a heuristic algorithm (only) priorize tile moves. Taxicab is a default algorithm (the param -H) | |
 
 ### 2.3 Implemented heuristic algorihms
 
 | Algorithm | Abbreviation| Description | Refer to |
 | :- | :-: | :- | -|
-|**Tiles out of place**||||
-||toop_1| Selcection of the next move is based a number of tile moves (already done) and a number of tiles out of a right place. Lowest value is the first in a priority queue. ||
-| **Taxicab geometry** | t | Selection of the next move is based a sum of tiles absolute distances (cartesian distance) from the right place. Lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry)|
-| | t | | |
+|**Hamming distance** (Tiles out of place) |h| Selcection of the next move is based a number of tiles out of the right place. A lowest value is the first in a priority queue. | [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) |
+| **Taxicab geometry** (Manhattan distance) | t | Selection of the next move is based a sum of tiles absolute distances (cartesian distance) from the right place. A lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry) |
+| **Taxicab geometry with direct reversal of tiles penalty** | tr | Selection of the next move is based to taxicab geometry and direct reversal of tiles. A lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry)|
 
 ### 2.4 Implemented N-puzzle search algorithm
 
