@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/25 18:21:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 09:59:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
 	return ;
 }
 
-static int	count_num_of_bits_required(int num_of_tiles)
+static int	count_num_of_bits_required(int num_of_tiles, int *bit_mask)
 {
 	int		num_of_bits;
 
@@ -42,51 +42,60 @@ static int	count_num_of_bits_required(int num_of_tiles)
 	{
 		num_of_tiles = num_of_tiles >> 1;
 		num_of_bits++;
+		(*bit_mask) <<= 1;
+		(*bit_mask) |= 1;
 	}
 	return (num_of_bits);
+}
+
+static t_tiles_pos_map	*initialize_tiles_pos_map(int puzzle_size)
+{
+	t_tiles_pos_map		*tiles_pos_map;
+	int					num_of_tile_positions;
+	int					num_of_index;
+
+	tiles_pos_map = (t_tiles_pos_map *)ft_memalloc(sizeof(*tiles_pos_map));
+	num_of_tile_positions = puzzle_size * puzzle_size;
+	tiles_pos_map->bits_for_tile_number
+		= count_num_of_bits_required(num_of_tile_positions - 1,
+			&tiles_pos_map->bit_mask);
+	tiles_pos_map->tiles_per_map_index = sizeof(tiles_pos_map->map) * 8
+		/ tiles_pos_map->bits_for_tile_number;
+	num_of_index = num_of_tile_positions / tiles_pos_map->tiles_per_map_index;
+	if (num_of_tile_positions % tiles_pos_map->tiles_per_map_index)
+		num_of_index++;
+	tiles_pos_map->map_size = sizeof(*tiles_pos_map->map) * num_of_index;
+	tiles_pos_map->map = (unsigned long *)ft_memalloc(tiles_pos_map->map_size);
+	return (tiles_pos_map);
 }
 
 static unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 											int puzzle_size, t_pos **empty_pos)
 {
-	unsigned long	*tiles_pos_map;
-	int				i;
-	int				j;
-	unsigned long	tile_number;
-	unsigned long	shifted_tile_number;
+	t_tiles_pos_map	*tiles_pos_map;
+	t_xy_values		yx_pos;
 	int				shift;
-	int				num_of_bits;
-	int				num_per_long;
-	int				num_of_tile_positions;
-	int				len_of_tiles_pos_map;
 	int				pos_number;
 	int				pos_map_index;
 
-	num_of_tile_positions = puzzle_size * puzzle_size;
-	num_of_bits = count_num_of_bits_required(num_of_tile_positions - 1);
-	num_per_long = sizeof(tiles_pos_map) * 8 / num_of_bits;
-	len_of_tiles_pos_map = num_of_tile_positions / num_per_long;
-	if (num_of_tile_positions % num_per_long)
-		len_of_tiles_pos_map++;
-	tiles_pos_map = (unsigned long *)ft_memalloc(sizeof(*tiles_pos_map)
-			* len_of_tiles_pos_map);
-	i = -1;
-	while (++i < puzzle_size)
+	tiles_pos_map = initialize_tiles_pos_map(puzzle_size);
+	yx_pos.y = -1;
+	while (++yx_pos.y < puzzle_size)
 	{
-		j = -1;
-		while (++j < puzzle_size)
+		yx_pos.x = -1;
+		while (++yx_pos.x < puzzle_size)
 		{
-			tile_number = (unsigned long)tile_map[i][j];
-			pos_number = i * puzzle_size + j;
-			pos_map_index = pos_number / num_per_long;
-			shift = num_of_bits * (pos_number % num_per_long);
-			shifted_tile_number = tile_number << shift;
-			tiles_pos_map[pos_map_index] |= shifted_tile_number;
-			if (!tile_number)
-				*empty_pos = pos_table[i][j];
+			pos_number = yx_pos.y * puzzle_size + yx_pos.x;
+			pos_map_index = pos_number / tiles_pos_map->tiles_per_map_index;
+			shift = tiles_pos_map->bits_for_tile_number
+				* (pos_number % tiles_pos_map->tiles_per_map_index);
+			tiles_pos_map->map[pos_map_index]
+				|= (unsigned long)tile_map[yx_pos.y][yx_pos.x] << shift;
+			if (!tile_map[yx_pos.y][yx_pos.x])
+				*empty_pos = pos_table[yx_pos.y][yx_pos.x];
 		}
 	}
-	return (*tiles_pos_map);
+	return (*tiles_pos_map->map);
 }
 
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)

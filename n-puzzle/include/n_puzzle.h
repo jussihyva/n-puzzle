@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/24 15:06:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 09:38:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,15 @@ typedef struct s_move
 	t_pos	*from_pos;
 	t_pos	*to_pos;
 }				t_move;
+
+typedef struct s_tiles_pos_map
+{
+	unsigned long	*map;
+	int				bits_for_tile_number;
+	int				tiles_per_map_index;
+	int				bit_mask;
+	int				map_size;
+}				t_tiles_pos_map;
 
 typedef struct s_puzzle_status
 {
