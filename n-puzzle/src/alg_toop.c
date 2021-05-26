@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:48:19 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 17:56:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 10:13:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	alg_toop(t_puzzle *puzzle)
 {
-	stat_set_start_time(puzzle->statistics);
 	print_puzzle(1, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	print_puzzle(2, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	if (puzzle->algorithm == E_TOOP_1)

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:14:03 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/29 10:02:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 10:12:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	dfs(t_puzzle *puzzle)
 {
-	stat_set_start_time(puzzle->statistics);
 	print_puzzle(1, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	print_puzzle(2, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	if (puzzle->algorithm == E_DFS_NO_MEM)

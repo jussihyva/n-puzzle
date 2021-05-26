@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:14:31 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/04 07:24:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 10:12:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	bfs(t_puzzle *puzzle)
 {
-	stat_set_start_time(puzzle->statistics);
 	print_puzzle(1, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	print_puzzle(2, puzzle->curr_status->tiles_pos_map, puzzle->size);
 	if (puzzle->algorithm == E_BFS_1)
