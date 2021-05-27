@@ -6,31 +6,40 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 09:59:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:49:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
 void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
-												unsigned long *tiles_pos_map)
+												t_tiles_pos_map *tiles_pos_map)
 {
-	unsigned long	tile_number1;
-	unsigned long	tile_number2;
+	unsigned long	tile_number[2];
+	int				i[2];
+	int				position_number[2];
+	int				shift[2];
 
-	tile_number1 = (*tiles_pos_map >> (4 * (pos1->xy_pos.y
-					* puzzle_size + pos1->xy_pos.x))) & 0xF;
-	tile_number2 = (*tiles_pos_map >> (4 * (pos2->xy_pos.y
-					* puzzle_size + pos2->xy_pos.x))) & 0xF;
-	*tiles_pos_map &= ~((unsigned long)0xF << (4 * (pos1->xy_pos.y
-					* puzzle_size + pos1->xy_pos.x)));
-	*tiles_pos_map &= ~((unsigned long)0xF << (4 * (pos2->xy_pos.y
-					* puzzle_size + pos2->xy_pos.x)));
-	*tiles_pos_map |= tile_number1 << (4 * (pos2->xy_pos.y
-				* puzzle_size + pos2->xy_pos.x));
-	*tiles_pos_map |= tile_number2 << (4 * (pos1->xy_pos.y
-				* puzzle_size + pos1->xy_pos.x));
-	return ;
+	position_number[0] = pos1->xy_pos.y * puzzle_size + pos1->xy_pos.x;
+	position_number[1] = pos2->xy_pos.y * puzzle_size + pos2->xy_pos.x;
+	i[0] = position_number[0] / tiles_pos_map->tiles_per_map_index;
+	i[1] = position_number[1] / tiles_pos_map->tiles_per_map_index;
+	shift[0] = tiles_pos_map->bits_for_tile_number
+		* (position_number[0] % tiles_pos_map->tiles_per_map_index);
+	shift[1] = tiles_pos_map->bits_for_tile_number
+		* (position_number[1] % tiles_pos_map->tiles_per_map_index);
+	tile_number[0] = tiles_pos_map->map[i[0]] >> shift[0]
+		& tiles_pos_map->bit_mask;
+	tile_number[1] = tiles_pos_map->map[i[1]] >> shift[1]
+		& tiles_pos_map->bit_mask;
+	tiles_pos_map->map[i[0]] &= ~((unsigned long)tiles_pos_map->bit_mask
+			<< (tiles_pos_map->bits_for_tile_number * position_number[0]));
+	tiles_pos_map->map[i[1]] &= ~((unsigned long)tiles_pos_map->bit_mask
+			<< (tiles_pos_map->bits_for_tile_number * position_number[1]));
+	tiles_pos_map->map[i[0]] |= tile_number[0]
+		<< (tiles_pos_map->bits_for_tile_number * position_number[0]);
+	tiles_pos_map->map[i[1]] |= tile_number[1]
+		<< (tiles_pos_map->bits_for_tile_number * position_number[1]);
 }
 
 static int	count_num_of_bits_required(int num_of_tiles, int *bit_mask)
@@ -69,7 +78,7 @@ static t_tiles_pos_map	*initialize_tiles_pos_map(int puzzle_size)
 	return (tiles_pos_map);
 }
 
-static unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
+static t_tiles_pos_map	*create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 											int puzzle_size, t_pos **empty_pos)
 {
 	t_tiles_pos_map	*tiles_pos_map;
@@ -95,7 +104,7 @@ static unsigned long	create_tiles_pos_map(int **tile_map, t_pos ***pos_table,
 				*empty_pos = pos_table[yx_pos.y][yx_pos.x];
 		}
 	}
-	return (*tiles_pos_map->map);
+	return (tiles_pos_map);
 }
 
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
@@ -108,7 +117,7 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 }
 
 static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
-													unsigned long tiles_pos_map)
+													t_tiles_pos_map *tiles_pos_map)
 {
 	unsigned int	right_pos_status;
 	int				i;
@@ -124,7 +133,7 @@ static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
 		while (++j < puzzle_size)
 		{
 			pos = pos_table[i][j];
-			tile_number = (tiles_pos_map >> (4 * (i * puzzle_size + j))) & 0xF;
+			tile_number = (tiles_pos_map->map[0] >> (4 * (i * puzzle_size + j))) & 0xF;
 			if (tile_number == pos->right_tile_number)
 				right_pos_status |= 1 << pos->right_tile_number;
 		}
@@ -138,16 +147,14 @@ t_puzzle_status	*create_puzzle_status(int **tile_map, t_pos ***pos_table,
 {
 	t_puzzle_status		*puzzle_status;
 	t_pos				*empty_pos;
-	unsigned long		tiles_pos_map;
 	unsigned int		right_pos_status;
 
-	tiles_pos_map = create_tiles_pos_map(tile_map,
+	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
+	puzzle_status->tiles_pos_map = create_tiles_pos_map(tile_map,
 			pos_table, puzzle_size, &empty_pos);
 	right_pos_status = set_right_pos_status(pos_table, puzzle_size,
-			tiles_pos_map);
-	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
+			puzzle_status->tiles_pos_map);
 	puzzle_status->empty_pos = empty_pos;
-	puzzle_status->tiles_pos_map = tiles_pos_map;
 	puzzle_status->right_pos_status = right_pos_status;
 	return (puzzle_status);
 }
@@ -177,7 +184,7 @@ void	store_visited_puzzle_status_b_tree(t_puzzle_status *puzzle_status,
 	return ;
 }
 
-int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
+int	is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map, t_puzzle *puzzle,
 												t_puzzle_status **puzzle_status)
 {
 	int					is_visited;
@@ -189,7 +196,7 @@ int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
 	while (elem)
 	{
 		*puzzle_status = *(t_puzzle_status **)elem->content;
-		if (tiles_pos_map == (*puzzle_status)->tiles_pos_map)
+		if (!(ft_memcmp(tiles_pos_map->map, (*puzzle_status)->tiles_pos_map->map, tiles_pos_map->map_size)))
 		{
 			is_visited = 1;
 			(*puzzle->state_collision_cnt)++;
@@ -200,7 +207,7 @@ int	is_visited_puzzle_status_list(unsigned long tiles_pos_map, t_puzzle *puzzle,
 	return (is_visited);
 }
 
-static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
+static void	verify_visited_puzzle_status(t_tiles_pos_map *tiles_pos_map,
 								t_puzzle *puzzle, int bt_is_visited)
 {
 	int					is_visited;
@@ -210,21 +217,21 @@ static void	verify_visited_puzzle_status(unsigned long tiles_pos_map,
 			&puzzle_status);
 	if (is_visited != bt_is_visited)
 	{
-		FT_LOG_WARN("Tiles pos map: %lx", tiles_pos_map);
+		FT_LOG_WARN("Tiles pos map: %lx", tiles_pos_map->map[0]);
 		FT_LOG_WARN("Is visited: %d %d", is_visited, bt_is_visited);
 	}
 	return ;
 }
 
-int	is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
+int	is_visited_puzzle_status_b_tree(t_tiles_pos_map *tiles_pos_map,
 							t_puzzle *puzzle, t_puzzle_status **puzzle_status)
 {
 	int					is_visited;
 	t_bt_key			bt_key;
 	t_bt_data			return_bt_data;
 
-	bt_key.key = (void *)&tiles_pos_map;
-	bt_key.key_size = sizeof(tiles_pos_map);
+	bt_key.key = (void *)tiles_pos_map->map;
+	bt_key.key_size = tiles_pos_map->map_size;
 	FT_LOG_TRACE("KEY to find: %#.9lx (%p)",
 		*(unsigned long *)bt_key.key, bt_key.key);
 	ft_bt_find(&bt_key, *puzzle->bt_root, &return_bt_data);

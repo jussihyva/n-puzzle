@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/23 10:07:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 19:53:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
 		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
-		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
+		ft_memcpy(puzzle->curr_status->tiles_pos_map->map,
+			puzzle_status->tiles_pos_map->map,
+			puzzle->curr_status->tiles_pos_map->map_size);
 		puzzle->curr_status->depth--;
 	}
 	return (is_puzzle_ready);

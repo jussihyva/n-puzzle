@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/22 11:19:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:50:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	calculate_taxicab_distance(unsigned long tiles_pos_map,
+static int	calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 							int puzzle_size, t_xy_values *tile_right_pos_array)
 {
 	int				taxicab_distance;
@@ -27,7 +27,7 @@ static int	calculate_taxicab_distance(unsigned long tiles_pos_map,
 		xy.x = -1;
 		while (++xy.x < puzzle_size)
 		{
-			tile_number = (int)(tiles_pos_map
+			tile_number = (int)(tiles_pos_map->map[0]
 					>> (4 * (xy.y * puzzle_size + xy.x))) & 0xF;
 			tile_pos = tile_right_pos_array[tile_number];
 			if (tile_number)

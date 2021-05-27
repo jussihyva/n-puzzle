@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/16 15:41:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:39:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	int						is_puzzle_ready;
 	int						i;
 	unsigned int			saved_right_pos_status;
-	unsigned long			saved_tiles_pos_map;
+	t_tiles_pos_map			*saved_tiles_pos_map;
 	t_puzzle_status			*puzzle_status;
 	int						is_visited;
 

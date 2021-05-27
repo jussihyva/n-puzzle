@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 09:38:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:47:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct s_tiles_pos_map
 
 typedef struct s_puzzle_status
 {
-	unsigned long			tiles_pos_map;
+	t_tiles_pos_map			*tiles_pos_map;
 	int						depth;
 	int						tiles_out_of_place;
 	int						prio;
@@ -205,7 +205,7 @@ void			dfs(t_puzzle *puzzle);
 t_puzzle		*initialize_puzzle(t_input *input);
 void			set_tile_numbers_target_positions(t_pos ***pos_table, int size);
 void			release(t_input *input, t_influxdb *influxdb, t_puzzle *puzzle);
-void			print_puzzle(int fd, unsigned long tiles_pos_map,
+void			print_puzzle(int fd, t_tiles_pos_map *tiles_pos_map,
 					int puzzle_size);
 void			stat_set_start_time(t_statistics *statistics);
 void			stat_set_end_time(t_statistics *statistics);
@@ -228,9 +228,9 @@ void			delete_puzzle_status(void *content, size_t size);
 t_puzzle_status	*create_puzzle_status(int **tile_map, t_pos ***pos_table,
 					int puzzle_size);
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status);
-int				is_visited_puzzle_status_list(unsigned long tiles_pos_map,
+int				is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
-int				is_visited_puzzle_status_b_tree(unsigned long tiles_pos_map,
+int				is_visited_puzzle_status_b_tree(t_tiles_pos_map *tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);
 void			store_visited_puzzle_status_list(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
@@ -241,9 +241,7 @@ void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);
 void			bfs_1(t_puzzle *puzzle);
 void			update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
-					int puzzle_size, unsigned long *tiles_pos_map);
-int				get_tile_number(unsigned long tiles_pos_map, t_pos *pos,
-					int puzzle_size);
+					int puzzle_size, t_tiles_pos_map *tiles_pos_map);
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			alg_a_star(t_puzzle *puzzle);
