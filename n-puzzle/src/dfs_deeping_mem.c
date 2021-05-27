@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 13:39:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:15:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,25 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	int						is_puzzle_ready;
 	int						i;
 	unsigned int			saved_right_pos_status;
-	t_tiles_pos_map			*saved_tiles_pos_map;
 	t_puzzle_status			*puzzle_status;
 	int						is_visited;
+	unsigned long			*saved_puzzle_state_map;
 
+	saved_puzzle_state_map = (unsigned long *)
+			ft_memalloc(puzzle->curr_status->tiles_pos_map.map_size);
 	is_puzzle_ready = 0;
 	i = -1;
 	while (puzzle->curr_status->depth < puzzle->max_depth && !is_puzzle_ready
 		&& ++i < pos->num_of_neighbors)
 	{
 		saved_right_pos_status = puzzle->curr_status->right_pos_status;
-		saved_tiles_pos_map = puzzle->curr_status->tiles_pos_map;
+		ft_memcpy(saved_puzzle_state_map,
+			puzzle->curr_status->tiles_pos_map.map,
+			puzzle->curr_status->tiles_pos_map.map_size);
 		tile_move(pos, pos->neighbors[i], puzzle);
 		puzzle->curr_status->depth++;
 		is_visited = is_visited_puzzle_status_b_tree(
-				puzzle->curr_status->tiles_pos_map, puzzle, &puzzle_status);
+				&puzzle->curr_status->tiles_pos_map, puzzle, &puzzle_status);
 		if (!is_visited || puzzle_status->depth > puzzle->curr_status->depth)
 		{
 			if (is_visited)
@@ -53,13 +57,16 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 			puzzle->curr_status->prev_status = puzzle_status->prev_status;
 		}
 		puzzle->curr_status->right_pos_status = saved_right_pos_status;
-		puzzle->curr_status->tiles_pos_map = saved_tiles_pos_map;
+		ft_memcpy(puzzle->curr_status->tiles_pos_map.map,
+			saved_puzzle_state_map,
+			puzzle->curr_status->tiles_pos_map.map_size);
 		puzzle->curr_status->depth--;
 	}
 	if (puzzle_status->depth == puzzle->max_depth
 		&& puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
 		is_puzzle_ready
 			= print_solution(puzzle->curr_status->prev_status, puzzle);
+	ft_memdel((void **)&saved_puzzle_state_map);
 	return (is_puzzle_ready);
 }
 

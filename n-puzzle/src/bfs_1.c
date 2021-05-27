@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/25 16:01:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:40:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 		(*puzzle->solution_move_cnt)++;
 		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
 	}
-	print_puzzle(1, puzzle_status->tiles_pos_map, puzzle->size);
+	print_puzzle(1, &puzzle_status->tiles_pos_map, puzzle->size);
 	sleep(puzzle->print_delay / 10);
 	is_puzzle_ready = 1;
 	return (is_puzzle_ready);
@@ -31,7 +31,7 @@ static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle)
 {
 	t_puzzle_status		*next_status;
 
-	if (is_visited_puzzle_status_list(puzzle->curr_status->tiles_pos_map,
+	if (is_visited_puzzle_status_list(&puzzle->curr_status->tiles_pos_map,
 			puzzle, &next_status))
 		next_status = NULL;
 	else
@@ -48,7 +48,7 @@ static t_puzzle_status	*add_next_status_to_queue_2(t_puzzle *puzzle)
 {
 	t_puzzle_status		*next_status;
 
-	if (is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
+	if (is_visited_puzzle_status_b_tree(&puzzle->curr_status->tiles_pos_map,
 			puzzle, &next_status))
 		next_status = NULL;
 	else

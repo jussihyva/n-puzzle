@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 13:47:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:27:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct s_tiles_pos_map
 
 typedef struct s_puzzle_status
 {
-	t_tiles_pos_map			*tiles_pos_map;
+	t_tiles_pos_map			tiles_pos_map;
 	int						depth;
 	int						tiles_out_of_place;
 	int						prio;
@@ -225,8 +225,7 @@ void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			stat_update_cpu_usage(t_statistics *statistics);
 void			delete_puzzle_status(void *content, size_t size);
-t_puzzle_status	*create_puzzle_status(int **tile_map, t_pos ***pos_table,
-					int puzzle_size);
+t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle);
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status);
 int				is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map,
 					t_puzzle *puzzle, t_puzzle_status **puzzle_status);

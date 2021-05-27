@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 09:47:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:07:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
 		if (next_pos != prev_pos)
 		{
 			tile_move(pos, next_pos, puzzle);
-			print_puzzle(1, puzzle->curr_status->tiles_pos_map, puzzle->size);
+			print_puzzle(1, &puzzle->curr_status->tiles_pos_map, puzzle->size);
 			is_puzzle_ready = depth_limited_dfs(puzzle, next_pos, depth - 1,
 					pos);
 			if (!is_puzzle_ready)
 			{
 				tile_move(next_pos, pos, puzzle);
-				print_puzzle(1, puzzle->curr_status->tiles_pos_map,
+				print_puzzle(1, &puzzle->curr_status->tiles_pos_map,
 					puzzle->size);
 			}
 		}

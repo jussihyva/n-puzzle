@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 13:32:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:33:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static int	get_tile_number(t_tiles_pos_map *tiles_pos_map, t_pos *pos,
 	i = position_number / tiles_pos_map->tiles_per_map_index;
 	shift = tiles_pos_map->bits_for_tile_number
 		* (position_number % tiles_pos_map->tiles_per_map_index);
-	tile_number = (tiles_pos_map->map[i] >> (tiles_pos_map->bits_for_tile_number
-				* position_number)) & tiles_pos_map->bit_mask;
+	tile_number = (tiles_pos_map->map[i] >> shift) & tiles_pos_map->bit_mask;
 	return (tile_number);
 }
 
@@ -48,7 +47,7 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 {
 	t_tiles_pos_map	*tiles_pos_map;
 
-	tiles_pos_map = puzzle->curr_status->tiles_pos_map;
+	tiles_pos_map = &puzzle->curr_status->tiles_pos_map;
 	if (*right_pos_status & (unsigned int)1 << pos1->right_tile_number)
 	{
 		*right_pos_status &= ~((unsigned int)1 << pos1->right_tile_number);
@@ -78,7 +77,7 @@ void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 	puzzle->curr_status->empty_pos = from_pos;
 	stat_update_mem_usage(puzzle->statistics);
 	update_tiles_pos_map(from_pos, to_pos, puzzle->size,
-		puzzle->curr_status->tiles_pos_map);
+		&puzzle->curr_status->tiles_pos_map);
 	update_right_pos_status(puzzle, from_pos, to_pos,
 		&puzzle->curr_status->right_pos_status);
 	return ;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:45:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/17 12:25:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:41:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle)
 {
 	t_puzzle_status		*next_status;
 
-	if (is_visited_puzzle_status_b_tree(puzzle->curr_status->tiles_pos_map,
+	if (is_visited_puzzle_status_b_tree(&puzzle->curr_status->tiles_pos_map,
 			puzzle, &next_status))
 		next_status = NULL;
 	else

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 19:53:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/27 18:45:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
 		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
-		ft_memcpy(puzzle->curr_status->tiles_pos_map->map,
-			puzzle_status->tiles_pos_map->map,
-			puzzle->curr_status->tiles_pos_map->map_size);
+		ft_memcpy(puzzle->curr_status->tiles_pos_map.map,
+			puzzle_status->tiles_pos_map.map,
+			puzzle->curr_status->tiles_pos_map.map_size);
 		puzzle->curr_status->depth--;
 	}
 	return (is_puzzle_ready);
@@ -77,6 +77,10 @@ void	alg_a_star(t_puzzle *puzzle)
 		puzzle_status->is_in_queue = 0;
 		ft_memcpy(puzzle->curr_status, puzzle_status,
 			sizeof(*puzzle->curr_status));
+		puzzle->curr_status->tiles_pos_map.map
+			= (unsigned long *)ft_memalloc(puzzle->curr_status->tiles_pos_map.map_size);
+		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map,
+			puzzle->curr_status->tiles_pos_map.map_size);
 		puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = n_puzzle_search_algorithm(puzzle, puzzle_status);
 		print_depth_level(puzzle->curr_status->depth);
