@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 13:47:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 17:29:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,22 @@ static t_puzzle_status	*n_puzzle_search_algorithm(t_puzzle *puzzle,
 	move.to_pos = puzzle_status->empty_pos;
 	while (*search_pos_index < move.to_pos->num_of_neighbors)
 	{
-		// ft_memcpy(puzzle->curr_status, puzzle_status,
-		// 	sizeof(*puzzle->curr_status));
-		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
-		ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
-		puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
-		puzzle->curr_status->depth = puzzle_status->depth;
-		puzzle->curr_status->prev_status = puzzle_status->prev_status;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 		move.from_pos = move.to_pos->neighbors[*search_pos_index];
 		tile_move(move.from_pos, move.to_pos, puzzle);
-		puzzle->curr_status->depth++;
 		if (!is_visited_puzzle_status_b_tree(
 				&puzzle->curr_status->tiles_pos_map,
 				puzzle, &dummy_puzzle_status))
 		{
+			puzzle->curr_status->depth++;
+			puzzle->curr_status->prev_status = puzzle_status;
 			next_puzzle_status
 				= save_current_puzzle_status(puzzle->curr_status);
 			break ;
 		}
 		(*search_pos_index)++;
 	}
-	// ft_memcpy(puzzle->curr_status, puzzle_status, sizeof(*puzzle->curr_status));
-	ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
-	ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
-	puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
-	puzzle->curr_status->depth = puzzle_status->depth;
-	puzzle->curr_status->prev_status = puzzle_status->prev_status;
+	update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 	return (next_puzzle_status);
 }
 
@@ -67,13 +57,7 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	search_pos_index = 0;
 	while (!searched_puzzle_state && previous_puzzle_state)
 	{
-		// ft_memcpy(puzzle->curr_status, previous_puzzle_state,
-		// 	sizeof(*puzzle->curr_status));
-		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
-		ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
-		puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
-		puzzle->curr_status->depth = puzzle_status->depth;
-		puzzle->curr_status->prev_status = puzzle_status->prev_status;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 		puzzle_status = previous_puzzle_state;
 		searched_puzzle_state = n_puzzle_search_algorithm(puzzle, puzzle_status,
 				&search_pos_index);
@@ -149,14 +133,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 		puzzle_status
 			= (t_puzzle_status *)ft_prio_dequeue(puzzle->states_prio_queue);
 		puzzle_status->is_in_queue = 0;
-		ft_memcpy(puzzle->curr_status, puzzle_status,
-			sizeof(*puzzle->curr_status));
-		puzzle->curr_status->tiles_pos_map.map
-			= (unsigned long *)ft_memalloc(puzzle->curr_status->tiles_pos_map.map_size);
-		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map,
-			puzzle->curr_status->tiles_pos_map.map_size);
-		puzzle->curr_status->prev_status = puzzle_status;
-		// print_puzzle(1, puzzle_status->tiles_pos_map, puzzle->size);
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 		is_puzzle_ready = ida_star_search_algorithm(puzzle, puzzle_status);
 		print_depth_level(puzzle->curr_status->depth);
 	}

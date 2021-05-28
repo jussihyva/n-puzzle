@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 14:27:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 17:26:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,5 +250,6 @@ t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
 					t_bt_node **states_prio_queue);
 void			alg_ida_star(t_puzzle *puzzle);
+void			update_current_puzzle_state(t_puzzle_status *curr_state, t_puzzle_status *puzzle_state);
 
 #endif
