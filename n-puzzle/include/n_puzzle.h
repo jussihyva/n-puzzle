@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 17:26:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:31:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ typedef struct s_puzzle_status
 	int						prio;
 	struct s_puzzle_status	*prev_status;
 	t_pos					*empty_pos;
-	unsigned int			right_pos_status;
+	unsigned long			right_pos_status;
 	int						is_in_queue;
 }				t_puzzle_status;
 
@@ -161,7 +161,7 @@ typedef struct s_puzzle
 	t_pos				***pos_table;
 	int					*tile_move_cnt;
 	int					*solution_move_cnt;
-	unsigned int		puzzle_ready_status;
+	unsigned long		puzzle_ready_status;
 	t_xy_values			*tile_right_pos_array;
 	int					max_depth;
 	t_puzzle_status		*curr_status;
@@ -250,6 +250,9 @@ t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
 					t_bt_node **states_prio_queue);
 void			alg_ida_star(t_puzzle *puzzle);
-void			update_current_puzzle_state(t_puzzle_status *curr_state, t_puzzle_status *puzzle_state);
+void			update_current_puzzle_state(t_puzzle_status *curr_state,
+					t_puzzle_status *puzzle_state);
+int				get_tile_number(int puzzle_size, t_xy_values *xy,
+					t_tiles_pos_map *tiles_pos_map);
 
 #endif

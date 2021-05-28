@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 14:40:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:30:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	int					is_puzzle_ready;
 	int					i;
 	t_move				move;
-	unsigned int		tmp_pos_status;
+	unsigned long		tmp_pos_status;
 
 	is_puzzle_ready = 0;
 	i = -1;

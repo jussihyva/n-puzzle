@@ -55,7 +55,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-			"args": ["-L", "2", "-A", "ida*"],
+			"args": ["-L", "0", "-A", "ida*"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],
@@ -68,9 +68,10 @@
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_22.map"
-					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_xx.map"
+					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_xx.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_14.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_10.map"
+					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_01.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_05.map"
 				}
 			]

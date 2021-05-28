@@ -6,15 +6,22 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/24 15:08:22 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/28 21:00:15 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
-ifdef Q
-	PUZZLE_QUI		=	| ./bin/n-puzzle_gui.py
+
+ifdef M
+	MAX_MOVES		=	-i $(M)
 else
-	PUZZLE_QUI		=	>/dev/null
+	MAX_MOVES		=
+endif
+
+ifdef G
+	PUZZLE_GUI		=	| ./bin/n-puzzle_gui.py
+else
+	PUZZLE_GUI		=	>/dev/null
 endif
 
 ifdef S
@@ -156,14 +163,14 @@ endif
 .PHONY: run_loop
 run_loop: all
 ifeq ($(OS), Darwin)
-	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
+	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
-		$(PUZZLE_QUI) ; \
+		$(PUZZLE_GUI) ; \
 		done
 else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py -s $(PUZZLE_SIZE) \
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
-		$(PUZZLE_QUI) ; done
+		$(PUZZLE_GUI) ; done
 endif
 .PHONY: test
 test: all

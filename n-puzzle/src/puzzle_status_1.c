@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 18:25:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:27:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
 	tile_number[1] = (tiles_pos_map->map[i[1]] >> shift[1])
 		& tiles_pos_map->bit_mask;
 	tiles_pos_map->map[i[0]] &= ~((unsigned long)tiles_pos_map->bit_mask
-			<< (tiles_pos_map->bits_for_tile_number * position_number[0]));
+			<< shift[0]);
 	tiles_pos_map->map[i[1]] &= ~((unsigned long)tiles_pos_map->bit_mask
-			<< (tiles_pos_map->bits_for_tile_number * position_number[1]));
-	tiles_pos_map->map[i[0]] |= tile_number[1]
-		<< (tiles_pos_map->bits_for_tile_number * position_number[0]);
-	tiles_pos_map->map[i[1]] |= tile_number[0]
-		<< (tiles_pos_map->bits_for_tile_number * position_number[1]);
+			<< shift[1]);
+	tiles_pos_map->map[i[0]] |= tile_number[1] << shift[0];
+	tiles_pos_map->map[i[1]] |= tile_number[0] << shift[1];
 }
 
 static int	count_num_of_bits_required(int num_of_tiles, int *bit_mask)
@@ -118,29 +116,28 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 	return (puzzle_status);
 }
 
-static unsigned int	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
+static unsigned long	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
 													t_tiles_pos_map *tiles_pos_map)
 {
-	unsigned int	right_pos_status;
-	int				i;
-	int				j;
+	unsigned long	right_pos_status;
+	t_xy_values		yx;
 	t_pos			*pos;
 	int				tile_number;
 
 	right_pos_status = 0;
-	i = -1;
-	while (++i < puzzle_size)
+	yx.y = -1;
+	while (++yx.y < puzzle_size)
 	{
-		j = -1;
-		while (++j < puzzle_size)
+		yx.x = -1;
+		while (++yx.x < puzzle_size)
 		{
-			pos = pos_table[i][j];
-			tile_number = (tiles_pos_map->map[0] >> (4 * (i * puzzle_size + j))) & 0xF;
+			pos = pos_table[yx.y][yx.x];
+			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			if (tile_number == pos->right_tile_number)
-				right_pos_status |= (unsigned int)1 << pos->right_tile_number;
+				right_pos_status |= (unsigned long)1 << pos->right_tile_number;
 		}
 	}
-	FT_LOG_TRACE("Right position status: %u", right_pos_status);
+	FT_LOG_TRACE("Right position status: %x", right_pos_status);
 	return (right_pos_status);
 }
 
@@ -148,7 +145,7 @@ t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle)
 {
 	t_puzzle_status		*puzzle_status;
 	t_pos				*empty_pos;
-	unsigned int		right_pos_status;
+	unsigned long		right_pos_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	create_tiles_pos_map(tile_map, puzzle, &empty_pos,

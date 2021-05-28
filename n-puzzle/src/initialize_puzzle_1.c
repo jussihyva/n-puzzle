@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 14:27:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:46:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->statistics = input->statistics;
 	puzzle->algorithm = input->algorithm;
 	puzzle->size = puzzle_map->size;
-	puzzle->puzzle_ready_status = (1 << (puzzle->size * puzzle->size)) - 1;
+	if (puzzle->size == 8)
+		puzzle->puzzle_ready_status = ~(unsigned long)0;
+	else
+		puzzle->puzzle_ready_status = ((unsigned long)1 << (puzzle->size * puzzle->size)) - 1;
 	puzzle->states_prio_queue
 		= (t_bt_node **)ft_memalloc(sizeof(*puzzle->states_prio_queue));
 	puzzle->bt_root

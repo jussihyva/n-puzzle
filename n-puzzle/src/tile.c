@@ -6,27 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 17:33:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:26:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
-
-static int	get_tile_number(t_tiles_pos_map *tiles_pos_map, t_pos *pos,
-																int puzzle_size)
-{
-	int		tile_number;
-	int		i;
-	int		position_number;
-	int		shift;
-
-	position_number = pos->xy_pos.y * puzzle_size + pos->xy_pos.x;
-	i = position_number / tiles_pos_map->tiles_per_map_index;
-	shift = tiles_pos_map->bits_for_tile_number
-		* (position_number % tiles_pos_map->tiles_per_map_index);
-	tile_number = (tiles_pos_map->map[i] >> shift) & tiles_pos_map->bit_mask;
-	return (tile_number);
-}
 
 static unsigned long	set_position_match(t_tiles_pos_map *tiles_pos_map,
 													t_pos *pos, int puzzle_size)
@@ -34,31 +18,31 @@ static unsigned long	set_position_match(t_tiles_pos_map *tiles_pos_map,
 	int					tile_number;
 	unsigned long		match;
 
-	tile_number = get_tile_number(tiles_pos_map, pos, puzzle_size);
+	tile_number = get_tile_number(puzzle_size, &pos->xy_pos, tiles_pos_map);
 	if (tile_number == pos->right_tile_number)
-		match = (unsigned int)1 << pos->right_tile_number;
+		match = (unsigned long)1 << pos->right_tile_number;
 	else
 		match = 0;
 	return (match);
 }
 
 static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
-												unsigned int *right_pos_status)
+												unsigned long *right_pos_status)
 {
 	t_tiles_pos_map	*tiles_pos_map;
 
 	tiles_pos_map = &puzzle->curr_status->tiles_pos_map;
-	if (*right_pos_status & (unsigned int)1 << pos1->right_tile_number)
+	if (*right_pos_status & (unsigned long)1 << pos1->right_tile_number)
 	{
-		*right_pos_status &= ~((unsigned int)1 << pos1->right_tile_number);
-		*right_pos_status &= ~((unsigned int)1 << pos2->right_tile_number);
+		*right_pos_status &= ~((unsigned long)1 << pos1->right_tile_number);
+		*right_pos_status &= ~((unsigned long)1 << pos2->right_tile_number);
 	}
 	else
 	{
-		if (*right_pos_status & (unsigned int)1 << pos2->right_tile_number)
+		if (*right_pos_status & (unsigned long)1 << pos2->right_tile_number)
 		{
-			*right_pos_status &= ~((unsigned int)1 << pos1->right_tile_number);
-			*right_pos_status &= ~((unsigned int)1 << pos2->right_tile_number);
+			*right_pos_status &= ~((unsigned long)1 << pos1->right_tile_number);
+			*right_pos_status &= ~((unsigned long)1 << pos2->right_tile_number);
 		}
 		else
 		{
@@ -68,7 +52,7 @@ static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
 					puzzle->size);
 		}
 	}
-	FT_LOG_TRACE("Right position status: %u", *right_pos_status);
+	FT_LOG_TRACE("Right position status: %x", *right_pos_status);
 	return ;
 }
 
