@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 18:43:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/28 13:47:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static t_puzzle_status	*n_puzzle_search_algorithm(t_puzzle *puzzle,
 		// 	sizeof(*puzzle->curr_status));
 		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
 		ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
+		puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
+		puzzle->curr_status->depth = puzzle_status->depth;
+		puzzle->curr_status->prev_status = puzzle_status->prev_status;
 		move.from_pos = move.to_pos->neighbors[*search_pos_index];
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		puzzle->curr_status->depth++;
@@ -43,6 +46,9 @@ static t_puzzle_status	*n_puzzle_search_algorithm(t_puzzle *puzzle,
 	// ft_memcpy(puzzle->curr_status, puzzle_status, sizeof(*puzzle->curr_status));
 	ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
 	ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
+	puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
+	puzzle->curr_status->depth = puzzle_status->depth;
+	puzzle->curr_status->prev_status = puzzle_status->prev_status;
 	return (next_puzzle_status);
 }
 
@@ -65,6 +71,9 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		// 	sizeof(*puzzle->curr_status));
 		ft_memcpy(puzzle->curr_status->tiles_pos_map.map, puzzle_status->tiles_pos_map.map, puzzle->curr_status->tiles_pos_map.map_size);
 		ft_memcpy(&puzzle->curr_status->right_pos_status, &puzzle_status->right_pos_status, sizeof(puzzle->curr_status->right_pos_status));
+		puzzle->curr_status->empty_pos = puzzle_status->empty_pos;
+		puzzle->curr_status->depth = puzzle_status->depth;
+		puzzle->curr_status->prev_status = puzzle_status->prev_status;
 		puzzle_status = previous_puzzle_state;
 		searched_puzzle_state = n_puzzle_search_algorithm(puzzle, puzzle_status,
 				&search_pos_index);

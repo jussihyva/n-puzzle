@@ -66,7 +66,9 @@
 				{
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/4_4_05.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
-					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
+					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
+					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_22.map"
+					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_xx.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_14.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_10.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_05.map"

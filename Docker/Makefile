@@ -6,10 +6,10 @@ SELF_SIGNED_KEY	=	./influxdb-selfsigned.key
 all: start
 
 build: $(SELF_SIGNED_CRT)
-	docker-compose build
+	docker compose build
 
 start: build
-	docker-compose up -d
+	docker compose up -d
 
 login:
 	docker exec -it n_puzzle bash
