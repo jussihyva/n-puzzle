@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 17:36:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:38:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 					puzzle->size, puzzle->tile_right_pos_array);
 		puzzle->curr_status->prev_status = puzzle_status;
 		add_puzzle_state_to_prio_queue(puzzle);
-		if (puzzle->curr_status->right_pos_status
-			== puzzle->puzzle_ready_status)
+		if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
 		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 	}
@@ -59,7 +58,7 @@ void	alg_a_star(t_puzzle *puzzle)
 	t_puzzle_status		*puzzle_status;
 
 	is_puzzle_ready = 0;
-	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
+	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,

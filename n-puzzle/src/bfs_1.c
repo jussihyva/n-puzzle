@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 14:40:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:36:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,9 @@ static int	breadth_first_search(t_puzzle *puzzle,
 			add_next_status_to_queue_1(puzzle);
 		else
 			add_next_status_to_queue_2(puzzle);
-		if (curr_status->right_pos_status == puzzle->puzzle_ready_status)
+		if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 			is_puzzle_ready = print_solution(curr_status, puzzle);
-		curr_status->right_pos_status = puzzle_status->right_pos_status;
-		curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
-		curr_status->depth--;
+		update_current_puzzle_state(curr_status, puzzle_status);
 	}
 	return (is_puzzle_ready);
 }
@@ -101,7 +99,7 @@ void	bfs_1(t_puzzle *puzzle)
 	puzzle->max_depth = -1;
 	printed_depth = -1;
 	is_puzzle_ready = 0;
-	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
+	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 	ft_enqueue(puzzle->status_queue, (void *)puzzle_status);

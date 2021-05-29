@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 20:31:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:36:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_pos
 {
 	t_xy_values			xy_pos;
 	int					right_tile_number;
+	int					current_tile_number;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
 }				t_pos;
@@ -151,17 +152,18 @@ typedef struct s_puzzle_status
 	t_pos					*empty_pos;
 	unsigned long			right_pos_status;
 	int						is_in_queue;
+	int						tiles_in_right_pos;
 }				t_puzzle_status;
 
 typedef struct s_puzzle
 {
 	t_statistics		*statistics;
 	int					size;
+	int					num_of_tile_pos;
 	t_algorithm			algorithm;
 	t_pos				***pos_table;
 	int					*tile_move_cnt;
 	int					*solution_move_cnt;
-	unsigned long		puzzle_ready_status;
 	t_xy_values			*tile_right_pos_array;
 	int					max_depth;
 	t_puzzle_status		*curr_status;

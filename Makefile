@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/05/24 14:39:22 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/29 14:15:22 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,8 @@ build: folders
 	@echo "DONE"
 
 .PHONY: run
-run:
-	@echo "MOI!"
-	make -C n-puzzle run S=3 D=0 L=3 A=ida*
+run: build
+	make -C n-puzzle run S=3 D=0 L=3 A="ida*"
 
 .PHONY: folders
 folders:

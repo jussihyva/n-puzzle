@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 17:29:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:38:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		store_visited_puzzle_status_b_tree(selected_puzzle_state,
 			puzzle->bt_root);
 		(*puzzle->states_cnt)++;
-		if (selected_puzzle_state->right_pos_status
-			== puzzle->puzzle_ready_status)
+		if (selected_puzzle_state->tiles_in_right_pos
+			== puzzle->num_of_tile_pos)
 			is_puzzle_ready = print_solution(selected_puzzle_state, puzzle);
 	}
 	return (is_puzzle_ready);
@@ -120,7 +120,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 	t_puzzle_status		*puzzle_status;
 
 	is_puzzle_ready = 0;
-	if (puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
+	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,

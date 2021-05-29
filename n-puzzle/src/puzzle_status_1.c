@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 20:27:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 15:03:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 	return (puzzle_status);
 }
 
-static unsigned long	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
-													t_tiles_pos_map *tiles_pos_map)
+static unsigned long	set_right_pos_status(t_pos ***pos_table,
+		int puzzle_size, t_tiles_pos_map *tiles_pos_map, int *tiles_in_right_pos)
 {
 	unsigned long	right_pos_status;
 	t_xy_values		yx;
@@ -134,7 +134,10 @@ static unsigned long	set_right_pos_status(t_pos ***pos_table, int puzzle_size,
 			pos = pos_table[yx.y][yx.x];
 			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			if (tile_number == pos->right_tile_number)
+			{
 				right_pos_status |= (unsigned long)1 << pos->right_tile_number;
+				(*tiles_in_right_pos)++;
+			}
 		}
 	}
 	FT_LOG_TRACE("Right position status: %x", right_pos_status);
@@ -151,7 +154,7 @@ t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle)
 	create_tiles_pos_map(tile_map, puzzle, &empty_pos,
 		&puzzle_status->tiles_pos_map);
 	right_pos_status = set_right_pos_status(puzzle->pos_table, puzzle->size,
-			&puzzle_status->tiles_pos_map);
+			&puzzle_status->tiles_pos_map, &puzzle_status->tiles_in_right_pos);
 	puzzle_status->empty_pos = empty_pos;
 	puzzle_status->right_pos_status = right_pos_status;
 	return (puzzle_status);

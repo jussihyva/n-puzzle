@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 20:28:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:37:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 		puzzle->curr_status->depth--;
 	}
 	if (puzzle_status->depth == puzzle->max_depth
-		&& puzzle->curr_status->right_pos_status == puzzle->puzzle_ready_status)
+		&& puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready
 			= print_solution(puzzle->curr_status->prev_status, puzzle);
 	ft_memdel((void **)&saved_puzzle_state_map);

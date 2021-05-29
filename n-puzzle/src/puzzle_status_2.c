@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:12:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 17:25:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 15:08:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	update_current_puzzle_state(t_puzzle_status *curr_state, t_puzzle_status *p
 	curr_state->empty_pos = puzzle_state->empty_pos;
 	curr_state->depth = puzzle_state->depth;
 	curr_state->prev_status = puzzle_state->prev_status;
+	curr_state->tiles_in_right_pos = puzzle_state->tiles_in_right_pos;
 	return ;
 }

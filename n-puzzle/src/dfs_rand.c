@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/27 14:06:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:37:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	dfs_no_mem(t_puzzle *puzzle)
 		{
 			tile_move(pos, next_pos, puzzle);
 			print_puzzle(1, &puzzle->curr_status->tiles_pos_map, puzzle->size);
-			if (puzzle->curr_status->right_pos_status
-				== puzzle->puzzle_ready_status)
+			if (puzzle->curr_status->tiles_in_right_pos
+				== puzzle->num_of_tile_pos)
 				break ;
 			pos = next_pos;
 		}

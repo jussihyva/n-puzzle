@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 20:46:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:37:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_pos	*initialize_tile_pos(t_xy_values *xy_pos)
 	return (pos);
 }
 
-static t_pos	***initialize_pos_table(int puzzle_size)
+static t_pos	***initialize_pos_table(int puzzle_size, int **tile_map)
 {
 	t_pos			***pos_table;
 	t_xy_values		xy_pos;
@@ -83,7 +83,11 @@ static t_pos	***initialize_pos_table(int puzzle_size)
 			ft_memalloc(sizeof(*pos_table[xy_pos.y]) * puzzle_size);
 		xy_pos.x = -1;
 		while (++xy_pos.x < puzzle_size)
+		{
 			pos_table[xy_pos.y][xy_pos.x] = initialize_tile_pos(&xy_pos);
+			pos_table[xy_pos.y][xy_pos.x]->current_tile_number
+				= tile_map[xy_pos.y][xy_pos.x];
+		}
 	}
 	set_tile_neighbors(pos_table, puzzle_size);
 	return (pos_table);
@@ -100,10 +104,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->statistics = input->statistics;
 	puzzle->algorithm = input->algorithm;
 	puzzle->size = puzzle_map->size;
-	if (puzzle->size == 8)
-		puzzle->puzzle_ready_status = ~(unsigned long)0;
-	else
-		puzzle->puzzle_ready_status = ((unsigned long)1 << (puzzle->size * puzzle->size)) - 1;
+	puzzle->num_of_tile_pos = puzzle->size * puzzle->size;
 	puzzle->states_prio_queue
 		= (t_bt_node **)ft_memalloc(sizeof(*puzzle->states_prio_queue));
 	puzzle->bt_root
@@ -111,7 +112,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->puzzle_status_lst
 		= (t_list **)ft_memalloc(sizeof(*puzzle->puzzle_status_lst));
 	puzzle->status_queue = ft_queue_init();
-	puzzle->pos_table = initialize_pos_table(puzzle->size);
+	puzzle->pos_table = initialize_pos_table(puzzle->size, puzzle_map->tile_map);
 	set_tile_numbers_target_positions(puzzle->pos_table, puzzle->size);
 	puzzle->tile_right_pos_array
 		= create_tile_right_pos_array(puzzle->pos_table, puzzle->size);
