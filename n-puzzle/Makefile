@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/05/28 21:00:15 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/05/29 12:22:03 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,8 @@ DATA			=	data
 OBJ				=	obj
 SRC				=	src
 INCLUDE			=	include
-FOLDERS			=	$(LIB) $(BIN) $(DATA) $(OBJ) $(SRC) $(INCLUDE)
+TEST			=	test
+FOLDERS			=	$(LIB) $(BIN) $(DATA) $(OBJ) $(SRC) $(INCLUDE) $(TEST)
 INCLUDES		=	-I $(INCLUDE) -I $(LIB)
 
 # C (Source code) and H (Header) files
@@ -172,10 +173,12 @@ else
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; done
 endif
-.PHONY: test
-test: all
-	-./$(NAME) data/maps/Error/Invalid_param_01
-	-./$(NAME) data/maps/Error/Invalid_param_02
+.PHONY: run_test
+run_test: all
+	while [ 1 -eq 1 ] ; \
+	do \
+		python3 test/n-puzzle_test.py ; \
+	done
 
 $(SELF_SIGNED_CRT):
 	openssl req -x509 -nodes -newkey rsa:2048 \

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 20:30:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/29 12:30:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,15 @@ static int	breadth_first_search(t_puzzle *puzzle,
 		puzzle->curr_status->depth++;
 		puzzle->curr_status->prio = puzzle->curr_status->tiles_out_of_place
 			+ puzzle->curr_status->depth;
+		puzzle->curr_status->prev_status = puzzle_status;
 		add_state_to_prio_queue_1(puzzle);
 		if (puzzle->curr_status->right_pos_status
 			== puzzle->puzzle_ready_status)
 			is_puzzle_ready = print_solution(puzzle->curr_status, puzzle);
-		puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
-		puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
-		puzzle->curr_status->depth--;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
+		// puzzle->curr_status->right_pos_status = puzzle_status->right_pos_status;
+		// puzzle->curr_status->tiles_pos_map = puzzle_status->tiles_pos_map;
+		// puzzle->curr_status->depth--;
 	}
 	return (is_puzzle_ready);
 }
@@ -99,9 +101,10 @@ void	alg_toop_1(t_puzzle *puzzle)
 		puzzle_status
 			= (t_puzzle_status *)ft_prio_dequeue(puzzle->states_prio_queue);
 		puzzle_status->is_in_queue = 0;
-		ft_memcpy(puzzle->curr_status, puzzle_status,
-			sizeof(*puzzle->curr_status));
-		puzzle->curr_status->prev_status = puzzle_status;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
+		// ft_memcpy(puzzle->curr_status, puzzle_status,
+		// 	sizeof(*puzzle->curr_status));
+		// puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = breadth_first_search(puzzle, puzzle_status);
 		print_depth_level(puzzle->curr_status->depth);
 	}
