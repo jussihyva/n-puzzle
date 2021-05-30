@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 12:55:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:34:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,7 @@ typedef struct s_puzzle_status
 	int						prio;
 	struct s_puzzle_status	*prev_status;
 	t_pos					*empty_pos;
-	unsigned long			right_pos_status;
-	int						is_in_queue;
+int						is_in_queue;
 	int						tiles_in_right_pos;
 }				t_puzzle_status;
 

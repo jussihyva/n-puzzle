@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:12:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 15:08:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:38:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	delete_puzzle_status(void *content, size_t size)
 	return ;
 }
 
-void	update_current_puzzle_state(t_puzzle_status *curr_state, t_puzzle_status *puzzle_state)
+void	update_current_puzzle_state(t_puzzle_status *curr_state,
+												t_puzzle_status *puzzle_state)
 {
-	ft_memcpy(curr_state->tiles_pos_map.map, puzzle_state->tiles_pos_map.map, curr_state->tiles_pos_map.map_size);
-	ft_memcpy(&curr_state->right_pos_status, &puzzle_state->right_pos_status, sizeof(curr_state->right_pos_status));
+	ft_memcpy(curr_state->tiles_pos_map.map, puzzle_state->tiles_pos_map.map,
+		curr_state->tiles_pos_map.map_size);
 	curr_state->empty_pos = puzzle_state->empty_pos;
 	curr_state->depth = puzzle_state->depth;
 	curr_state->prev_status = puzzle_state->prev_status;

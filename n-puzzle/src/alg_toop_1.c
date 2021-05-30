@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:36:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:34:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	int					is_puzzle_ready;
 	int					i;
 	t_move				move;
-	unsigned long		tmp_pos_status;
 
 	is_puzzle_ready = 0;
 	i = -1;
@@ -46,14 +45,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 	{
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
-		puzzle->curr_status->tiles_out_of_place = puzzle->size * puzzle->size;
-		tmp_pos_status = puzzle->curr_status->right_pos_status;
-		while (tmp_pos_status)
-		{
-			if (tmp_pos_status % 2)
-				puzzle->curr_status->tiles_out_of_place--;
-			tmp_pos_status = tmp_pos_status >> 1;
-		}
+		puzzle->curr_status->tiles_out_of_place = (puzzle->size * puzzle->size) - puzzle->curr_status->tiles_in_right_pos;
 		puzzle->curr_status->depth++;
 		puzzle->curr_status->prio = puzzle->curr_status->tiles_out_of_place
 			+ puzzle->curr_status->depth;

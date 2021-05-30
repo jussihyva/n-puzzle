@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:37:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:37:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,17 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 {
 	int						is_puzzle_ready;
 	int						i;
-	unsigned long			saved_right_pos_status;
 	t_puzzle_status			*puzzle_status;
 	int						is_visited;
 	unsigned long			*saved_puzzle_state_map;
 
 	saved_puzzle_state_map = (unsigned long *)
-			ft_memalloc(puzzle->curr_status->tiles_pos_map.map_size);
+		ft_memalloc(puzzle->curr_status->tiles_pos_map.map_size);
 	is_puzzle_ready = 0;
 	i = -1;
 	while (puzzle->curr_status->depth < puzzle->max_depth && !is_puzzle_ready
 		&& ++i < pos->num_of_neighbors)
 	{
-		saved_right_pos_status = puzzle->curr_status->right_pos_status;
 		ft_memcpy(saved_puzzle_state_map,
 			puzzle->curr_status->tiles_pos_map.map,
 			puzzle->curr_status->tiles_pos_map.map_size);
@@ -56,7 +54,6 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 					pos->neighbors[i], puzzle_status_lst);
 			puzzle->curr_status->prev_status = puzzle_status->prev_status;
 		}
-		puzzle->curr_status->right_pos_status = saved_right_pos_status;
 		ft_memcpy(puzzle->curr_status->tiles_pos_map.map,
 			saved_puzzle_state_map,
 			puzzle->curr_status->tiles_pos_map.map_size);

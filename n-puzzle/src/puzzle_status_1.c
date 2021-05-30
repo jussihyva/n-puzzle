@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 12:58:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:31:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,15 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 	return (puzzle_status);
 }
 
-static void	set_right_pos_status(t_pos ***pos_table,
-		int puzzle_size, t_tiles_pos_map *tiles_pos_map, int *tiles_in_right_pos)
+static int	count_num_of_tiles_in_right_pos(t_pos ***pos_table,
+		int puzzle_size, t_tiles_pos_map *tiles_pos_map)
 {
 	t_xy_values		yx;
 	t_pos			*pos;
 	int				tile_number;
+	int				tiles_in_right_pos;
 
+	tiles_in_right_pos = 0;
 	yx.y = -1;
 	while (++yx.y < puzzle_size)
 	{
@@ -143,12 +145,12 @@ static void	set_right_pos_status(t_pos ***pos_table,
 			pos = pos_table[yx.y][yx.x];
 			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			if (tile_number == pos->right_tile_number)
-				(*tiles_in_right_pos)++;
+				tiles_in_right_pos++;
 		}
 	}
 	FT_LOG_TRACE("Number of tiles in the right position: %x",
 		tiles_in_right_pos);
-	return ;
+	return (tiles_in_right_pos);
 }
 
 t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle)
@@ -159,8 +161,9 @@ t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle)
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	create_tiles_pos_map(tile_map, puzzle, &empty_pos,
 		&puzzle_status->tiles_pos_map);
-	set_right_pos_status(puzzle->pos_table, puzzle->size,
-		&puzzle_status->tiles_pos_map, &puzzle_status->tiles_in_right_pos);
+	puzzle_status->tiles_in_right_pos
+		= count_num_of_tiles_in_right_pos(puzzle->pos_table, puzzle->size,
+			&puzzle_status->tiles_pos_map);
 	puzzle_status->empty_pos = empty_pos;
 	return (puzzle_status);
 }
