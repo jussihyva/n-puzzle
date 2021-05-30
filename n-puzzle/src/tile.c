@@ -6,74 +6,19 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 16:47:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 12:57:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static unsigned long	set_position_match(t_tiles_pos_map *tiles_pos_map,
-						t_pos *pos, int puzzle_size, int *tiles_in_right_pos)
-{
-	int					tile_number;
-	unsigned long		match;
-
-	tile_number = get_tile_number(puzzle_size, &pos->xy_pos, tiles_pos_map);
-	if (tile_number == pos->right_tile_number)
-	{
-		match = (unsigned long)1 << pos->right_tile_number;
-		(*tiles_in_right_pos)++;
-	}
-	else
-		match = 0;
-	return (match);
-}
-
-static int	remove_tiles_from_right_pos(unsigned long *right_pos_status, t_pos *pos)
-{
-	int		num_of_tiles;
-
-	num_of_tiles = 0;
-	*right_pos_status &= ~((unsigned long)1 << pos->right_tile_number);
-	return (num_of_tiles);
-}
-
-static void	update_right_pos_status(t_puzzle *puzzle, t_pos *pos1, t_pos *pos2,
-												unsigned long *right_pos_status)
-{
-	t_tiles_pos_map		*tiles_pos_map;
-	int					tile_number;
-
-	if (pos1->right_tile_number == pos1->current_tile_number)
-		puzzle->curr_status->tiles_in_right_pos--;
-	if (pos2->right_tile_number == pos2->current_tile_number)
-		puzzle->curr_status->tiles_in_right_pos--;
-	tile_number = pos1->current_tile_number;
-	pos1->current_tile_number = pos2->current_tile_number;
-	pos2->current_tile_number = tile_number;
-	tiles_pos_map = &puzzle->curr_status->tiles_pos_map;
-	if (*right_pos_status & (unsigned long)1 << pos1->right_tile_number)
-		puzzle->curr_status->tiles_in_right_pos
-			-= remove_tiles_from_right_pos(right_pos_status, pos1);
-	if (*right_pos_status & (unsigned long)1 << pos2->right_tile_number)
-		puzzle->curr_status->tiles_in_right_pos
-			-= remove_tiles_from_right_pos(right_pos_status, pos2);
-	*right_pos_status |= set_position_match(tiles_pos_map, pos1,
-			puzzle->size, &puzzle->curr_status->tiles_in_right_pos);
-	*right_pos_status |= set_position_match(tiles_pos_map, pos2,
-			puzzle->size, &puzzle->curr_status->tiles_in_right_pos);
-	FT_LOG_TRACE("Right position status: %x", *right_pos_status);
-	return ;
-}
-
 void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 {
 	puzzle->curr_status->empty_pos = from_pos;
 	stat_update_mem_usage(puzzle->statistics);
-	update_tiles_pos_map(from_pos, to_pos, puzzle->size,
+	puzzle->curr_status->tiles_in_right_pos
+		+= update_tiles_pos_map(from_pos, to_pos, puzzle->size,
 		&puzzle->curr_status->tiles_pos_map);
-	update_right_pos_status(puzzle, from_pos, to_pos,
-		&puzzle->curr_status->right_pos_status);
 	return ;
 }
 

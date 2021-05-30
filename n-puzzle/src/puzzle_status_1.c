@@ -6,20 +6,22 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 15:03:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 12:58:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
+int	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
 												t_tiles_pos_map *tiles_pos_map)
 {
-	unsigned long	tile_number[2];
+	int				tile_number[2];
 	int				i[2];
 	int				position_number[2];
 	int				shift[2];
+	int				change_num_of_tiles_in_right_pos;
 
+	change_num_of_tiles_in_right_pos = 0;
 	position_number[0] = pos1->xy_pos.y * puzzle_size + pos1->xy_pos.x;
 	position_number[1] = pos2->xy_pos.y * puzzle_size + pos2->xy_pos.x;
 	i[0] = position_number[0] / tiles_pos_map->tiles_per_map_index;
@@ -30,14 +32,23 @@ void	update_tiles_pos_map(t_pos *pos1, t_pos *pos2, int puzzle_size,
 		* (position_number[1] % tiles_pos_map->tiles_per_map_index);
 	tile_number[0] = (tiles_pos_map->map[i[0]] >> shift[0])
 		& tiles_pos_map->bit_mask;
+	if (tile_number[0] == pos1->right_tile_number)
+		change_num_of_tiles_in_right_pos--;
+	if (tile_number[0] == pos2->right_tile_number)
+		change_num_of_tiles_in_right_pos++;
 	tile_number[1] = (tiles_pos_map->map[i[1]] >> shift[1])
 		& tiles_pos_map->bit_mask;
+	if (tile_number[1] == pos2->right_tile_number)
+		change_num_of_tiles_in_right_pos--;
+	if (tile_number[1] == pos1->right_tile_number)
+		change_num_of_tiles_in_right_pos++;
 	tiles_pos_map->map[i[0]] &= ~((unsigned long)tiles_pos_map->bit_mask
 			<< shift[0]);
 	tiles_pos_map->map[i[1]] &= ~((unsigned long)tiles_pos_map->bit_mask
 			<< shift[1]);
-	tiles_pos_map->map[i[0]] |= tile_number[1] << shift[0];
-	tiles_pos_map->map[i[1]] |= tile_number[0] << shift[1];
+	tiles_pos_map->map[i[0]] |= (unsigned long)tile_number[1] << shift[0];
+	tiles_pos_map->map[i[1]] |= (unsigned long)tile_number[0] << shift[1];
+	return (change_num_of_tiles_in_right_pos);
 }
 
 static int	count_num_of_bits_required(int num_of_tiles, int *bit_mask)
@@ -116,15 +127,13 @@ t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status)
 	return (puzzle_status);
 }
 
-static unsigned long	set_right_pos_status(t_pos ***pos_table,
+static void	set_right_pos_status(t_pos ***pos_table,
 		int puzzle_size, t_tiles_pos_map *tiles_pos_map, int *tiles_in_right_pos)
 {
-	unsigned long	right_pos_status;
 	t_xy_values		yx;
 	t_pos			*pos;
 	int				tile_number;
 
-	right_pos_status = 0;
 	yx.y = -1;
 	while (++yx.y < puzzle_size)
 	{
@@ -134,29 +143,25 @@ static unsigned long	set_right_pos_status(t_pos ***pos_table,
 			pos = pos_table[yx.y][yx.x];
 			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			if (tile_number == pos->right_tile_number)
-			{
-				right_pos_status |= (unsigned long)1 << pos->right_tile_number;
 				(*tiles_in_right_pos)++;
-			}
 		}
 	}
-	FT_LOG_TRACE("Right position status: %x", right_pos_status);
-	return (right_pos_status);
+	FT_LOG_TRACE("Number of tiles in the right position: %x",
+		tiles_in_right_pos);
+	return ;
 }
 
 t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle)
 {
 	t_puzzle_status		*puzzle_status;
 	t_pos				*empty_pos;
-	unsigned long		right_pos_status;
 
 	puzzle_status = (t_puzzle_status *)ft_memalloc(sizeof(*puzzle_status));
 	create_tiles_pos_map(tile_map, puzzle, &empty_pos,
 		&puzzle_status->tiles_pos_map);
-	right_pos_status = set_right_pos_status(puzzle->pos_table, puzzle->size,
-			&puzzle_status->tiles_pos_map, &puzzle_status->tiles_in_right_pos);
+	set_right_pos_status(puzzle->pos_table, puzzle->size,
+		&puzzle_status->tiles_pos_map, &puzzle_status->tiles_in_right_pos);
 	puzzle_status->empty_pos = empty_pos;
-	puzzle_status->right_pos_status = right_pos_status;
 	return (puzzle_status);
 }
 

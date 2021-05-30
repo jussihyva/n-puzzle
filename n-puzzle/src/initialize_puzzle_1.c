@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:37:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 12:19:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ static t_pos	*initialize_tile_pos(t_xy_values *xy_pos)
 	return (pos);
 }
 
-static t_pos	***initialize_pos_table(int puzzle_size, int **tile_map)
+static t_pos	***initialize_pos_table(int puzzle_size)
 {
 	t_pos			***pos_table;
 	t_xy_values		xy_pos;
+	int				pos_index;
 
+	pos_index = 0;
 	pos_table = (t_pos ***)ft_memalloc(sizeof(*pos_table) * puzzle_size);
 	xy_pos.y = -1;
 	while (++xy_pos.y < puzzle_size)
@@ -85,8 +87,8 @@ static t_pos	***initialize_pos_table(int puzzle_size, int **tile_map)
 		while (++xy_pos.x < puzzle_size)
 		{
 			pos_table[xy_pos.y][xy_pos.x] = initialize_tile_pos(&xy_pos);
-			pos_table[xy_pos.y][xy_pos.x]->current_tile_number
-				= tile_map[xy_pos.y][xy_pos.x];
+			pos_table[xy_pos.y][xy_pos.x]->pos_index = pos_index;
+			pos_index++;
 		}
 	}
 	set_tile_neighbors(pos_table, puzzle_size);
@@ -112,7 +114,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->puzzle_status_lst
 		= (t_list **)ft_memalloc(sizeof(*puzzle->puzzle_status_lst));
 	puzzle->status_queue = ft_queue_init();
-	puzzle->pos_table = initialize_pos_table(puzzle->size, puzzle_map->tile_map);
+	puzzle->pos_table = initialize_pos_table(puzzle->size);
 	set_tile_numbers_target_positions(puzzle->pos_table, puzzle->size);
 	puzzle->tile_right_pos_array
 		= create_tile_right_pos_array(puzzle->pos_table, puzzle->size);

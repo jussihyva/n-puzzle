@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:36:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 12:55:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ typedef struct s_input
 typedef struct s_pos
 {
 	t_xy_values			xy_pos;
+	int					pos_index;
 	int					right_tile_number;
-	int					current_tile_number;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
 }				t_pos;
@@ -241,7 +241,7 @@ void			bfs(t_puzzle *puzzle);
 void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);
 void			bfs_1(t_puzzle *puzzle);
-void			update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
+int				update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
 					int puzzle_size, t_tiles_pos_map *tiles_pos_map);
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
