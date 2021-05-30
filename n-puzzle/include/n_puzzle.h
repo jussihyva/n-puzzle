@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 15:11:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:18:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef enum e_stat_counter_name
 
 typedef struct s_stat_counter
 {
-	e_stat_counter_name		name;
+	t_stat_counter_name		name;
 	char					*string_name;
 	int						value;
 }				t_stat_counter;
