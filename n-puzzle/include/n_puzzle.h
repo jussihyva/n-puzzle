@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 14:34:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:11:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,28 @@ typedef struct s_xy_values
 	int		y;
 	int		x;
 }				t_xy_values;
+
+typedef enum e_stat_counter_name
+{
+	E_EXECUTION_TIME,
+	E_TOTAL_CPU_USAGE_TIME,
+	E_SOLVING_CPU_USAGE_TIME,
+	E_PRINTING_CPU_USAGE_TIME,
+	E_TOTAL_NUM_OF_PUZZLE_STATES,
+	E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS,
+	E_MAX_NUM_OF_SAVED_PUZZLE_STATES,
+	E_MAX_QUEUE_LEN,
+	E_TOTAL_NUM_OF_ELEM_IN_QUEUE,
+	E_MAX_MEM_USAGE,
+	E_MIN_FREE_MEM
+}				t_stat_counter_name;
+
+typedef struct s_stat_counter
+{
+	e_stat_counter_name		name;
+	char					*string_name;
+	int						value;
+}				t_stat_counter;
 
 typedef struct s_statistics
 {
@@ -150,7 +172,7 @@ typedef struct s_puzzle_status
 	int						prio;
 	struct s_puzzle_status	*prev_status;
 	t_pos					*empty_pos;
-int						is_in_queue;
+	int						is_in_queue;
 	int						tiles_in_right_pos;
 }				t_puzzle_status;
 
