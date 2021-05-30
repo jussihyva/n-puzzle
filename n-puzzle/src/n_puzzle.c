@@ -6,11 +6,30 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/26 10:17:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 16:52:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+t_stat_counter_names	g_stat_counter_names[15] =
+{
+	{E_PUZZLE_INITIAL_STATE, ""},
+	{E_PUZZLE_FINAL_STATE, ""},
+	{E_IS_PUZZLE_SOLVABLE, "RRRRRR"},
+	{E_IS_PUZZLE_SOLVED, ""},
+	{E_EXECUTION_TIME, ""},
+	{E_TOTAL_CPU_USAGE_TIME, ""},
+	{E_SOLVING_CPU_USAGE_TIME, ""},
+	{E_PRINTING_CPU_USAGE_TIME, ""},
+	{E_TOTAL_NUM_OF_PUZZLE_STATES, ""},
+	{E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS, ""},
+	{E_MAX_NUM_OF_SAVED_PUZZLE_STATES, ""},
+	{E_MAX_QUEUE_LEN, ""},
+	{E_TOTAL_NUM_OF_ELEM_IN_QUEUE, ""},
+	{E_MAX_MEM_USAGE, ""},
+	{E_MIN_FREE_MEM, ""}
+};
 
 static void	initialize_print_strings(int map_size, char **string, char **line)
 {
@@ -99,10 +118,10 @@ static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 
 int	main(int argc, char **argv)
 {
-	t_input				*input;
-	t_statistics		*statistics;
-	t_influxdb			*influxdb;
-	t_puzzle			*puzzle;
+	t_input					*input;
+	t_statistics			*statistics;
+	t_influxdb				*influxdb;
+	t_puzzle				*puzzle;
 
 	statistics = initialize_statistics();
 	input = read_input_data(argc, argv, statistics);
