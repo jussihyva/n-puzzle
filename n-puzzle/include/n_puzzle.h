@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 15:18:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:40:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ typedef struct s_xy_values
 
 typedef enum e_stat_counter_name
 {
+	E_PUZZLE_INITIAL_STATE,
+	E_PUZZLE_FINAL_STATE,
+	E_IS_PUZZLE_SOLVABLE,
+	E_IS_PUZZLE_SOLVED,
 	E_EXECUTION_TIME,
 	E_TOTAL_CPU_USAGE_TIME,
 	E_SOLVING_CPU_USAGE_TIME,
@@ -84,6 +88,23 @@ typedef enum e_stat_counter_name
 	E_MAX_MEM_USAGE,
 	E_MIN_FREE_MEM
 }				t_stat_counter_name;
+
+g_stat_string[15];
+g_stat_string[E_PUZZLE_INITIAL_STATE] = "";
+g_stat_string[E_PUZZLE_FINAL_STATE] = "";
+g_stat_string[E_IS_PUZZLE_SOLVABLE] = "";
+g_stat_string[E_IS_PUZZLE_SOLVED] = "";
+g_stat_string[E_EXECUTION_TIME] = "";
+g_stat_string[E_TOTAL_CPU_USAGE_TIME] = "";
+g_stat_string[E_SOLVING_CPU_USAGE_TIME] = "";
+g_stat_string[E_PRINTING_CPU_USAGE_TIME] = "";
+g_stat_string[E_TOTAL_NUM_OF_PUZZLE_STATES] = "";
+g_stat_string[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = "";
+g_stat_string[E_MAX_NUM_OF_SAVED_PUZZLE_STATES] = "";
+g_stat_string[E_MAX_QUEUE_LEN] = "";
+g_stat_string[E_TOTAL_NUM_OF_ELEM_IN_QUEUE] = "";
+g_stat_string[E_MAX_MEM_USAGE] = "";
+g_stat_string[E_MIN_FREE_MEM] = "";
 
 typedef struct s_stat_counter
 {
