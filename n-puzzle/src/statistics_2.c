@@ -6,11 +6,40 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/06 13:31:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/30 22:05:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+static char	*get_stat_counter_string_name(t_stat_counter_name stat_counter_name)
+{
+	static char	**stat_counter_string_names = NULL;
+
+	if (!stat_counter_string_names)
+	{
+		stat_counter_string_names
+			= (char **)ft_memalloc(sizeof(*stat_counter_string_names) * 15);
+		stat_counter_string_names[E_PUZZLE_INITIAL_STATE] = ft_strdup("sss");
+		stat_counter_string_names[E_PUZZLE_FINAL_STATE] = ft_strdup("");
+		stat_counter_string_names[E_IS_PUZZLE_SOLVABLE] = ft_strdup("RRRRRR");
+		stat_counter_string_names[E_IS_PUZZLE_SOLVED] = ft_strdup("");
+		stat_counter_string_names[E_EXECUTION_TIME] = ft_strdup("");
+		stat_counter_string_names[E_TOTAL_CPU_USAGE_TIME] = ft_strdup("");
+		stat_counter_string_names[E_SOLVING_CPU_USAGE_TIME] = ft_strdup("");
+		stat_counter_string_names[E_PRINTING_CPU_USAGE_TIME] = ft_strdup("");
+		stat_counter_string_names[E_TOTAL_NUM_OF_PUZZLE_STATES] = ft_strdup("");
+		stat_counter_string_names[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]
+			= ft_strdup("");
+		stat_counter_string_names[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]
+			= ft_strdup("");
+		stat_counter_string_names[E_MAX_QUEUE_LEN] = ft_strdup("");
+		stat_counter_string_names[E_TOTAL_NUM_OF_ELEM_IN_QUEUE] = ft_strdup("");
+		stat_counter_string_names[E_MAX_MEM_USAGE] = ft_strdup("");
+		stat_counter_string_names[E_MIN_FREE_MEM] = ft_strdup("");
+	}
+	return (stat_counter_string_names[stat_counter_name]);
+}
 
 t_statistics	*initialize_statistics(void)
 {
@@ -42,6 +71,7 @@ void	influxdb_plugin(t_log_event *event)
 	char			*influxdb_query_string;
 	char			*format_string;
 
+	get_stat_counter_string_name(0);
 	statistics = (t_statistics *)event->additional_event_data;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
