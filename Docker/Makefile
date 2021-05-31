@@ -1,15 +1,22 @@
 .PHONY: all build start login stop remove create_keys print_key clean fclean
 
+OS				=	$(shell uname -s)
+ifeq ($(OS), Darwin)
+	DOCKER_COMPOSE	=	docker compose
+else
+	DOCKER_COMPOSE	=	docker-compose
+endif
+
 SELF_SIGNED_CRT	=	./influxdb-selfsigned.crt
 SELF_SIGNED_KEY	=	./influxdb-selfsigned.key
 
 all: start
 
 build: $(SELF_SIGNED_CRT)
-	docker compose build
+	$(DOCKER_COMPOSE) build
 
 start: build
-	docker compose up -d
+	$(DOCKER_COMPOSE) up -d
 
 login:
 	docker exec -it n_puzzle bash

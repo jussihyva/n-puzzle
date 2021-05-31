@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 17:13:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 23:52:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ void	influxdb_plugin(t_log_event *event)
 			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES],
 			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS],
 			statistics->end_time);
-		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
+		write_influxdb(statistics->connection, new_influxdb_query_string,
+			"Hive");
 		ft_dprintf(2, influxdb_query_string);
 		ft_dprintf(2, new_influxdb_query_string);
 		ft_strdel(&influxdb_query_string);
