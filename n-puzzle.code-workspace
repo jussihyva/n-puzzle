@@ -17,7 +17,9 @@
 			"random": "c",
 			"limits": "c",
 			"algorithm": "c",
-			"tcp.h": "c"
+			"tcp.h": "c",
+			"string": "c",
+			"iosfwd": "c"
 		}
 	}
 }

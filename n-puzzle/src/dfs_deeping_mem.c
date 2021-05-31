@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 14:37:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 11:25:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,8 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 		puzzle->curr_status->prev_status = NULL;
 	}
 	*puzzle->solution_move_cnt = puzzle->max_depth;
+	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
+	puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]
+		= puzzle->max_depth;
 	return ;
 }

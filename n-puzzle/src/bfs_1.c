@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:36:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 11:46:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 {
 	int		is_puzzle_ready;
 
+	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
 	if (puzzle_status->prev_status)
 	{
+		puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]++;
 		(*puzzle->solution_move_cnt)++;
 		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
 	}

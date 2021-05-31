@@ -6,30 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 16:52:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 11:23:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
-
-t_stat_counter_names	g_stat_counter_names[15] =
-{
-	{E_PUZZLE_INITIAL_STATE, ""},
-	{E_PUZZLE_FINAL_STATE, ""},
-	{E_IS_PUZZLE_SOLVABLE, "RRRRRR"},
-	{E_IS_PUZZLE_SOLVED, ""},
-	{E_EXECUTION_TIME, ""},
-	{E_TOTAL_CPU_USAGE_TIME, ""},
-	{E_SOLVING_CPU_USAGE_TIME, ""},
-	{E_PRINTING_CPU_USAGE_TIME, ""},
-	{E_TOTAL_NUM_OF_PUZZLE_STATES, ""},
-	{E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS, ""},
-	{E_MAX_NUM_OF_SAVED_PUZZLE_STATES, ""},
-	{E_MAX_QUEUE_LEN, ""},
-	{E_TOTAL_NUM_OF_ELEM_IN_QUEUE, ""},
-	{E_MAX_MEM_USAGE, ""},
-	{E_MIN_FREE_MEM, ""}
-};
 
 static void	initialize_print_strings(int map_size, char **string, char **line)
 {
@@ -134,6 +115,7 @@ int	main(int argc, char **argv)
 	puzzle->tile_move_cnt = &statistics->tile_move_cnt;
 	puzzle->states_cnt = &statistics->puzzle_states_cnt;
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
+	puzzle->stat_counters = &statistics->stat_counters;
 	puzzle->state_collision_cnt = &statistics->puzzle_state_collision_cnt;
 	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);

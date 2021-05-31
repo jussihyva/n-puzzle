@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 16:53:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 11:21:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,15 @@ typedef struct s_xy_values
 	int		x;
 }				t_xy_values;
 
+# define	NUM_OF_STAT_COUNTERS	16
+
 typedef enum e_stat_counter_name
 {
 	E_PUZZLE_INITIAL_STATE,
 	E_PUZZLE_FINAL_STATE,
 	E_IS_PUZZLE_SOLVABLE,
 	E_IS_PUZZLE_SOLVED,
+	E_NUM_OF_SOLUTION_MOVES,
 	E_EXECUTION_TIME,
 	E_TOTAL_CPU_USAGE_TIME,
 	E_SOLVING_CPU_USAGE_TIME,
@@ -89,18 +92,12 @@ typedef enum e_stat_counter_name
 	E_MIN_FREE_MEM
 }				t_stat_counter_name;
 
-typedef struct s_stat_counter_names
+typedef struct s_stat_counters
 {
-	t_stat_counter_name		name;
-	char					*string_name;
-}				t_stat_counter_names;
-
-typedef struct s_stat_counter
-{
-	t_stat_counter_name		name;
-	char					*string_name;
-	int						value;
-}				t_stat_counter;
+	char				**string_names;
+	int					counter_values[NUM_OF_STAT_COUNTERS];
+	long				active_counters[NUM_OF_STAT_COUNTERS];
+}				t_stat_counters;
 
 typedef struct s_statistics
 {
@@ -119,6 +116,7 @@ typedef struct s_statistics
 	int					puzzle_size;
 	int					puzzle_states_cnt;
 	int					puzzle_state_collision_cnt;
+	t_stat_counters		stat_counters;
 }				t_statistics;
 
 typedef struct s_cmd_args
@@ -205,6 +203,7 @@ typedef struct s_puzzle
 	t_bt_node			**bt_root;
 	t_bt_node			**states_prio_queue;
 	int					print_delay;
+	t_stat_counters		*stat_counters;
 }				t_puzzle;
 
 typedef enum e_connection_status
@@ -223,8 +222,6 @@ typedef struct s_influxdb
 	void					*connection;
 	t_connection_status		connection_status;
 }						t_influxdb;
-
-t_stat_counter_names	g_stat_counter_names[15];
 
 t_input			*read_input_data(int argc, char **argv,
 					t_statistics *statistics);
