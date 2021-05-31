@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 14:21:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 14:28:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static char	*create_format_string(t_statistics *statistics,
 	ft_strcat(string, ",state_collisions=%di");
 	ft_strcat(string, " %d\n");
 	offset_ptr = add_counters_to_string(tag_string, &statistics->stat_counters,
-		new_influxdb_query_string);
+			new_influxdb_query_string);
 	ft_sprintf(offset_ptr, " %d\n", statistics->end_time);
 	ft_dprintf(2, "OLD string: %s", string);
 	ft_dprintf(2, "NEW string: %s\n", tag_format_string);
@@ -124,7 +124,6 @@ void	influxdb_plugin(t_log_event *event)
 	char			*new_influxdb_query_string;
 	char			*format_string;
 
-	get_stat_counter_string_name(0);
 	statistics = (t_statistics *)event->additional_event_data;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
