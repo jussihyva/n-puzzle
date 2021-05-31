@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 14:13:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 14:21:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	influxdb_plugin(t_log_event *event)
 	char			*new_influxdb_query_string;
 	char			*format_string;
 
+	get_stat_counter_string_name(0);
 	statistics = (t_statistics *)event->additional_event_data;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
