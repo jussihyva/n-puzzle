@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 11:25:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 16:30:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 	{
 		puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 		store_visited_puzzle_status_list(puzzle_status, puzzle);
-		(*puzzle->states_cnt)++;
 		puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos,
 				puzzle->puzzle_status_lst);

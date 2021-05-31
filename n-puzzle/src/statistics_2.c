@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 14:28:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 17:13:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static char	**create_stat_counter_string_names(void)
 		= ft_strdup("solution_moves=%di");
 	stat_counter_string_names[E_EXECUTION_TIME]
 		= ft_strdup("execution_time=%di");
-	stat_counter_string_names[E_TOTAL_CPU_USAGE_TIME] = ft_strdup("");
+	stat_counter_string_names[E_TOTAL_CPU_USAGE_TIME]
+		= ft_strdup("total_cpu_usage_time=%di");
 	stat_counter_string_names[E_SOLVING_CPU_USAGE_TIME] = ft_strdup("");
 	stat_counter_string_names[E_PRINTING_CPU_USAGE_TIME] = ft_strdup("");
 	stat_counter_string_names[E_TOTAL_NUM_OF_PUZZLE_STATES]
@@ -36,7 +37,7 @@ static char	**create_stat_counter_string_names(void)
 	stat_counter_string_names[E_MAX_NUM_OF_SAVED_PUZZLE_STATES] = ft_strdup("");
 	stat_counter_string_names[E_MAX_QUEUE_LEN] = ft_strdup("");
 	stat_counter_string_names[E_TOTAL_NUM_OF_ELEM_IN_QUEUE] = ft_strdup("");
-	stat_counter_string_names[E_MAX_MEM_USAGE] = ft_strdup("");
+	stat_counter_string_names[E_MAX_MEM_USAGE] = ft_strdup("max_mem_usage=%di");
 	stat_counter_string_names[E_MIN_FREE_MEM] = ft_strdup("");
 	return (stat_counter_string_names);
 }
@@ -81,7 +82,6 @@ static char	*add_counters_to_string(char *format_string_ptr,
 			is_first_counter_added = 1;
 		}
 	}
-	ft_dprintf(2, "Influxdb NEW string: %s\n", influxdb_query_string);
 	return (ptr);
 }
 
@@ -112,8 +112,6 @@ static char	*create_format_string(t_statistics *statistics,
 	offset_ptr = add_counters_to_string(tag_string, &statistics->stat_counters,
 			new_influxdb_query_string);
 	ft_sprintf(offset_ptr, " %d\n", statistics->end_time);
-	ft_dprintf(2, "OLD string: %s", string);
-	ft_dprintf(2, "NEW string: %s\n", tag_format_string);
 	return (string);
 }
 
@@ -123,8 +121,10 @@ void	influxdb_plugin(t_log_event *event)
 	char			*influxdb_query_string;
 	char			*new_influxdb_query_string;
 	char			*format_string;
+	int				*counter_values;
 
 	statistics = (t_statistics *)event->additional_event_data;
+	counter_values = statistics->stat_counters.counter_values;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
 		influxdb_query_string
@@ -132,18 +132,18 @@ void	influxdb_plugin(t_log_event *event)
 		new_influxdb_query_string
 			= (char *)ft_memalloc(sizeof(*new_influxdb_query_string) * 100000);
 		statistics->stat_counters.active_counters[E_EXECUTION_TIME] = 1;
-		statistics->stat_counters.counter_values[E_EXECUTION_TIME]
-			= (int)get_execution_time(statistics);
+		counter_values[E_EXECUTION_TIME] = (int)get_execution_time(statistics);
 		format_string = create_format_string(statistics,
 				new_influxdb_query_string);
 		ft_sprintf(influxdb_query_string, format_string,
 			"n-puzzle", statistics->algorithm, statistics->algorithm_substring,
 			statistics->puzzle_size,
-			statistics->stat_counters.counter_values[E_EXECUTION_TIME],
+			counter_values[E_EXECUTION_TIME],
 			(int)statistics->cpu_usage_ms,
 			statistics->tile_move_cnt, statistics->max_mem_usage,
-			statistics->solution_move_cnt, statistics->puzzle_states_cnt,
-			statistics->puzzle_state_collision_cnt,
+			statistics->solution_move_cnt,
+			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES],
+			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS],
 			statistics->end_time);
 		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
 		ft_dprintf(2, influxdb_query_string);
@@ -165,13 +165,18 @@ void	stat_update_mem_usage(t_statistics *statistics)
 		- usage_prev);
 	statistics->max_mem_usage = ft_max_int(statistics->max_mem_usage,
 			(int)rusage.ru_maxrss);
+	statistics->stat_counters.active_counters[E_MAX_MEM_USAGE] = 1;
+	statistics->stat_counters.counter_values[E_MAX_MEM_USAGE] = statistics->max_mem_usage;
 	usage_prev = rusage.ru_maxrss;
 	return ;
 }
 
-void	stat_update_cpu_usage(t_statistics *statistics)
+void	set_total_cpu_usage_time(t_statistics *statistics)
 {
 	statistics->cpu_usage_ms = clock() / (CLOCKS_PER_SEC / 1000);
+	statistics->stat_counters.active_counters[E_TOTAL_CPU_USAGE_TIME] = 1;
+	statistics->stat_counters.counter_values[E_TOTAL_CPU_USAGE_TIME]
+		= (int)statistics->cpu_usage_ms;
 	FT_LOG_INFO("Used CPU time (ms): %ld", statistics->cpu_usage_ms);
 	return ;
 }

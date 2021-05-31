@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 14:20:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/05/31 17:02:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	send_stat_report(t_puzzle *puzzle)
 
 	statistics = puzzle->statistics;
 	stat_set_end_time(puzzle->statistics);
-	stat_update_cpu_usage(puzzle->statistics);
+	set_total_cpu_usage_time(puzzle->statistics);
 	puzzle->statistics->order = E_SEND_TO_INFLUXDB;
 	FT_LOG_INFO("%-20s %ld", "Execution time:",
 		get_execution_time(puzzle->statistics));
@@ -113,10 +113,12 @@ int	main(int argc, char **argv)
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input);
 	puzzle->tile_move_cnt = &statistics->tile_move_cnt;
-	puzzle->states_cnt = &statistics->puzzle_states_cnt;
+	puzzle->states_cnt = &statistics->stat_counters.counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES];
+	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATES] = 1;
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	puzzle->stat_counters = &statistics->stat_counters;
-	puzzle->state_collision_cnt = &statistics->puzzle_state_collision_cnt;
+	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS];
+	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = 1;
 	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);
 	release(input, influxdb, puzzle);
