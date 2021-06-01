@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 12:15:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 23:25:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 # if DARWIN
 #  include <sys/sysctl.h>
+#  define OS					"DARWIN"
 # else
 #  include <sys/sysinfo.h>
+#  define OS					"LINUX"
 # endif
 
 # define MAX_NUM_OF_NEIGHBORS	4

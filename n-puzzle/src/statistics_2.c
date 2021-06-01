@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 15:08:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 23:44:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,18 +134,31 @@ void	influxdb_plugin(t_log_event *event)
 	return ;
 }
 
-static void	check_mac_mem_usage(void)
+int	check_mac_mem_usage(long *av_phys_pages, long *tot_phys_pages,
+														struct rusage rusage)
 {
-	// int mib[5], val;
-	// size_t len;
+	int		mem_usage;
 
-	// mib[0] = CTL_NET;
-	// mib[1] = AF_INET;
-	// mib[2] = CTL_VM;
-	// mib[3] = UDPCTL_CHECKSUM;
-	// len = sizeof(val);
-	// sysctl(mib, 4, &val, &len, NULL, 0);
-	return ;
+	*av_phys_pages = 0;
+	*tot_phys_pages = 0;
+	mem_usage = (int)rusage.ru_maxrss / 1000;
+	return (mem_usage);
+}
+
+int	check_linux_mem_usage(long *av_phys_pages, long *tot_phys_pages,
+								struct rusage rusage, t_statistics *statistics)
+{
+	int					mem_usage;
+	struct sysinfo		info;
+
+	sysinfo(&info);
+	*av_phys_pages = get_avphys_pages();
+	*tot_phys_pages = get_phys_pages();
+	statistics->stat_counters.active_counters[E_IS_MEM_LIMIT_REACHED] = 1;
+	if (*av_phys_pages < 50000)
+		statistics->stat_counters.counter_values[E_IS_MEM_LIMIT_REACHED] = 1;
+	mem_usage = (int)rusage.ru_maxrss;
+	return (mem_usage);
 }
 
 void	stat_update_mem_usage(t_statistics *statistics)
@@ -158,41 +171,15 @@ void	stat_update_mem_usage(t_statistics *statistics)
 	long			tot_phys_pages;
 	int				mem_usage;
 
-	struct t_sysinfo
-	{
-		long uptime;             /* Seconds since boot */
-		unsigned long loads[3];  /* 1, 5, and 15 minute load averages */
-		unsigned long totalram;  /* Total usable main memory size */
-		unsigned long freeram;   /* Available memory size */
-		unsigned long sharedram; /* Amount of shared memory */
-		unsigned long bufferram; /* Memory used by buffers */
-		unsigned long totalswap; /* Total swap space size */
-		unsigned long freeswap;  /* swap space still available */
-		unsigned short procs;    /* Number of current processes */
-		unsigned long totalhigh; /* Total high memory size */
-		unsigned long freehigh;  /* Available high memory size */
-		unsigned int mem_unit;   /* Memory unit size in bytes */
-		char _f[20-2*sizeof(long)-sizeof(int)]; /* Padding to 64 bytes */
-	};
-
 	usage_prev = 0;
 	getrusage(RUSAGE_SELF, &rusage);
 	getrlimit(RLIMIT_MEMLOCK, &rlim);
-# if DARWIN
-	check_mac_mem_usage();
-	av_phys_pages = 0;
-	tot_phys_pages = 0;
-	mem_usage = (int)rusage.ru_maxrss / 1000;
-# else
-	struct sysinfo info;
-	sysinfo(&info);
-	av_phys_pages = get_avphys_pages();
-	tot_phys_pages = get_phys_pages();
-	mem_usage = (int)rusage.ru_maxrss;
-	statistics->stat_counters.active_counters[E_IS_MEM_LIMIT_REACHED] = 1;
-	if (av_phys_pages < 50000)
-		statistics->stat_counters.counter_values[E_IS_MEM_LIMIT_REACHED] = 1;
-# endif
+	if (ft_strequ(OS, "DARWIN"))
+		mem_usage = check_mac_mem_usage(&av_phys_pages, &tot_phys_pages,
+				rusage);
+	else
+		mem_usage = check_linux_mem_usage(&av_phys_pages, &tot_phys_pages,
+				rusage, statistics);
 	statistics->stat_counters.active_counters[E_IS_TIME_LIMIT_REACHED] = 1;
 	if (300000 < (clock() / (CLOCKS_PER_SEC / 1000)))
 		statistics->stat_counters.counter_values[E_IS_TIME_LIMIT_REACHED] = 1;

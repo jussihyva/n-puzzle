@@ -8,7 +8,7 @@ import time
 def	generate_puzzle(command_path):
 	puzzle_lines = []
 	command = os.path.join(command_path, "PuzzleGenerator.py")
-	process_create_puzzle = subprocess.Popen(["python", command, "-s", "3"], stdout=subprocess.PIPE, 
+	process_create_puzzle = subprocess.Popen(["python2", command, "-s", "3"], stdout=subprocess.PIPE, 
 															stderr=subprocess.PIPE)
 	for line in process_create_puzzle.stdout.readlines():
 		line = str(line.decode("UTF-8").strip())
