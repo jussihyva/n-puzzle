@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 12:52:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 15:08:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ static char	*add_counters_to_string(char *format_string_ptr,
 	return (ptr);
 }
 
-static char	*create_format_string(t_statistics *statistics,
-												char *new_influxdb_query_string)
+static char	*create_influxdb_query_string(t_statistics *statistics)
 {
+	char	*influxdb_query_string;
 	char	*string;
 	char	*tag_format_string;
 	char	*tag_string;
 	char	*offset_ptr;
 
+	influxdb_query_string
+		= (char *)ft_memalloc(sizeof(*influxdb_query_string) * 100000);
 	string = (char *)ft_memalloc(sizeof(*string) * 100000);
 	tag_string = (char *)ft_memalloc(sizeof(*tag_string) * 100000);
 	tag_format_string = (char *)ft_memalloc(sizeof(*tag_format_string)
@@ -105,57 +107,29 @@ static char	*create_format_string(t_statistics *statistics,
 	ft_strcat(string, "project=%s,algorithm=%s,algorithm_substring=%s");
 	ft_strcat(string, ",puzzle_size=%d");
 	ft_strcat(tag_format_string, string);
-	ft_sprintf(tag_string, tag_format_string,
-		"n-puzzle", statistics->algorithm, statistics->algorithm_substring,
-		statistics->puzzle_size);
-	ft_strcat(string, " execution_time=%di,total_cpu_usage_time=%di");
-	ft_strcat(string, ",tile_moves=%di,max_mem_usage=%di");
-	ft_strcat(string, ",solution_moves=%di");
-	ft_strcat(string, ",puzzle_states=%di");
-	ft_strcat(string, ",state_collisions=%di");
-	ft_strcat(string, " %d\n");
+	ft_sprintf(tag_string, tag_format_string, "n-puzzle", statistics->algorithm,
+		statistics->algorithm_substring, statistics->puzzle_size);
 	offset_ptr = add_counters_to_string(tag_string, &statistics->stat_counters,
-			new_influxdb_query_string);
+			influxdb_query_string);
 	ft_sprintf(offset_ptr, " %d\n", statistics->end_time);
-	return (string);
+	ft_memdel((void **)&string);
+	return (influxdb_query_string);
 }
 
 void	influxdb_plugin(t_log_event *event)
 {
 	t_statistics	*statistics;
 	char			*influxdb_query_string;
-	char			*new_influxdb_query_string;
-	char			*format_string;
 	int				*counter_values;
 
 	statistics = (t_statistics *)event->additional_event_data;
 	counter_values = statistics->stat_counters.counter_values;
 	if (statistics->order == E_SEND_TO_INFLUXDB)
 	{
-		influxdb_query_string
-			= (char *)ft_memalloc(sizeof(*influxdb_query_string) * 100000);
-		new_influxdb_query_string
-			= (char *)ft_memalloc(sizeof(*new_influxdb_query_string) * 100000);
 		statistics->stat_counters.active_counters[E_EXECUTION_TIME] = 1;
 		counter_values[E_EXECUTION_TIME] = (int)get_execution_time(statistics);
-		format_string = create_format_string(statistics,
-				new_influxdb_query_string);
-		ft_sprintf(influxdb_query_string, format_string,
-			"n-puzzle", statistics->algorithm, statistics->algorithm_substring,
-			statistics->puzzle_size,
-			counter_values[E_EXECUTION_TIME],
-			(int)statistics->cpu_usage_ms,
-			statistics->tile_move_cnt, statistics->max_mem_usage,
-			statistics->solution_move_cnt,
-			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES],
-			counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS],
-			statistics->end_time);
-		write_influxdb(statistics->connection, new_influxdb_query_string,
-			"Hive");
-		ft_dprintf(2, influxdb_query_string);
-		ft_dprintf(2, new_influxdb_query_string);
-		ft_strdel(&influxdb_query_string);
-		ft_strdel(&format_string);
+		influxdb_query_string = create_influxdb_query_string(statistics);
+		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
 	}
 	return ;
 }
