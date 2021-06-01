@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 00:07:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 12:58:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,24 @@ static void	send_stat_report(t_puzzle *puzzle)
 	puzzle->statistics->order = E_NONE;
 	FT_LOG_INFO("%-20s %d", "Total num of moves:", *puzzle->tile_move_cnt);
 	ft_dprintf(2, "\n\033[0;32mSUMMARY\n");
-	ft_dprintf(2, "%-26s %d\n", "Puzzle size:", statistics->puzzle_size);
-	ft_dprintf(2, "%-26s %s %s\n", "Used algorithm:", statistics->algorithm,
-		statistics->algorithm_substring);
-	ft_dprintf(2, "%-26s %ld ms\n", "Execution time:",
-		get_execution_time(statistics));
-	ft_dprintf(2, "%-26s %ld ms\n", "CPU usage time:",
-		statistics->cpu_usage_ms);
-	ft_dprintf(2, "%-26s %d Mb\n", "Memory usage:",
-		statistics->max_mem_usage / 1000);
-	ft_dprintf(2, "%-26s %d\n", "Number of solution moves:",
-		statistics->solution_move_cnt);
+	if (statistics->stat_counters.counter_values[E_IS_TIME_LIMIT_REACHED])
+		ft_dprintf(2, "%-26s\n", "Maximum puzzle solving time reached");
+	else if (statistics->stat_counters.counter_values[E_IS_MEM_LIMIT_REACHED])
+		ft_dprintf(2, "%-26s\n", "Maximum memory limit reached");
+	else
+	{
+		ft_dprintf(2, "%-26s %d\n", "Puzzle size:", statistics->puzzle_size);
+		ft_dprintf(2, "%-26s %s %s\n", "Used algorithm:", statistics->algorithm,
+			statistics->algorithm_substring);
+		ft_dprintf(2, "%-26s %ld ms\n", "Execution time:",
+			get_execution_time(statistics));
+		ft_dprintf(2, "%-26s %ld ms\n", "CPU usage time:",
+			statistics->cpu_usage_ms);
+		ft_dprintf(2, "%-26s %d Mb\n", "Memory usage:",
+			statistics->max_mem_usage / 1000);
+		ft_dprintf(2, "%-26s %d\n", "Number of solution moves:",
+			statistics->solution_move_cnt);
+	}
 	ft_dprintf(2, "======================================\033[0m\n\n");
 	return ;
 }

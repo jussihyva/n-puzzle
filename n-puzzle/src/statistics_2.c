@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 08:20:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 12:52:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ static char	**create_stat_counter_string_names(void)
 	stat_counter_string_names[E_PUZZLE_FINAL_STATE] = ft_strdup("");
 	stat_counter_string_names[E_IS_PUZZLE_SOLVABLE] = ft_strdup("RRRRRR");
 	stat_counter_string_names[E_IS_PUZZLE_SOLVED] = ft_strdup("");
+	stat_counter_string_names[E_IS_TIME_LIMIT_REACHED]
+		= ft_strdup("time_limit=%di");
+	stat_counter_string_names[E_IS_MEM_LIMIT_REACHED]
+		= ft_strdup("mem_limit=%di");
 	stat_counter_string_names[E_NUM_OF_SOLUTION_MOVES]
 		= ft_strdup("solution_moves=%di");
 	stat_counter_string_names[E_EXECUTION_TIME]
@@ -156,6 +160,20 @@ void	influxdb_plugin(t_log_event *event)
 	return ;
 }
 
+static void	check_mac_mem_usage(void)
+{
+	// int mib[5], val;
+	// size_t len;
+
+	// mib[0] = CTL_NET;
+	// mib[1] = AF_INET;
+	// mib[2] = CTL_VM;
+	// mib[3] = UDPCTL_CHECKSUM;
+	// len = sizeof(val);
+	// sysctl(mib, 4, &val, &len, NULL, 0);
+	return ;
+}
+
 void	stat_update_mem_usage(t_statistics *statistics)
 {
 	static int		free_mem_limit = 100000;
@@ -164,6 +182,7 @@ void	stat_update_mem_usage(t_statistics *statistics)
 	struct rlimit	rlim;
 	long			av_phys_pages;
 	long			tot_phys_pages;
+	int				mem_usage;
 
 	struct t_sysinfo
 	{
@@ -182,30 +201,43 @@ void	stat_update_mem_usage(t_statistics *statistics)
 		char _f[20-2*sizeof(long)-sizeof(int)]; /* Padding to 64 bytes */
 	};
 
-	struct sysinfo info;
-	sysinfo(&info);
 	usage_prev = 0;
 	getrusage(RUSAGE_SELF, &rusage);
 	getrlimit(RLIMIT_MEMLOCK, &rlim);
+# if DARWIN
+	check_mac_mem_usage();
+	av_phys_pages = 0;
+	tot_phys_pages = 0;
+	mem_usage = (int)rusage.ru_maxrss / 1000;
+# else
+	struct sysinfo info;
+	sysinfo(&info);
 	av_phys_pages = get_avphys_pages();
 	tot_phys_pages = get_phys_pages();
-	if (rusage.ru_maxrss > free_mem_limit)
+	mem_usage = (int)rusage.ru_maxrss;
+	statistics->stat_counters.active_counters[E_IS_MEM_LIMIT_REACHED] = 1;
+	if (av_phys_pages < 50000)
+		statistics->stat_counters.counter_values[E_IS_MEM_LIMIT_REACHED] = 1;
+# endif
+	statistics->stat_counters.active_counters[E_IS_TIME_LIMIT_REACHED] = 1;
+	if (300000 < (clock() / (CLOCKS_PER_SEC / 1000)))
+		statistics->stat_counters.counter_values[E_IS_TIME_LIMIT_REACHED] = 1;
+	if (mem_usage > free_mem_limit)
 	{
 		FT_LOG_WARN("Free Mem: CUR=%llx, MAX=%llx)", rlim.rlim_cur,
 			rlim.rlim_max);
-		FT_LOG_WARN("Mem usage: %ld (+%5ld)", rusage.ru_maxrss, rusage.ru_maxrss
+		FT_LOG_WARN("Mem usage: %ld (+%5ld)", mem_usage, mem_usage
 			- usage_prev);
-		FT_LOG_WARN("Free Mem: %lld", info.freehigh);
 		FT_LOG_WARN("Available phys pages: %ld(%ld)", av_phys_pages,
 			tot_phys_pages);
 		free_mem_limit += 100000;
 	}
 	statistics->max_mem_usage = ft_max_int(statistics->max_mem_usage,
-			(int)rusage.ru_maxrss);
+			mem_usage);
 	statistics->stat_counters.active_counters[E_MAX_MEM_USAGE] = 1;
 	statistics->stat_counters.counter_values[E_MAX_MEM_USAGE]
 		= statistics->max_mem_usage;
-	usage_prev = rusage.ru_maxrss;
+	usage_prev = mem_usage;
 	return ;
 }
 

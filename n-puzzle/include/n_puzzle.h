@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 08:20:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 12:15:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@
 # include <fcntl.h>
 # include <time.h>
 # include <sys/resource.h>
-# include <sys/sysinfo.h>
+
+# if DARWIN
+#  include <sys/sysctl.h>
+# else
+#  include <sys/sysinfo.h>
+# endif
 
 # define MAX_NUM_OF_NEIGHBORS	4
 # define READ_BUF_MAX_SIZE		4096
@@ -71,7 +76,7 @@ typedef struct s_xy_values
 	int		x;
 }				t_xy_values;
 
-# define	NUM_OF_STAT_COUNTERS	16
+# define	NUM_OF_STAT_COUNTERS	18
 
 typedef enum e_stat_counter_name
 {
@@ -79,6 +84,8 @@ typedef enum e_stat_counter_name
 	E_PUZZLE_FINAL_STATE,
 	E_IS_PUZZLE_SOLVABLE,
 	E_IS_PUZZLE_SOLVED,
+	E_IS_TIME_LIMIT_REACHED,
+	E_IS_MEM_LIMIT_REACHED,
 	E_NUM_OF_SOLUTION_MOVES,
 	E_EXECUTION_TIME,
 	E_TOTAL_CPU_USAGE_TIME,

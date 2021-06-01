@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/29 17:38:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 12:23:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	alg_a_star(t_puzzle *puzzle)
 	puzzle_status->is_in_queue = 1;
 	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
 	(*puzzle->states_cnt)++;
-	while (!is_puzzle_ready && *puzzle->states_prio_queue)
+	while (!is_puzzle_ready && *puzzle->states_prio_queue
+		&& !puzzle->stat_counters->counter_values[E_IS_MEM_LIMIT_REACHED]
+		&& !puzzle->stat_counters->counter_values[E_IS_TIME_LIMIT_REACHED])
 	{
 		puzzle_status
 			= (t_puzzle_status *)ft_prio_dequeue(puzzle->states_prio_queue);
