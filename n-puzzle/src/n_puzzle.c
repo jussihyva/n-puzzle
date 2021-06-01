@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 17:02:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 00:07:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	send_stat_report(t_puzzle *puzzle)
 
 static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 {
+	set_solver_start_time(puzzle->statistics);
 	if (!ft_strncmp(algorithm, "dfs", 3))
 		dfs(puzzle);
 	else if (!ft_strncmp(algorithm, "bfs", 3))
@@ -94,6 +95,7 @@ static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm,
 			"Specify a valid algorithm with the param -A");
+	set_solver_end_time(puzzle->statistics);
 	return ;
 }
 

@@ -168,7 +168,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "BFS B-Tree (ms)",
@@ -371,7 +371,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "TOOP (ms)",
@@ -392,7 +392,7 @@
 			  [
 				{
 				  "params": [
-					"total_cpu_usage_time"
+					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
 				},
@@ -586,7 +586,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "A* Taxicab (ms)",
@@ -607,7 +607,7 @@
 			  [
 				{
 				  "params": [
-					"total_cpu_usage_time"
+					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
 				},
@@ -813,7 +813,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "IDA* Taxicab (ms)",
@@ -834,7 +834,7 @@
 			  [
 				{
 				  "params": [
-					"total_cpu_usage_time"
+					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
 				},
@@ -970,7 +970,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Random (Sec.)",
@@ -1131,7 +1131,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Deeping (Sec.)",
@@ -1304,7 +1304,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Deeping mem (Sec.)",
@@ -1489,7 +1489,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "BFS List (Sec.)",
@@ -1638,7 +1638,7 @@
 			  [
 				{
 				  "params": [
-					"total_cpu_usage_time"
+					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
 				}
@@ -1757,7 +1757,7 @@
 			  [
 				{
 				  "params": [
-					"total_cpu_usage_time"
+					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
 				}
@@ -1803,5 +1803,6 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 2
+	"version": 9
   }
+  

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 16:19:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/01 08:20:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <time.h>
 # include <sys/resource.h>
+# include <sys/sysinfo.h>
 
 # define MAX_NUM_OF_NEIGHBORS	4
 # define READ_BUF_MAX_SIZE		4096
@@ -81,7 +82,7 @@ typedef enum e_stat_counter_name
 	E_NUM_OF_SOLUTION_MOVES,
 	E_EXECUTION_TIME,
 	E_TOTAL_CPU_USAGE_TIME,
-	E_SOLVING_CPU_USAGE_TIME,
+	E_SOLVER_CPU_USAGE_TIME,
 	E_PRINTING_CPU_USAGE_TIME,
 	E_TOTAL_NUM_OF_PUZZLE_STATES,
 	E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS,
@@ -117,6 +118,8 @@ typedef struct s_statistics
 	int					puzzle_states_cnt;
 	int					puzzle_state_collision_cnt;
 	t_stat_counters		stat_counters;
+	int					solver_start_time_ms;
+	int					solver_end_time_ms;
 }				t_statistics;
 
 typedef struct s_cmd_args
@@ -241,6 +244,8 @@ void			print_puzzle(int fd, t_tiles_pos_map *tiles_pos_map,
 					int puzzle_size);
 void			stat_set_start_time(t_statistics *statistics);
 void			stat_set_end_time(t_statistics *statistics);
+void			set_solver_start_time(t_statistics *statistics);
+void			set_solver_end_time(t_statistics *statistics);
 time_t			get_execution_time(t_statistics *statistics);
 t_statistics	*initialize_statistics(void);
 void			influxdb_plugin(t_log_event *event);
