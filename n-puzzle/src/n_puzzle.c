@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 12:58:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 17:38:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ static void	send_stat_report(t_puzzle *puzzle)
 	FT_LOG_INFO("%-20s %ld", "Execution time:",
 		get_execution_time(puzzle->statistics));
 	puzzle->statistics->order = E_NONE;
-	FT_LOG_INFO("%-20s %d", "Total num of moves:", *puzzle->tile_move_cnt);
+	FT_LOG_INFO("%-20s %d", "Total num of moves:",
+		puzzle->stat_counters->counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]
+		+ puzzle->stat_counters->counter_values[
+		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]);
 	ft_dprintf(2, "\n\033[0;32mSUMMARY\n");
 	if (statistics->stat_counters.counter_values[E_IS_TIME_LIMIT_REACHED])
 		ft_dprintf(2, "%-26s\n", "Maximum puzzle solving time reached");
@@ -78,7 +81,7 @@ static void	send_stat_report(t_puzzle *puzzle)
 		ft_dprintf(2, "%-26s %ld ms\n", "CPU usage time:",
 			statistics->cpu_usage_ms);
 		ft_dprintf(2, "%-26s %d Mb\n", "Memory usage:",
-			statistics->max_mem_usage / 1000);
+			statistics->stat_counters.counter_values[E_MAX_MEM_USAGE] / 1000);
 		ft_dprintf(2, "%-26s %d\n", "Number of solution moves:",
 			statistics->solution_move_cnt);
 	}
@@ -121,13 +124,15 @@ int	main(int argc, char **argv)
 	statistics->puzzle_size = input->puzzle_map->size;
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input);
-	puzzle->tile_move_cnt = &statistics->tile_move_cnt;
-	puzzle->states_cnt = &statistics->stat_counters.counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES];
+	puzzle->states_cnt = &statistics->stat_counters.counter_values[
+		E_TOTAL_NUM_OF_PUZZLE_STATES];
 	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATES] = 1;
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	puzzle->stat_counters = &statistics->stat_counters;
-	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS];
-	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = 1;
+	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[
+		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS];
+	statistics->stat_counters.active_counters[
+		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = 1;
 	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);
 	release(input, influxdb, puzzle);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 11:42:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 19:12:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ static int	fast_rand(void)
 	return ((seed >> 16) & 0x7FFF);
 }
 
+static void	set_stat_counters(t_stat_counters *stat_counters,
+														int solution_move_cnt)
+{
+	stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
+	stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]
+		= solution_move_cnt;
+	stat_counters->active_counters[E_TOTAL_NUM_OF_PUZZLE_STATES] = 1;
+	stat_counters->counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]
+		= solution_move_cnt;
+	return ;
+}
+
 void	dfs_no_mem(t_puzzle *puzzle)
 {
 	t_pos			*pos;
@@ -40,6 +52,7 @@ void	dfs_no_mem(t_puzzle *puzzle)
 		if (next_pos)
 		{
 			tile_move(pos, next_pos, puzzle);
+			(*puzzle->solution_move_cnt)++;
 			print_puzzle(1, &puzzle->curr_status->tiles_pos_map, puzzle->size);
 			if (puzzle->curr_status->tiles_in_right_pos
 				== puzzle->num_of_tile_pos)
@@ -47,9 +60,6 @@ void	dfs_no_mem(t_puzzle *puzzle)
 			pos = next_pos;
 		}
 	}
-	*puzzle->solution_move_cnt = *puzzle->tile_move_cnt;
-	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
-	puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]
-		= *puzzle->tile_move_cnt;
+	set_stat_counters(puzzle->stat_counters, *puzzle->solution_move_cnt);
 	return ;
 }

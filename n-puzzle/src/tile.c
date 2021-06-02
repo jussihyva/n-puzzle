@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 12:57:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 16:52:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	tile_move(t_pos *from_pos, t_pos *to_pos, t_puzzle *puzzle)
 	stat_update_mem_usage(puzzle->statistics);
 	puzzle->curr_status->tiles_in_right_pos
 		+= update_tiles_pos_map(from_pos, to_pos, puzzle->size,
-		&puzzle->curr_status->tiles_pos_map);
+			&puzzle->curr_status->tiles_pos_map);
 	return ;
 }
 
@@ -52,18 +52,26 @@ static int	calculate_num_of_inversions(t_xy_values start_pos,
 	return (num_of_inversions);
 }
 
+static int	in_case_of_even_num_of_tiles(int num_of_inversions)
+{
+	int				is_solvable;
+
+	if (num_of_inversions % 2)
+		is_solvable = 0;
+	else
+		is_solvable = 1;
+	return (is_solvable);
+}
+
 static int	decide_is_puzzle_solvable(int puzzle_size, int num_of_inversions,
 														int empty_tile_row_nbr)
 {
 	int				is_solvable;
+	int				num_of_tiles;
 
 	is_solvable = 1;
-	if ((puzzle_size * puzzle_size) % 2)
-	{
-		if (num_of_inversions % 2)
-			is_solvable = 0;
-	}
-	else
+	num_of_tiles = (puzzle_size * puzzle_size) - 1;
+	if (num_of_tiles % 2)
 	{
 		if (empty_tile_row_nbr % 2)
 		{
@@ -78,6 +86,8 @@ static int	decide_is_puzzle_solvable(int puzzle_size, int num_of_inversions,
 		if (!((puzzle_size - 2) % 4))
 			is_solvable = ~is_solvable & 1;
 	}
+	else
+		is_solvable = in_case_of_even_num_of_tiles(num_of_inversions);
 	if (!is_solvable)
 		FT_LOG_FATAL("Puzzle is NOT solvable!");
 	return (is_solvable);

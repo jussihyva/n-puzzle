@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/01 23:25:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 17:34:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@
 #  define OS					"LINUX"
 # endif
 
-# define MAX_NUM_OF_NEIGHBORS	4
-# define READ_BUF_MAX_SIZE		4096
-# define PEM_CERT_FILE			"/var/tmp/tls-selfsigned.crt"
-# define PEM_PRIVTE_KEY_FILE	"/var/tmp/tls-selfsigned.key"
+# define MILLI_SECONDS					1000
+# define MINUTE							60
+# define PUZZLE_SOLVING_TIME_LIMIT		5
+# define MAX_NUM_OF_NEIGHBORS			4
+# define READ_BUF_MAX_SIZE				4096
+# define PEM_CERT_FILE					"/var/tmp/tls-selfsigned.crt"
+# define PEM_PRIVTE_KEY_FILE			"/var/tmp/tls-selfsigned.key"
 
 typedef enum e_dir
 {
@@ -104,7 +107,7 @@ typedef enum e_stat_counter_name
 
 typedef struct s_stat_counters
 {
-	char				**string_names;
+	char				**counter_names;
 	int					counter_values[NUM_OF_STAT_COUNTERS];
 	long				active_counters[NUM_OF_STAT_COUNTERS];
 }				t_stat_counters;
@@ -120,9 +123,7 @@ typedef struct s_statistics
 	time_t				end_time_ms;
 	clock_t				cpu_usage_ms;
 	t_tls_connection	*connection;
-	int					tile_move_cnt;
 	int					solution_move_cnt;
-	int					max_mem_usage;
 	int					puzzle_size;
 	int					puzzle_states_cnt;
 	int					puzzle_state_collision_cnt;
@@ -203,7 +204,6 @@ typedef struct s_puzzle
 	int					num_of_tile_pos;
 	t_algorithm			algorithm;
 	t_pos				***pos_table;
-	int					*tile_move_cnt;
 	int					*solution_move_cnt;
 	t_xy_values			*tile_right_pos_array;
 	int					max_depth;
@@ -234,6 +234,18 @@ typedef struct s_influxdb
 	void					*connection;
 	t_connection_status		connection_status;
 }						t_influxdb;
+
+typedef struct s_memory_info
+{
+	int				mem_limit;
+	long			usage_prev;
+	struct rusage	rusage;
+	struct rlimit	rlim;
+	long			av_phys_pages;
+	long			tot_phys_pages;
+	int				mem_usage;
+
+}						t_memory_info;
 
 t_input			*read_input_data(int argc, char **argv,
 					t_statistics *statistics);

@@ -6,13 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 12:19:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 17:14:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_xy_values	*create_tile_right_pos_array(t_pos ***pos_table, int puzzle_size)
+static t_xy_values	*create_tile_right_pos_array(t_pos ***pos_table,
+																int puzzle_size)
 {
 	t_xy_values		xy;
 	t_xy_values		*tile_right_pos_array;

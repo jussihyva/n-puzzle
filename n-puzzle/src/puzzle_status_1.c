@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/30 14:31:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 17:43:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,8 @@ void	store_visited_puzzle_status_b_tree(t_puzzle_status *puzzle_status,
 	return ;
 }
 
-int	is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map, t_puzzle *puzzle,
-												t_puzzle_status **puzzle_status)
+int	is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map,
+							t_puzzle *puzzle, t_puzzle_status **puzzle_status)
 {
 	int					is_visited;
 	t_list				*elem;
@@ -205,7 +205,8 @@ int	is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map, t_puzzle *puzz
 	while (elem)
 	{
 		*puzzle_status = *(t_puzzle_status **)elem->content;
-		if (!(ft_memcmp(tiles_pos_map->map, (*puzzle_status)->tiles_pos_map.map, tiles_pos_map->map_size)))
+		if (!(ft_memcmp(tiles_pos_map->map, (*puzzle_status)->tiles_pos_map.map,
+					tiles_pos_map->map_size)))
 		{
 			is_visited = 1;
 			(*puzzle->state_collision_cnt)++;

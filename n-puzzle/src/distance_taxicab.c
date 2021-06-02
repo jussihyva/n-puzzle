@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/28 18:33:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 17:12:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_tile_number(int puzzle_size, t_xy_values *xy,
 	shift = tiles_pos_map->bits_for_tile_number
 		* (position_number % tiles_pos_map->tiles_per_map_index);
 	tile_number = (int)((tiles_pos_map->map[i]
-		>> shift)) & tiles_pos_map->bit_mask;
+				>> shift)) & tiles_pos_map->bit_mask;
 	return (tile_number);
 }
 

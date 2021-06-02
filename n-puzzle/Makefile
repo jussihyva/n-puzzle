@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/01 23:50:55 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/02 14:13:53 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					puzzle_map_2.c release_puzzle.c input_1.c input_2.c \
 					initialize_puzzle_1.c initialize_puzzle_2.c \
 					puzzle_print.c statistics_1.c statistics_2.c \
-					statistics_3.c \
+					statistics_3.c statistics_4.c \
 					influxdb_1.c tile.c \
 					dfs.c dfs_rand.c dfs_deeping.c dfs_deeping_mem.c \
 					puzzle_status_1.c puzzle_status_2.c bfs.c bfs_1.c \

@@ -6,28 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 11:46:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 19:05:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
-
-int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
-{
-	int		is_puzzle_ready;
-
-	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
-	if (puzzle_status->prev_status)
-	{
-		puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]++;
-		(*puzzle->solution_move_cnt)++;
-		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
-	}
-	print_puzzle(1, &puzzle_status->tiles_pos_map, puzzle->size);
-	sleep(puzzle->print_delay / 10);
-	is_puzzle_ready = 1;
-	return (is_puzzle_ready);
-}
 
 static t_puzzle_status	*add_next_status_to_queue_1(t_puzzle *puzzle)
 {
@@ -81,6 +64,7 @@ static int	breadth_first_search(t_puzzle *puzzle,
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		curr_status->depth++;
+		puzzle->curr_status->prev_status = puzzle_status;
 		if (puzzle->algorithm == E_BFS_1)
 			add_next_status_to_queue_1(puzzle);
 		else
@@ -90,6 +74,15 @@ static int	breadth_first_search(t_puzzle *puzzle,
 		update_current_puzzle_state(curr_status, puzzle_status);
 	}
 	return (is_puzzle_ready);
+}
+
+static int	print_depth_level(t_puzzle_status *puzzle_status)
+{
+	int			printed_depth;
+
+	FT_LOG_INFO("Depth level %d done", puzzle_status->depth);
+	printed_depth = puzzle_status->depth;
+	return (printed_depth);
 }
 
 void	bfs_1(t_puzzle *puzzle)
@@ -110,14 +103,13 @@ void	bfs_1(t_puzzle *puzzle)
 	{
 		puzzle_status = (t_puzzle_status *)ft_dequeue(puzzle->status_queue);
 		puzzle_status->is_in_queue = 0;
-		ft_memcpy(puzzle->curr_status, puzzle_status,
-			sizeof(*puzzle->curr_status));
-		puzzle->curr_status->prev_status = puzzle_status;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 		is_puzzle_ready = breadth_first_search(puzzle, puzzle_status);
 		if (printed_depth < puzzle->curr_status->depth)
-		{
-			FT_LOG_INFO("Depth level %d done", puzzle->curr_status->depth);
-			printed_depth = puzzle->curr_status->depth;
-		}
+			printed_depth = print_depth_level(puzzle->curr_status);
 	}
+	*puzzle->solution_move_cnt = puzzle->curr_status->depth + 1;
+	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
+	puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]
+		= puzzle->curr_status->depth + 1;
 }

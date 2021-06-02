@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/23 10:42:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/02 18:17:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static void	release_status_queue(t_queue *status_queue)
 	t_puzzle_status		*puzzle_status;
 
 	while (!ft_is_queue_empty(status_queue))
-	{
 		puzzle_status = (t_puzzle_status *)ft_dequeue(status_queue);
-		ft_memdel((void **)&puzzle_status);
-	}
 	ft_memdel((void **)&status_queue->in_stack);
 	ft_memdel((void **)&status_queue->out_stack);
 	ft_memdel((void **)&status_queue);
@@ -38,8 +35,7 @@ static void	release_status_queue(t_queue *status_queue)
 
 static void	release_puzzle(t_puzzle *puzzle)
 {
-	int					i;
-	int					j;
+	t_xy_values			yx;
 
 	ft_bt_remove(puzzle->states_prio_queue, NULL);
 	ft_memdel((void **)&puzzle->states_prio_queue);
@@ -48,16 +44,16 @@ static void	release_puzzle(t_puzzle *puzzle)
 	release_status_queue(puzzle->status_queue);
 	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	ft_memdel((void **)&puzzle->puzzle_status_lst);
-	i = -1;
-	while (++i < puzzle->size)
+	yx.y = -1;
+	while (++yx.y < puzzle->size)
 	{
-		j = -1;
-		while (++j < puzzle->size)
+		yx.x = -1;
+		while (++yx.x < puzzle->size)
 		{
-			ft_memdel((void **)&puzzle->pos_table[i][j]->neighbors);
-			ft_memdel((void **)&puzzle->pos_table[i][j]);
+			ft_memdel((void **)&puzzle->pos_table[yx.y][yx.x]->neighbors);
+			ft_memdel((void **)&puzzle->pos_table[yx.y][yx.x]);
 		}
-		ft_memdel((void **)&puzzle->pos_table[i]);
+		ft_memdel((void **)&puzzle->pos_table[yx.y]);
 	}
 	ft_memdel((void **)&puzzle->pos_table);
 	ft_memdel((void **)&puzzle->curr_status);

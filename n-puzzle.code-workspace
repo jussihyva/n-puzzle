@@ -20,6 +20,7 @@
 			"tcp.h": "c",
 			"string": "c",
 			"iosfwd": "c"
-		}
+		},
+		"norminettev2.norminette_bin": "norminette-beta"
 	}
 }
