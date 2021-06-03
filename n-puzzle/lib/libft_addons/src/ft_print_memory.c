@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 08:28:55 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/20 13:05:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 10:23:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_addons.h"
 
-static size_t		print_ascii(char *addr, size_t size)
+static size_t	print_ascii(char *addr, size_t size)
 {
 	char	i;
 	size_t	index;
@@ -57,7 +57,7 @@ static size_t	print_hex(char *addr, size_t size)
 	return (index);
 }
 
-static void print_ptr(char *addr, size_t index)
+static void	print_ptr(char *addr, size_t index)
 {
 	ft_printf("%p (%0#6lx): ", addr + index, index);
 	return ;

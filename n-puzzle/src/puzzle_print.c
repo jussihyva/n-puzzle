@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:59:15 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 19:05:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 14:22:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,16 @@ int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 	sleep(puzzle->print_delay / 10);
 	is_puzzle_ready = 1;
 	return (is_puzzle_ready);
+}
+
+void	print_depth_level(int depth)
+{
+	static int	printed_depth = -1;
+
+	if (printed_depth < depth)
+	{
+		FT_LOG_INFO("Depth level %d done", depth);
+		printed_depth = depth;
+	}
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 13:52:53 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/10 15:19:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 10:17:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node, t_bt_data *bt_data)
 	return (i);
 }
 
-static int	find_elem_index_2(t_bt_key *bt_key, t_bt_node **bt_node, t_bt_data *bt_data)
+static int	find_elem_index_2(t_bt_key *bt_key, t_bt_node **bt_node,
+															t_bt_data *bt_data)
 {
 	int			i;
 	t_bt_node	*bt_child_node;

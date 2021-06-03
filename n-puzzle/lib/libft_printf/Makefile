@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2021/04/17 10:33:36 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/03 10:15:50 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FOLDERS			=	$(OBJ) $(SRC) $(INCLUDE)
 INCLUDES		=	-I $(INCLUDE) -I $(LIBFT_FOLDER)
 
 # Compiler and linking parameters
+OS				=	$(shell uname -s)
 CC				=	clang
 C_FLAGS			=	-std=gnu17 -fPIE -g -Wall -Wextra -Werror $(INCLUDES)
 
@@ -86,4 +87,8 @@ re: fclean all
 
 .PHONY: norm
 norm:
+ifeq ($(OS), Darwin)
+	norminette-beta $(SRC)/* $(INCLUDE)/*
+else
 	norminette $(SRC)/* $(INCLUDE)/*
+endif

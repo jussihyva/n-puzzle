@@ -55,7 +55,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-			"args": ["-L", "3", "-A", "bfs_1"],
+			"args": ["-L", "3", "-A", "toop_1"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],

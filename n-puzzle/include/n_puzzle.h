@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 17:34:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 14:34:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,5 +312,8 @@ void			update_current_puzzle_state(t_puzzle_status *curr_state,
 					t_puzzle_status *puzzle_state);
 int				get_tile_number(int puzzle_size, t_xy_values *xy,
 					t_tiles_pos_map *tiles_pos_map);
+void			print_depth_level(int depth);
+t_puzzle_status	*alg_n_puzzle_search_state(t_puzzle *puzzle,
+					t_puzzle_status *puzzle_status, int *search_pos_index);
 
 #endif

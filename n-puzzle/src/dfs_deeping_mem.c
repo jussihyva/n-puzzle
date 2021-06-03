@@ -6,18 +6,17 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/31 16:30:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 15:09:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
 static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
-													t_list **puzzle_status_lst)
+					t_list **puzzle_status_lst, t_puzzle_status *puzzle_status)
 {
 	int						is_puzzle_ready;
 	int						i;
-	t_puzzle_status			*puzzle_status;
 	int						is_visited;
 	unsigned long			*saved_puzzle_state_map;
 
@@ -28,9 +27,6 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	while (puzzle->curr_status->depth < puzzle->max_depth && !is_puzzle_ready
 		&& ++i < pos->num_of_neighbors)
 	{
-		ft_memcpy(saved_puzzle_state_map,
-			puzzle->curr_status->tiles_pos_map.map,
-			puzzle->curr_status->tiles_pos_map.map_size);
 		tile_move(pos, pos->neighbors[i], puzzle);
 		puzzle->curr_status->depth++;
 		is_visited = is_visited_puzzle_status_b_tree(
@@ -49,15 +45,10 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 					puzzle->bt_root);
 				(*puzzle->states_cnt)++;
 			}
-			puzzle->curr_status->prev_status = puzzle_status;
 			is_puzzle_ready = depth_limited_dfs_mem(puzzle,
-					pos->neighbors[i], puzzle_status_lst);
-			puzzle->curr_status->prev_status = puzzle_status->prev_status;
+					pos->neighbors[i], puzzle_status_lst, puzzle_status);
 		}
-		ft_memcpy(puzzle->curr_status->tiles_pos_map.map,
-			saved_puzzle_state_map,
-			puzzle->curr_status->tiles_pos_map.map_size);
-		puzzle->curr_status->depth--;
+		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 	}
 	if (puzzle_status->depth == puzzle->max_depth
 		&& puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
@@ -84,7 +75,7 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 		store_visited_puzzle_status_list(puzzle_status, puzzle);
 		puzzle->curr_status->prev_status = puzzle_status;
 		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos,
-				puzzle->puzzle_status_lst);
+				puzzle->puzzle_status_lst, puzzle_status);
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);
 		ft_bt_remove(puzzle->bt_root, NULL);
 		ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
@@ -94,5 +85,4 @@ void	dfs_deeping_mem(t_puzzle *puzzle)
 	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
 	puzzle->stat_counters->counter_values[E_NUM_OF_SOLUTION_MOVES]
 		= puzzle->max_depth;
-	return ;
 }

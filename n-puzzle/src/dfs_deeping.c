@@ -6,11 +6,23 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 17:13:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 14:40:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+static int	check_is_puzzle_ready(int depth, t_puzzle *puzzle)
+{
+	int			is_puzzle_ready;
+
+	if (!depth && puzzle->curr_status->tiles_in_right_pos
+		== puzzle->num_of_tile_pos)
+		is_puzzle_ready = 1;
+	else
+		is_puzzle_ready = 0;
+	return (is_puzzle_ready);
+}
 
 static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
 																t_pos *prev_pos)
@@ -38,9 +50,7 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
 			}
 		}
 	}
-	if (!depth && puzzle->curr_status->tiles_in_right_pos
-		== puzzle->num_of_tile_pos)
-		is_puzzle_ready = 1;
+	is_puzzle_ready = check_is_puzzle_ready(depth, puzzle);
 	return (is_puzzle_ready);
 }
 
