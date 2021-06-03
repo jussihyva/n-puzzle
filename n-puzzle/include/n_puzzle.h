@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 14:34:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 17:32:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "ft_printf.h"
 # include "libft_addons.h"
 # include <unistd.h>
-# include <fcntl.h>
 # include <time.h>
 # include <sys/resource.h>
 
@@ -168,6 +167,8 @@ typedef struct s_pos
 	int					right_tile_number;
 	struct s_pos		**neighbors;
 	int					num_of_neighbors;
+	int					tile_map_index;
+	int					tile_pos_shift;
 }				t_pos;
 
 typedef struct s_move
@@ -181,7 +182,7 @@ typedef struct s_tiles_pos_map
 	unsigned long	*map;
 	int				bits_for_tile_number;
 	int				tiles_per_map_index;
-	int				bit_mask;
+	unsigned long	bit_mask;
 	int				map_size;
 }				t_tiles_pos_map;
 
@@ -298,7 +299,7 @@ void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);
 void			bfs_1(t_puzzle *puzzle);
 int				update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
-					int puzzle_size, t_tiles_pos_map *tiles_pos_map);
+					t_tiles_pos_map *tiles_pos_map);
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			alg_a_star(t_puzzle *puzzle);
@@ -315,5 +316,8 @@ int				get_tile_number(int puzzle_size, t_xy_values *xy,
 void			print_depth_level(int depth);
 t_puzzle_status	*alg_n_puzzle_search_state(t_puzzle *puzzle,
 					t_puzzle_status *puzzle_status, int *search_pos_index);
+void			validate_puzzle_map(t_map *puzzle_map);
+char			*based_on_heuristic_alg(t_heuristic_alg algorithm);
+t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string);
 
 #endif
