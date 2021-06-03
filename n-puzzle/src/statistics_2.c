@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 16:33:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/03 19:46:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	check_mem_usage(t_memory_info *memory_info, t_statistics *statistics)
 
 void	check_mem_usage(t_memory_info *memory_info, t_statistics *statistics)
 {
-	int					mem_usage;
 	struct sysinfo		info;
 
 	sysinfo(&info);
