@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:08:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 10:34:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 21:32:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ static char	*create_influxdb_query_string(t_statistics *statistics)
 	ft_strcat(tag_format_string, string);
 	ft_sprintf(tag_string, tag_format_string, "n-puzzle", statistics->algorithm,
 		statistics->algorithm_substring, statistics->puzzle_size);
+	ft_memdel((void **)&tag_format_string);
 	offset_ptr = add_counters_to_string(tag_string, &statistics->stat_counters,
 			influxdb_query_string);
+	ft_memdel((void **)&tag_string);
 	ft_sprintf(offset_ptr, " %d\n", statistics->end_time);
 	ft_memdel((void **)&string);
 	return (influxdb_query_string);
@@ -109,6 +111,7 @@ void	influxdb_plugin(t_log_event *event)
 		counter_values[E_EXECUTION_TIME] = (int)get_execution_time(statistics);
 		influxdb_query_string = create_influxdb_query_string(statistics);
 		write_influxdb(statistics->connection, influxdb_query_string, "Hive");
+		ft_memdel((void **)&influxdb_query_string);
 	}
 	return ;
 }

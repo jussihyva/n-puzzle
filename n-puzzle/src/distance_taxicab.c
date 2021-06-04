@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 16:29:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 21:46:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,15 @@ void	prio_based_selection(t_puzzle_status *searched_puzzle_state,
 {
 	if ((*selected_puzzle_state)->prio > searched_puzzle_state->prio)
 	{
+		ft_memdel((void **)&(*selected_puzzle_state)->tiles_pos_map.map);
 		ft_memdel((void **)selected_puzzle_state);
 		*selected_puzzle_state = searched_puzzle_state;
 	}
 	else
+	{
+		ft_memdel((void **)&searched_puzzle_state->tiles_pos_map.map);
 		ft_memdel((void **)&searched_puzzle_state);
+	}
 	return ;
 }
 

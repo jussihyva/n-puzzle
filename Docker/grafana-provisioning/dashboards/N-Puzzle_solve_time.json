@@ -168,7 +168,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "BFS B-Tree (ms)",
@@ -258,7 +258,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": null
+				  "value": 155
 				}
 			  ]
 			},
@@ -357,6 +357,18 @@
 				  "value": 91
 				}
 			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Hamming (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 115
+				}
+			  ]
 			}
 		  ]
 		},
@@ -371,7 +383,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "Hamming (ms)",
@@ -586,7 +598,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "A* Taxicab (ms)",
@@ -796,7 +808,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 138
+				  "value": 131
 				}
 			  ]
 			}
@@ -813,7 +825,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "IDA* Taxicab (ms)",
@@ -1026,12 +1038,24 @@
 				  "value": 138
 				}
 			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Greedy Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 148
+				}
+			  ]
 			}
 		  ]
 		},
 		"gridPos": {
 		  "h": 10,
-		  "w": 4,
+		  "w": 5,
 		  "x": 16,
 		  "y": 1
 		},
@@ -1040,7 +1064,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "Greedy Taxicab (ms)",
@@ -1197,7 +1221,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Random (Sec.)",
@@ -1358,7 +1382,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Deeping (Sec.)",
@@ -1523,7 +1547,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 5,
-		  "x": 10,
+		  "x": 11,
 		  "y": 12
 		},
 		"id": 6,
@@ -1531,7 +1555,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "DFS Deeping mem (Sec.)",
@@ -1708,7 +1732,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 5,
-		  "x": 15,
+		  "x": 16,
 		  "y": 12
 		},
 		"id": 7,
@@ -1716,7 +1740,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.7",
+		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
 			"alias": "BFS List (Sec.)",
@@ -1784,7 +1808,7 @@
 		},
 		"gridPos": {
 		  "h": 12,
-		  "w": 20,
+		  "w": 21,
 		  "x": 0,
 		  "y": 22
 		},
@@ -1903,7 +1927,7 @@
 		},
 		"gridPos": {
 		  "h": 12,
-		  "w": 20,
+		  "w": 21,
 		  "x": 0,
 		  "y": 34
 		},
@@ -2022,7 +2046,7 @@
 		},
 		"gridPos": {
 		  "h": 12,
-		  "w": 20,
+		  "w": 21,
 		  "x": 0,
 		  "y": 46
 		},
@@ -2149,6 +2173,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 4
+	"version": 11
   }
-  
