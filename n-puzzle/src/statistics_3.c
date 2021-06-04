@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:08:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 16:29:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 10:34:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	release_statistics_params(t_statistics *statistics)
 {
+	int		i;
+
 	if (statistics)
 	{
 		ft_strdel(&statistics->algorithm);
 		ft_strdel(&statistics->algorithm_substring);
+		i = -1;
+		while (++i < NUM_OF_STAT_COUNTERS)
+			ft_memdel((void **)&statistics->stat_counters.counter_names[i]);
+		ft_memdel((void **)&statistics->stat_counters.counter_names);
 		ft_memdel((void **)&statistics);
 	}
 	return ;

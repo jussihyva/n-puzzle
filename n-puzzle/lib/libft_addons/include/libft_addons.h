@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 14:53:13 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:21:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 10:26:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,8 @@ int					find_elem_index(t_bt_key *bt_key, t_bt_node **bt_node,
 						t_bt_data *bt_data);
 void				ft_bt_find(t_bt_key *bt_key, t_bt_node *bt_root,
 						t_bt_data *return_bt_data);
-void				ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key);
+void				ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key,
+						void ((*fn)(void *data, size_t size)));
 int					search_key_position(t_bt_node *bt_node, t_bt_key *bt_key,
 						t_bt_data *bt_data);
 void				split_node(t_bt_node **bt_node, t_bt_node **parent,

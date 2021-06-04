@@ -6,20 +6,22 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:07:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:13:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 10:29:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-void	delete_puzzle_status(void *content, size_t size)
+void	delete_puzzle_status(void *data, size_t size)
 {
 	t_puzzle_status		*puzzle_status;
+	t_bt_data			*bt_data;
 
 	(void)size;
-	puzzle_status = *(t_puzzle_status **)content;
+	bt_data = (t_bt_data *)data;
+	puzzle_status = (t_puzzle_status *)bt_data->data;
+	ft_memdel((void **)&puzzle_status->tiles_pos_map.map);
 	ft_memdel((void **)&puzzle_status);
-	ft_memdel((void **)&content);
 	return ;
 }
 
