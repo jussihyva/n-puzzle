@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/03 17:30:00 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/04 13:42:21 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
 					alg_n_puzzle_search.c \
 					open_set.c \
 					alg_a_star.c distance_taxicab.c \
-					alg_ida_star.c
+					alg_ida_star.c alg_greedy.c
 SRC_H_FILES		=	n_puzzle.h
 LOCAL_LIBS		=	libft_addons.a libftprintf.a libft.a
 GLOBAL_LIBS		=	libssl.a libcrypto.a libm.a

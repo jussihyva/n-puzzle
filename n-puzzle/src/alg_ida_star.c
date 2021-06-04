@@ -6,27 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 09:40:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 15:20:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static void	prio_based_selection(t_puzzle_status *searched_puzzle_state,
-										t_puzzle_status **selected_puzzle_state)
-{
-	if ((*selected_puzzle_state)->prio > searched_puzzle_state->prio)
-	{
-		ft_memdel((void **)selected_puzzle_state);
-		*selected_puzzle_state = searched_puzzle_state;
-	}
-	else
-		ft_memdel((void **)&searched_puzzle_state);
-	return ;
-}
-
 static t_puzzle_status	*select_next_puzzle_state(
-					t_puzzle_status *searched_puzzle_state, t_puzzle *puzzle,
+					t_puzzle_status *available_puzzle_state, t_puzzle *puzzle,
 					t_puzzle_status *puzzle_status)
 {
 	t_puzzle_status		*selected_puzzle_state;
@@ -34,18 +21,13 @@ static t_puzzle_status	*select_next_puzzle_state(
 
 	selected_puzzle_state = NULL;
 	search_pos_index = 0;
-	while (searched_puzzle_state)
+	while (available_puzzle_state)
 	{
-		searched_puzzle_state->prio = calculate_taxicab_based_prio(
-				searched_puzzle_state, puzzle->size,
-				puzzle->tile_right_pos_array);
-		if (selected_puzzle_state)
-			prio_based_selection(searched_puzzle_state, &selected_puzzle_state);
-		else
-			selected_puzzle_state = searched_puzzle_state;
+		taxicab_based_selection(puzzle, available_puzzle_state,
+			&selected_puzzle_state);
 		search_pos_index++;
-		searched_puzzle_state = alg_n_puzzle_search_state(puzzle, puzzle_status,
-				&search_pos_index);
+		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
+				puzzle_status, &search_pos_index);
 	}
 	return (selected_puzzle_state);
 }

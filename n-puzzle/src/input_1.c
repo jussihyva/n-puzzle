@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:31:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 14:07:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static char	*set_algorithm_string(t_algorithm algorithm)
 		algorithm_string = ft_strdup("a_star");
 	else if (algorithm == E_IDA_STAR)
 		algorithm_string = ft_strdup("ida*");
+	else if (algorithm == E_GREEDY)
+		algorithm_string = ft_strdup("greedy");
 	return (algorithm_string);
 }
 
@@ -91,6 +93,8 @@ static t_algorithm	validate_search_algorithm(char *algorithm_string)
 		algorithm = E_A_STAR_T;
 	else if (!ft_strcmp(algorithm_string, "ida*"))
 		algorithm = E_IDA_STAR;
+	else if (!ft_strcmp(algorithm_string, "greedy"))
+		algorithm = E_GREEDY;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");

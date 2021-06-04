@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 17:38:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 13:50:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 		alg_a_star(puzzle);
 	else if (!ft_strncmp(algorithm, "ida*", 3))
 		alg_ida_star(puzzle);
+	else if (!ft_strncmp(algorithm, "greedy", 3))
+		alg_greedy(puzzle);
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm,
 			"Specify a valid algorithm with the param -A");

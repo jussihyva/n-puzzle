@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 19:25:31 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 10:28:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 17:40:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,20 @@ static void	remove_data_from_queue(t_queue *queue,
 	while (!ft_is_queue_empty(queue))
 	{
 		data = ft_dequeue(queue);
-		fn(data, 0);
+		if (fn)
+			fn(data, 0);
 	}
 	ft_memdel((void **)&queue->in_stack);
 	ft_memdel((void **)&queue->out_stack);
 	ft_memdel((void **)&queue);
+	return ;
+}
+
+static void	remove_data_from_bt_elem(void *data,
+									void ((*fn)(void *data, size_t size)))
+{
+	if (fn)
+		fn(data, 0);
 	return ;
 }
 
@@ -42,7 +51,7 @@ void	ft_bt_remove(t_bt_node **bt_node, t_bt_key *bt_key,
 		if (bt_elem->is_queue)
 			remove_data_from_queue((t_queue *)bt_elem->bt_data.data, fn);
 		else if (bt_key)
-			fn((void *)&bt_elem->bt_data, 0);
+			remove_data_from_bt_elem(bt_elem->bt_data.data, fn);
 		bt_child_node = bt_elem->left_child;
 		if (bt_child_node)
 			ft_bt_remove(&bt_child_node, bt_key, fn);

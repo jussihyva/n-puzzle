@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 10:25:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 16:29:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ typedef enum e_algorithm
 	E_BFS_2,
 	E_TOOP_1,
 	E_A_STAR_T,
-	E_IDA_STAR
+	E_IDA_STAR,
+	E_GREEDY
 }				t_algorithm;
 
 typedef struct s_xy_values
@@ -305,6 +306,8 @@ int				print_solution(t_puzzle_status *puzzle_status,
 void			alg_a_star(t_puzzle *puzzle);
 int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
 					int puzzle_size, t_xy_values *tile_right_pos_array);
+int				calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
+					int puzzle_size, t_xy_values *tile_right_pos_array);
 t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
 					t_bt_node **states_prio_queue);
@@ -319,5 +322,11 @@ t_puzzle_status	*alg_n_puzzle_search_state(t_puzzle *puzzle,
 void			validate_puzzle_map(t_map *puzzle_map);
 char			*based_on_heuristic_alg(t_heuristic_alg algorithm);
 t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string);
+void			alg_greedy(t_puzzle *puzzle);
+void			taxicab_based_selection(t_puzzle *puzzle,
+					t_puzzle_status *available_puzzle_state,
+					t_puzzle_status **selected_puzzle_state);
+void			prio_based_selection(t_puzzle_status *searched_puzzle_state,
+					t_puzzle_status **selected_puzzle_state);
 
 #endif

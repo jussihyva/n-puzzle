@@ -52,7 +52,7 @@ def	get_python_command():
 	return (python)
 
 if __name__ == "__main__":
-	algorithm_list = ["a_star_t", "ida*", "toop_1"]
+	algorithm_list = ["a_star_t", "ida*", "toop_1", "greedy"]
 	current_path = os.path.dirname(sys.argv[0])
 	command_path = os.path.join(current_path, "../bin")
 	python = get_python_command()

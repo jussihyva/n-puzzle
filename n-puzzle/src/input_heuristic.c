@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 17:30:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:33:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/04 13:57:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string)
 	else if (!ft_strcmp(algorithm_string, "a_star_t"))
 		heuristic_algorithm = E_NO_HEURISTIC_ALG;
 	else if (!ft_strcmp(algorithm_string, "ida*"))
+		heuristic_algorithm = E_TAXICAB;
+	else if (!ft_strcmp(algorithm_string, "greedy"))
 		heuristic_algorithm = E_TAXICAB;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
