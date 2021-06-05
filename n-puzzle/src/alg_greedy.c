@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 17:45:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/05 09:27:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static int	select_next_puzzle_state(t_puzzle *puzzle,
 		if (available_puzzle_state->tiles_in_right_pos
 			== puzzle->num_of_tile_pos)
 			is_puzzle_ready = print_solution(available_puzzle_state, puzzle);
-		search_pos_index++;
-		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
-				puzzle_status, &search_pos_index);
+		else
+			available_puzzle_state = alg_n_puzzle_search_state(puzzle,
+					puzzle_status, &search_pos_index);
 	}
 	return (is_puzzle_ready);
 }
@@ -60,8 +60,6 @@ void	alg_greedy(t_puzzle *puzzle)
 	t_puzzle_status		*puzzle_status;
 
 	is_puzzle_ready = 0;
-	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
-		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 		(void *)puzzle_status);

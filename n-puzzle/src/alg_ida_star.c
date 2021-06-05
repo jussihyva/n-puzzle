@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 21:37:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/05 09:26:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ static t_puzzle_status	*select_next_puzzle_state(
 	int					search_pos_index;
 
 	selected_puzzle_state = NULL;
-	search_pos_index = 0;
+	search_pos_index = 1;
 	while (available_puzzle_state)
 	{
 		taxicab_based_selection(puzzle, available_puzzle_state,
 			&selected_puzzle_state);
-		search_pos_index++;
 		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
 				puzzle_status, &search_pos_index);
 	}

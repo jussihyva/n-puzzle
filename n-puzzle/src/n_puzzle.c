@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 13:50:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/05 09:19:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ static void	send_stat_report(t_puzzle *puzzle)
 static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 {
 	set_solver_start_time(puzzle->statistics);
-	if (!ft_strncmp(algorithm, "dfs", 3))
+	if (puzzle->curr_status->tiles_in_right_pos
+		== puzzle->num_of_tile_pos)
+		print_solution(puzzle->curr_status, puzzle);
+	else if (!ft_strncmp(algorithm, "dfs", 3))
 		dfs(puzzle);
 	else if (!ft_strncmp(algorithm, "bfs", 3))
 		bfs(puzzle);
