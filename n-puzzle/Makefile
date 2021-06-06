@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/04 13:42:21 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/06 12:46:55 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,13 @@ endif
 ifdef A
 	ALGORITHM	=	$(A)
 else
-	ALGORITHM	=	dfs_1
+	ALGORITHM	=	greedy
+endif
+
+ifdef H
+	HEURISTIC	=	-H $(H)
+else
+	HEURISTIC	=	
 endif
 
 OS				=	$(shell uname -s)
@@ -157,23 +163,23 @@ libraries_norm:
 run: all
 ifeq ($(OS), Darwin)
 	cat $(MAP_FILE) | $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM) -D $(PRINT_DELAY)
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY)
 else
 	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM) -D $(PRINT_DELAY)
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY)
 endif
 
 .PHONY: run_loop
 run_loop: all
 ifeq ($(OS), Darwin)
 	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; \
 		done
 else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) -D $(PRINT_DELAY) \
+		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; done
 endif
 .PHONY: run_test

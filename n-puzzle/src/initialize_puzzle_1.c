@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 17:14:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 13:09:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->print_delay = input->cmd_args->print_delay;
 	puzzle->statistics = input->statistics;
 	puzzle->algorithm = input->algorithm;
+	puzzle->heuristic_algorithm = input->heuristic_algorithm;
 	puzzle->size = puzzle_map->size;
 	puzzle->num_of_tile_pos = puzzle->size * puzzle->size;
 	puzzle->states_prio_queue

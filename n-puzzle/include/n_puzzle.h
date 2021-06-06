@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 16:29:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 13:09:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef enum e_order
 typedef enum e_heuristic_alg
 {
 	E_NO_HEURISTIC_ALG,
-	E_TAXICAB
+	E_TAXICAB,
+	E_HAMMING
 }				t_heuristic_alg;
 
 typedef enum e_algorithm
@@ -138,7 +139,7 @@ typedef struct s_cmd_args
 	char			**argv;
 	t_loging_level	loging_level;
 	char			*algorithm;
-	char			*heurestic_algorithm;
+	char			*heuristic_algorithm;
 	int				release;
 	char			*input_file;
 	int				print_delay;
@@ -205,6 +206,7 @@ typedef struct s_puzzle
 	int					size;
 	int					num_of_tile_pos;
 	t_algorithm			algorithm;
+	t_heuristic_alg		heuristic_algorithm;
 	t_pos				***pos_table;
 	int					*solution_move_cnt;
 	t_xy_values			*tile_right_pos_array;
@@ -321,7 +323,8 @@ t_puzzle_status	*alg_n_puzzle_search_state(t_puzzle *puzzle,
 					t_puzzle_status *puzzle_status, int *search_pos_index);
 void			validate_puzzle_map(t_map *puzzle_map);
 char			*based_on_heuristic_alg(t_heuristic_alg algorithm);
-t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string);
+t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string,
+					char *heuristic_algorithm);
 void			alg_greedy(t_puzzle *puzzle);
 void			taxicab_based_selection(t_puzzle *puzzle,
 					t_puzzle_status *available_puzzle_state,

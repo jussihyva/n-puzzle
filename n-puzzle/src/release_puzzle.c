@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 21:20:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 12:55:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ static void	release_input(t_input *input)
 	i = -1;
 	while (++i < input->puzzle_map->size)
 		ft_memdel((void **)&input->puzzle_map->tile_map[i]);
-	ft_memdel((void **)&input->cmd_args->heurestic_algorithm);
+	ft_memdel((void **)&input->cmd_args->algorithm);
+	ft_memdel((void **)&input->cmd_args->heuristic_algorithm);
 	ft_memdel((void **)&input->cmd_args);
 	ft_memdel((void **)&input->puzzle_map->tile_map);
 	ft_memdel((void **)&input->puzzle_map);

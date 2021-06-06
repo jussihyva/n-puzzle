@@ -1,49 +1,3 @@
-// {
-// 	// Use IntelliSense to learn about possible attributes.
-// 	// Hover to view descriptions of existing attributes.
-// 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-// 	"version": "0.2.0",
-// 	"configurations": [
-// 		{
-// 			"name": "(lldb) Launch",
-// 			"type": "cppdbg",
-// 			"request": "launch",
-// 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-// 			// "args": ["-L", "0", "-A", "bfs_2", "<", "${workspaceFolder}/n-puzzle/data/3_3_xx.map"],
-// 			// "args": ["-L", "1", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
-// 			// "args": ["-L", "1", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
-// 			// "args": ["-L", "2", "-A", "dfs_3", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
-// 			// "args": ["-L", "2", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/4_4_05.map"],
-// 			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
-// 			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_22_2.map"],
-// 			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
-// 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/5_5_05.map"],
-// 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
-// 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
-// 			"args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
-// 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/3_3_10.map"],
-// 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/4_4_Not_Solvable_01.map"],
-// 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data"],
-// 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/Empty.map"],
-// 			"stopAtEntry": false,
-// 			"cwd": "${workspaceFolder}/n-puzzle",
-// 			"environment": [],
-// 			"externalConsole": false,
-// 			// "MIMode": "lldb",
-// 			"MIMode": "gdb",
-// 			"setupCommands":
-// 			[
-// 				{
-// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
-// 					"description": "Enable pretty-printing for gdb",
-// 					"text": "-enable-pretty-printing",
-// 					"ignoreFailures": true
-// 				}
-// 			]
-// 		}
-// 	]
-// }
-
 {
 	// Use IntelliSense to learn about possible attributes.
 	// Hover to view descriptions of existing attributes.
@@ -55,28 +9,74 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
-			"args": ["-L", "3", "-A", "a_star_t"],
+			// "args": ["-L", "0", "-A", "bfs_2", "<", "${workspaceFolder}/n-puzzle/data/3_3_xx.map"],
+			// "args": ["-L", "1", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
+			// "args": ["-L", "1", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
+			// "args": ["-L", "2", "-A", "dfs_3", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
+			// "args": ["-L", "2", "-A", "bfs_1", "<", "${workspaceFolder}/n-puzzle/data/4_4_05.map"],
+			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_14.map"],
+			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_22_2.map"],
+			// "args": ["-L", "2", "-A", "toop_1", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
+			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/5_5_05.map"],
+			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
+			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
+			"args": ["-L", "2", "-A", "greedy", "-H", "h", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
+			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/3_3_10.map"],
+			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/4_4_Not_Solvable_01.map"],
+			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data"],
+			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/Empty.map"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/n-puzzle",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "lldb",
+			// "MIMode": "lldb",
+			"MIMode": "gdb",
 			"setupCommands":
 			[
 				{
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/4_4_05.map"
 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_22.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_xx.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_14.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_10.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_01.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
-					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_05.map"
-					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
 				}
 			]
 		}
 	]
 }
+
+// {
+// 	// Use IntelliSense to learn about possible attributes.
+// 	// Hover to view descriptions of existing attributes.
+// 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+// 	"version": "0.2.0",
+// 	"configurations": [
+// 		{
+// 			"name": "(lldb) Launch",
+// 			"type": "cppdbg",
+// 			"request": "launch",
+// 			"program": "${workspaceFolder}/n-puzzle/bin/n_puzzle",
+// 			"args": ["-L", "3", "-A", "a_star_t"],
+// 			"stopAtEntry": false,
+// 			"cwd": "${workspaceFolder}/n-puzzle",
+// 			"environment": [],
+// 			"externalConsole": false,
+// 			"MIMode": "lldb",
+// 			"setupCommands":
+// 			[
+// 				{
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/4_4_05.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_22.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_xx.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_14.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_10.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_01.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_05.map"
+// 					// "text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/5_5_05.map"
+// 					"text": "settings set target.input-path ${workspaceFolder}/n-puzzle/data/3_3_01.map"
+// 				}
+// 			]
+// 		}
+// 	]
+// }

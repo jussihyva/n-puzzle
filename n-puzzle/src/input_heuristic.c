@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 17:30:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 13:57:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 12:35:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,25 @@ char	*based_on_heuristic_alg(t_heuristic_alg algorithm)
 	algorithm_substring = NULL;
 	if (algorithm == E_TAXICAB)
 		algorithm_substring = ft_strdup("taxicab");
+	else if (algorithm == E_HAMMING)
+		algorithm_substring = ft_strdup("hamming");
 	return (algorithm_substring);
 }
 
-t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string)
+t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string,
+													char *heuristic_algorithm)
 {
-	t_heuristic_alg		heuristic_algorithm;
+	t_heuristic_alg		heuristic_alg;
 
-	heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	if (!ft_strcmp(algorithm_string, "dfs_1"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "dfs_2"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "dfs_3"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "bfs_1"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "bfs_2"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "toop_1"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "a_star_t"))
-		heuristic_algorithm = E_NO_HEURISTIC_ALG;
-	else if (!ft_strcmp(algorithm_string, "ida*"))
-		heuristic_algorithm = E_TAXICAB;
-	else if (!ft_strcmp(algorithm_string, "greedy"))
-		heuristic_algorithm = E_TAXICAB;
+	heuristic_alg = E_NO_HEURISTIC_ALG;
+	if (!ft_strcmp(heuristic_algorithm, ""))
+		heuristic_alg = E_NO_HEURISTIC_ALG;
+	else if (!ft_strcmp(heuristic_algorithm, "t"))
+		heuristic_alg = E_TAXICAB;
+	else if (!ft_strcmp(heuristic_algorithm, "h"))
+		heuristic_alg = E_HAMMING;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");
-	return (heuristic_algorithm);
+	return (heuristic_alg);
 }

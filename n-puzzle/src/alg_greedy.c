@@ -6,11 +6,27 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/05 09:27:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 13:14:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+static int	calculate_heuristic_distance(t_puzzle_status *puzzle_state,
+															t_puzzle *puzzle)
+{
+	int		prio;
+
+	prio = E_NO_HEURISTIC_ALG;
+	if (puzzle->heuristic_algorithm == E_TAXICAB)
+		prio = calculate_taxicab_distance(&puzzle_state->tiles_pos_map,
+				puzzle->size, puzzle->tile_right_pos_array);
+	else if (puzzle->heuristic_algorithm == E_HAMMING)
+		prio = (puzzle->size * puzzle->size) - puzzle_state->tiles_in_right_pos;
+	else
+		FT_LOG_ERROR("-H parameter (heuristic algorithm) is mandatory!");
+	return (prio);
+}
 
 static int	select_next_puzzle_state(t_puzzle *puzzle,
 												t_puzzle_status *puzzle_status)
@@ -25,9 +41,8 @@ static int	select_next_puzzle_state(t_puzzle *puzzle,
 			&search_pos_index);
 	while (available_puzzle_state && !is_puzzle_ready)
 	{
-		available_puzzle_state->prio = calculate_taxicab_distance(
-				&available_puzzle_state->tiles_pos_map, puzzle->size,
-				puzzle->tile_right_pos_array);
+		available_puzzle_state->prio = calculate_heuristic_distance(
+				available_puzzle_state, puzzle);
 		add_puzzle_state_to_prio_queue_1(available_puzzle_state,
 			puzzle->states_prio_queue);
 		store_visited_puzzle_status_b_tree(available_puzzle_state,

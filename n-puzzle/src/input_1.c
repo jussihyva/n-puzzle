@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 14:07:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 12:30:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 	ft_log_set_level(input->cmd_args->loging_level);
 	input->puzzle_map = read_puzzle_map(input->cmd_args->input_file);
 	input->heuristic_algorithm
-		= validate_heuristic_algorithm(input->cmd_args->algorithm);
+		= validate_heuristic_algorithm(input->cmd_args->algorithm,
+			input->cmd_args->heuristic_algorithm);
 	input->algorithm = validate_search_algorithm(input->cmd_args->algorithm);
 	statistics->algorithm = set_algorithm_string(input->algorithm);
 	statistics->algorithm_substring = set_algorithm_substring(input->algorithm,
