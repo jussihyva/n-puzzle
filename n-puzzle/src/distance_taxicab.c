@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/04 21:46:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:40:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,33 @@ int	calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 	t_xy_values		tile_pos;
 	int				tile_number;
 
+	taxicab_distance = 0;
+	xy.y = -1;
+	while (++xy.y < puzzle_size)
+	{
+		xy.x = -1;
+		while (++xy.x < puzzle_size)
+		{
+			tile_number = get_tile_number(puzzle_size, &xy, tiles_pos_map);
+			tile_pos = tile_right_pos_array[tile_number];
+			if (tile_number)
+				taxicab_distance += ft_abs(tile_pos.y - xy.y)
+					+ ft_abs(tile_pos.x - xy.x);
+		}
+	}
+	return (taxicab_distance);
+}
+
+int	linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
+							int puzzle_size, t_xy_values *tile_right_pos_array)
+{
+	int				taxicab_distance;
+	t_xy_values		xy;
+	t_xy_values		tile_pos;
+	int				tile_number;
+	// t_list			*stack;
+
+	// ft_stack_push(&stack, );
 	taxicab_distance = 0;
 	xy.y = -1;
 	while (++xy.y < puzzle_size)

@@ -9,8 +9,8 @@ import platform
 def	generate_puzzle(command_path, python):
 	puzzle_lines = []
 	command = os.path.join(command_path, "PuzzleGenerator.py")
-	process_create_puzzle = subprocess.Popen([python, command, "-s", "3"], stdout=subprocess.PIPE, 
-															stderr=subprocess.PIPE)
+	process_create_puzzle = subprocess.Popen([python, command, "-s", "3"],
+								stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	for line in process_create_puzzle.stdout.readlines():
 		line = str(line.decode("UTF-8").strip())
 		puzzle_lines.append(line)
@@ -21,8 +21,9 @@ def	solve_puzzle(command_path, puzzle_lines, algorithm):
 	summary_lines = []
 
 	command = os.path.join(command_path, "n_puzzle")
-	process_solve_puzzle = subprocess.Popen([command, "-L", "3", "-A", algorithm], stdin =subprocess.PIPE,
-									stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	process_solve_puzzle = subprocess.Popen(
+		[command, "-L", "3", "-A", algorithm, "-H", "t"], stdin =subprocess.PIPE,
+								stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	for line in puzzle_lines:
 		process_solve_puzzle.stdin.write(str(line + "\n").encode())
 	process_solve_puzzle.stdin.close()

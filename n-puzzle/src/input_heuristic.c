@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 17:30:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 12:35:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:29:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ char	*based_on_heuristic_alg(t_heuristic_alg algorithm)
 		algorithm_substring = ft_strdup("taxicab");
 	else if (algorithm == E_HAMMING)
 		algorithm_substring = ft_strdup("hamming");
+	else if (algorithm == E_LINEAR_CONFLICT)
+		algorithm_substring = ft_strdup("linear_conflict");
+	else
+		FT_LOG_ERROR("Unknown heuristic algorithm!");
 	return (algorithm_substring);
 }
 
@@ -36,6 +40,8 @@ t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string,
 		heuristic_alg = E_TAXICAB;
 	else if (!ft_strcmp(heuristic_algorithm, "h"))
 		heuristic_alg = E_HAMMING;
+	else if (!ft_strcmp(heuristic_algorithm, "l"))
+		heuristic_alg = E_LINEAR_CONFLICT;
 	else
 		FT_LOG_ERROR("Unknown algorithm: %s. %s", algorithm_string,
 			"Specify a valid algorithm with the param -A");

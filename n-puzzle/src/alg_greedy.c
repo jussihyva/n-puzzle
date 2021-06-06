@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 13:14:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:39:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static int	calculate_heuristic_distance(t_puzzle_status *puzzle_state,
 				puzzle->size, puzzle->tile_right_pos_array);
 	else if (puzzle->heuristic_algorithm == E_HAMMING)
 		prio = (puzzle->size * puzzle->size) - puzzle_state->tiles_in_right_pos;
+	else if (puzzle->heuristic_algorithm == E_LINEAR_CONFLICT)
+		prio = linear_conflict_taxicab_distance(&puzzle_state->tiles_pos_map,
+				puzzle->size, puzzle->tile_right_pos_array);
 	else
 		FT_LOG_ERROR("-H parameter (heuristic algorithm) is mandatory!");
 	return (prio);

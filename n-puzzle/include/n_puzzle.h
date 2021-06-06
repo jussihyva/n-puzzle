@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 13:09:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:20:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef enum e_heuristic_alg
 {
 	E_NO_HEURISTIC_ALG,
 	E_TAXICAB,
-	E_HAMMING
+	E_HAMMING,
+	E_LINEAR_CONFLICT
 }				t_heuristic_alg;
 
 typedef enum e_algorithm
@@ -309,6 +310,8 @@ void			alg_a_star(t_puzzle *puzzle);
 int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
 					int puzzle_size, t_xy_values *tile_right_pos_array);
 int				calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
+					int puzzle_size, t_xy_values *tile_right_pos_array);
+int				linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 					int puzzle_size, t_xy_values *tile_right_pos_array);
 t_puzzle_status	*add_puzzle_state_to_prio_queue(t_puzzle *puzzle);
 void			add_puzzle_state_to_prio_queue_1(t_puzzle_status *puzzle_state,
