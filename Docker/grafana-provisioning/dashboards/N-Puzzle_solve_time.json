@@ -67,198 +67,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 150
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "project=n-puzzle.mean"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 208
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Random"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 110
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Deeping"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 132
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Deeping mem"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 147
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS List"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 87
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS B-Tree"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 105
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS B-Tree (ms)"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 132
-				}
-			  ]
-			}
-		  ]
-		},
-		"gridPos": {
-		  "h": 10,
-		  "w": 4,
-		  "x": 0,
-		  "y": 1
-		},
-		"id": 8,
-		"options": {
-		  "showHeader": true,
-		  "sortBy": []
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"alias": "BFS B-Tree (ms)",
-			"groupBy": [
-			  {
-				"params": [
-				  "1h"
-				],
-				"type": "time"
-			  }
-			],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "time_series",
-			"select": [
-			  [
-				{
-				  "params": [
-					"total_cpu_usage_time"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "mean"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "3"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "bfs"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "b_tree"
-			  }
-			]
-		  }
-		],
-		"type": "table"
-	  },
-	  {
-		"datasource": null,
-		"description": "",
-		"fieldConfig": {
-		  "defaults": {
-			"color": {
-			  "mode": "thresholds"
-			},
-			"custom": {
-			  "align": null,
-			  "filterable": false
-			},
-			"mappings": [],
-			"thresholds": {
-			  "mode": "absolute",
-			  "steps": [
-				{
-				  "color": "green",
-				  "value": null
-				},
-				{
-				  "color": "red",
-				  "value": 80
-				}
-			  ]
-			}
-		  },
-		  "overrides": [
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "Time"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 155
+				  "value": 149
 				}
 			  ]
 			},
@@ -361,12 +170,24 @@
 			{
 			  "matcher": {
 				"id": "byName",
-				"options": "Hamming (ms)"
+				"options": "A* Taxicab (ms)"
 			  },
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 115
+				  "value": 134
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "IDA* Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 131
 				}
 			  ]
 			}
@@ -375,10 +196,10 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 4,
-		  "x": 4,
+		  "x": 0,
 		  "y": 1
 		},
-		"id": 12,
+		"id": 16,
 		"options": {
 		  "showHeader": true,
 		  "sortBy": []
@@ -386,7 +207,7 @@
 		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
-			"alias": "Hamming (ms)",
+			"alias": "IDA* Taxicab (ms)",
 			"groupBy": [
 			  {
 				"params": [
@@ -424,13 +245,13 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "toop"
+				"value": "ida*"
 			  },
 			  {
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "tiles_out_of_place"
+				"value": "taxicab"
 			  }
 			]
 		  }
@@ -590,7 +411,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 4,
-		  "x": 8,
+		  "x": 4,
 		  "y": 1
 		},
 		"id": 13,
@@ -808,7 +629,19 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 131
+				  "value": 138
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Greedy Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 148
 				}
 			  ]
 			}
@@ -816,11 +649,11 @@
 		},
 		"gridPos": {
 		  "h": 10,
-		  "w": 4,
-		  "x": 12,
+		  "w": 5,
+		  "x": 8,
 		  "y": 1
 		},
-		"id": 16,
+		"id": 18,
 		"options": {
 		  "showHeader": true,
 		  "sortBy": []
@@ -828,7 +661,7 @@
 		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
-			"alias": "IDA* Taxicab (ms)",
+			"alias": "Greedy Taxicab (ms)",
 			"groupBy": [
 			  {
 				"params": [
@@ -866,7 +699,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "greedy"
 			  },
 			  {
 				"condition": "AND",
@@ -1055,11 +888,11 @@
 		},
 		"gridPos": {
 		  "h": 10,
-		  "w": 5,
-		  "x": 16,
+		  "w": 6,
+		  "x": 13,
 		  "y": 1
 		},
-		"id": 18,
+		"id": 20,
 		"options": {
 		  "showHeader": true,
 		  "sortBy": []
@@ -1067,7 +900,7 @@
 		"pluginVersion": "7.5.2",
 		"targets": [
 		  {
-			"alias": "Greedy Taxicab (ms)",
+			"alias": "Greedy Taxicab linear conflicts (ms)",
 			"groupBy": [
 			  {
 				"params": [
@@ -1111,7 +944,7 @@
 				"condition": "AND",
 				"key": "algorithm_substring",
 				"operator": "=",
-				"value": "taxicab"
+				"value": "linear_conflict"
 			  }
 			]
 		  }
@@ -2154,7 +1987,126 @@
 			]
 		  }
 		],
-		"title": "Number of tile moves vs time (Greedy* taxicab)",
+		"title": "Number of tile solution moves vs time (Greedy* taxicab)",
+		"type": "michaeldmoore-scatter-panel"
+	  },
+	  {
+		"datasource": null,
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 12,
+		  "w": 21,
+		  "x": 0,
+		  "y": 58
+		},
+		"id": 21,
+		"options": {
+		  "border": {
+			"show": false,
+			"color": "yellow",
+			"size": 1
+		  },
+		  "fieldSets": [
+			{
+			  "col": 2,
+			  "color": "#76e887",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			},
+			{
+			  "col": 2,
+			  "color": "#c183e2",
+			  "dotSize": 3,
+			  "hidden": false,
+			  "lineSize": 1,
+			  "lineType": "none"
+			}
+		  ],
+		  "grid": {
+			"color": "gray"
+		  },
+		  "legend": {
+			"show": false,
+			"size": 3
+		  },
+		  "rotateYAxisTitle": true,
+		  "xAxis": {
+			"col": 1,
+			"inverted": false
+		  },
+		  "xAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "xAxisTitle": {
+			"text": "Number of tile moves",
+			"color": "white",
+			"textSize": 1
+		  },
+		  "yAxisExtents": {
+			"min": 0,
+			"max": null
+		  },
+		  "yAxisTitle": {
+			"text": "CPU usage time (ms)",
+			"color": "#777",
+			"textSize": 1
+		  }
+		},
+		"pluginVersion": "7.5.2",
+		"targets": [
+		  {
+			"groupBy": [],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "table",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solution_moves"
+				  ],
+				  "type": "field"
+				}
+			  ],
+			  [
+				{
+				  "params": [
+					"solver_cpu_usage_time"
+				  ],
+				  "type": "field"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "greedy"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  }
+		],
+		"title": "Number of tile solution moves vs time (Greedy Taxicab linear conflicts)",
 		"type": "michaeldmoore-scatter-panel"
 	  }
 	],
@@ -2173,5 +2125,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 11
+	"version": 12
   }

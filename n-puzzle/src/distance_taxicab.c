@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 18:40:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/07 12:20:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,60 @@ int	calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 	return (taxicab_distance);
 }
 
+static int	add_linear_conflicts(int puzzle_size, t_list **stack)
+{
+	int		num_of_conflicts;
+	int		min;
+	int		x;
+
+	num_of_conflicts = 0;
+	min = puzzle_size;
+	while (*stack)
+	{
+		x = *(int *)ft_stack_pop(stack);
+		if (x > min)
+			num_of_conflicts += 2;
+		min = ft_min_int(min, x);
+	}
+	return (num_of_conflicts);
+}
+
 int	linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 							int puzzle_size, t_xy_values *tile_right_pos_array)
 {
 	int				taxicab_distance;
-	t_xy_values		xy;
+	t_xy_values		yx;
 	t_xy_values		tile_pos;
 	int				tile_number;
-	// t_list			*stack;
+	t_list			*raw_stack;
+	t_list			**column_stack;
 
-	// ft_stack_push(&stack, );
+	raw_stack = NULL;
+	column_stack = (t_list **)ft_memalloc(sizeof(*column_stack) * puzzle_size);
 	taxicab_distance = 0;
-	xy.y = -1;
-	while (++xy.y < puzzle_size)
+	yx.y = -1;
+	while (++yx.y < puzzle_size)
 	{
-		xy.x = -1;
-		while (++xy.x < puzzle_size)
+		yx.x = -1;
+		while (++yx.x < puzzle_size)
 		{
-			tile_number = get_tile_number(puzzle_size, &xy, tiles_pos_map);
+			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			tile_pos = tile_right_pos_array[tile_number];
+			if (tile_pos.y == yx.y)
+				ft_stack_push(&raw_stack,
+					(void *)&tile_right_pos_array[tile_number].x);
+			if (tile_pos.x == yx.x)
+				ft_stack_push(&column_stack[yx.x],
+					(void *)&tile_right_pos_array[tile_number].y);
 			if (tile_number)
-				taxicab_distance += ft_abs(tile_pos.y - xy.y)
-					+ ft_abs(tile_pos.x - xy.x);
+				taxicab_distance += ft_abs(tile_pos.y - yx.y)
+					+ ft_abs(tile_pos.x - yx.x);
 		}
+		add_linear_conflicts(puzzle_size, &raw_stack);
 	}
+	yx.x = -1;
+	while (++yx.x < puzzle_size)
+		add_linear_conflicts(puzzle_size, &column_stack[yx.x]);
 	return (taxicab_distance);
 }
 

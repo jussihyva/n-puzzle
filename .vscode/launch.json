@@ -20,7 +20,7 @@
 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/5_5_05.map"],
 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
 			// "args": ["-L", "2", "-A", "a_star_t", "<", "${workspaceFolder}/n-puzzle/data/3_3_01.map"],
-			"args": ["-L", "2", "-A", "greedy", "-H", "h", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
+			"args": ["-L", "2", "-A", "greedy", "-H", "l", "<", "${workspaceFolder}/n-puzzle/data/3_3_05.map"],
 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/3_3_10.map"],
 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data/4_4_Not_Solvable_01.map"],
 			// "args": ["-L", "2", "-A", "ida*", "<", "${workspaceFolder}/n-puzzle/data"],
