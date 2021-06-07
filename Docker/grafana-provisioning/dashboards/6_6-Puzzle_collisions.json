@@ -26,378 +26,9 @@
 		  "x": 0,
 		  "y": 0
 		},
-		"id": 23,
-		"panels": [],
-		"title": "6x6 Puzzle solve time vs Collision moves",
-		"type": "row"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 10,
-		  "w": 21,
-		  "x": 0,
-		  "y": 1
-		},
-		"id": 27,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#d863a0",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": 900
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": 4000
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"state_collisions"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"total_cpu_usage_time"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [
-					" / 1000"
-				  ],
-				  "type": "math"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "greedy"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "taxicab"
-			  }
-			]
-		  }
-		],
-		"title": "Number of collisions vs time (Greedy Taxicab)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 11
-		},
-		"id": 19,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": 900
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": 4000
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"state_collisions"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "greedy"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "taxicab"
-			  }
-			]
-		  }
-		],
-		"title": "Number of collisions vs time (Greedy Taxicab)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 23
-		},
-		"id": 21,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": 900
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": 4000
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"state_collisions"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "greedy"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "linear_conflict"
-			  }
-			]
-		  }
-		],
-		"title": "Number of collisions vs time (Greedy Taxicab linear conflicts)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"collapsed": false,
-		"datasource": null,
-		"gridPos": {
-		  "h": 1,
-		  "w": 24,
-		  "x": 0,
-		  "y": 35
-		},
 		"id": 10,
 		"panels": [],
-		"title": "6x6 Puzzle solve time",
+		"title": "6x6 Puzzle state collisions",
 		"type": "row"
 	  },
 	  {
@@ -578,7 +209,7 @@
 		  "h": 10,
 		  "w": 5,
 		  "x": 0,
-		  "y": 36
+		  "y": 1
 		},
 		"id": 18,
 		"options": {
@@ -606,7 +237,7 @@
 			  [
 				{
 				  "params": [
-					"solver_cpu_usage_time"
+					"state_collisions"
 				  ],
 				  "type": "field"
 				},
@@ -829,7 +460,7 @@
 		  "h": 10,
 		  "w": 6,
 		  "x": 5,
-		  "y": 36
+		  "y": 1
 		},
 		"id": 20,
 		"options": {
@@ -857,7 +488,7 @@
 			  [
 				{
 				  "params": [
-					"solver_cpu_usage_time"
+					"state_collisions"
 				  ],
 				  "type": "field"
 				},
@@ -897,7 +528,7 @@
 		  "h": 1,
 		  "w": 24,
 		  "x": 0,
-		  "y": 46
+		  "y": 11
 		},
 		"id": 4,
 		"panels": [],
@@ -914,9 +545,9 @@
 		  "h": 12,
 		  "w": 21,
 		  "x": 0,
-		  "y": 47
+		  "y": 12
 		},
-		"id": 24,
+		"id": 19,
 		"options": {
 		  "border": {
 			"show": false,
@@ -958,7 +589,7 @@
 			"max": null
 		  },
 		  "xAxisTitle": {
-			"text": "Number of tile moves",
+			"text": "Number of state collisions",
 			"color": "white",
 			"textSize": 1
 		  },
@@ -967,7 +598,7 @@
 			"max": null
 		  },
 		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
+			"text": "CPU usage time (sec.)",
 			"color": "#777",
 			"textSize": 1
 		  }
@@ -985,7 +616,7 @@
 			  [
 				{
 				  "params": [
-					"solution_moves"
+					"state_collisions"
 				  ],
 				  "type": "field"
 				}
@@ -996,6 +627,12 @@
 					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
 				}
 			  ]
 			],
@@ -1020,7 +657,7 @@
 			]
 		  }
 		],
-		"title": "Number of tile moves vs time (Greedy Taxicab)",
+		"title": "Number of collisions vs time (Greedy Taxicab)",
 		"type": "michaeldmoore-scatter-panel"
 	  },
 	  {
@@ -1033,9 +670,9 @@
 		  "h": 12,
 		  "w": 21,
 		  "x": 0,
-		  "y": 59
+		  "y": 24
 		},
-		"id": 25,
+		"id": 21,
 		"options": {
 		  "border": {
 			"show": false,
@@ -1074,19 +711,19 @@
 		  },
 		  "xAxisExtents": {
 			"min": 0,
-			"max": 900
+			"max": null
 		  },
 		  "xAxisTitle": {
-			"text": "Number of tile moves",
+			"text": "Number of state collisions",
 			"color": "white",
 			"textSize": 1
 		  },
 		  "yAxisExtents": {
 			"min": 0,
-			"max": 4000
+			"max": null
 		  },
 		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
+			"text": "CPU usage time (sec.)",
 			"color": "#777",
 			"textSize": 1
 		  }
@@ -1104,7 +741,7 @@
 			  [
 				{
 				  "params": [
-					"solution_moves"
+					"state_collisions"
 				  ],
 				  "type": "field"
 				}
@@ -1115,6 +752,12 @@
 					"solver_cpu_usage_time"
 				  ],
 				  "type": "field"
+				},
+				{
+				  "params": [
+					" / 1000"
+				  ],
+				  "type": "math"
 				}
 			  ]
 			],
@@ -1139,7 +782,7 @@
 			]
 		  }
 		],
-		"title": "Number of tile moves vs time (Greedy Taxicab linear conflicts)",
+		"title": "Number of collisions vs time (Greedy Taxicab linear conflicts)",
 		"type": "michaeldmoore-scatter-panel"
 	  }
 	],
@@ -1156,7 +799,7 @@
 	},
 	"timepicker": {},
 	"timezone": "",
-	"title": "6_6-Puzzle solve time",
-	"uid": "2021-06-06",
-	"version": 11
+	"title": "6_6-Puzzle collisions",
+	"uid": "2021-06-08",
+	"version": 3
   }

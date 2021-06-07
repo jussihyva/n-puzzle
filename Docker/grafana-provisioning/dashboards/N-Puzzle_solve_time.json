@@ -1987,7 +1987,7 @@
 			]
 		  }
 		],
-		"title": "Number of tile solution moves vs time (Greedy* taxicab)",
+		"title": "Number of tile solution moves vs time (Greedy Taxicab)",
 		"type": "michaeldmoore-scatter-panel"
 	  },
 	  {
@@ -2125,5 +2125,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 12
+	"version": 13
   }
