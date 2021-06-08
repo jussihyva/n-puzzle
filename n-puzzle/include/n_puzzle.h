@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 18:20:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/08 11:35:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ typedef struct s_puzzle
 	int					*states_cnt;
 	int					*state_collision_cnt;
 	t_queue				*status_queue;
+	t_list				*states_stack;
 	t_bt_node			**bt_root;
 	t_bt_node			**states_prio_queue;
 	int					print_delay;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:59:15 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 14:22:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/08 09:59:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_puzzle(int fd, t_tiles_pos_map *tiles_pos_map, int puzzle_size)
 
 int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 {
-	int		is_puzzle_ready;
+	int				is_puzzle_ready;
 
 	puzzle->stat_counters->active_counters[E_NUM_OF_SOLUTION_MOVES] = 1;
 	if (puzzle_status->prev_status)
@@ -48,7 +48,7 @@ int	print_solution(t_puzzle_status *puzzle_status, t_puzzle *puzzle)
 		is_puzzle_ready = print_solution(puzzle_status->prev_status, puzzle);
 	}
 	print_puzzle(1, &puzzle_status->tiles_pos_map, puzzle->size);
-	sleep(puzzle->print_delay / 10);
+	usleep((useconds_t)puzzle->print_delay * 1000);
 	is_puzzle_ready = 1;
 	return (is_puzzle_ready);
 }

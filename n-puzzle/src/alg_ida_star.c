@@ -6,104 +6,112 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/05 09:26:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/08 19:25:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_puzzle_status	*select_next_puzzle_state(
-					t_puzzle_status *available_puzzle_state, t_puzzle *puzzle,
-					t_puzzle_status *puzzle_status)
+static int	is_state_in_path(t_puzzle_status *puzzle_status,
+														t_list **states_stack)
 {
-	t_puzzle_status		*selected_puzzle_state;
-	int					search_pos_index;
+	t_list		*elem;
+	int			found;
 
-	selected_puzzle_state = NULL;
-	search_pos_index = 1;
-	while (available_puzzle_state)
+	found = 0;
+	elem = *states_stack;
+	while (elem)
 	{
-		taxicab_based_selection(puzzle, available_puzzle_state,
-			&selected_puzzle_state);
-		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
-				puzzle_status, &search_pos_index);
+		if (!(ft_memcmp(puzzle_status->tiles_pos_map.map,
+					(*(t_puzzle_status **)elem->content)->tiles_pos_map.map,
+					puzzle_status->tiles_pos_map.map_size)))
+		{
+			found = 1;
+			break ;
+		}
+		elem = elem->next;
 	}
-	return (selected_puzzle_state);
-}
-
-static t_puzzle_status	*search_first_state(t_puzzle *puzzle,
-												t_puzzle_status *puzzle_status)
-{
-	t_puzzle_status		*searched_puzzle_state;
-	int					search_pos_index;
-
-	search_pos_index = 0;
-	searched_puzzle_state = NULL;
-	searched_puzzle_state = alg_n_puzzle_search_state(puzzle, puzzle_status,
-			&search_pos_index);
-	while (!searched_puzzle_state)
-	{
-		puzzle_status = puzzle->curr_status->prev_status;
-		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
-		searched_puzzle_state = alg_n_puzzle_search_state(puzzle, puzzle_status,
-				&search_pos_index);
-		search_pos_index = 0;
-	}
-	return (searched_puzzle_state);
+	return (found);
 }
 
 static int	ida_star_search_algorithm(t_puzzle *puzzle,
-												t_puzzle_status *puzzle_status)
+			t_puzzle_status *puzzle_status, int g_h_cost, int *is_puzzle_ready)
 {
-	int					is_puzzle_ready;
-	t_puzzle_status		*selected_puzzle_state;
-	t_puzzle_status		*searched_puzzle_state;
+	t_puzzle_status		*available_puzzle_state;
 	int					search_pos_index;
+	int					new_g_h_cost_limit;
+	int					received_g_h_cost_limit;
 
-	search_pos_index = 0;
-	searched_puzzle_state = search_first_state(puzzle, puzzle_status);
-	search_pos_index = 0;
-	selected_puzzle_state = select_next_puzzle_state(searched_puzzle_state,
-			puzzle, puzzle_status);
-	is_puzzle_ready = 0;
-	if (selected_puzzle_state)
+	*is_puzzle_ready = 0;
+	if (g_h_cost >= puzzle_status->prio)
 	{
-		add_puzzle_state_to_prio_queue_1(selected_puzzle_state,
-			puzzle->states_prio_queue);
-		store_visited_puzzle_status_b_tree(selected_puzzle_state,
-			puzzle->bt_root);
-		(*puzzle->states_cnt)++;
-		if (selected_puzzle_state->tiles_in_right_pos
-			== puzzle->num_of_tile_pos)
-			is_puzzle_ready = print_solution(selected_puzzle_state, puzzle);
+		search_pos_index = 0;
+		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
+				puzzle_status, &search_pos_index);
+		new_g_h_cost_limit = INT_MAX;
+		while (available_puzzle_state && !*is_puzzle_ready)
+		{
+			available_puzzle_state->prio = available_puzzle_state->depth
+				+ calculate_taxicab_distance(
+					&available_puzzle_state->tiles_pos_map,
+					puzzle->size, puzzle->tile_right_pos_array);
+			available_puzzle_state->prev_status = puzzle_status;
+			if (available_puzzle_state->tiles_in_right_pos
+				== puzzle->num_of_tile_pos)
+				*is_puzzle_ready
+					= print_solution(available_puzzle_state, puzzle);
+			else
+			{
+				if (is_state_in_path(available_puzzle_state,
+						&puzzle->states_stack))
+					(*puzzle->state_collision_cnt)++;
+				else
+				{
+					ft_stack_push(&puzzle->states_stack,
+						(void *)available_puzzle_state);
+					(*puzzle->states_cnt)++;
+					received_g_h_cost_limit = ida_star_search_algorithm(puzzle,
+							available_puzzle_state, g_h_cost, is_puzzle_ready);
+					new_g_h_cost_limit = ft_min_int(received_g_h_cost_limit,
+							new_g_h_cost_limit);
+					ft_stack_pop(&puzzle->states_stack);
+				}
+				available_puzzle_state = alg_n_puzzle_search_state(puzzle,
+						puzzle_status, &search_pos_index);
+			}
+		}
 	}
-	return (is_puzzle_ready);
+	else
+		new_g_h_cost_limit = puzzle_status->prio;
+	return (new_g_h_cost_limit);
 }
 
 void	alg_ida_star(t_puzzle *puzzle)
 {
 	int					is_puzzle_ready;
 	t_puzzle_status		*puzzle_status;
+	int					g_h_cost_limit;
+	int					new_g_h_cost_limit;
 
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready = 1;
 	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
-		(void *)puzzle_status);
-	puzzle_status->is_in_queue = 1;
-	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
+	g_h_cost_limit = puzzle_status->depth + calculate_taxicab_distance(
+			&puzzle_status->tiles_pos_map, puzzle->size,
+			puzzle->tile_right_pos_array);
+	puzzle_status->prio = g_h_cost_limit;
+	ft_stack_push(&puzzle->states_stack, (void *)puzzle_status);
 	(*puzzle->states_cnt)++;
-	while (!is_puzzle_ready && *puzzle->states_prio_queue
+	while (!is_puzzle_ready
 		&& !puzzle->stat_counters->counter_values[E_IS_MEM_LIMIT_REACHED]
 		&& !puzzle->stat_counters->counter_values[E_IS_TIME_LIMIT_REACHED])
 	{
-		puzzle_status
-			= (t_puzzle_status *)ft_prio_dequeue(puzzle->states_prio_queue);
-		puzzle_status->is_in_queue = 0;
 		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
-		is_puzzle_ready = ida_star_search_algorithm(puzzle, puzzle_status);
+		new_g_h_cost_limit = ida_star_search_algorithm(puzzle, puzzle_status,
+				g_h_cost_limit, &is_puzzle_ready);
 		print_depth_level(puzzle->curr_status->depth);
+		g_h_cost_limit = new_g_h_cost_limit;
 	}
 	return ;
 }

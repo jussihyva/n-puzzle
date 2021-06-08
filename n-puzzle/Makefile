@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/06 12:46:55 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/08 09:33:17 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -163,11 +163,13 @@ libraries_norm:
 run: all
 ifeq ($(OS), Darwin)
 	cat $(MAP_FILE) | $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY)
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+	$(PUZZLE_GUI)
 else
 	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
 	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY)
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+	$(PUZZLE_GUI)
 endif
 
 .PHONY: run_loop
@@ -182,6 +184,7 @@ else
 		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; done
 endif
+
 .PHONY: run_test
 run_test: all
 	while [ 1 -eq 1 ] ; \

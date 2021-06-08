@@ -53,7 +53,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -348,7 +348,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -687,7 +687,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -977,7 +977,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -1267,7 +1267,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.4",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -1542,7 +1542,7 @@
 		  },
 		  "fieldSets": [
 			{
-			  "col": 2,
+			  "col": 1,
 			  "color": "#e28cc6",
 			  "dotSize": 3,
 			  "hidden": false,
@@ -1559,7 +1559,7 @@
 		  },
 		  "rotateYAxisTitle": true,
 		  "xAxis": {
-			"col": 1,
+			"col": 2,
 			"inverted": false
 		  },
 		  "xAxisExtents": {
@@ -1658,7 +1658,7 @@
 		  },
 		  "fieldSets": [
 			{
-			  "col": 2,
+			  "col": 1,
 			  "color": "#e28cc6",
 			  "dotSize": 3,
 			  "hidden": false,
@@ -1675,7 +1675,7 @@
 		  },
 		  "rotateYAxisTitle": true,
 		  "xAxis": {
-			"col": 1,
+			"col": 2,
 			"inverted": false
 		  },
 		  "xAxisExtents": {
@@ -1768,5 +1768,5 @@
 	"timezone": "",
 	"title": "Puzzle states",
 	"uid": "ganfuBCGz",
-	"version": 2
+	"version": 3
   }
