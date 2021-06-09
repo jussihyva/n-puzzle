@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/08 11:35:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/09 11:09:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,5 +335,7 @@ void			taxicab_based_selection(t_puzzle *puzzle,
 					t_puzzle_status **selected_puzzle_state);
 void			prio_based_selection(t_puzzle_status *searched_puzzle_state,
 					t_puzzle_status **selected_puzzle_state);
+int				calculate_heuristic_distance(t_puzzle_status *puzzle_state,
+					t_puzzle *puzzle);
 
 #endif

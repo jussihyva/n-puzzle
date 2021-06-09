@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/08 19:25:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/09 11:07:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		while (available_puzzle_state && !*is_puzzle_ready)
 		{
 			available_puzzle_state->prio = available_puzzle_state->depth
-				+ calculate_taxicab_distance(
-					&available_puzzle_state->tiles_pos_map,
-					puzzle->size, puzzle->tile_right_pos_array);
+				+ calculate_heuristic_distance(available_puzzle_state, puzzle);
 			available_puzzle_state->prev_status = puzzle_status;
 			if (available_puzzle_state->tiles_in_right_pos
 				== puzzle->num_of_tile_pos)

@@ -54,7 +54,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -162,13 +162,213 @@
 				"value": "linear_conflict"
 			  }
 			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "IDA* Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "B",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  },
+		  {
+			"alias": "A* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "C",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "A* Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "F",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
 		  }
 		],
 		"thresholds": [],
 		"timeFrom": null,
 		"timeRegions": [],
 		"timeShift": null,
-		"title": "Total number of visited puzzle states (Avg.)",
+		"title": "Total number of visited puzzle states (Average in 5 min period)",
 		"tooltip": {
 		  "shared": true,
 		  "sort": 0,
@@ -227,6 +427,396 @@
 		  "y": 10
 		},
 		"hiddenSeries": false,
+		"id": 10,
+		"legend": {
+		  "avg": false,
+		  "current": false,
+		  "max": false,
+		  "min": false,
+		  "show": true,
+		  "total": false,
+		  "values": false
+		},
+		"lines": true,
+		"linewidth": 1,
+		"nullPointMode": "connected",
+		"options": {
+		  "alertThreshold": true
+		},
+		"percentage": false,
+		"pluginVersion": "7.5.7",
+		"pointradius": 2,
+		"points": false,
+		"renderer": "flot",
+		"seriesOverrides": [],
+		"spaceLength": 10,
+		"stack": false,
+		"steppedLine": false,
+		"targets": [
+		  {
+			"alias": "Greedy Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "D",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "greedy"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "Greedy Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "E",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "greedy"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  },
+		  {
+			"alias": "IDA* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "IDA* Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "B",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  },
+		  {
+			"alias": "A* Taxicab",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "C",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  },
+		  {
+			"alias": "A* Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "5m"
+				],
+				"type": "time"
+			  }
+			],
+			"hide": false,
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "F",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"puzzle_states"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "max"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "6"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "a_star"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  }
+		],
+		"thresholds": [],
+		"timeFrom": null,
+		"timeRegions": [],
+		"timeShift": null,
+		"title": "Total number of visited puzzle states (Max in 5 min period)",
+		"tooltip": {
+		  "shared": true,
+		  "sort": 0,
+		  "value_type": "individual"
+		},
+		"type": "graph",
+		"xaxis": {
+		  "buckets": null,
+		  "mode": "time",
+		  "name": null,
+		  "show": true,
+		  "values": []
+		},
+		"yaxes": [
+		  {
+			"$$hashKey": "object:1299",
+			"format": "short",
+			"label": "Number of visited states",
+			"logBase": 1,
+			"max": null,
+			"min": null,
+			"show": true
+		  },
+		  {
+			"$$hashKey": "object:1300",
+			"format": "short",
+			"label": null,
+			"logBase": 1,
+			"max": null,
+			"min": null,
+			"show": true
+		  }
+		],
+		"yaxis": {
+		  "align": false,
+		  "alignLevel": null
+		}
+	  },
+	  {
+		"aliasColors": {},
+		"bars": false,
+		"dashLength": 10,
+		"dashes": false,
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {},
+		  "overrides": []
+		},
+		"fill": 0,
+		"fillGradient": 0,
+		"gridPos": {
+		  "h": 10,
+		  "w": 24,
+		  "x": 0,
+		  "y": 20
+		},
+		"hiddenSeries": false,
 		"id": 3,
 		"legend": {
 		  "avg": false,
@@ -244,7 +834,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -414,7 +1004,7 @@
 		  "h": 10,
 		  "w": 24,
 		  "x": 0,
-		  "y": 20
+		  "y": 30
 		},
 		"hiddenSeries": false,
 		"id": 4,
@@ -434,7 +1024,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -604,7 +1194,7 @@
 		  "h": 10,
 		  "w": 24,
 		  "x": 0,
-		  "y": 30
+		  "y": 40
 		},
 		"hiddenSeries": false,
 		"id": 7,
@@ -624,7 +1214,7 @@
 		  "alertThreshold": true
 		},
 		"percentage": false,
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"pointradius": 2,
 		"points": false,
 		"renderer": "flot",
@@ -788,7 +1378,7 @@
 		  "h": 10,
 		  "w": 24,
 		  "x": 0,
-		  "y": 40
+		  "y": 50
 		},
 		"id": 8,
 		"options": {
@@ -910,7 +1500,7 @@
 		  "h": 10,
 		  "w": 24,
 		  "x": 0,
-		  "y": 50
+		  "y": 60
 		},
 		"id": 9,
 		"options": {
@@ -1030,7 +1620,7 @@
 	  "list": []
 	},
 	"time": {
-	  "from": "now-6h",
+	  "from": "now-1h",
 	  "to": "now"
 	},
 	"timepicker": {},

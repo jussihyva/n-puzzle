@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/08 09:33:17 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/09 13:36:09 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,7 +189,7 @@ endif
 run_test: all
 	while [ 1 -eq 1 ] ; \
 	do \
-		python3 test/n-puzzle_test.py ; \
+		python3 test/n-puzzle_test.py $(PUZZLE_SIZE) ; \
 	done
 
 $(SELF_SIGNED_CRT):

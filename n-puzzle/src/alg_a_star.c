@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 09:06:23 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 14:17:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/09 14:05:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ static int	n_puzzle_search_algorithm(t_puzzle *puzzle,
 		move.from_pos = move.to_pos->neighbors[i];
 		tile_move(move.from_pos, move.to_pos, puzzle);
 		puzzle->curr_status->depth++;
-		if (puzzle->algorithm == E_A_STAR_T)
-			puzzle->curr_status->prio
-				= calculate_taxicab_based_prio(puzzle->curr_status,
-					puzzle->size, puzzle->tile_right_pos_array);
+		puzzle->curr_status->prio = puzzle->curr_status->depth
+			+ calculate_heuristic_distance(puzzle->curr_status, puzzle);
 		puzzle->curr_status->prev_status = puzzle_status;
 		add_puzzle_state_to_prio_queue(puzzle);
 		if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)

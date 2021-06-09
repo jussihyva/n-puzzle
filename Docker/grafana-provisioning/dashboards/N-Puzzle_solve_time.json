@@ -67,7 +67,7 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
-				  "value": 149
+				  "value": null
 				}
 			  ]
 			},
@@ -176,18 +176,6 @@
 				{
 				  "id": "custom.width",
 				  "value": 134
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "IDA* Taxicab (ms)"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 131
 				}
 			  ]
 			}
@@ -199,227 +187,12 @@
 		  "x": 0,
 		  "y": 1
 		},
-		"id": 16,
-		"options": {
-		  "showHeader": true,
-		  "sortBy": []
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"alias": "IDA* Taxicab (ms)",
-			"groupBy": [
-			  {
-				"params": [
-				  "1h"
-				],
-				"type": "time"
-			  }
-			],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "time_series",
-			"select": [
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "mean"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "3"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "ida*"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "taxicab"
-			  }
-			]
-		  }
-		],
-		"type": "table"
-	  },
-	  {
-		"datasource": null,
-		"description": "",
-		"fieldConfig": {
-		  "defaults": {
-			"color": {
-			  "mode": "thresholds"
-			},
-			"custom": {
-			  "align": null,
-			  "filterable": false
-			},
-			"mappings": [],
-			"thresholds": {
-			  "mode": "absolute",
-			  "steps": [
-				{
-				  "color": "green",
-				  "value": null
-				},
-				{
-				  "color": "red",
-				  "value": 80
-				}
-			  ]
-			}
-		  },
-		  "overrides": [
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "Time"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": null
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "project=n-puzzle.mean"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 208
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Random"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 110
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Deeping"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 132
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "DFS Deeping mem"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 147
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS List"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 87
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS B-Tree"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 105
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "BFS B-Tree (ms)"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 132
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "TOOP (ms)"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 91
-				}
-			  ]
-			},
-			{
-			  "matcher": {
-				"id": "byName",
-				"options": "A* Taxicab (ms)"
-			  },
-			  "properties": [
-				{
-				  "id": "custom.width",
-				  "value": 134
-				}
-			  ]
-			}
-		  ]
-		},
-		"gridPos": {
-		  "h": 10,
-		  "w": 4,
-		  "x": 4,
-		  "y": 1
-		},
 		"id": 13,
 		"options": {
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "A* Taxicab (ms)",
@@ -629,6 +402,460 @@
 			  "properties": [
 				{
 				  "id": "custom.width",
+				  "value": 131
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 4,
+		  "y": 1
+		},
+		"id": 16,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.7",
+		"targets": [
+		  {
+			"alias": "IDA* Taxicab (ms)",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solver_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "taxicab"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 149
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping mem"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 147
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS List"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 87
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS B-Tree"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 105
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS B-Tree (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "TOOP (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 91
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "A* Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 134
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "IDA* Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 131
+				}
+			  ]
+			}
+		  ]
+		},
+		"gridPos": {
+		  "h": 10,
+		  "w": 4,
+		  "x": 8,
+		  "y": 1
+		},
+		"id": 22,
+		"options": {
+		  "showHeader": true,
+		  "sortBy": []
+		},
+		"pluginVersion": "7.5.7",
+		"targets": [
+		  {
+			"alias": "IDA* Taxicab linear conflicts",
+			"groupBy": [
+			  {
+				"params": [
+				  "1h"
+				],
+				"type": "time"
+			  }
+			],
+			"measurement": "project=n-puzzle",
+			"orderByTime": "ASC",
+			"policy": "default",
+			"refId": "A",
+			"resultFormat": "time_series",
+			"select": [
+			  [
+				{
+				  "params": [
+					"solver_cpu_usage_time"
+				  ],
+				  "type": "field"
+				},
+				{
+				  "params": [],
+				  "type": "mean"
+				}
+			  ]
+			],
+			"tags": [
+			  {
+				"key": "puzzle_size",
+				"operator": "=",
+				"value": "3"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm",
+				"operator": "=",
+				"value": "ida*"
+			  },
+			  {
+				"condition": "AND",
+				"key": "algorithm_substring",
+				"operator": "=",
+				"value": "linear_conflict"
+			  }
+			]
+		  }
+		],
+		"type": "table"
+	  },
+	  {
+		"datasource": null,
+		"description": "",
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "thresholds"
+			},
+			"custom": {
+			  "align": null,
+			  "filterable": false
+			},
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			}
+		  },
+		  "overrides": [
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "Time"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 149
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "project=n-puzzle.mean"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 208
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Random"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 110
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "DFS Deeping mem"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 147
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS List"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 87
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS B-Tree"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 105
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "BFS B-Tree (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 132
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "TOOP (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 91
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "A* Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
+				  "value": 134
+				}
+			  ]
+			},
+			{
+			  "matcher": {
+				"id": "byName",
+				"options": "IDA* Taxicab (ms)"
+			  },
+			  "properties": [
+				{
+				  "id": "custom.width",
 				  "value": 138
 				}
 			  ]
@@ -650,7 +877,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 5,
-		  "x": 8,
+		  "x": 12,
 		  "y": 1
 		},
 		"id": 18,
@@ -658,7 +885,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "Greedy Taxicab (ms)",
@@ -888,8 +1115,8 @@
 		},
 		"gridPos": {
 		  "h": 10,
-		  "w": 6,
-		  "x": 13,
+		  "w": 4,
+		  "x": 17,
 		  "y": 1
 		},
 		"id": 20,
@@ -897,7 +1124,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "Greedy Taxicab linear conflicts (ms)",
@@ -1054,7 +1281,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "DFS Random (Sec.)",
@@ -1215,7 +1442,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "DFS Deeping (Sec.)",
@@ -1388,7 +1615,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "DFS Deeping mem (Sec.)",
@@ -1573,7 +1800,7 @@
 		  "showHeader": true,
 		  "sortBy": []
 		},
-		"pluginVersion": "7.5.2",
+		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
 			"alias": "BFS List (Sec.)",
@@ -2125,5 +2352,5 @@
 	"timezone": "",
 	"title": "N-Puzzle solve time",
 	"uid": "WZnMjZjGz",
-	"version": 13
+	"version": 6
   }

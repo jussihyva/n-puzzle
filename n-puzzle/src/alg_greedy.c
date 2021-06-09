@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 18:39:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/09 11:09:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static int	calculate_heuristic_distance(t_puzzle_status *puzzle_state,
+int	calculate_heuristic_distance(t_puzzle_status *puzzle_state,
 															t_puzzle *puzzle)
 {
 	int		prio;
