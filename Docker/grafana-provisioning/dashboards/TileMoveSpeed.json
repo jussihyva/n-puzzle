@@ -28,7 +28,7 @@
 		},
 		"id": 10,
 		"panels": [],
-		"title": "6x6 Puzzle solve time",
+		"title": "Tile move speed (Moves / Second)",
 		"type": "row"
 	  },
 	  {
@@ -219,7 +219,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "A* Taxicab (ms)",
+			"alias": "A* Taxicab (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -231,6 +231,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -244,6 +246,12 @@
 				{
 				  "params": [],
 				  "type": "mean"
+				},
+				{
+				  "params": [
+					" / 100"
+				  ],
+				  "type": "math"
 				}
 			  ]
 			],
@@ -458,7 +466,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "IDA* Taxicab (ms)",
+			"alias": "IDA* Taxicab (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -470,6 +478,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida*' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -686,7 +696,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 5,
-		  "x": 10,
+		  "x": 11,
 		  "y": 1
 		},
 		"id": 26,
@@ -697,7 +707,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "Greedy Taxicab (ms)",
+			"alias": "Greedy Taxicab (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -709,6 +719,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'greedy' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -948,7 +960,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "A* Taxicab linear conflicts (ms)",
+			"alias": "A* Taxicab linear conflicts (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -960,6 +972,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -1199,7 +1213,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "IDA* Taxicab linear conflicts (ms)",
+			"alias": "IDA* Taxicab linear conflicts (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -1211,6 +1225,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida*' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -1439,7 +1455,7 @@
 		"gridPos": {
 		  "h": 10,
 		  "w": 5,
-		  "x": 10,
+		  "x": 11,
 		  "y": 11
 		},
 		"id": 20,
@@ -1450,7 +1466,7 @@
 		"pluginVersion": "7.5.7",
 		"targets": [
 		  {
-			"alias": "Greedy Taxicab linear conflicts (ms)",
+			"alias": "Greedy Taxicab linear conflicts (moves per second)",
 			"groupBy": [
 			  {
 				"params": [
@@ -1462,6 +1478,8 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'greedy' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
+			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
 			"select": [
@@ -1500,496 +1518,6 @@
 		  }
 		],
 		"type": "table"
-	  },
-	  {
-		"collapsed": false,
-		"datasource": null,
-		"gridPos": {
-		  "h": 1,
-		  "w": 24,
-		  "x": 0,
-		  "y": 21
-		},
-		"id": 4,
-		"panels": [],
-		"title": "6x6 Puzzle solve time vs Solution moves",
-		"type": "row"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 22
-		},
-		"id": 24,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"solution_moves"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "greedy"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "taxicab"
-			  }
-			]
-		  }
-		],
-		"title": "Number of tile moves vs time (Greedy Taxicab)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 34
-		},
-		"id": 25,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"solution_moves"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "greedy"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "linear_conflict"
-			  }
-			]
-		  }
-		],
-		"title": "Number of tile moves vs time (Greedy Taxicab linear conflicts)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 46
-		},
-		"id": 28,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"solution_moves"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "ida*"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "taxicab"
-			  }
-			]
-		  }
-		],
-		"title": "Number of tile moves vs time (IDA* Taxicab)",
-		"type": "michaeldmoore-scatter-panel"
-	  },
-	  {
-		"datasource": null,
-		"fieldConfig": {
-		  "defaults": {},
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 12,
-		  "w": 21,
-		  "x": 0,
-		  "y": 58
-		},
-		"id": 29,
-		"options": {
-		  "border": {
-			"show": false,
-			"color": "yellow",
-			"size": 1
-		  },
-		  "fieldSets": [
-			{
-			  "col": 2,
-			  "color": "#76e887",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			},
-			{
-			  "col": 2,
-			  "color": "#c183e2",
-			  "dotSize": 3,
-			  "hidden": false,
-			  "lineSize": 1,
-			  "lineType": "none"
-			}
-		  ],
-		  "grid": {
-			"color": "gray"
-		  },
-		  "legend": {
-			"show": false,
-			"size": 3
-		  },
-		  "rotateYAxisTitle": true,
-		  "xAxis": {
-			"col": 1,
-			"inverted": false
-		  },
-		  "xAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "xAxisTitle": {
-			"text": "Number of tile moves",
-			"color": "white",
-			"textSize": 1
-		  },
-		  "yAxisExtents": {
-			"min": 0,
-			"max": null
-		  },
-		  "yAxisTitle": {
-			"text": "CPU usage time (ms)",
-			"color": "#777",
-			"textSize": 1
-		  }
-		},
-		"pluginVersion": "7.5.2",
-		"targets": [
-		  {
-			"groupBy": [],
-			"measurement": "project=n-puzzle",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"solution_moves"
-				  ],
-				  "type": "field"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"solver_cpu_usage_time"
-				  ],
-				  "type": "field"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "puzzle_size",
-				"operator": "=",
-				"value": "6"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm",
-				"operator": "=",
-				"value": "ida*"
-			  },
-			  {
-				"condition": "AND",
-				"key": "algorithm_substring",
-				"operator": "=",
-				"value": "linear_conflict"
-			  }
-			]
-		  }
-		],
-		"title": "Number of tile moves vs time (IDA* Taxicab linear conflicts)",
-		"type": "michaeldmoore-scatter-panel"
 	  }
 	],
 	"refresh": "5s",
@@ -2005,7 +1533,7 @@
 	},
 	"timepicker": {},
 	"timezone": "",
-	"title": "6_6-Puzzle solve time",
-	"uid": "2021-06-06",
-	"version": 4
+	"title": "Tile move speed",
+	"uid": "2021-06-09",
+	"version": 3
   }
