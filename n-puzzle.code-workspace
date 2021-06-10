@@ -19,7 +19,9 @@
 			"algorithm": "c",
 			"tcp.h": "c",
 			"string": "c",
-			"iosfwd": "c"
+			"iosfwd": "c",
+			"ratio": "c"
 		},
+		"norminettev2.norminette_bin": "norminette-beta",
 	}
 }

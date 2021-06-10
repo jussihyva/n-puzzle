@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/09 11:07:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 19:00:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 		{
 			available_puzzle_state->prio = available_puzzle_state->depth
 				+ calculate_heuristic_distance(available_puzzle_state, puzzle);
-			available_puzzle_state->prev_status = puzzle_status;
 			if (available_puzzle_state->tiles_in_right_pos
 				== puzzle->num_of_tile_pos)
 				*is_puzzle_ready
@@ -84,6 +83,17 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	return (new_g_h_cost_limit);
 }
 
+static int	check_is_limit_reached(int *counter_values)
+{
+	int		is_limit_reached;
+
+	is_limit_reached = 0;
+	if (counter_values[E_IS_MEM_LIMIT_REACHED]
+		|| counter_values[E_IS_TIME_LIMIT_REACHED])
+		is_limit_reached = 1;
+	return (is_limit_reached);
+}
+
 void	alg_ida_star(t_puzzle *puzzle)
 {
 	int					is_puzzle_ready;
@@ -102,8 +112,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 	ft_stack_push(&puzzle->states_stack, (void *)puzzle_status);
 	(*puzzle->states_cnt)++;
 	while (!is_puzzle_ready
-		&& !puzzle->stat_counters->counter_values[E_IS_MEM_LIMIT_REACHED]
-		&& !puzzle->stat_counters->counter_values[E_IS_TIME_LIMIT_REACHED])
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		update_current_puzzle_state(puzzle->curr_status, puzzle_status);
 		new_g_h_cost_limit = ida_star_search_algorithm(puzzle, puzzle_status,

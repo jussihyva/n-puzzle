@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 19:46:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 12:58:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ t_statistics	*initialize_statistics(void)
 	statistics = (t_statistics *)ft_memalloc(sizeof(*statistics));
 	statistics->stat_counters.counter_names
 		= create_stat_counter_string_names();
+	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATES] = 1;
+	statistics->stat_counters.active_counters[
+		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = 1;
 	return (statistics);
 }
 

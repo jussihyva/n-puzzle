@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 12:55:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 12:30:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,26 @@ static void	release_status_queue(t_queue *status_queue)
 	return ;
 }
 
-static void	release_puzzle(t_puzzle *puzzle)
+static void	release_pos_table(int puzzle_size, t_pos ****pos_table)
 {
 	t_xy_values			yx;
 
+	yx.y = -1;
+	while (++yx.y < puzzle_size)
+	{
+		yx.x = -1;
+		while (++yx.x < puzzle_size)
+		{
+			ft_memdel((void **)&(*pos_table)[yx.y][yx.x]->neighbors);
+			ft_memdel((void **)&(*pos_table)[yx.y][yx.x]);
+		}
+		ft_memdel((void **)&(*pos_table)[yx.y]);
+	}
+	return ;
+}
+
+static void	release_puzzle(t_puzzle *puzzle)
+{
 	ft_bt_remove(puzzle->states_prio_queue, NULL, NULL);
 	ft_memdel((void **)&puzzle->states_prio_queue);
 	ft_bt_remove(puzzle->bt_root, &(*puzzle->bt_root)->bt_elem[0].bt_key,
@@ -49,48 +65,12 @@ static void	release_puzzle(t_puzzle *puzzle)
 	release_status_queue(puzzle->status_queue);
 	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
 	ft_memdel((void **)&puzzle->puzzle_status_lst);
-	yx.y = -1;
-	while (++yx.y < puzzle->size)
-	{
-		yx.x = -1;
-		while (++yx.x < puzzle->size)
-		{
-			ft_memdel((void **)&puzzle->pos_table[yx.y][yx.x]->neighbors);
-			ft_memdel((void **)&puzzle->pos_table[yx.y][yx.x]);
-		}
-		ft_memdel((void **)&puzzle->pos_table[yx.y]);
-	}
+	release_pos_table(puzzle->size, &puzzle->pos_table);
 	ft_memdel((void **)&puzzle->pos_table);
 	ft_memdel((void **)&puzzle->curr_status->tiles_pos_map.map);
 	ft_memdel((void **)&puzzle->curr_status);
 	ft_memdel((void *)&puzzle->tile_right_pos_array);
 	ft_memdel((void **)&puzzle);
-	return ;
-}
-
-static void	release_input(t_input *input)
-{
-	int		i;
-
-	release_statistics_params(input->statistics);
-	i = -1;
-	while (++i < LOGING_LEVELS)
-	{
-		ft_memdel((void **)&input->level_colors[i]);
-		ft_memdel((void **)&input->level_strings[i]);
-	}
-	ft_memdel((void **)&input->level_colors);
-	ft_memdel((void **)&input->level_strings);
-	i = -1;
-	while (++i < input->puzzle_map->size)
-		ft_memdel((void **)&input->puzzle_map->tile_map[i]);
-	ft_memdel((void **)&input->cmd_args->algorithm);
-	ft_memdel((void **)&input->cmd_args->heuristic_algorithm);
-	ft_memdel((void **)&input->cmd_args);
-	ft_memdel((void **)&input->puzzle_map->tile_map);
-	ft_memdel((void **)&input->puzzle_map);
-	ft_memdel((void **)&input);
-	ft_release_loging_params();
 	return ;
 }
 

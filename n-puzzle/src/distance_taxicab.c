@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 19:09:48 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/07 12:20:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 18:10:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	get_tile_number(int puzzle_size, t_xy_values *xy,
 												t_tiles_pos_map *tiles_pos_map)
 {
-	int			tile_number;
 	int			position_number;
 	int			i;
 	int			shift;
+	int			tile_number;
 
 	position_number = xy->y * puzzle_size + xy->x;
 	i = position_number / tiles_pos_map->tiles_per_map_index;
@@ -29,61 +29,51 @@ int	get_tile_number(int puzzle_size, t_xy_values *xy,
 	return (tile_number);
 }
 
+static int	increase_taxicab_distance(int tile_number, t_xy_values *yx,
+											t_xy_values *tile_pos)
+{
+	int				distance;
+
+	distance = 0;
+	if (tile_number)
+		distance = ft_abs(tile_pos->y - yx->y) + ft_abs(tile_pos->x - yx->x);
+	return (distance);
+}
+
+static int	increase_taxicab_distance_conflicts(int tile_number,
+										t_xy_values *yx, t_xy_values *tile_pos,
+											t_linear_conflict *linear_conflict)
+{
+	int				distance;
+
+	distance = 0;
+	if (tile_number)
+		distance = ft_abs(tile_pos->y - yx->y) + ft_abs(tile_pos->x - yx->x);
+	if (tile_pos->y == yx->y)
+	{
+		if (linear_conflict->raw > tile_pos->x)
+			distance += 2;
+		linear_conflict->raw = ft_max_int(linear_conflict->raw,
+				tile_pos->x);
+	}
+	if (tile_pos->x == yx->x)
+	{
+		if (linear_conflict->column[yx->x] > tile_pos->y)
+			distance += 2;
+		linear_conflict->column[yx->x]
+			= ft_max_int(linear_conflict->column[yx->x], tile_pos->y);
+	}
+	return (distance);
+}
+
 int	calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 							int puzzle_size, t_xy_values *tile_right_pos_array)
 {
 	int				taxicab_distance;
-	t_xy_values		xy;
-	t_xy_values		tile_pos;
-	int				tile_number;
-
-	taxicab_distance = 0;
-	xy.y = -1;
-	while (++xy.y < puzzle_size)
-	{
-		xy.x = -1;
-		while (++xy.x < puzzle_size)
-		{
-			tile_number = get_tile_number(puzzle_size, &xy, tiles_pos_map);
-			tile_pos = tile_right_pos_array[tile_number];
-			if (tile_number)
-				taxicab_distance += ft_abs(tile_pos.y - xy.y)
-					+ ft_abs(tile_pos.x - xy.x);
-		}
-	}
-	return (taxicab_distance);
-}
-
-static int	add_linear_conflicts(int puzzle_size, t_list **stack)
-{
-	int		num_of_conflicts;
-	int		min;
-	int		x;
-
-	num_of_conflicts = 0;
-	min = puzzle_size;
-	while (*stack)
-	{
-		x = *(int *)ft_stack_pop(stack);
-		if (x > min)
-			num_of_conflicts += 2;
-		min = ft_min_int(min, x);
-	}
-	return (num_of_conflicts);
-}
-
-int	linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
-							int puzzle_size, t_xy_values *tile_right_pos_array)
-{
-	int				taxicab_distance;
 	t_xy_values		yx;
-	t_xy_values		tile_pos;
 	int				tile_number;
-	t_list			*raw_stack;
-	t_list			**column_stack;
+	t_xy_values		tile_pos;
 
-	raw_stack = NULL;
-	column_stack = (t_list **)ft_memalloc(sizeof(*column_stack) * puzzle_size);
 	taxicab_distance = 0;
 	yx.y = -1;
 	while (++yx.y < puzzle_size)
@@ -93,63 +83,38 @@ int	linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 		{
 			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
 			tile_pos = tile_right_pos_array[tile_number];
-			if (tile_pos.y == yx.y)
-				ft_stack_push(&raw_stack,
-					(void *)&tile_right_pos_array[tile_number].x);
-			if (tile_pos.x == yx.x)
-				ft_stack_push(&column_stack[yx.x],
-					(void *)&tile_right_pos_array[tile_number].y);
-			if (tile_number)
-				taxicab_distance += ft_abs(tile_pos.y - yx.y)
-					+ ft_abs(tile_pos.x - yx.x);
+			taxicab_distance += increase_taxicab_distance(tile_number, &yx,
+					&tile_pos);
 		}
-		add_linear_conflicts(puzzle_size, &raw_stack);
 	}
-	yx.x = -1;
-	while (++yx.x < puzzle_size)
-		add_linear_conflicts(puzzle_size, &column_stack[yx.x]);
 	return (taxicab_distance);
 }
 
-int	calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
+int	linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 							int puzzle_size, t_xy_values *tile_right_pos_array)
 {
-	int				prio;
-	int				taxicab_distance;
+	int					taxicab_distance;
+	t_xy_values			yx;
+	t_xy_values			tile_pos;
+	int					tile_number;
+	t_linear_conflict	linear_conflict;
 
-	taxicab_distance = calculate_taxicab_distance(&puzzle_status->tiles_pos_map,
-			puzzle_size, tile_right_pos_array);
-	prio = taxicab_distance + puzzle_status->depth;
-	return (prio);
-}
-
-void	prio_based_selection(t_puzzle_status *searched_puzzle_state,
-										t_puzzle_status **selected_puzzle_state)
-{
-	if ((*selected_puzzle_state)->prio > searched_puzzle_state->prio)
+	linear_conflict.column = (int *)ft_memalloc(sizeof(*linear_conflict.column)
+			* puzzle_size);
+	taxicab_distance = 0;
+	yx.y = -1;
+	while (++yx.y < puzzle_size)
 	{
-		ft_memdel((void **)&(*selected_puzzle_state)->tiles_pos_map.map);
-		ft_memdel((void **)selected_puzzle_state);
-		*selected_puzzle_state = searched_puzzle_state;
+		linear_conflict.raw = 0;
+		yx.x = -1;
+		while (++yx.x < puzzle_size)
+		{
+			tile_number = get_tile_number(puzzle_size, &yx, tiles_pos_map);
+			tile_pos = tile_right_pos_array[tile_number];
+			taxicab_distance += increase_taxicab_distance_conflicts(tile_number,
+					&yx, &tile_pos, &linear_conflict);
+		}
 	}
-	else
-	{
-		ft_memdel((void **)&searched_puzzle_state->tiles_pos_map.map);
-		ft_memdel((void **)&searched_puzzle_state);
-	}
-	return ;
-}
-
-void	taxicab_based_selection(t_puzzle *puzzle,
-										t_puzzle_status *available_puzzle_state,
-										t_puzzle_status **selected_puzzle_state)
-{
-	available_puzzle_state->prio = calculate_taxicab_based_prio(
-			available_puzzle_state, puzzle->size,
-			puzzle->tile_right_pos_array);
-	if (*selected_puzzle_state)
-		prio_based_selection(available_puzzle_state, selected_puzzle_state);
-	else
-		*selected_puzzle_state = available_puzzle_state;
-	return ;
+	ft_memdel((void **)&linear_conflict.column);
+	return (taxicab_distance);
 }

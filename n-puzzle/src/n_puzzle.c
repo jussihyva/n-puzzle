@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/05 09:19:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 12:58:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,7 @@ static void	send_stat_report(t_puzzle *puzzle)
 	else if (statistics->stat_counters.counter_values[E_IS_MEM_LIMIT_REACHED])
 		ft_dprintf(2, "%-26s\n", "Maximum memory limit reached");
 	else
-	{
-		ft_dprintf(2, "%-26s %d\n", "Puzzle size:", statistics->puzzle_size);
-		ft_dprintf(2, "%-26s %s %s\n", "Used algorithm:", statistics->algorithm,
-			statistics->algorithm_substring);
-		ft_dprintf(2, "%-26s %ld ms\n", "Execution time:",
-			get_execution_time(statistics));
-		ft_dprintf(2, "%-26s %ld ms\n", "CPU usage time:",
-			statistics->cpu_usage_ms);
-		ft_dprintf(2, "%-26s %d Mb\n", "Memory usage:",
-			statistics->stat_counters.counter_values[E_MAX_MEM_USAGE] / 1000);
-		ft_dprintf(2, "%-26s %d\n", "Number of solution moves:",
-			statistics->solution_move_cnt);
-	}
+		print_result_summary(statistics);
 	ft_dprintf(2, "======================================\033[0m\n\n");
 	return ;
 }
@@ -131,13 +119,10 @@ int	main(int argc, char **argv)
 	puzzle = initialize_puzzle(input);
 	puzzle->states_cnt = &statistics->stat_counters.counter_values[
 		E_TOTAL_NUM_OF_PUZZLE_STATES];
-	statistics->stat_counters.active_counters[E_TOTAL_NUM_OF_PUZZLE_STATES] = 1;
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	puzzle->stat_counters = &statistics->stat_counters;
 	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[
 		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS];
-	statistics->stat_counters.active_counters[
-		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS] = 1;
 	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);
 	release(input, influxdb, puzzle);

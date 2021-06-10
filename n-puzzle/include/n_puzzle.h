@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/09 11:09:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/10 18:09:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,12 @@ typedef struct s_memory_info
 
 }						t_memory_info;
 
+typedef struct s_linear_conflict
+{
+	int			raw;
+	int			*column;
+}				t_linear_conflict;
+
 t_input			*read_input_data(int argc, char **argv,
 					t_statistics *statistics);
 void			set_loging_parameters(t_input *input,
@@ -308,8 +314,6 @@ int				update_tiles_pos_map(t_pos *pos1, t_pos *pos2,
 int				print_solution(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			alg_a_star(t_puzzle *puzzle);
-int				calculate_taxicab_based_prio(t_puzzle_status *puzzle_status,
-					int puzzle_size, t_xy_values *tile_right_pos_array);
 int				calculate_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
 					int puzzle_size, t_xy_values *tile_right_pos_array);
 int				linear_conflict_taxicab_distance(t_tiles_pos_map *tiles_pos_map,
@@ -330,12 +334,9 @@ char			*based_on_heuristic_alg(t_heuristic_alg algorithm);
 t_heuristic_alg	validate_heuristic_algorithm(char *algorithm_string,
 					char *heuristic_algorithm);
 void			alg_greedy(t_puzzle *puzzle);
-void			taxicab_based_selection(t_puzzle *puzzle,
-					t_puzzle_status *available_puzzle_state,
-					t_puzzle_status **selected_puzzle_state);
-void			prio_based_selection(t_puzzle_status *searched_puzzle_state,
-					t_puzzle_status **selected_puzzle_state);
 int				calculate_heuristic_distance(t_puzzle_status *puzzle_state,
 					t_puzzle *puzzle);
+void			release_input(t_input *input);
+void			print_result_summary(t_statistics *statistics);
 
 #endif
