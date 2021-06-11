@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 19:00:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 08:11:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 				+ calculate_heuristic_distance(available_puzzle_state, puzzle);
 			if (available_puzzle_state->tiles_in_right_pos
 				== puzzle->num_of_tile_pos)
+			{
 				*is_puzzle_ready
 					= print_solution(available_puzzle_state, puzzle);
+				delete_puzzle_status((void *)available_puzzle_state, 0);
+			}
 			else
 			{
 				if (is_state_in_path(available_puzzle_state,
@@ -73,6 +76,7 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 							new_g_h_cost_limit);
 					ft_stack_pop(&puzzle->states_stack);
 				}
+				delete_puzzle_status((void *)available_puzzle_state, 0);
 				available_puzzle_state = alg_n_puzzle_search_state(puzzle,
 						puzzle_status, &search_pos_index);
 			}
@@ -120,5 +124,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 		print_depth_level(puzzle->curr_status->depth);
 		g_h_cost_limit = new_g_h_cost_limit;
 	}
+	ft_stack_pop(&puzzle->states_stack);
+	delete_puzzle_status((void *)puzzle_status, 0);
 	return ;
 }
