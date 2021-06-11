@@ -6,26 +6,27 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/11 15:38:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 16:01:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static t_xy_values	*create_tile_right_pos_array(t_pos ***pos_table,
-																int puzzle_size)
+static t_xy_values	*create_tile_right_pos_array(t_puzzle *puzzle)
 {
 	t_xy_values		xy;
 	t_xy_values		*tile_right_pos_array;
+	t_pos			***pos_table;
 
+	pos_table = puzzle->pos_table;
 	tile_right_pos_array
 		= (t_xy_values *)ft_memalloc(sizeof(*tile_right_pos_array)
-			* puzzle_size * puzzle_size);
+			* puzzle->num_of_tile_pos);
 	xy.y = -1;
-	while (++xy.y < puzzle_size)
+	while (++xy.y < puzzle->size)
 	{
 		xy.x = -1;
-		while (++xy.x < puzzle_size)
+		while (++xy.x < puzzle->size)
 			tile_right_pos_array[pos_table[xy.y][xy.x]->right_tile_number] = xy;
 	}
 	return (tile_right_pos_array);
@@ -118,9 +119,9 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	puzzle->status_queue = ft_queue_init();
 	puzzle->pos_table = initialize_pos_table(puzzle->size);
 	set_tile_numbers_target_positions(puzzle->pos_table, puzzle->size);
-	puzzle->tile_right_pos_array
-		= create_tile_right_pos_array(puzzle->pos_table, puzzle->size);
+	puzzle->tile_right_pos_array = create_tile_right_pos_array(puzzle);
 	puzzle->curr_status = create_puzzle_status(puzzle_map->tile_map, puzzle);
-	puzzle->solvable = is_puzzle_solvable(puzzle_map, puzzle->tile_right_pos_array);
+	puzzle->solvable = is_puzzle_solvable(puzzle_map,
+			puzzle->tile_right_pos_array);
 	return (puzzle);
 }
