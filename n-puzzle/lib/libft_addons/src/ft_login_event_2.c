@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 08:21:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/05/03 13:38:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:33:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	ft_log_error(const char *file, const int line, const char *fmt, ...)
 		va_start(event.ap, fmt);
 		stdout_callback(&event);
 		va_end(event.ap);
+		exit(42);
 	}
 	execute_login_extensions(&event, fmt);
 	unlock();
-	exit(42);
 	return ;
 }

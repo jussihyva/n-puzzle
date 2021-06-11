@@ -30,19 +30,19 @@ def	solve_puzzle(command_path, puzzle_string, algorithm):
 			stdin =subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	elif algorithm == "ida_1":
 		process_solve_puzzle = subprocess.Popen(
-			[command, "-L", "3", "-A", "ida*", "-H", "t"],
+			[command, "-L", "3", "-A", "ida", "-H", "t"],
 			stdin =subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	elif algorithm == "ida_2":
 		process_solve_puzzle = subprocess.Popen(
-			[command, "-L", "3", "-A", "ida*", "-H", "l"],
+			[command, "-L", "3", "-A", "ida", "-H", "l"],
 			stdin =subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	elif algorithm == "a_1":
 		process_solve_puzzle = subprocess.Popen(
-			[command, "-L", "3", "-A", "a_star_t", "-H", "t"],
+			[command, "-L", "3", "-A", "a", "-H", "t"],
 			stdin =subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	elif algorithm == "a_2":
 		process_solve_puzzle = subprocess.Popen(
-			[command, "-L", "3", "-A", "a_star_t", "-H", "l"],
+			[command, "-L", "3", "-A", "a", "-H", "l"],
 			stdin =subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	else:
 		process_solve_puzzle = subprocess.Popen(

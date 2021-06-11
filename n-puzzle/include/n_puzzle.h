@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 18:09:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:37:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef enum e_algorithm
 	E_BFS_1,
 	E_BFS_2,
 	E_TOOP_1,
-	E_A_STAR_T,
+	E_A_STAR,
 	E_IDA_STAR,
 	E_GREEDY
 }				t_algorithm;
@@ -222,6 +222,7 @@ typedef struct s_puzzle
 	t_bt_node			**states_prio_queue;
 	int					print_delay;
 	t_stat_counters		*stat_counters;
+	int					solvable;
 }				t_puzzle;
 
 typedef enum e_connection_status

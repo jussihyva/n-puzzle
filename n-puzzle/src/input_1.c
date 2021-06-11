@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 12:59:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:00:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static char	*set_algorithm_string(t_algorithm algorithm)
 		algorithm_string = ft_strdup("bfs");
 	else if (algorithm == E_TOOP_1)
 		algorithm_string = ft_strdup("toop");
-	else if (algorithm == E_A_STAR_T)
-		algorithm_string = ft_strdup("a_star");
+	else if (algorithm == E_A_STAR)
+		algorithm_string = ft_strdup("a");
 	else if (algorithm == E_IDA_STAR)
-		algorithm_string = ft_strdup("ida*");
+		algorithm_string = ft_strdup("ida");
 	else if (algorithm == E_GREEDY)
 		algorithm_string = ft_strdup("greedy");
 	return (algorithm_string);
@@ -55,7 +55,7 @@ static char	*based_on_search_alg(t_algorithm algorithm)
 		algorithm_substring = ft_strdup("b_tree");
 	else if (algorithm == E_TOOP_1)
 		algorithm_substring = ft_strdup("tiles_out_of_place");
-	else if (algorithm == E_A_STAR_T)
+	else if (algorithm == E_A_STAR)
 		algorithm_substring = ft_strdup("taxicab");
 	return (algorithm_substring);
 }
@@ -89,9 +89,9 @@ static t_algorithm	validate_search_algorithm(char *algorithm_string)
 		algorithm = E_BFS_2;
 	else if (!ft_strcmp(algorithm_string, "toop_1"))
 		algorithm = E_TOOP_1;
-	else if (!ft_strcmp(algorithm_string, "a_star_t"))
-		algorithm = E_A_STAR_T;
-	else if (!ft_strcmp(algorithm_string, "ida*"))
+	else if (!ft_strcmp(algorithm_string, "a"))
+		algorithm = E_A_STAR;
+	else if (!ft_strcmp(algorithm_string, "ida"))
 		algorithm = E_IDA_STAR;
 	else if (!ft_strcmp(algorithm_string, "greedy"))
 		algorithm = E_GREEDY;

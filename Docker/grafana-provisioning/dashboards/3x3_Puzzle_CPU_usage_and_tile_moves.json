@@ -768,7 +768,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "a_star"
+				"value": "a"
 			  },
 			  {
 				"condition": "AND",
@@ -1947,7 +1947,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time($__interval) fill(null)",
+			"query": "SELECT mean(\"tile_moves\")  / (mean(\"total_cpu_usage_time\")  / 1000) FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '3' AND \"algorithm\" = 'a' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time($__interval) fill(null)",
 			"rawQuery": true,
 			"refId": "G",
 			"resultFormat": "time_series",

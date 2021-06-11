@@ -257,7 +257,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "a_star"
+				"value": "a"
 			  },
 			  {
 				"condition": "AND",
@@ -496,7 +496,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",
@@ -986,7 +986,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "a_star"
+				"value": "a"
 			  },
 			  {
 				"condition": "AND",
@@ -1237,7 +1237,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",
@@ -1858,7 +1858,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",
@@ -1977,7 +1977,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",

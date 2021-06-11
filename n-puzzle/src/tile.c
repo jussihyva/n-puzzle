@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 21:04:21 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 16:18:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:43:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	decide_is_puzzle_solvable(int puzzle_size, int num_of_inversions,
 	else
 		is_solvable = in_case_of_even_num_of_tiles(num_of_inversions);
 	if (!is_solvable)
-		FT_LOG_FATAL("Puzzle is NOT solvable!");
+		FT_LOG_WARN("Puzzle is NOT solvable!");
 	return (is_solvable);
 }
 
@@ -101,7 +101,6 @@ int	is_puzzle_solvable(t_map *puzzle_map, t_xy_values *tile_right_pos_array)
 	int				current_tile_number;
 	int				empty_tile_row_nbr;
 
-	is_solvable = 1;
 	xy_pos.y = -1;
 	num_of_inversions = 0;
 	xy_pos.y = -1;

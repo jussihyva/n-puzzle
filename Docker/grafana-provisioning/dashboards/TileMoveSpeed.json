@@ -231,7 +231,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
@@ -265,7 +265,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "a_star"
+				"value": "a"
 			  },
 			  {
 				"condition": "AND",
@@ -478,7 +478,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida*' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida' AND \"algorithm_substring\" = 'taxicab') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
@@ -506,7 +506,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",
@@ -972,7 +972,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a_star' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'a' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
@@ -1000,7 +1000,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "a_star"
+				"value": "a"
 			  },
 			  {
 				"condition": "AND",
@@ -1225,7 +1225,7 @@
 			"measurement": "project=n-puzzle",
 			"orderByTime": "ASC",
 			"policy": "default",
-			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida*' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
+			"query": "SELECT (mean(\"puzzle_states\") * 1000 / mean(\"solver_cpu_usage_time\")) AS TileMoveSpeed FROM \"project=n-puzzle\" WHERE (\"puzzle_size\" = '6' AND \"algorithm\" = 'ida' AND \"algorithm_substring\" = 'linear_conflict') AND $timeFilter GROUP BY time(1h)",
 			"rawQuery": true,
 			"refId": "A",
 			"resultFormat": "time_series",
@@ -1253,7 +1253,7 @@
 				"condition": "AND",
 				"key": "algorithm",
 				"operator": "=",
-				"value": "ida*"
+				"value": "ida"
 			  },
 			  {
 				"condition": "AND",

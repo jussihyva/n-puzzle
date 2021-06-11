@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 12:58:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:39:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 {
 	set_solver_start_time(puzzle->statistics);
 	if (puzzle->curr_status->tiles_in_right_pos
-		== puzzle->num_of_tile_pos)
+		== puzzle->num_of_tile_pos || !puzzle->solvable)
 		print_solution(puzzle->curr_status, puzzle);
 	else if (!ft_strncmp(algorithm, "dfs", 3))
 		dfs(puzzle);
@@ -89,9 +89,9 @@ static void	puzzle_solver(char *algorithm, t_puzzle *puzzle)
 		bfs(puzzle);
 	else if (!ft_strncmp(algorithm, "toop", 3))
 		alg_toop(puzzle);
-	else if (!ft_strncmp(algorithm, "a_star", 3))
+	else if (!ft_strncmp(algorithm, "a", 3))
 		alg_a_star(puzzle);
-	else if (!ft_strncmp(algorithm, "ida*", 3))
+	else if (!ft_strncmp(algorithm, "ida", 3))
 		alg_ida_star(puzzle);
 	else if (!ft_strncmp(algorithm, "greedy", 3))
 		alg_greedy(puzzle);

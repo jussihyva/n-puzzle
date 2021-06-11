@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 14:19:02 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/06 13:09:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 15:38:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ t_puzzle	*initialize_puzzle(t_input *input)
 	set_tile_numbers_target_positions(puzzle->pos_table, puzzle->size);
 	puzzle->tile_right_pos_array
 		= create_tile_right_pos_array(puzzle->pos_table, puzzle->size);
-	is_puzzle_solvable(puzzle_map, puzzle->tile_right_pos_array);
 	puzzle->curr_status = create_puzzle_status(puzzle_map->tile_map, puzzle);
+	puzzle->solvable = is_puzzle_solvable(puzzle_map, puzzle->tile_right_pos_array);
 	return (puzzle);
 }
