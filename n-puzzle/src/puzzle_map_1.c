@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:08:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:25:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 11:24:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ static int	read_map_size(const char *line)
 
 	size = ft_strtoi(line, &remainings, 10);
 	if (*remainings != '\0' || errno)
-	{
 		FT_LOG_ERROR("%s %s",
-			"ERROR: Map size is not valid integer value:",
-			line);
-		exit(42);
-	}
+			"ERROR: Map size is not valid integer value:", line);
+	else if (size < 3 || size > 500)
+		FT_LOG_ERROR("%s %s",
+			"ERROR: Map size is not valid. Sould be 3 --> 500:", line);
 	return (size);
 }
 

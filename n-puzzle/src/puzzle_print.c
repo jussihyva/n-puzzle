@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 12:59:15 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/08 09:59:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/11 11:00:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_puzzle(int fd, t_tiles_pos_map *tiles_pos_map, int puzzle_size)
 {
-	char			line[1000];
-	char			string[6];
+	char			line[100000];
+	char			string[60];
 	int				tile_number;
 	t_xy_values		yx;
 
