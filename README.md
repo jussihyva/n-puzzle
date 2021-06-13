@@ -4,7 +4,30 @@ N-Puzzle is a project at Hive (Helsinki) coding school.
 
 ## 1. Project description
 
-### 1.1 A goal of the project
+### 1.1 What is N-Puzzle
+
+N-Puzzle is sliding puzzle and the most common one is 15-Puzzle.
+
+#### 1.1.1 Description of 15-Puzzle in Wikipedia (https://en.wikipedia.org/wiki/15_puzzle)
+
+The 15 puzzle (also called Gem Puzzle, Boss Puzzle, Game of Fifteen, Mystic Square and many others) is a sliding puzzle having 15 square tiles numbered 1–15 in a frame that is 4 tiles high and 4 tiles wide, leaving one unoccupied tile position. Tiles in the same row or column of the open position can be moved by sliding them horizontally or vertically, respectively. The goal of the puzzle is to place the tiles in numerical order.
+
+Named for the number of tiles in the frame, the 15 puzzle may also be called a 16 puzzle, alluding to its total tile capacity. Similar names are used for different sized variants of the 15 puzzle, such as the 8 puzzle that has 8 tiles in a 3×3 frame.
+
+The n puzzle is a classical problem for modelling algorithms involving heuristics. Commonly used heuristics for this problem include counting the number of misplaced tiles and finding the sum of the taxicab distances between each block and its position in the goal configuration.[1] Note that both are admissible, i.e. they never overestimate the number of moves left, which ensures optimality for certain search algorithms such as A*.
+
+
+#### 1.1.2 Useful links to get more information
+
+- [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle)
+- [Sliding puzzle](https://en.wikipedia.org/wiki/Sliding_puzzle)
+
+#### 1.1.3 An example
+
+![15-Puzzle looks like this](https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif)
+https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif
+
+### 1.2 A goal of the project
 
 The goal of this project is to solve the N-puzzle game using the A\* search algorithm or one of its variants.
 You start with a square board made up of N*N cells. One of these cells will be empty,
@@ -44,12 +67,12 @@ The only move one can do in the N-puzzle is to swap the empty cell with one of i
 neighbors (No diagonals, of course. Imagine you’re sliding a block with a number on it
 towards an empty space).
 
-### 1.2 Visualization of 3x3 Puzzle algorithms
+### 1.3 Visualization of 3x3 Puzzle algorithms
 
 Here is a link to a page which demonstrate (visualize) solutions for solving 3x3 Puzzle. The page is not related to the Hive N-Puzzle project.
 * https://tristanpenman.com/demos/n-puzzle/
 
-### 1.3 Ready made script for creating input (N-puzzle) for a solution
+### 1.4 Ready made script for creating input (N-puzzle) for a solution
 
 ## 2. My Solution
 
