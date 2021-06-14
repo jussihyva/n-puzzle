@@ -39,14 +39,14 @@ below). While there will be no direct evaluation of its performance in this inst
 project, it has to have at least a vaguely reasonable perfomance : Taking a few second to
 solve a 3-puzzle is pushing it, ten seconds is unacceptable.
 
-**3x3 Puzzle**
+**8-Puzzle (3x3)**
 ||||
 |-|-|-|
 |1|2|3|
 |8||4|
 |7|6|5|
 
-**4x4 Puzzle**
+**15-Puzzle (4x4)**
 |||||
 |-|-|-|-|
 |1|2|3|4|
@@ -54,7 +54,7 @@ solve a 3-puzzle is pushing it, ten seconds is unacceptable.
 |11||15|6|
 |10|9|8|7|
 
-**5x5 Puzzle**
+**24-Puzzle (5x5)**
 ||||||
 |-|-|-|-|-|
 |1|2|3|4|5|
@@ -80,7 +80,40 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 [Link to Solution description (PPT)](https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777)
 
-#### 2.1.1 Visualized solution descriptions
+#### 2.1.1 Complexity of N-Puzzle
+
+| Puzzle size | Calculation | Number of possible states ([Refer to](https://en.wikipedia.org/wiki/15_puzzle#Solvability)) |
+| :-: | :-: | :-: |
+| 8 (3x3) | 9! / 2 | 181000 |
+| 15 (4x4) | 16! / 2 | 10 461 394 944 000
+| 24 (5x5) | 25! / 2 | 7 755 605 021 665 492 992 000 000
+
+#### 2.1.2 Overview of implemented search algorithms
+
+| Search algorithm | Cost of the path from start node | Estimat cost to the goal | More like |
+| :-: | :-: | :-: | :-: |
+| [A*]((https://en.m.wikipedia.org/wiki/A*_search_algorithm)) | Yes | Yes | BFS |
+| [IDA*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) | Yes | Yes | DFS |
+| [Greedy](https://en.wikipedia.org/wiki/Greedy_algorithm) | No | Yes | DFS |
+
+#### 2.1.3 Overview of implemented heuristic algorithms
+
+| Heuristic algorithm | Is admissible
+| :-: | :-: |
+| [Hamming](https://en.wikipedia.org/wiki/Hamming_distance) | Yes |
+| [Taxicab](https://en.m.wikipedia.org/wiki/Taxicab_geometry) | Yes |
+| [Taxicab with linear conflicts](https://medium.com/swlh/looking-into-k-puzzle-heuristics-6189318eaca2) | Yes |
+
+#### 2.1.4 Key measurements
+
+| Measurement | Valuable algorithm | goal |
+| :-: | :-: | :-: |
+| Solution moves | A*, IDA* | Least number of moves to reach a goal |
+| Memory usage | IDA*, Greedy | Least number of saved N-puzzle states |
+| CPU usage time | | Shortist time to solve a N-puzzle |
+| Solution complezity | | Least number of visited N-puzzle states |
+
+#### 2.1.5 Visualized solution descriptions
 
 * N-Puzzle creator
 ![](n-puzzle/data/N-Puzzle_Creator_Description.gif)
