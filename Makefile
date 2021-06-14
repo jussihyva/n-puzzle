@@ -6,11 +6,21 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/06/11 15:00:02 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/14 14:15:38 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PROJECT_FOLDERS		=	Docker n-puzzle
+
+define DOCKER_NOT_INSTALLED_ERROR
+
+	Docker is not installed:"
+
+		1. For Hive MAC's:	Download 42toolbox (github) and run init_docker.sh
+		2. For std linux env:	sudo apt-get install docker"
+
+		
+endef
 
 .PHONY: all
 all:
@@ -20,7 +30,8 @@ all:
 	@echo "2. Run N-Puzzle solver"
 	@echo "  make run"
 
-build: folders
+.PHONY: build
+build: check_docker folders
 	@echo "DONE"
 
 .PHONY: run
@@ -56,3 +67,9 @@ norm:
 	for folder in $(PROJECT_FOLDERS) ; do \
 	    make -C $$folder norm ; \
 	done
+
+.PHONY: check_docker
+check_docker:
+ifeq (, $(shell which docker))
+	$(error $(DOCKER_NOT_INSTALLED_ERROR))
+endif

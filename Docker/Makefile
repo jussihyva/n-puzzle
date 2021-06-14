@@ -2,7 +2,7 @@
 
 OS				=	$(shell uname -s)
 ifeq ($(OS), Darwin)
-	DOCKER_COMPOSE	=	docker compose
+	DOCKER_COMPOSE	=	docker-compose
 else
 	DOCKER_COMPOSE	=	docker-compose
 endif
