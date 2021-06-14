@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 23:44:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/04/28 18:09:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/14 14:34:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ time_t	get_execution_time(t_statistics *statistics)
 {
 	time_t	execution_time;
 
-	execution_time = (int)(statistics->end_time_ms
+	execution_time = (time_t)(statistics->end_time_ms
 			- statistics->start_time_ms);
 	return (execution_time);
 }
