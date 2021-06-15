@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/11 13:55:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:27:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	search_pos_index = 0;
 	new_g_h_cost_limit = INT_MAX;
 	available_puzzle_state = puzzle_status;
-	while (available_puzzle_state && !*is_puzzle_ready)
+	while (available_puzzle_state && !*is_puzzle_ready
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		available_puzzle_state = alg_n_puzzle_search_state(puzzle,
 				puzzle_status, &search_pos_index);
@@ -91,7 +92,7 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	return (new_g_h_cost_limit);
 }
 
-static int	check_is_limit_reached(int *counter_values)
+int	check_is_limit_reached(int *counter_values)
 {
 	int		is_limit_reached;
 

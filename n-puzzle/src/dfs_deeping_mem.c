@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 18:32:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:40:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 	is_puzzle_ready = 0;
 	i = -1;
 	while (puzzle->curr_status->depth < puzzle->max_depth && !is_puzzle_ready
-		&& ++i < pos->num_of_neighbors)
+		&& ++i < pos->num_of_neighbors
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		tile_move(pos, pos->neighbors[i], puzzle);
 		puzzle->curr_status->depth++;
@@ -70,21 +71,21 @@ static int	depth_limited_dfs_mem(t_puzzle *puzzle, t_pos *pos,
 
 void	dfs_deeping_mem(t_puzzle *puzzle)
 {
-	t_pos				*pos;
 	int					depth;
 	int					is_puzzle_ready;
 	t_puzzle_status		*puzzle_status;
 
-	pos = puzzle->curr_status->empty_pos;
 	is_puzzle_ready = 0;
 	puzzle->max_depth = -1;
 	depth = 0;
-	while (!is_puzzle_ready && ++puzzle->max_depth < INT_MAX)
+	while (!is_puzzle_ready && ++puzzle->max_depth < INT_MAX
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		puzzle_status = save_current_puzzle_status(puzzle->curr_status);
 		store_visited_puzzle_status_list(puzzle_status, puzzle);
 		puzzle->curr_status->prev_status = puzzle_status;
-		is_puzzle_ready = depth_limited_dfs_mem(puzzle, pos,
+		is_puzzle_ready = depth_limited_dfs_mem(puzzle,
+				puzzle->curr_status->empty_pos,
 				puzzle->puzzle_status_lst, puzzle_status);
 		FT_LOG_INFO("Depth level %2d done", puzzle->max_depth);
 		ft_bt_remove(puzzle->bt_root, NULL, delete_puzzle_status);

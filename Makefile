@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/06/14 14:15:38 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/15 12:10:05 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ build: check_docker folders
 
 .PHONY: run
 run: build
-	make -C n-puzzle run S=3 D=0 L=3 A="ida"
+	make -C n-puzzle run
 
 .PHONY: folders
 folders:

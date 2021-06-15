@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 14:40:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:37:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
 
 	is_puzzle_ready = 0;
 	i = -1;
-	while (depth && !is_puzzle_ready && ++i < pos->num_of_neighbors)
+	while (depth && !is_puzzle_ready && ++i < pos->num_of_neighbors
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		next_pos = pos->neighbors[i];
 		if (next_pos != prev_pos)
@@ -63,7 +64,8 @@ void	dfs_deeping(t_puzzle *puzzle)
 	pos = puzzle->curr_status->empty_pos;
 	is_puzzle_ready = 0;
 	depth = -1;
-	while (!is_puzzle_ready && ++depth < INT_MAX)
+	while (!is_puzzle_ready && ++depth < INT_MAX
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		is_puzzle_ready = depth_limited_dfs(puzzle, pos, depth, NULL);
 		FT_LOG_INFO("Depth level %2d done", depth);

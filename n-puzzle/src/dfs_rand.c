@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 10:58:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 19:12:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:36:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	dfs_no_mem(t_puzzle *puzzle)
 	int				i;
 
 	pos = puzzle->curr_status->empty_pos;
-	while (1)
+	while (!check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		i = ft_mod_int(fast_rand(), pos->num_of_neighbors);
 		next_pos = pos->neighbors[i];
