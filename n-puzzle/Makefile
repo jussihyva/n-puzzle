@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/15 12:21:46 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/15 15:36:19 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 ifdef M
 	MAX_MOVES		=	-i $(M)
 else
-	MAX_MOVES		=
+	MAX_MOVES		=	-i 10
 endif
 
 ifdef G
