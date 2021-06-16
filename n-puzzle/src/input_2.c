@@ -6,11 +6,51 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:32:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 12:52:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/16 13:40:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+static void	print_alg_alternatives()
+{
+	ft_printf("-A parameter <alg_name>:\n");
+	ft_printf("  a       A* search algorithm\n");
+	ft_printf("  ida     IDA* search algorithm\n");
+	ft_printf("  greedy  Greedy search algorithm\n");
+	ft_printf("  bfs_2   Breadth First Search algorithm\n");
+	ft_printf("\n-H parameter <alg_name>:\n");
+	ft_printf("  h       Hamming distance\n");
+	ft_printf("  t       Taxicab (Manhattan) distance\n");
+	ft_printf("  l       Taxicab distance with linear conflicts\n");
+}
+
+static void	print_usage(void)
+{
+	ft_printf("Usage:\n");
+	ft_printf("1.     ./bin/n_puzzle [options]\n");
+	ft_printf("      3\n");
+	ft_printf("      1 2 3\n");
+	ft_printf("      4 5 6\n");
+	ft_printf("      8 7 0\n");
+	ft_printf("      <Cntrl>-D\n");
+	ft_printf("\n2.     cat data/3_3_05.map | ./bin/n_puzzle [options]\n");
+	ft_printf("%s %s\n",
+		"\n3.     python ./bin/PuzzleGenerator.py -s 3",
+		"| ./bin/n_puzzle [options]\n");
+	ft_printf("%s %s\n",
+		"\n4.     python ./bin/PuzzleGenerator.py -s 3",
+		"| ./bin/n_puzzle [options] -D 2000 | ./bin/n-puzzle_gui.py\n");
+	ft_printf("\n\nOptional parameters:\n");
+	ft_printf("  -A <alg_name> Puzzle solving algorithm\n");
+	ft_printf("  -H <alg_name> Heuristic algorithm for distance calculation\n");
+	ft_printf("  -L    Event logging level\n");
+	ft_printf("  -D    Result printout speed. Delay (ms) between tile moves\n");
+	ft_printf("  -r    Release request for post proocessing functions\n");
+	ft_printf("  -h    Help printout\n");
+	print_alg_alternatives();
+	exit(42);
+}
 
 static int	conv_str_to_int(const char opt, const char *s)
 {
@@ -51,6 +91,8 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 		cmd_args->input_file = ft_strdup(next_arg);
 	else if (opt == 'r')
 		cmd_args->release = 1;
+	else if (opt == 'h')
+		print_usage();
 	return ;
 }
 

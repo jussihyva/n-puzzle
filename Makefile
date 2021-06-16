@@ -6,11 +6,12 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/06/16 10:08:40 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/16 13:05:00 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 PROJECT_FOLDERS		=	Docker n-puzzle
+CUR_DIR				=	$(abspath .)
 
 define DOCKER_NOT_INSTALLED_ERROR
 
@@ -29,6 +30,10 @@ all:
 	@echo ""
 	@echo "2. Run N-Puzzle solver"
 	@echo "  make run"
+	@echo ""
+	@echo "3. Help"	
+	@echo "  $(CUR_DIR)/n-puzzle/bin/n_puzzle -h"
+	@echo ""
 
 .PHONY: build
 build: check_docker folders

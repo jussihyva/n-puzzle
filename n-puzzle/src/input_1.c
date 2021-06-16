@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:57:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/11 15:00:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/16 11:40:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_input	*read_input_data(int argc, char **argv, t_statistics *statistics)
 	input = (t_input *)ft_memalloc(sizeof(*input));
 	input->statistics = statistics;
 	set_loging_parameters(input, LOG_TRACE, statistics);
-	options = ft_strdup("L:rA:f:D:H:");
+	options = ft_strdup("hL:rA:f:D:H:");
 	input->cmd_args = arg_parser(save_cmd_arguments, argc, argv, options);
 	ft_log_set_level(input->cmd_args->loging_level);
 	input->puzzle_map = read_puzzle_map(input->cmd_args->input_file);

@@ -6,11 +6,13 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/15 15:36:19 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/16 11:13:42 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Input parameters
+
+CUR_DIR				=	$(abspath .)
 
 ifdef M
 	MAX_MOVES		=	-i $(M)
@@ -61,7 +63,7 @@ endif
 ifdef H
 	HEURISTIC	=	-H $(H)
 else
-	HEURISTIC	=	
+	HEURISTIC	=	-H t
 endif
 
 OS				=	$(shell uname -s)
@@ -166,34 +168,32 @@ libraries_norm:
 .PHONY: run
 run: all
 ifeq ($(OS), Darwin)
-	cat $(MAP_FILE) | $(BIN)/$(NAME) $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-	$(PUZZLE_GUI)
+	cat $(CUR_DIR)/$(MAP_FILE) \
+	| $(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI)
 else
-	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
-	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-	$(PUZZLE_GUI)
+	cat $(CUR_DIR)/$(MAP_FILE) | valgrind -s --tool=memcheck --leak-check=full --show-leak-kinds=all \
+	$(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI)
 endif
 
 .PHONY: run_loop
 run_loop: all
 ifeq ($(OS), Darwin)
-	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-		$(PUZZLE_GUI) ; \
+	while [ 1 -eq 1 ] ; do \
+		python $(CUR_DIR)/bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
+		| $(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI) ; \
 		done
 else
-	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-		$(PUZZLE_GUI) ; done
+	while [ 1 -eq 1 ] ; do \
+		$(CUR_DIR)/bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
+		| $(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI) ; \
+		done
 endif
 
 .PHONY: run_test
 run_test: all
 	while [ 1 -eq 1 ] ; \
 	do \
-		python3 test/n-puzzle_test.py $(PUZZLE_SIZE) ; \
+		python3 $(CUR_DIR)/test/n-puzzle_test.py $(PUZZLE_SIZE) ; \
 	done
 
 $(SELF_SIGNED_CRT):
@@ -208,14 +208,11 @@ $(SELF_SIGNED_CRT):
 .PHONY: run_leaks
 run_leaks: all
 ifeq ($(OS), Darwin)
-	cat $(MAP_FILE) | $(BIN)/$(NAME) $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-	$(PUZZLE_GUI)
+	cat $(CUR_DIR)/$(MAP_FILE) | $(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI)
 else
-	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
-	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) $(LOGING_LEVEL) \
-	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
-	$(PUZZLE_GUI)
+	cat $(CUR_DIR)/$(MAP_FILE) | valgrind -s --tool=memcheck \
+	--leak-check=full --show-leak-kinds=all \
+	$(CUR_DIR)/$(BIN)/$(NAME) $(LOGING_LEVEL) -A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) $(PUZZLE_GUI)
 endif
 
 print_key:
