@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/06/16 07:45:38 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/16 10:08:40 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ define DOCKER_NOT_INSTALLED_ERROR
 
 	Docker is not installed:"
 
-		1. For Hive MAC's:	Download 42toolbox (github) and run init_docker.sh
+		1. For Hive MAC's:	Download alexandregv/42toolbox (github) and run init_docker.sh
 		2. For std linux env:	sudo apt-get install docker"
 
 		
