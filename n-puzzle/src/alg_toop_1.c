@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 14:23:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:31:59 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	alg_toop_1(t_puzzle *puzzle)
 	puzzle_status->is_in_queue = 1;
 	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
 	(*puzzle->states_cnt)++;
-	while (!is_puzzle_ready && *puzzle->states_prio_queue)
+	while (!is_puzzle_ready && *puzzle->states_prio_queue
+		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
 		puzzle_status
 			= (t_puzzle_status *)ft_prio_dequeue(puzzle->states_prio_queue);

@@ -6,31 +6,18 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 12:30:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 13:23:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
-
-// static void	release_prio_queue(t_queue *states_prio_queue)
-// {
-// 	while (states_prio_queue)
-// 	{
-
-// 	}
-// 	return ;
-// }
 
 static void	release_status_queue(t_queue *status_queue)
 {
 	t_puzzle_status		*puzzle_status;
 
 	while (!ft_is_queue_empty(status_queue))
-	{
 		puzzle_status = (t_puzzle_status *)ft_dequeue(status_queue);
-		ft_memdel((void **)&puzzle_status->tiles_pos_map.map);
-		ft_memdel((void **)&puzzle_status);
-	}
 	ft_memdel((void **)&status_queue->in_stack);
 	ft_memdel((void **)&status_queue->out_stack);
 	ft_memdel((void **)&status_queue);

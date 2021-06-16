@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/11 15:37:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/15 12:24:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,5 +339,6 @@ int				calculate_heuristic_distance(t_puzzle_status *puzzle_state,
 					t_puzzle *puzzle);
 void			release_input(t_input *input);
 void			print_result_summary(t_statistics *statistics);
+int				check_is_limit_reached(int *counter_values);
 
 #endif

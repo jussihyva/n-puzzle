@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/09 13:36:09 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/15 15:36:19 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,17 @@
 ifdef M
 	MAX_MOVES		=	-i $(M)
 else
-	MAX_MOVES		=
+	MAX_MOVES		=	-i 10
 endif
 
 ifdef G
-	PUZZLE_GUI		=	| ./bin/n-puzzle_gui.py
+	ifeq (1, $(G))
+		PUZZLE_GUI	=	>/dev/null
+	else
+		PUZZLE_GUI	=	| ./bin/n-puzzle_gui.py
+	endif
 else
-	PUZZLE_GUI		=	>/dev/null
+	PUZZLE_GUI		=
 endif
 
 ifdef S
@@ -43,9 +47,9 @@ else
 endif
 
 ifdef L
-	LOGING_LEVEL	=	$(L)
+	LOGING_LEVEL	=	-L $(L)
 else
-	LOGING_LEVEL	=	3
+	LOGING_LEVEL	=	
 endif
 
 ifdef A
@@ -162,12 +166,12 @@ libraries_norm:
 .PHONY: run
 run: all
 ifeq ($(OS), Darwin)
-	cat $(MAP_FILE) | $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
+	cat $(MAP_FILE) | $(BIN)/$(NAME) $(LOGING_LEVEL) \
 	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 	$(PUZZLE_GUI)
 else
 	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
-	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) -L $(LOGING_LEVEL) \
+	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) $(LOGING_LEVEL) \
 	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 	$(PUZZLE_GUI)
 endif
@@ -176,12 +180,12 @@ endif
 run_loop: all
 ifeq ($(OS), Darwin)
 	while [ 1 -eq 1 ] ; do python ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+		| $(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; \
 		done
 else
 	while [ 1 -eq 1 ] ; do ./bin/PuzzleGenerator.py ${MAX_MOVES} -s $(PUZZLE_SIZE) \
-		| $(BIN)/$(NAME) -L $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+		| $(BIN)/$(NAME) $(LOGING_LEVEL) -rA $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
 		$(PUZZLE_GUI) ; done
 endif
 
@@ -200,6 +204,19 @@ $(SELF_SIGNED_CRT):
 	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=Hive/CN=n-puzzle"
 	chmod 644 $(SELF_SIGNED_CRT)
 	chmod +r $(SELF_SIGNED_KEY)
+
+.PHONY: run_leaks
+run_leaks: all
+ifeq ($(OS), Darwin)
+	cat $(MAP_FILE) | $(BIN)/$(NAME) $(LOGING_LEVEL) \
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+	$(PUZZLE_GUI)
+else
+	cat $(MAP_FILE) | valgrind -s --tool=memcheck \
+	--leak-check=full --show-leak-kinds=all $(BIN)/$(NAME) $(LOGING_LEVEL) \
+	-A $(ALGORITHM) $(HEURISTIC) -D $(PRINT_DELAY) \
+	$(PUZZLE_GUI)
+endif
 
 print_key:
 	openssl x509 -in $(SELF_SIGNED_CRT) -text -noout
