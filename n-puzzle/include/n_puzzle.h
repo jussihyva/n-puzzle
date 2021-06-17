@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:24:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 09:56:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +296,7 @@ void			stat_update_mem_usage(t_statistics *statistics);
 void			release_statistics_params(t_statistics *statistics);
 void			set_total_cpu_usage_time(t_statistics *statistics);
 void			delete_puzzle_status(void *data, size_t size);
+void			delete_puzzle_status_from_lst(void *data, size_t size);
 t_puzzle_status	*create_puzzle_status(int **tile_map, t_puzzle *puzzle);
 t_puzzle_status	*save_current_puzzle_status(t_puzzle_status *curr_status);
 int				is_visited_puzzle_status_list(t_tiles_pos_map *tiles_pos_map,

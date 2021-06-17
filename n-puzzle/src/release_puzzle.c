@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 17:19:11 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 13:23:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 09:56:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	release_puzzle(t_puzzle *puzzle)
 		delete_puzzle_status);
 	ft_memdel((void **)&puzzle->bt_root);
 	release_status_queue(puzzle->status_queue);
-	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status);
+	ft_lstdel(puzzle->puzzle_status_lst, delete_puzzle_status_from_lst);
 	ft_memdel((void **)&puzzle->puzzle_status_lst);
 	release_pos_table(puzzle->size, &puzzle->pos_table);
 	ft_memdel((void **)&puzzle->pos_table);
