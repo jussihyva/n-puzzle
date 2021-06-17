@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 13:08:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 14:51:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ int	main(int argc, char **argv)
 	statistics = initialize_statistics();
 	input = read_input_data(argc, argv, statistics);
 	stat_set_start_time(input->statistics);
-	influxdb = setup_influxdb_connection("127.0.0.1", "8086");
-	statistics->connection = (t_tls_connection *)influxdb->connection;
+	influxdb = setup_influxdb_connection("127.0.0.1", "8086", statistics);
 	statistics->puzzle_size = input->puzzle_map->size;
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input);

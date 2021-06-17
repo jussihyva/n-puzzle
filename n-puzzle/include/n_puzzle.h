@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 13:05:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 14:51:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,8 @@ void			set_solver_end_time(t_statistics *statistics);
 time_t			get_execution_time(t_statistics *statistics);
 t_statistics	*initialize_statistics(void);
 void			influxdb_plugin(t_log_event *event);
-t_influxdb		*setup_influxdb_connection(char *host_name, char *port_number);
+t_influxdb		*setup_influxdb_connection(char *host_name, char *port_number,
+					t_statistics *statistics);
 void			write_influxdb(t_tls_connection *connection, char *body,
 					char *database);
 void			dfs_no_mem(t_puzzle *puzzle);
