@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 14:19:04 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:33:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 06:55:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ void	bfs_1(t_puzzle *puzzle)
 	is_puzzle_ready = 0;
 	if (puzzle->curr_status->tiles_in_right_pos == puzzle->num_of_tile_pos)
 		is_puzzle_ready = 1;
-	puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-	ft_enqueue(puzzle->status_queue, (void *)puzzle_status);
-	puzzle_status->is_in_queue = 1;
+	if (puzzle->algorithm == E_BFS_1)
+		add_next_status_to_queue_1(puzzle);
+	else
+		add_next_status_to_queue_2(puzzle);
 	while (!is_puzzle_ready && !ft_is_queue_empty(puzzle->status_queue)
 		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{

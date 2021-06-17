@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/11 15:39:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 07:15:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	main(int argc, char **argv)
 	puzzle->stat_counters = &statistics->stat_counters;
 	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[
 		E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS];
+	stat_update_mem_usage(puzzle->statistics);
 	puzzle_solver(input->cmd_args->algorithm, puzzle);
 	send_stat_report(puzzle);
 	release(input, influxdb, puzzle);
