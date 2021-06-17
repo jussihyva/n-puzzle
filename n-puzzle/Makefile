@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/16 11:13:42 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/17 10:10:03 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,8 @@ INCLUDES		=	-I $(INCLUDE) -I $(LIB)
 
 # C (Source code) and H (Header) files
 SRC_C_FILES		=	loging_parameters.c arg_parser.c puzzle_map_1.c \
-					puzzle_map_2.c release_puzzle.c input_1.c input_2.c \
+					puzzle_map_2.c release_puzzle.c \
+					input_1.c input_2.c input_3.c \
 					input_heuristic.c \
 					initialize_puzzle_1.c initialize_puzzle_2.c \
 					puzzle_print.c statistics_1.c statistics_2.c \

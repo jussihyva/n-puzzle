@@ -6,15 +6,15 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 18:32:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/16 13:40:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 10:18:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
 
-static void	print_alg_alternatives()
+static void	print_alg_alternatives(void)
 {
-	ft_printf("-A parameter <alg_name>:\n");
+	ft_printf("\n-A parameter <alg_name>:\n");
 	ft_printf("  a       A* search algorithm\n");
 	ft_printf("  ida     IDA* search algorithm\n");
 	ft_printf("  greedy  Greedy search algorithm\n");
@@ -37,10 +37,10 @@ static void	print_usage(void)
 	ft_printf("\n2.     cat data/3_3_05.map | ./bin/n_puzzle [options]\n");
 	ft_printf("%s %s\n",
 		"\n3.     python ./bin/PuzzleGenerator.py -s 3",
-		"| ./bin/n_puzzle [options]\n");
+		"| ./bin/n_puzzle [options]");
 	ft_printf("%s %s\n",
 		"\n4.     python ./bin/PuzzleGenerator.py -s 3",
-		"| ./bin/n_puzzle [options] -D 2000 | ./bin/n-puzzle_gui.py\n");
+		"| ./bin/n_puzzle -D 2000 | ./bin/n-puzzle_gui.py\n");
 	ft_printf("\n\nOptional parameters:\n");
 	ft_printf("  -A <alg_name> Puzzle solving algorithm\n");
 	ft_printf("  -H <alg_name> Heuristic algorithm for distance calculation\n");
@@ -93,53 +93,5 @@ void	save_cmd_arguments(t_cmd_args *cmd_args, char opt, char *next_arg)
 		cmd_args->release = 1;
 	else if (opt == 'h')
 		print_usage();
-	return ;
-}
-
-void	print_result_summary(t_statistics *statistics)
-{
-	int		*counter_values;
-
-	counter_values = statistics->stat_counters.counter_values;
-	ft_dprintf(2, "%-28s %d\n", "Puzzle size:", statistics->puzzle_size);
-	ft_dprintf(2, "%-28s %s %s\n", "Used algorithm:", statistics->algorithm,
-		statistics->algorithm_substring);
-	ft_dprintf(2, "%-28s %ld ms\n", "Execution time:",
-		get_execution_time(statistics));
-	ft_dprintf(2, "%-28s %ld ms\n", "CPU usage time:",
-		statistics->cpu_usage_ms);
-	ft_dprintf(2, "%-28s %d Mb\n", "Memory usage:",
-		counter_values[E_MAX_MEM_USAGE] / 1000);
-	ft_dprintf(2, "%-28s %d\n", "Total number of tile moves:",
-		counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]
-		+ counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]);
-	ft_dprintf(2, "%-28s %d\n", "Number of solution moves:",
-		statistics->solution_move_cnt);
-	return ;
-}
-
-void	release_input(t_input *input)
-{
-	int		i;
-
-	release_statistics_params(input->statistics);
-	i = -1;
-	while (++i < LOGING_LEVELS)
-	{
-		ft_memdel((void **)&input->level_colors[i]);
-		ft_memdel((void **)&input->level_strings[i]);
-	}
-	ft_memdel((void **)&input->level_colors);
-	ft_memdel((void **)&input->level_strings);
-	i = -1;
-	while (++i < input->puzzle_map->size)
-		ft_memdel((void **)&input->puzzle_map->tile_map[i]);
-	ft_memdel((void **)&input->cmd_args->algorithm);
-	ft_memdel((void **)&input->cmd_args->heuristic_algorithm);
-	ft_memdel((void **)&input->cmd_args);
-	ft_memdel((void **)&input->puzzle_map->tile_map);
-	ft_memdel((void **)&input->puzzle_map);
-	ft_memdel((void **)&input);
-	ft_release_loging_params();
 	return ;
 }

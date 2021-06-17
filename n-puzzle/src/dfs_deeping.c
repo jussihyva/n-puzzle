@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:37:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 10:06:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	depth_limited_dfs(t_puzzle *puzzle, t_pos *pos, int depth,
 	int						is_puzzle_ready;
 	int						i;
 
-	is_puzzle_ready = 0;
 	i = -1;
 	while (depth && !is_puzzle_ready && ++i < pos->num_of_neighbors
 		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
