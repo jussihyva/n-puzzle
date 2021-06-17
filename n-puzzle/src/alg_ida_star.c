@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 13:24:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:32:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	add_state(t_puzzle *puzzle, t_puzzle_status *puzzle_state)
 {
 	int		*counter_values;
 
+	puzzle->states_stack_size++;
 	counter_values = puzzle->stat_counters->counter_values;
 	ft_stack_push(&puzzle->states_stack, puzzle_state);
 	counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]++;
