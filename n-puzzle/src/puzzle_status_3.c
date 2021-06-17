@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 17:09:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/03 17:13:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:08:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	store_visited_puzzle_status_list(t_puzzle_status *puzzle_status,
 
 	new_elem = ft_lstnew((void **)&puzzle_status, sizeof(puzzle_status));
 	ft_lstadd(puzzle->puzzle_status_lst, new_elem);
-	(*puzzle->states_cnt)++;
+	puzzle->stat_counters->counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]++;
+	puzzle->stat_counters->counter_values[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]++;
 	return ;
 }
 
 void	store_visited_puzzle_status_b_tree(t_puzzle_status *puzzle_status,
-															t_bt_node **bt_root)
+															t_puzzle *puzzle)
 {
 	t_bt_key			bt_key;
 	t_bt_data			bt_data;
@@ -33,7 +34,9 @@ void	store_visited_puzzle_status_b_tree(t_puzzle_status *puzzle_status,
 	bt_key.key_size = puzzle_status->tiles_pos_map.map_size;
 	bt_data.data = (void *)puzzle_status;
 	bt_data.data_size = sizeof(puzzle_status);
-	ft_bt_instert(&bt_key, &bt_data, bt_root);
+	ft_bt_instert(&bt_key, &bt_data, puzzle->bt_root);
+	puzzle->stat_counters->counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]++;
+	puzzle->stat_counters->counter_values[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]++;
 	return ;
 }
 

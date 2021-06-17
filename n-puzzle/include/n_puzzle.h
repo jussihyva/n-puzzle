@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:52 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 09:56:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:05:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,10 +214,10 @@ typedef struct s_puzzle
 	int					max_depth;
 	t_puzzle_status		*curr_status;
 	t_list				**puzzle_status_lst;
-	int					*states_cnt;
 	int					*state_collision_cnt;
 	t_queue				*status_queue;
 	t_list				*states_stack;
+	int					states_stack_size;
 	t_bt_node			**bt_root;
 	t_bt_node			**states_prio_queue;
 	int					print_delay;
@@ -306,7 +306,7 @@ int				is_visited_puzzle_status_b_tree(t_tiles_pos_map *tiles_pos_map,
 void			store_visited_puzzle_status_list(t_puzzle_status *puzzle_status,
 					t_puzzle *puzzle);
 void			store_visited_puzzle_status_b_tree(
-					t_puzzle_status *puzzle_status, t_bt_node **bt_root);
+					t_puzzle_status *puzzle_status, t_puzzle *puzzle);
 void			bfs(t_puzzle *puzzle);
 void			alg_toop(t_puzzle *puzzle);
 void			alg_toop_1(t_puzzle *puzzle);

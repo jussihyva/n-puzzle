@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:41:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:05:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static int	select_next_puzzle_state(t_puzzle *puzzle,
 				available_puzzle_state, puzzle);
 		add_puzzle_state_to_prio_queue_1(available_puzzle_state,
 			puzzle->states_prio_queue);
-		store_visited_puzzle_status_b_tree(available_puzzle_state,
-			puzzle->bt_root);
-		(*puzzle->states_cnt)++;
+		store_visited_puzzle_status_b_tree(available_puzzle_state, puzzle);
 		if (available_puzzle_state->tiles_in_right_pos
 			== puzzle->num_of_tile_pos)
 			is_puzzle_ready = print_solution(available_puzzle_state, puzzle);
@@ -82,8 +80,7 @@ void	alg_greedy(t_puzzle *puzzle)
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 		(void *)puzzle_status);
 	puzzle_status->is_in_queue = 1;
-	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
-	(*puzzle->states_cnt)++;
+	store_visited_puzzle_status_b_tree(puzzle_status, puzzle);
 	while (!is_puzzle_ready && *puzzle->states_prio_queue
 		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{

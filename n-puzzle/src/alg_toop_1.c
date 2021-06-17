@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 17:55:05 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:31:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:08:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static t_puzzle_status	*add_state_to_prio_queue_1(t_puzzle *puzzle)
 		ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 			(void *)puzzle_status);
 		puzzle_status->is_in_queue = 1;
-		store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
-		(*puzzle->states_cnt)++;
+		store_visited_puzzle_status_b_tree(puzzle_status, puzzle);
 	}
 	return (puzzle_status);
 }
@@ -71,8 +70,7 @@ void	alg_toop_1(t_puzzle *puzzle)
 	ft_prio_enqueue(puzzle->states_prio_queue, &puzzle_status->prio,
 		(void *)puzzle_status);
 	puzzle_status->is_in_queue = 1;
-	store_visited_puzzle_status_b_tree(puzzle_status, puzzle->bt_root);
-	(*puzzle->states_cnt)++;
+	store_visited_puzzle_status_b_tree(puzzle_status, puzzle);
 	while (!is_puzzle_ready && *puzzle->states_prio_queue
 		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{

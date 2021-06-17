@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 14:14:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/02 14:14:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:24:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,15 @@ void	set_solver_end_time(t_statistics *statistics)
 	FT_LOG_INFO("Solver CPU time (ms): %ld",
 		statistics->stat_counters.counter_values[E_SOLVER_CPU_USAGE_TIME]);
 	return ;
+}
+
+int	check_is_limit_reached(int *counter_values)
+{
+	int		is_limit_reached;
+
+	is_limit_reached = 0;
+	if (counter_values[E_IS_MEM_LIMIT_REACHED]
+		|| counter_values[E_IS_TIME_LIMIT_REACHED])
+		is_limit_reached = 1;
+	return (is_limit_reached);
 }

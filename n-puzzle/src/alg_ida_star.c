@@ -6,11 +6,24 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 12:37:40 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:27:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:24:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_puzzle.h"
+
+static void	add_state(t_puzzle *puzzle, t_puzzle_status *puzzle_state)
+{
+	int		*counter_values;
+
+	counter_values = puzzle->stat_counters->counter_values;
+	ft_stack_push(&puzzle->states_stack, puzzle_state);
+	counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]++;
+	counter_values[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]
+		= ft_max_int(puzzle->states_stack_size,
+			counter_values[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]);
+	return ;
+}
 
 static int	ida_star_search_algorithm(t_puzzle *puzzle,
 				t_puzzle_status *puzzle_status, int g_h_cost,
@@ -53,8 +66,7 @@ static int	analyze_puzzle_state(t_puzzle *puzzle,
 	{
 		if (!is_state_in_path(puzzle_state, puzzle))
 		{
-			ft_stack_push(&puzzle->states_stack, puzzle_state);
-			(*puzzle->states_cnt)++;
+			add_state(puzzle, puzzle_state);
 			received_g_h_cost_limit = puzzle_state->prio;
 			if (g_h_cost >= puzzle_state->prio)
 				received_g_h_cost_limit = ida_star_search_algorithm(
@@ -62,6 +74,7 @@ static int	analyze_puzzle_state(t_puzzle *puzzle,
 			*new_g_h_cost_limit = ft_min_int(received_g_h_cost_limit,
 					*new_g_h_cost_limit);
 			ft_stack_pop(&puzzle->states_stack);
+			puzzle->states_stack_size--;
 		}
 	}
 	return (is_puzzle_ready);
@@ -92,17 +105,6 @@ static int	ida_star_search_algorithm(t_puzzle *puzzle,
 	return (new_g_h_cost_limit);
 }
 
-int	check_is_limit_reached(int *counter_values)
-{
-	int		is_limit_reached;
-
-	is_limit_reached = 0;
-	if (counter_values[E_IS_MEM_LIMIT_REACHED]
-		|| counter_values[E_IS_TIME_LIMIT_REACHED])
-		is_limit_reached = 1;
-	return (is_limit_reached);
-}
-
 void	alg_ida_star(t_puzzle *puzzle)
 {
 	int					is_puzzle_ready;
@@ -116,8 +118,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 			&puzzle_status->tiles_pos_map, puzzle->size,
 			puzzle->tile_right_pos_array);
 	puzzle_status->prio = g_h_cost_limit;
-	ft_stack_push(&puzzle->states_stack, (void *)puzzle_status);
-	(*puzzle->states_cnt)++;
+	add_state(puzzle, puzzle_status);
 	while (!is_puzzle_ready
 		&& !check_is_limit_reached(puzzle->stat_counters->counter_values))
 	{
@@ -128,6 +129,7 @@ void	alg_ida_star(t_puzzle *puzzle)
 		g_h_cost_limit = new_g_h_cost_limit;
 	}
 	ft_stack_pop(&puzzle->states_stack);
+	puzzle->states_stack_size--;
 	delete_puzzle_status((void *)puzzle_status, 0);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 20:12:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/15 12:40:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:08:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ static void	update_puzzle_state(int is_visited, t_puzzle *puzzle,
 	else
 	{
 		*puzzle_status = save_current_puzzle_status(puzzle->curr_status);
-		store_visited_puzzle_status_b_tree(*puzzle_status,
-			puzzle->bt_root);
-		(*puzzle->states_cnt)++;
+		store_visited_puzzle_status_b_tree(*puzzle_status, puzzle);
 	}
 	return ;
 }

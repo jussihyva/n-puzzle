@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 07:38:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 07:15:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:08:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ int	main(int argc, char **argv)
 	statistics->puzzle_size = input->puzzle_map->size;
 	print_map(input->puzzle_map);
 	puzzle = initialize_puzzle(input);
-	puzzle->states_cnt = &statistics->stat_counters.counter_values[
-		E_TOTAL_NUM_OF_PUZZLE_STATES];
 	puzzle->solution_move_cnt = &statistics->solution_move_cnt;
 	puzzle->stat_counters = &statistics->stat_counters;
 	puzzle->state_collision_cnt = &statistics->stat_counters.counter_values[

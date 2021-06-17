@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:10:43 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 10:14:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:00:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,23 @@ void	print_result_summary(t_statistics *statistics)
 	int		*counter_values;
 
 	counter_values = statistics->stat_counters.counter_values;
-	ft_dprintf(2, "%-28s %d\n", "Puzzle size:", statistics->puzzle_size);
-	ft_dprintf(2, "%-28s %s %s\n", "Used algorithm:", statistics->algorithm,
+	ft_dprintf(2, "%-38s %d\n", "Puzzle size:", statistics->puzzle_size);
+	ft_dprintf(2, "%-38s %s %s\n", "Used algorithm:", statistics->algorithm,
 		statistics->algorithm_substring);
-	ft_dprintf(2, "%-28s %ld ms\n", "Execution time:",
+	ft_dprintf(2, "%-38s %ld ms\n", "Execution time:",
 		get_execution_time(statistics));
-	ft_dprintf(2, "%-28s %ld ms\n", "CPU usage time:",
+	ft_dprintf(2, "%-38s %ld ms\n", "CPU usage time:",
 		statistics->cpu_usage_ms);
-	ft_dprintf(2, "%-28s %d Mb\n", "Memory usage:",
+	ft_dprintf(2, "%-38s %d Mb\n", "Memory usage:",
 		counter_values[E_MAX_MEM_USAGE] / 1000);
-	ft_dprintf(2, "%-28s %d\n", "Total number of tile moves:",
+	ft_dprintf(2, "%-38s %d\n", "Total number of tile moves:",
 		counter_values[E_TOTAL_NUM_OF_PUZZLE_STATES]
 		+ counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]);
-	ft_dprintf(2, "%-28s %d\n", "Number of solution moves:",
+	ft_dprintf(2, "%-38s %d\n", "Total number of tile move collisions:",
+		counter_values[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]);
+	ft_dprintf(2, "%-38s %d\n", "Max. number of saved states:",
+		counter_values[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]);
+	ft_dprintf(2, "%-38s %d\n", "Number of solution moves:",
 		statistics->solution_move_cnt);
 	return ;
 }

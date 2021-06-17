@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 10:00:07 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/10 12:58:31 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/17 11:53:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static char	**create_stat_counter_string_names(void)
 	string[E_TOTAL_NUM_OF_PUZZLE_STATES] = ft_strdup("puzzle_states=%di");
 	string[E_TOTAL_NUM_OF_PUZZLE_STATE_COLLISIONS]
 		= ft_strdup("state_collisions=%di");
-	string[E_MAX_NUM_OF_SAVED_PUZZLE_STATES] = ft_strdup("");
+	string[E_MAX_NUM_OF_SAVED_PUZZLE_STATES]
+		= ft_strdup("max_num_of_saved_puzzle_states");
 	string[E_MAX_QUEUE_LEN] = ft_strdup("");
 	string[E_TOTAL_NUM_OF_ELEM_IN_QUEUE] = ft_strdup("");
 	string[E_MAX_MEM_USAGE] = ft_strdup("max_mem_usage=%di");
