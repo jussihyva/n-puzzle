@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/04 13:42:36 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 13:05:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/18 14:11:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	calculate_heuristic_distance(t_puzzle_status *puzzle_state,
 	return (prio);
 }
 
-static int	select_next_puzzle_state(t_puzzle *puzzle,
+static int	greedy_search_algorithm(t_puzzle *puzzle,
 												t_puzzle_status *puzzle_status)
 {
 	t_puzzle_status		*available_puzzle_state;
@@ -56,17 +56,6 @@ static int	select_next_puzzle_state(t_puzzle *puzzle,
 			available_puzzle_state = alg_n_puzzle_search_state(puzzle,
 					puzzle_status, &search_pos_index);
 	}
-	return (is_puzzle_ready);
-}
-
-static int	greedy_search_algorithm(t_puzzle *puzzle,
-												t_puzzle_status *puzzle_status)
-{
-	int					is_puzzle_ready;
-
-	(void)puzzle;
-	(void)puzzle_status;
-	is_puzzle_ready = select_next_puzzle_state(puzzle, puzzle_status);
 	return (is_puzzle_ready);
 }
 

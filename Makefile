@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/20 10:35:04 by ubuntu            #+#    #+#              #
-#    Updated: 2021/06/16 13:05:00 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/18 13:53:53 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,19 @@ CUR_DIR				=	$(abspath .)
 
 define DOCKER_NOT_INSTALLED_ERROR
 
-	Docker is not installed:"
+	Docker is not installed:
 
 		1. For Hive MAC's:	Download alexandregv/42toolbox (github) and run init_docker.sh
 		2. For std linux env:	sudo apt-get install docker"
+
+		
+endef
+
+define OPENSSL_ERROR
+
+	OPENSSL is not installed:
+
+		1. For Hive MAC's:	brew install openssl
 
 		
 endef
@@ -35,8 +44,12 @@ all:
 	@echo "  $(CUR_DIR)/n-puzzle/bin/n_puzzle -h"
 	@echo ""
 
+.PHONY: help
+help: all
+	@echo "DONE"
+
 .PHONY: build
-build: check_docker folders
+build: check_openssl check_docker folders
 	@echo "DONE"
 
 .PHONY: run
@@ -78,3 +91,6 @@ check_docker:
 ifeq (, $(shell docker-compose -h))
 	$(error $(DOCKER_NOT_INSTALLED_ERROR))
 endif
+
+.PHONY: check_openssl
+check_openssl:

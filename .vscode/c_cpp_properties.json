@@ -8,7 +8,8 @@
 				"${default}",
 				"${workspaceFolder}/**",
 				"/usr/include/**",
-				"/Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1k/include"
+				"${env:HOME}/.brew/Cellar/openssl@1.1/1.1.1h/include/**",
+				"${env:HOME}/.brew/Cellar/openssl@1.1/1.1.1k/include/**"
 			],
 			"defines": [],
 			"compilerPath": "/usr/bin/clang",

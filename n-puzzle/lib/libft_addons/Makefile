@@ -6,14 +6,15 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/21 11:50:38 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/03 17:18:21 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/06/18 13:24:03 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 OS				=	$(shell uname -s)
 ifeq ($(OS), Darwin)
 	D_ATTRIBUTES	=	-D DARWIN
-	MAC_INCLUDES	=	-I /Users/jkauppi/.brew/Cellar/openssl@1.1/1.1.1k/include
+	MAC_INCLUDES	=	-I $(HOME)/.brew/Cellar/openssl@1.1/1.1.1h/include
+	MAC_INCLUDES	+=	-I $(HOME)/.brew/Cellar/openssl@1.1/1.1.1k/include
 endif
 
 NAME			=	libft_addons.a

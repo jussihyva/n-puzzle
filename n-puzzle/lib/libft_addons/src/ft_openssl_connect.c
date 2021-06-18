@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 16:42:37 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/06/17 14:44:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/06/18 14:14:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_tls_connection	*ft_openssl_connect(char *hostname, char *port,
 	error = connect(socket_fd, (struct sockaddr *)&addr, sizeof(addr));
 	if (error != -1)
 	{
-		tls_connection = (t_tls_connection *)ft_memalloc(sizeof(*tls_connection));
+		tls_connection
+			= (t_tls_connection *)ft_memalloc(sizeof(*tls_connection));
 		tls_connection->socket_fd = socket_fd;
 		tls_connection->ctx = ctx;
 		tls_connection->ssl_bio = SSL_new(ctx);
