@@ -108,10 +108,10 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 | Measurement | Valuable algorithm | goal |
 | :-: | :-: | :-: |
-| Solution moves | A*, IDA* | Least number of moves to reach a goal |
-| Memory usage | IDA*, Greedy | Least number of saved N-puzzle states |
+| Moves to reach a goal | A*, IDA* | Least number of tile moves to reach a goal |
+| Memory usage | IDA* | Least number of saved N-puzzle states |
 | CPU usage time | | Shortist time to solve a N-puzzle |
-| Solution complezity | | Least number of visited N-puzzle states |
+| Solution complezity | | Least number of visited N-puzzle states (tile moves) |
 
 #### 2.1.5 Visualized solution descriptions
 
@@ -130,13 +130,13 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 || DFS Random | dfs_1 | Depth-first search (DFS) with random selection of next move ||
 || DFS Deeping | dfs_2 | Depth-first search (DFS). Depth is increased step by step until solution of a puzzle is reached ||
 || DFS Deeping mem | dfs_3 | Depth-first search (DFS). Like dfs_2, but all N-puzzle states are saved which avoid tile moves already verified direction ||
+| **IDA*** | IDA* with a heuristic algorithm | ida | IDA* is based DFS, a heuristic algorithm and path cost to priorize tile moves. | [Iterative deepening A*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) |
 |**BFS**|
 |*Linked list*| BFS List | bfs_1 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a linked list ||
 |*B-Tree*| BFS B-tree | bfs_2 | Breadth-first search (BFS) with all visited N-puzzle states are saved in a B-tree ||
 | **A*** | A* with taxicab (hardcoded heuristic algorithm) | a | A* is based BFS, a heuristic algorithm and path cost to priorize tile moves. | [A* search algorithm](https://en.m.wikipedia.org/wiki/A*_search_algorithm) |
-| **IDA*** | IDA* with a heuristic algorithm | ida | IDA* is based DFS, a heuristic algorithm and path cost to priorize tile moves. | [Iterative deepening A*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) |
-| **Uniform-cost search** | UCS | ucs | Selection of the next move is based on a cost from an initial (root) state. A lowest value is the first in a priority queue. | [What is uniform-cost search?](https://www.educative.io/edpresso/what-is-uniform-cost-search) |
-| **Greedy search** |  | g | Greedy is based a search with a heuristic algorithm (only) to priorize tile moves. | [Greedy algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm) |
+| **Uniform-cost search** | UCS | ucs --> bfs_2 | Selection of the next move is based on a cost from an initial (root) state. A lowest value is the first in a priority queue. In case of N-Puzzle, because of a cost of every move is 1 implementation is same as BFS (refer bfs_2) | [What is uniform-cost search?](https://www.educative.io/edpresso/what-is-uniform-cost-search) |
+| **Greedy search** |  | greedy | Greedy is based a search with a heuristic algorithm (only) to priorize tile moves. Cont from initial state is not included into calculation.| [Greedy algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm) |
 
 ### 2.3 Implemented heuristic algorihms
 
@@ -144,7 +144,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | :- | :-: | :- | -|
 |**Hamming distance** (Tiles out of place) |h| Selcection of the next move is based a number of tiles out of the right place. A lowest value is the first in a priority queue. | [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) |
 | **Taxicab geometry** (Manhattan distance) | t | Selection of the next move is based a sum of tiles absolute distances (cartesian distance) from the right place. A lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry) |
-| **Taxicab geometry with direct reversal of tiles penalty** | tr | Selection of the next move is based to taxicab geometry and direct reversal of tiles. A lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry)|
+| **Taxicab geometry with direct reversal of tiles penalty** | l | Selection of the next move is based to taxicab geometry and direct reversal of tiles. A lowest value is the first in a priority queue. | [Taxicab geometry](https://en.m.wikipedia.org/wiki/Taxicab_geometry)|
 
 ### 2.4 Implemented N-puzzle search algorithm
 
@@ -212,7 +212,7 @@ git clone https://github.com/jussihyva/n-puzzle.git
 ### 3. Compile and start docker containers
 
 cd n-puzzle
->NOTE. make command might fail without sudo command (sudo make). This becuse of usage of Docker requires admin rights (sudo) in some environments.
+>NOTE. make command will fail if docker requires admin rights. Use sudo to avoid an issue.
 
 make
 
@@ -220,8 +220,7 @@ make
 
 ./bin/n_puzzle -h
 
->Reply should be something like this:
-11:14:04.199 ERROR src/arg_parser.c:17: Unknown parameter: -h
+>Help printout should be printed
 
 ## 4. Use cases
 
