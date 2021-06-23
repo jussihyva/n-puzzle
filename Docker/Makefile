@@ -12,7 +12,7 @@ SELF_SIGNED_KEY	=	./influxdb-selfsigned.key
 
 all: start
 
-build: $(SELF_SIGNED_CRT)
+build: $(SELF_SIGNED_CRT) grafana-storage
 	$(DOCKER_COMPOSE) build
 
 start: build
@@ -49,6 +49,12 @@ $(SELF_SIGNED_CRT):
 	-subj "/C=FI/ST=Uusimaa/L=Espoo/O=/OU=Hive/CN=influxdb"
 	chmod 644 $(SELF_SIGNED_CRT)
 	chmod +r $(SELF_SIGNED_KEY)
+
+grafana-storage:
+ifneq ($(OS), Darwin)
+	mkdir grafana-storage
+	chmod a+w grafana-storage
+endif
 
 clean: remove
 

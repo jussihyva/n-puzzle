@@ -27,6 +27,14 @@ The n puzzle is a classical problem for modelling algorithms involving heuristic
 ![15-Puzzle looks like this](https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif)
 https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif
 
+#### 1.1.4 Complexity of N-Puzzle
+
+| Puzzle size | Calculation | Number of possible states ([Refer to](https://en.wikipedia.org/wiki/15_puzzle#Solvability)) |
+| :-: | :-: | :-: |
+| 8 (3x3) | 9! / 2 | 181000 |
+| 15 (4x4) | 16! / 2 | 10 461 394 944 000
+| 24 (5x5) | 25! / 2 | 7 755 605 021 665 492 992 000 000
+
 ### 1.2 A goal of the project
 
 The goal of this project is to solve the N-puzzle game using the A\* search algorithm or one of its variants.
@@ -80,15 +88,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 [Link to Solution description (PPT)](https://onedrive.live.com/embed?resid=7AEA86BDEF93781E%2178221&amp;authkey=%21AI75ceSh6FeMjX0&amp;em=2&amp;wdAr=1.7777777777777777)
 
-#### 2.1.1 Complexity of N-Puzzle
-
-| Puzzle size | Calculation | Number of possible states ([Refer to](https://en.wikipedia.org/wiki/15_puzzle#Solvability)) |
-| :-: | :-: | :-: |
-| 8 (3x3) | 9! / 2 | 181000 |
-| 15 (4x4) | 16! / 2 | 10 461 394 944 000
-| 24 (5x5) | 25! / 2 | 7 755 605 021 665 492 992 000 000
-
-#### 2.1.2 Overview of implemented search algorithms
+#### 2.1.1 Overview of implemented search algorithms
 
 | Search algorithm | Cost of the path from start node | Estimat cost to the goal | More like |
 | :-: | :-: | :-: | :-: |
@@ -96,7 +96,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | [IDA*](https://en.m.wikipedia.org/wiki/Iterative_deepening_A*) | Yes | Yes | DFS |
 | [Greedy](https://en.wikipedia.org/wiki/Greedy_algorithm) | No | Yes | DFS |
 
-#### 2.1.3 Overview of implemented heuristic algorithms
+#### 2.1.2 Overview of implemented heuristic algorithms
 
 | Heuristic algorithm | Is admissible
 | :-: | :-: |
@@ -104,7 +104,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | [Taxicab](https://en.m.wikipedia.org/wiki/Taxicab_geometry) | Yes |
 | [Taxicab with linear conflicts](https://medium.com/swlh/looking-into-k-puzzle-heuristics-6189318eaca2) | Yes |
 
-#### 2.1.4 Key measurements
+#### 2.1.3 Key measurements
 
 | Measurement | Valuable algorithm | goal |
 | :-: | :-: | :-: |
@@ -112,15 +112,6 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 | Memory usage | IDA* | Least number of saved N-puzzle states |
 | CPU usage time | | Shortist time to solve a N-puzzle |
 | Solution complezity | | Least number of visited N-puzzle states (tile moves) |
-
-#### 2.1.5 Visualized solution descriptions
-
-* N-Puzzle creator
-![](n-puzzle/data/N-Puzzle_Creator_Description.gif)
-* [N-Puzzle solver]()
-* [N-Puzzle tile move visualizer]()
-* [Database (Influxdb)]()
-* [Stat visualizer (Grafana)]()
 
 ### 2.2 Implemented search algorithms
 
@@ -150,7 +141,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 | Function | Function name | Description | Refer to |
 | :- | :- | :- | :- |
-| n_puzzle_search_algorithm | n_puzzle_search_algorithm | Searches all possible tile move alternatives from an n-puzzle state. The function is used for higher-level algorithms (A*, IDA*, etc.) as input (the next possible n-puzzle states). | |
+| n_puzzle_search_algorithm | n_puzzle_search_algorithm | Searches all possible tile move alternatives from a n-puzzle state. The function is used by higher-level algorithms (A*, IDA*, etc.) as input (the next possible n-puzzle states). | |
 
 ### 2.5 Implemented N-Puzzle specific functions
 
@@ -190,20 +181,22 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 ### 1. Verify prerequisites
 
 python2 --version
->Should be like:
-Python 2.xxxxx
+>Python 2.xxxxx
 
 python3 --version
->Should be like:
-Python 3.xxxxx
+>Python 3.xxxxx
 
 docker --version
->Should be like:
-Docker version 20.10.5, build 55c4c88
+>Docker version 20.10.5, build 55c4c88
 
 docker-compose --version
->Should be like:
-docker-compose version 1.29.0, build 07737305
+>docker-compose version 1.29.0, build 07737305
+
+clang -v
+>fgfddfgfdgdffggff
+
+valgrind
+>fdsdsfdfsdfdsfdsfdsfsdf
 
 ### 2. Clone the project from github
 
@@ -218,7 +211,7 @@ make
 
 ### 4. Verify installation
 
-./bin/n_puzzle -h
+./n-puzzle/bin/n_puzzle -h
 
 >Help printout should be printed
 
@@ -228,11 +221,49 @@ make
 
 ### 5.1 N-Puzzle input creator
 
+python2 n-puzzle/bin/PuzzleGenerator.py -s 3
+
+>\# This puzzle is solvable
+3
+6 5 3
+2 7 8
+4 1 0
+
 ### 5.2 N-Puzzle solver (My Solution)
+
+python n-puzzle/bin/PuzzleGenerator.py -s 3 -i 2 | ./n-puzzle/bin/n_puzzle -A a -H t
+
+>3
+    0    1    3
+    8    2    4
+    7    6    5
+ 3
+    1    0    3
+    8    2    4
+    7    6    5
+ 3
+    1    2    3
+    8    0    4
+    7    6    5
+SUMMARY
+Puzzle size:                           3
+Used algorithm:                        a taxicab
+Execution time:                        69 ms
+CPU usage time:                        8 ms
+Memory usage:                          2 Mb
+Total number of tile moves:            5
+Total number of tile move collisions:  1
+Max. number of saved states:           4
+Number of solution moves:              2
+======================================
 
 ### 5.2 N-puzzle GUI (Modified in my solution)
 
 ![N-puzzle GUI](n-puzzle/data/Manual_Puzzle_demo.gif)
+
+### 5.3 N-Puzzle report visualizer
+
+make -C n-puzzle run_test S=6
 
 ## 6. Lessons learned
 
