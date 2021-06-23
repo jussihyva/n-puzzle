@@ -267,20 +267,24 @@ make -C n-puzzle run_test S=6
 
 ## 6. Lessons learned
 
+Breafly, learning point of view this project were long enough, challenging enough to understand graph related algorithms deep enough. Understanding pros. and cons. of different algorithms, fitfalls in implementation (algorithm could be powerless not because of algorithm itself but bad implementation). Now I have execellent (wide) understanding how, when and why selected algorithm is usefull or useless solution for a specific issue. Also, now I have much more experience to learn and discuss (talk) different kind of algorithm solution alternatives with other high experience algorithm guys.
+
 ### 6.1 Stack, Queue, B-Tree and Prio-Queue
 
-Some details, what exactly I learned.
+The first time whan I implemented these function by C-language. Stack is based on linked list. Queue is based on two stacks. Idea is to put (ENQUEUE) new data into Stack A. DEQUEUE function move data from stack A (If stack B is empty) to stack B and pull data from stack B. I implemented B-tree from my head (Cannot say is it best of all). Because of B-tree were quite new functionality for me I read some articles from internet and then just started to write. I didn't use tearm "leaf-node" in my implemantaion. Once again, I cannot say is the implementation best of all. Learning point of view it was valuable session to get B-tree implemented in my way. Prio-Queue is miz of Queue and B-tree functionality. Funny solution, I think, and seems working well.
 
-### 6.2 BFS (Breadth-First Search)
+### 6.2 BFS (Breadth-First Search) and DFS (Depth-First Search)
 
-Some details, what exactly I learned.
+I played with DFS and BFS algorithms in pervious projects (Push swap and Lem-in), so I had some experience already. Any case I re-wrote everytihing from my head once again. Now I feel that those algorithms are in may back-bone. N-puzzle solving point of view both algorithms are powerless. I wrote those just to start implementation from most powerless algorithms and re-freshing my memory how basig algoritms work and how to write those.
 
-### 6.3 DFS (Depth-First Search)
+### 6.3 A\*, IDS\* and Greedy
 
-Some details, what exactly I learned.
+A\*, IDA\* and Greedy were new algorithms for me. To be honest, I read and heared somothing abouth these several months ago but nothing so deep that I did not feel that this will be peace of cake. Learning session takes time even these are quite simple algorithms. I think that main reaason (why learing takes time) is realted to mixing A\*, IDA\* and Greedy algorithms all the time. Not only those three words but many others like Uniform, Uninformed, Dijkstra, heuristic, admissible etc... caused confusion (full mess) in my head. Implementation (once again, from my own head) was quite straight forward. Actually, at the end of the project I got bit worried that some speed and memory usage issues (maybe too slow, maybe too high memory usage) are related to not bet of all implementation. In this project I didn't analyse my solution speed point of view. Evaluations required less than 10sec exectuion time for 8-Puzzle. Mine waste less than 100ms. So, noo need for speed analysis.
 
-### 6.4 Heuristic Algorithms related to N-puzzle
+### 6.4 Heuristic Algorithms
 
-#### 6.4.1 Tiles-Out-Of-Place
+#### 6.4.1 Hamming
 
-Some details, what exactly I learned.
+#### 6.4.2 Taxicab (Manhattan)
+
+#### 6.4.3 Taxicab with linear conflicts
