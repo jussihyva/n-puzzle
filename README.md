@@ -16,7 +16,6 @@ Named for the number of tiles in the frame, the 15 puzzle may also be called a 1
 
 The n puzzle is a classical problem for modelling algorithms involving heuristics. Commonly used heuristics for this problem include counting the number of misplaced tiles and finding the sum of the taxicab distances between each block and its position in the goal configuration.[1] Note that both are admissible, i.e. they never overestimate the number of moves left, which ensures optimality for certain search algorithms such as A*.
 
-
 #### 1.1.2 Useful links to get more information
 
 - [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle)
@@ -47,14 +46,16 @@ below). While there will be no direct evaluation of its performance in this inst
 project, it has to have at least a vaguely reasonable perfomance : Taking a few second to
 solve a 3-puzzle is pushing it, ten seconds is unacceptable.
 
-**8-Puzzle (3x3)**
+#### 8-Puzzle (3x3)
+
 ||||
 |-|-|-|
 |1|2|3|
 |8||4|
 |7|6|5|
 
-**15-Puzzle (4x4)**
+#### 15-Puzzle (4x4)
+
 |||||
 |-|-|-|-|
 |1|2|3|4|
@@ -62,7 +63,8 @@ solve a 3-puzzle is pushing it, ten seconds is unacceptable.
 |11||15|6|
 |10|9|8|7|
 
-**24-Puzzle (5x5)**
+#### 24-Puzzle (5x5)
+
 ||||||
 |-|-|-|-|-|
 |1|2|3|4|5|
@@ -78,7 +80,8 @@ towards an empty space).
 ### 1.3 Visualization of 3x3 Puzzle algorithms
 
 Here is a link to a page which demonstrate (visualize) solutions for solving 3x3 Puzzle. The page is not related to the Hive N-Puzzle project.
-* https://tristanpenman.com/demos/n-puzzle/
+
+- <https://tristanpenman.com/demos/n-puzzle/>
 
 ### 1.4 Ready made script for creating input (N-puzzle) for a solution
 
@@ -261,7 +264,7 @@ Number of solution moves:              2
 
 ![N-puzzle GUI](n-puzzle/data/Manual_Puzzle_demo.gif)
 
-### 5.3 N-Puzzle report visualizer
+### 5.3 N-Puzzle statistical data visualizer
 
 make -C n-puzzle run_test S=6
 
@@ -283,8 +286,8 @@ A\*, IDA\* and Greedy were new algorithms for me. To be honest, I read and heare
 
 ### 6.4 Heuristic Algorithms
 
-#### 6.4.1 Hamming
+I implemeted three different kind of distance calculations. Hamming which calculate number of tiles out of place. It was quite powerless heuristic algorithm. It does not take account how far tile is. Just add counter by one is tile is not in right position. It was easy implementation. Taxicab (Manhattan) geometry calculates more accurate value how far a tile is from right position. Third calculation is based on taxicab with linear conflict addition. My first implementation (which waste lot of time) was really poor. That leads me to think why it did  not improve solving result even I expected that it should. The second imllementation was much better (I think so). Still it wos not cristal clear that linear conflict addition improved sollving time all cases. Playing with heuristic algorithms explained me how important those are to improve algorithm solving time. Also I learned that I cannot critisize algorithm itself before I analyse quality of implementation (speed and memory usage point of view) at least twice.
 
-#### 6.4.2 Taxicab (Manhattan)
+### 6.5 N-Puzzle solving statistics visualization
 
-#### 6.4.3 Taxicab with linear conflicts
+Usage of Influxdb and grafana was excellent idea for visualizing N-puzzle solver statistical data. I implemented interface (HTTPS protocol) to send statistical data from N-puzzle solver to influxdb. Stat includes CPU usage time, Size of N-Puzzle, Memory usage, Number of tile moves to solve N-Puzzle, total number of tile moves etc. Grafana and Influxdb were running in docker container. Based on the experince how useful Grafana/Influxdb are for visualizing and post processing data I decided to use sema kind of functionality in furure projects.
