@@ -23,6 +23,8 @@ The n puzzle is a classical problem for modelling algorithms involving heuristic
 
 #### 1.1.3 An example
 
+**NOTE**: Required tile order is different in this project. Refer chapeter 1.2 for more information.
+
 ![15-Puzzle looks like this](https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif)
 https://miro.medium.com/max/600/1*Kg5sN-5U3Q7hevW9qhz2rA.gif
 
@@ -101,7 +103,7 @@ Here is a link to a page which demonstrate (visualize) solutions for solving 3x3
 
 #### 2.1.2 Overview of implemented heuristic algorithms
 
-| Heuristic algorithm | Is admissible
+| Heuristic algorithm | Is admissible ([Admissible heuristic](https://en.wikipedia.org/wiki/Admissible_heuristic#:~:text=An%20admissible%20heuristic%20is%20used,of%20reaching%20the%20goal%20state.))
 | :-: | :-: |
 | [Hamming](https://en.wikipedia.org/wiki/Hamming_distance) | Yes |
 | [Taxicab](https://en.m.wikipedia.org/wiki/Taxicab_geometry) | Yes |
@@ -282,12 +284,12 @@ I played with DFS and BFS algorithms in pervious projects (Push swap and Lem-in)
 
 ### 6.3 A\*, IDS\* and Greedy
 
-A\*, IDA\* and Greedy were new algorithms for me. To be honest, I read and heared somothing abouth these several months ago but nothing so deep that I did not feel that this will be peace of cake. Learning session takes time even these are quite simple algorithms. I think that main reaason (why learing takes time) is realted to mixing A\*, IDA\* and Greedy algorithms all the time. Not only those three words but many others like Uniform, Uninformed, Dijkstra, heuristic, admissible etc... caused confusion (full mess) in my head. Implementation (once again, from my own head) was quite straight forward. Actually, at the end of the project I got bit worried that some speed and memory usage issues (maybe too slow, maybe too high memory usage) are related to not bet of all implementation. In this project I didn't analyse my solution speed point of view. Evaluations required less than 10sec exectuion time for 8-Puzzle. Mine waste less than 100ms. So, noo need for speed analysis.
+A\*, IDA\* and Greedy were new algorithms for me. To be honest, I read and heared something about these several months ago but nothing so deep that I did not feel that this will be peace of cake. Learning session takes time even these are quite simple algorithms. I think that main reason (why learing takes time) is realted to mixing A\*, IDA\* and Greedy algorithms all the time. Not only those three words but many others like Uniform, Uninformed, Dijkstra, heuristic, admissible etc... caused confusion (full mess) in my head. Implementation (once again, from my own head) was quite straight forward. Actually, at the end of the project I got bit worried that some speed and memory usage issues (maybe too slow, maybe too high memory usage) are related to not bet of all implementation. In this project I didn't analyse my solution speed point of view. Evaluations required less than 10sec exectuion time for 8-Puzzle. Mine waste less than 100ms. So, noo need for speed analysis.
 
 ### 6.4 Heuristic Algorithms
 
-I implemeted three different kind of distance calculations. Hamming which calculate number of tiles out of place. It was quite powerless heuristic algorithm. It does not take account how far tile is. Just add counter by one is tile is not in right position. It was easy implementation. Taxicab (Manhattan) geometry calculates more accurate value how far a tile is from right position. Third calculation is based on taxicab with linear conflict addition. My first implementation (which waste lot of time) was really poor. That leads me to think why it did  not improve solving result even I expected that it should. The second imllementation was much better (I think so). Still it wos not cristal clear that linear conflict addition improved sollving time all cases. Playing with heuristic algorithms explained me how important those are to improve algorithm solving time. Also I learned that I cannot critisize algorithm itself before I analyse quality of implementation (speed and memory usage point of view) at least twice.
+I implemeted three different kind of distance calculations. The hamming algotithm which calculate number of tiles out of place. It was quite powerless heuristic algorithm. It does not take account how far tile is. Just add counter by one is tile is not in right position. It was easy implementation. Taxicab (Manhattan) geometry calculates more accurate value how far a tile is from right position. Third calculation is based on taxicab with linear conflict addition. My first implementation (which waste lot of time) was really poor. That leads me to think why it did  not improve solving result even I expected that it should. The second implementation was much better (I think so). Still it was not cristal clear that linear conflict addition improved solving time all cases. Playing with heuristic algorithms explained me how important those are to improve algorithm solving time. Also I learned that I cannot critisize algorithm itself before I analyse quality of implementation (speed and memory usage point of view) at least twice.
 
 ### 6.5 N-Puzzle solving statistics visualization
 
-Usage of Influxdb and grafana was excellent idea for visualizing N-puzzle solver statistical data. I implemented interface (HTTPS protocol) to send statistical data from N-puzzle solver to influxdb. Stat includes CPU usage time, Size of N-Puzzle, Memory usage, Number of tile moves to solve N-Puzzle, total number of tile moves etc. Grafana and Influxdb were running in docker container. Based on the experince how useful Grafana/Influxdb are for visualizing and post processing data I decided to use sema kind of functionality in furure projects.
+Usage of Influxdb and grafana (ready made applications) was an excellent idea for visualizing N-puzzle solver statistical data. I implemented interface (HTTPS protocol) to send statistical data from N-puzzle solver to influxdb. Stat includes CPU usage time, Size of N-Puzzle, Memory usage, Number of tile moves to solve N-Puzzle, total number of tile moves etc. Grafana and Influxdb were running in docker container. Based on the experince how useful Grafana/Influxdb are for visualizing and post processing data I decided to use same kind of functionality in future projects.
